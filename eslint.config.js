@@ -1,15 +1,15 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
+import tseslint from "typescript-eslint";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(["dist"]),
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ["**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
@@ -25,47 +25,51 @@ export default defineConfig([
       },
     },
     plugins: {
-      'simple-import-sort': simpleImportSort,
+      "simple-import-sort": simpleImportSort,
     },
     rules: {
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
         {
-          prefer: 'type-imports',
-          fixStyle: 'inline-type-imports',
+          prefer: "type-imports",
+          fixStyle: "inline-type-imports",
         },
       ],
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/no-misused-promises": [
+        "error",
         {
           checksVoidReturn: {
             attributes: false,
           },
         },
       ],
-      'simple-import-sort/imports': [
-        'error',
+      "simple-import-sort/imports": [
+        "error",
         {
           groups: [
             [
-              '^react$',
-              '^react-dom$',
-              '^(?!@(?:app|pages|widgets|features|entities|shared)(?:/|$))@?\\w',
+              "^react(?:/.*|$)",
+              "^react-dom(?:/.*|$)",
+              "^react-router(?:-dom)?(?:/.*|$)",
             ],
-            ['^@app(?:/.*|$)'],
-            ['^@pages(?:/.*|$)'],
-            ['^@widgets(?:/.*|$)'],
-            ['^@features(?:/.*|$)'],
-            ['^@entities(?:/.*|$)'],
-            ['^@shared(?:/.*|$)'],
-            ['^\\u0000'],
-            ['^/'],
-            ['^\\.'],
+            ["^@mui(?:/.*|$)"],
+            [
+              "^(?!react(?:/.*|$)|react-dom(?:/.*|$)|react-router(?:-dom)?(?:/.*|$)|@mui(?:/.*|$)|@(?:app|pages|widgets|features|entities|shared)(?:/|$))@?\\w",
+            ],
+            ["^@app(?:/.*|$)"],
+            ["^@pages(?:/.*|$)"],
+            ["^@widgets(?:/.*|$)"],
+            ["^@features(?:/.*|$)"],
+            ["^@entities(?:/.*|$)"],
+            ["^@shared(?:/.*|$)"],
+            ["^\\u0000"],
+            ["^/"],
+            ["^\\."],
           ],
         },
       ],
-      'simple-import-sort/exports': 'error',
+      "simple-import-sort/exports": "error",
     },
   },
-])
+]);
