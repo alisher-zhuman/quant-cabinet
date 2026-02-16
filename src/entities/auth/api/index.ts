@@ -8,7 +8,7 @@ export const logIn = async (
 ): Promise<LogInResponse> => {
   const validPayload = LogInFormSchema.parse(payload);
 
-  const response = await api.post<unknown>("/auth/login", validPayload);
+  const response = await api.post("/auth/login", validPayload);
 
   return LogInResponseSchema.parse(response.data);
 };
