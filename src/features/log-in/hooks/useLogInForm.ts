@@ -26,7 +26,7 @@ export const useLogInForm = () => {
     form.clearErrors("root");
 
     try {
-      const session = logIn(values);
+      const session = await logIn(values);
 
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
