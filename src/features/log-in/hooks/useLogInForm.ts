@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
+import axios from "axios";
 import toast from "react-hot-toast";
 
 import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
@@ -32,9 +33,13 @@ export const useLogInForm = () => {
       navigate(`/${ROUTES.USERS}`, { replace: true });
       toast.success("Успешный вход");
     } catch (error) {
-      console.log(error);
+      const message =
+        axios.isAxiosError<{ message?: unknown }>(error) &&
+        typeof error.response?.data?.message === "string"
+          ? error.response.data.message
+          : "Не удалось войти. Попробуйте снова.";
 
-      toast.error("Error");
+      toast.error(message);
     }
   };
 
