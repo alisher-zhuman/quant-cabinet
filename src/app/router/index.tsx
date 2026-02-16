@@ -11,12 +11,22 @@ import { WithSuspense } from "./ui/with-suspense";
 const NotFound = lazy(() =>
   import("@pages/not-found").then((m) => ({ default: m.NotFound })),
 );
+const LogIn = lazy(() =>
+  import("@pages/log-in").then((m) => ({ default: m.LogIn })),
+);
 const Users = lazy(() =>
   import("@pages/users").then((m) => ({ default: m.Users })),
 );
 
 export const ROUTER = createBrowserRouter([
-  { path: `/${ROUTES.LOG_IN}`, element: <h1>LOG IN</h1> },
+  {
+    path: `/${ROUTES.LOG_IN}`,
+    element: (
+      <WithSuspense>
+        <LogIn />
+      </WithSuspense>
+    ),
+  },
   { path: `/${ROUTES.RESET_PASSWORD}`, element: <h1>RESET PASSWORD</h1> },
   {
     path: "*",
