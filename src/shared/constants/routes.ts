@@ -1,5 +1,5 @@
 export const ROUTES = {
-  LOG_IN: "sign-in",
+  LOG_IN: "log-in",
   RESET_PASSWORD: "reset-password",
   USERS: "users",
 };
