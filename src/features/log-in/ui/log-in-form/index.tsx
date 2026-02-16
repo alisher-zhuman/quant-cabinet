@@ -1,3 +1,4 @@
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -12,6 +13,7 @@ export const LogInForm = () => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
+    onBack,
     onSubmit,
   } = useLogInForm();
 
@@ -21,9 +23,20 @@ export const LogInForm = () => {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      position="relative"
       px={2}
       bgcolor="grey.100"
     >
+      <Button
+        type="button"
+        variant="text"
+        onClick={onBack}
+        startIcon={<ArrowBackRoundedIcon />}
+        sx={{ position: "absolute", top: 16, left: 16 }}
+      >
+        Назад
+      </Button>
+
       <Paper
         elevation={0}
         sx={{

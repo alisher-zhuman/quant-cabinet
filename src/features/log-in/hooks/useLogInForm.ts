@@ -43,8 +43,13 @@ export const useLogInForm = () => {
     }
   };
 
+  const onBack = () => {
+    navigate(-1);
+  };
+
   return {
     ...form,
+    onBack,
     onSubmit,
   };
 };
