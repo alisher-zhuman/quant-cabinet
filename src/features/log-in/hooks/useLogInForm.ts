@@ -3,8 +3,7 @@ import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
-import { logIn } from "@entities/auth";
-import { LogInSchema } from "@entities/auth/model/schemas";
+import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
 
 import { ROUTES } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
@@ -15,7 +14,7 @@ export const useLogInForm = () => {
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const form = useForm<LogInFormValues>({
-    resolver: zodResolver(LogInSchema),
+    resolver: zodResolver(LogInFormSchema),
     mode: "onChange",
     defaultValues: {
       email: "",
@@ -27,7 +26,7 @@ export const useLogInForm = () => {
     form.clearErrors("root");
 
     try {
-      const session = await logIn(values);
+      const session = logIn(values);
 
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
