@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 
+import toast from "react-hot-toast";
+
 import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
 
 import { ROUTES } from "@shared/constants";
@@ -23,18 +25,16 @@ export const useLogInForm = () => {
   });
 
   const onSubmit: SubmitHandler<LogInFormValues> = async (values) => {
-    form.clearErrors("root");
-
     try {
       const session = await logIn(values);
 
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
-    } catch {
-      form.setError("root", {
-        type: "server",
-        message: "Не удалось войти. Проверьте email и пароль.",
-      });
+      toast.success("Успешный вход");
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Error");
     }
   };
 

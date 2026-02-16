@@ -1,4 +1,3 @@
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -41,10 +40,6 @@ export const LogInForm = () => {
             <Typography variant="h5" component="h1" fontWeight={700}>
               Вход в кабинет
             </Typography>
-
-            {errors.root?.message ? (
-              <Alert severity="error">{errors.root.message}</Alert>
-            ) : null}
 
             <Stack spacing={2}>
               <TextField
