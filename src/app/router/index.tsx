@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 
 import { Layout } from "@widgets/layout";
 
@@ -36,15 +36,18 @@ export const ROUTER = createBrowserRouter([
       </WithSuspense>
     ),
   },
-
   {
     path: "/",
     element: (
-      <ProtectedRoute>
+      <ProtectedRoute allowedRoles={["admin"]}>
         <Layout />
       </ProtectedRoute>
     ),
     children: [
+      {
+        index: true,
+        element: <Navigate to={ROUTES.USERS} replace />,
+      },
       {
         path: ROUTES.USERS,
         element: (
