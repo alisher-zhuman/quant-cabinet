@@ -2,20 +2,17 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+
+import { ROUTES } from "@shared/constants";
+import { FormActions } from "@shared/ui/form-actions";
+import { FormFieldset } from "@shared/ui/form-fieldset";
+import { FormTextField } from "@shared/ui/form-text-field";
 
 import { useLogInForm } from "../../hooks/useLogInForm";
 
 export const LogInForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-    onBack,
-    onSubmit,
-  } = useLogInForm();
+  const { control, isValid, isPending, onBack, onSubmit } = useLogInForm();
 
   return (
     <Box
@@ -48,44 +45,54 @@ export const LogInForm = () => {
           borderColor: "divider",
         }}
       >
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <Stack spacing={3}>
-            <Typography variant="h5" component="h1" fontWeight={700}>
-              Вход в кабинет
-            </Typography>
+        <Box
+          component="form"
+          onSubmit={onSubmit}
+          noValidate
+          sx={{ display: "flex", flexDirection: "column", gap: 3 }}
+        >
+          <Typography variant="h5" component="h1" fontWeight={700}>
+            Вход в кабинет
+          </Typography>
 
-            <Stack spacing={2}>
-              <TextField
-                label="Email"
-                type="email"
-                autoComplete="email"
-                fullWidth
-                error={Boolean(errors.email)}
-                helperText={errors.email?.message}
-                {...register("email")}
-              />
-
-              <TextField
-                label="Пароль"
-                type="password"
-                autoComplete="current-password"
-                fullWidth
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
-                {...register("password")}
-              />
-            </Stack>
-
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
+          <FormFieldset disabled={isPending}>
+            <FormTextField
+              label="Email"
+              type="email"
+              autoComplete="email"
               fullWidth
-              disabled={!isValid || isSubmitting}
-            >
-              Войти
-            </Button>
-          </Stack>
+              required
+              name="email"
+              control={control}
+            />
+
+            <FormTextField
+              label="Пароль"
+              type="password"
+              autoComplete="current-password"
+              fullWidth
+              required
+              name="password"
+              control={control}
+            />
+          </FormFieldset>
+
+          <FormActions
+            isSubmitting={isPending}
+            submitLabel="Войти"
+            submitLabelLoading="Вход..."
+            align="center"
+            fullWidth
+            submitProps={{ size: "large", disabled: !isValid }}
+          />
+
+          <Button
+            variant="text"
+            href={`/${ROUTES.RESET_PASSWORD}`}
+            sx={{ mt: 1, width: "fit-content", margin: "auto" }}
+          >
+            Забыли пароль?
+          </Button>
         </Box>
       </Paper>
     </Box>

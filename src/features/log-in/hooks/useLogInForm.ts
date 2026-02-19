@@ -1,14 +1,13 @@
 import { useNavigate } from "react-router";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm } from "react-hook-form";
-
-import axios from "axios";
-import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
 
 import { ROUTES } from "@shared/constants";
+import { getApiErrorMessage } from "@shared/helpers";
+import { useToastMutation } from "@shared/hooks";
 import { useAuthStore } from "@shared/stores";
 
 export const useLogInForm = () => {
@@ -16,7 +15,11 @@ export const useLogInForm = () => {
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
-  const form = useForm<LogInFormValues>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm<LogInFormValues>({
     resolver: zodResolver(LogInFormSchema),
     mode: "onChange",
     defaultValues: {
@@ -25,30 +28,29 @@ export const useLogInForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<LogInFormValues> = async (values) => {
-    try {
-      const session = await logIn(values);
-
+  const mutation = useToastMutation({
+    mutationFn: logIn,
+    onSuccess: (session) => {
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
-      toast.success("Успешный вход");
-    } catch (error) {
-      const message =
-        axios.isAxiosError<{ message?: unknown }>(error) &&
-        typeof error.response?.data?.message === "string"
-          ? error.response.data.message
-          : "Не удалось войти. Попробуйте снова.";
+    },
+    successMessage: "Успешный вход",
+    errorMessage: (error) =>
+      getApiErrorMessage(error, "Не удалось войти. Попробуйте снова."),
+  });
 
-      toast.error(message);
-    }
-  };
+  const onSubmit = handleSubmit((values) => {
+    mutation.mutate(values);
+  });
 
   const onBack = () => {
     navigate(-1);
   };
 
   return {
-    ...form,
+    control,
+    isValid,
+    isPending: mutation.isPending,
     onBack,
     onSubmit,
   };
