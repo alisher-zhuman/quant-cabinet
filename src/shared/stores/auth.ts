@@ -1,46 +1,34 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-import type { AuthSession, AuthState } from "@shared/types";
+import type { AuthState } from "@shared/types";
 
 export const AUTH_STORAGE_KEY = "quant-cabinet-auth";
 
-const getInitialAuthState = (): Pick<AuthState, "role" | "accessToken"> => {
-  if (typeof window === "undefined") {
-    return { role: null, accessToken: null };
-  }
-
-  const stored = localStorage.getItem(AUTH_STORAGE_KEY);
-
-  if (!stored) {
-    return { role: null, accessToken: null };
-  }
-
-  try {
-    const parsed = JSON.parse(stored) as Partial<AuthSession>;
-
-    return {
-      role: parsed.role ?? null,
-      accessToken: parsed.accessToken ?? null,
-    };
-  } catch {
-    return { role: null, accessToken: null };
-  }
+const INITIAL_AUTH_STATE: Pick<AuthState, "role" | "accessToken"> = {
+  role: null,
+  accessToken: null,
 };
 
-export const useAuthStore = create<AuthState>((set) => {
-  const initialState = getInitialAuthState();
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      ...INITIAL_AUTH_STATE,
 
-  return {
-    ...initialState,
+      setAuth: (session) => {
+        set({ role: session.role, accessToken: session.accessToken });
+      },
 
-    setAuth: (session) => {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(session));
-      set({ role: session.role, accessToken: session.accessToken });
+      logout: () => {
+        set(INITIAL_AUTH_STATE);
+      },
+    }),
+    {
+      name: AUTH_STORAGE_KEY,
+      partialize: (state) => ({
+        role: state.role,
+        accessToken: state.accessToken,
+      }),
     },
-
-    logout: () => {
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-      set({ role: null, accessToken: null });
-    },
-  };
-});
+  ),
+);

@@ -1,6 +1,6 @@
-export type UserRole = "user" | "admin";
+type UserRole = "user" | "admin";
 
-export interface AuthSession {
+interface AuthSession {
   role: UserRole;
   accessToken: string;
 }
