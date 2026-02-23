@@ -19,6 +19,15 @@ const LogIn = lazy(() =>
 const Users = lazy(() =>
   import("@pages/users").then((m) => ({ default: m.Users })),
 );
+const Companies = lazy(() =>
+  import("@pages/companies").then((m) => ({ default: m.Companies })),
+);
+const Controllers = lazy(() =>
+  import("@pages/controllers").then((m) => ({ default: m.Controllers })),
+);
+const Meters = lazy(() =>
+  import("@pages/meters").then((m) => ({ default: m.Meters })),
+);
 
 const ResetPassword = () => {
   const { t } = useTranslation();
@@ -61,6 +70,30 @@ export const ROUTER = createBrowserRouter([
         element: (
           <WithSuspense>
             <Users />
+          </WithSuspense>
+        ),
+      },
+      {
+        path: ROUTES.COMPANIES,
+        element: (
+          <WithSuspense>
+            <Companies />
+          </WithSuspense>
+        ),
+      },
+      {
+        path: ROUTES.CONTROLLERS,
+        element: (
+          <WithSuspense>
+            <Controllers />
+          </WithSuspense>
+        ),
+      },
+      {
+        path: ROUTES.METERS,
+        element: (
+          <WithSuspense>
+            <Meters />
           </WithSuspense>
         ),
       },

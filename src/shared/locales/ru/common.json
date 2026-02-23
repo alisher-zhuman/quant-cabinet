@@ -31,6 +31,15 @@
   "users": {
     "title": "Пользователи"
   },
+  "companies": {
+    "title": "Компании"
+  },
+  "controllers": {
+    "title": "Контроллеры"
+  },
+  "meters": {
+    "title": "Счетчики"
+  },
   "resetPassword": {
     "title": "Восстановление пароля"
   },
