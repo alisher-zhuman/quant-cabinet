@@ -1,8 +1,6 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 
-import { useTranslation } from "react-i18next";
-
 import { Layout } from "@widgets/layout";
 
 import { ROUTES } from "@shared/constants";
@@ -15,6 +13,9 @@ const NotFound = lazy(() =>
 );
 const LogIn = lazy(() =>
   import("@pages/log-in").then((m) => ({ default: m.LogIn })),
+);
+const ResetPassword = lazy(() =>
+  import("@pages/reset-password").then((m) => ({ default: m.ResetPassword })),
 );
 const Users = lazy(() =>
   import("@pages/users").then((m) => ({ default: m.Users })),
@@ -29,12 +30,6 @@ const Meters = lazy(() =>
   import("@pages/meters").then((m) => ({ default: m.Meters })),
 );
 
-const ResetPassword = () => {
-  const { t } = useTranslation();
-
-  return <h1>{t("resetPassword.title")}</h1>;
-};
-
 export const ROUTER = createBrowserRouter([
   {
     path: `/${ROUTES.LOG_IN}`,
@@ -44,7 +39,14 @@ export const ROUTER = createBrowserRouter([
       </WithSuspense>
     ),
   },
-  { path: `/${ROUTES.RESET_PASSWORD}`, element: <ResetPassword /> },
+  {
+    path: `/${ROUTES.RESET_PASSWORD}`,
+    element: (
+      <WithSuspense>
+        <ResetPassword />
+      </WithSuspense>
+    ),
+  },
   {
     path: "*",
     element: (

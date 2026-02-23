@@ -1,8 +1,16 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
-import { createLogInFormSchema, LogInResponseSchema } from "../model/schemas";
-import type { LogInFormValues, LogInResponse } from "../model/types";
+import {
+  createForgotPasswordFormSchema,
+  createLogInFormSchema,
+  LogInResponseSchema,
+} from "../model/schemas";
+import type {
+  ForgotPasswordFormValues,
+  LogInFormValues,
+  LogInResponse,
+} from "../model/types";
 
 export const logIn = async (
   payload: LogInFormValues,
@@ -12,4 +20,12 @@ export const logIn = async (
   const response = await api.post(API_PATHS.LOG_IN, validPayload);
 
   return LogInResponseSchema.parse(response.data);
+};
+
+export const forgotPassword = async (
+  payload: ForgotPasswordFormValues,
+): Promise<void> => {
+  const validPayload = createForgotPasswordFormSchema().parse(payload);
+
+  await api.post(API_PATHS.FORGOT_PASSWORD, validPayload);
 };
