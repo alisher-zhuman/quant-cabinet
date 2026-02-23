@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import { HEADER_NAVIGATION_ITEMS } from "@shared/constants";
+import { HEADER_NAVIGATION_ITEMS, ROUTES } from "@shared/constants";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
 
 export const Header = () => {
@@ -17,13 +17,19 @@ export const Header = () => {
         padding: 16,
       }}
     >
-      <img
-        src="/images/logo.png"
-        alt="Logo"
+      <NavLink
+        to={`/${ROUTES.USERS}`}
         style={{
-          width: 80,
+          textDecoration: "none",
+          color: "#0F172A",
+          fontSize: 24,
+          fontWeight: 800,
+          lineHeight: 1,
+          letterSpacing: 0.2,
         }}
-      />
+      >
+        Quant Cabinet
+      </NavLink>
 
       <nav
         style={{
