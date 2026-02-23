@@ -7,5 +7,5 @@ interface Props {
 }
 
 export const WithSuspense = ({ children }: Props) => (
-  <Suspense fallback={<Loader />}>{children}</Suspense>
+  <Suspense fallback={<Loader isFullscreen />}>{children}</Suspense>
 );
