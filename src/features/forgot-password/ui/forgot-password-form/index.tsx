@@ -11,13 +11,13 @@ import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
 
-import { useResetPasswordForm } from "../../hooks/useResetPasswordForm";
+import { useForgotPasswordForm } from "../../hooks/useForgotPasswordForm";
 
-export const ResetPasswordForm = () => {
+export const ForgotPasswordForm = () => {
   const { t } = useTranslation();
 
   const { control, isValid, isPending, onBack, onSubmit } =
-    useResetPasswordForm();
+    useForgotPasswordForm();
 
   return (
     <Box
@@ -36,7 +36,7 @@ export const ResetPasswordForm = () => {
         startIcon={<ArrowBackRoundedIcon />}
         sx={{ position: "absolute", top: 16, left: 16 }}
       >
-        {t("resetPassword.actions.back")}
+        {t("forgotPassword.actions.back")}
       </Button>
 
       <LangSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
@@ -59,12 +59,12 @@ export const ResetPasswordForm = () => {
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
           <Typography variant="h5" component="h1" fontWeight={700}>
-            {t("resetPassword.title")}
+            {t("forgotPassword.title")}
           </Typography>
 
           <FormFieldset disabled={isPending}>
             <FormTextField
-              label={t("resetPassword.fields.email")}
+              label={t("forgotPassword.fields.email")}
               type="email"
               autoComplete="email"
               fullWidth
@@ -76,8 +76,8 @@ export const ResetPasswordForm = () => {
 
           <FormActions
             isSubmitting={isPending}
-            submitLabel={t("resetPassword.actions.submit")}
-            submitLabelLoading={t("resetPassword.actions.submitLoading")}
+            submitLabel={t("forgotPassword.actions.submit")}
+            submitLabelLoading={t("forgotPassword.actions.submitLoading")}
             align="center"
             fullWidth
             submitProps={{ size: "large", disabled: !isValid }}

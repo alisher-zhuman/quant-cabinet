@@ -95,7 +95,7 @@ export const LogInForm = () => {
 
           <Button
             variant="text"
-            href={`/${ROUTES.RESET_PASSWORD}`}
+            href={`/${ROUTES.FORGOT_PASSWORD}`}
             sx={{ mt: 1, width: "fit-content", margin: "auto" }}
           >
             {t("logIn.actions.forgotPassword")}

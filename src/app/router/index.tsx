@@ -14,8 +14,8 @@ const NotFound = lazy(() =>
 const LogIn = lazy(() =>
   import("@pages/log-in").then((m) => ({ default: m.LogIn })),
 );
-const ResetPassword = lazy(() =>
-  import("@pages/reset-password").then((m) => ({ default: m.ResetPassword })),
+const ForgotPassword = lazy(() =>
+  import("@pages/forgot-password").then((m) => ({ default: m.ForgotPassword })),
 );
 const Users = lazy(() =>
   import("@pages/users").then((m) => ({ default: m.Users })),
@@ -40,10 +40,10 @@ export const ROUTER = createBrowserRouter([
     ),
   },
   {
-    path: `/${ROUTES.RESET_PASSWORD}`,
+    path: `/${ROUTES.FORGOT_PASSWORD}`,
     element: (
       <WithSuspense>
-        <ResetPassword />
+        <ForgotPassword />
       </WithSuspense>
     ),
   },

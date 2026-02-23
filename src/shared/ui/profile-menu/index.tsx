@@ -35,9 +35,9 @@ export const ProfileMenu = () => {
     setMenuAnchor(null);
   };
 
-  const onOpenResetPassword = () => {
+  const onOpenForgotPassword = () => {
     onCloseMenu();
-    navigate(`/${ROUTES.RESET_PASSWORD}`);
+    navigate(`/${ROUTES.FORGOT_PASSWORD}`);
   };
 
   const onLogout = () => {
@@ -70,8 +70,8 @@ export const ProfileMenu = () => {
 
         <Divider />
 
-        <MenuItem onClick={onOpenResetPassword}>
-          {t("profile.actions.resetPassword")}
+        <MenuItem onClick={onOpenForgotPassword}>
+          {t("profile.actions.forgotPassword")}
         </MenuItem>
 
         <MenuItem sx={{ color: COLORS.system.error }} onClick={onLogout}>

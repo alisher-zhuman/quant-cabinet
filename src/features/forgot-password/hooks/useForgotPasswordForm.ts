@@ -15,7 +15,7 @@ import { ROUTES } from "@shared/constants";
 import { getApiErrorMessage } from "@shared/helpers";
 import { useToastMutation } from "@shared/hooks";
 
-export const useResetPasswordForm = () => {
+export const useForgotPasswordForm = () => {
   const navigate = useNavigate();
 
   const { t } = useTranslation();
@@ -34,10 +34,10 @@ export const useResetPasswordForm = () => {
 
   const mutation = useToastMutation({
     mutationFn: forgotPassword,
-    pendingMessage: t("resetPassword.toast.loading"),
-    successMessage: t("resetPassword.toast.success"),
+    pendingMessage: t("forgotPassword.toast.loading"),
+    successMessage: t("forgotPassword.toast.success"),
     errorMessage: (error) =>
-      getApiErrorMessage(error, t("resetPassword.toast.error")),
+      getApiErrorMessage(error, t("forgotPassword.toast.error")),
   });
 
   const onSubmit = handleSubmit((values) => {
