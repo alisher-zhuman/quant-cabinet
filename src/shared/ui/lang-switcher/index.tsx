@@ -6,26 +6,15 @@ import type { SxProps, Theme } from "@mui/material/styles";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@shared/constants";
+import { SUPPORTED_LANGUAGES } from "@shared/constants";
+import { getResolvedLanguage } from "@shared/helpers";
 import type { AppLanguage } from "@shared/types";
 
 interface Props {
   sx?: SxProps<Theme>;
 }
 
-const getResolvedLanguage = (language: string | undefined): AppLanguage => {
-  if (!language) {
-    return DEFAULT_LANGUAGE;
-  }
-
-  const normalizedLanguage = language.split("-")[0];
-
-  return SUPPORTED_LANGUAGES.includes(normalizedLanguage as AppLanguage)
-    ? (normalizedLanguage as AppLanguage)
-    : DEFAULT_LANGUAGE;
-};
-
-export const LanguageSwitcher = ({ sx }: Props) => {
+export const LangSwitcher = ({ sx }: Props) => {
   const { t, i18n } = useTranslation();
 
   const currentLanguage = getResolvedLanguage(i18n.resolvedLanguage);

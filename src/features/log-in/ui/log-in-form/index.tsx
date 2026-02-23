@@ -10,7 +10,7 @@ import { ROUTES } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
-import { LanguageSwitcher } from "@shared/ui/language-switcher";
+import { LangSwitcher } from "@shared/ui/lang-switcher";
 
 import { useLogInForm } from "../../hooks/useLogInForm";
 
@@ -39,7 +39,7 @@ export const LogInForm = () => {
         {t("logIn.actions.back")}
       </Button>
 
-      <LanguageSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
+      <LangSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
 
       <Paper
         elevation={0}
