@@ -6,11 +6,8 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
-import {
-  type AppLanguage,
-  DEFAULT_LANGUAGE,
-  SUPPORTED_LANGUAGES,
-} from "@shared/constants";
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@shared/constants";
+import type { AppLanguage } from "@shared/types";
 
 interface Props {
   sx?: SxProps<Theme>;
