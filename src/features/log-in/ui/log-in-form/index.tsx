@@ -27,7 +27,7 @@ export const LogInForm = () => {
       justifyContent="center"
       position="relative"
       px={2}
-      bgcolor="grey.100"
+      bgcolor="background.default"
     >
       <Button
         type="button"

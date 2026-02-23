@@ -52,7 +52,7 @@
     },
     "actions": {
       "resetPassword": "Сбросить пароль",
-      "logout": "Выйти"
+      "logOut": "Выйти"
     }
   },
   "validation": {

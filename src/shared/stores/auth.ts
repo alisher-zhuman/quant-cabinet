@@ -19,7 +19,7 @@ export const useAuthStore = create<AuthState>()(
         set({ role: session.role, accessToken: session.accessToken });
       },
 
-      logout: () => {
+      logOut: () => {
         set(INITIAL_AUTH_STATE);
       },
     }),

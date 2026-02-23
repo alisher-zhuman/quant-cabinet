@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-import { LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "@shared/constants";
+import { COLORS, LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "@shared/constants";
 import { getResolvedLanguage } from "@shared/helpers";
 
 interface Props {
@@ -47,15 +47,15 @@ export const LangSwitcher = ({ sx }: Props) => {
           py: 1,
           cursor: "pointer",
           borderRadius: 2,
-          borderColor: "#2563EB",
-          color: "#1D4ED8",
-          bgcolor: "#EFF6FF",
+          borderColor: COLORS.primary.main,
+          color: COLORS.primary.dark,
+          bgcolor: COLORS.primary.light,
           textTransform: "none",
           fontWeight: 700,
           lineHeight: 1,
           "&:hover": {
-            borderColor: "#1D4ED8",
-            bgcolor: "#DBEAFE",
+            borderColor: COLORS.primary.dark,
+            bgcolor: COLORS.neutral[100],
           },
         }}
       >

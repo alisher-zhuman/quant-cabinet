@@ -52,7 +52,7 @@
     },
     "actions": {
       "resetPassword": "Сырсөздү алмаштыруу",
-      "logout": "Чыгуу"
+      "logOut": "Чыгуу"
     }
   },
   "validation": {

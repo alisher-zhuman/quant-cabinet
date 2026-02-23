@@ -10,17 +10,17 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 
-import { ROUTES } from "@shared/constants";
+import { COLORS, ROUTES } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 
 export const ProfileMenu = () => {
   const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null);
 
   const role = useAuthStore((state) => state.role);
-  const logout = useAuthStore((state) => state.logout);
+  const logOut = useAuthStore((state) => state.logOut);
 
   const { t } = useTranslation();
-  
+
   const navigate = useNavigate();
 
   const isMenuOpen = Boolean(menuAnchor);
@@ -42,7 +42,7 @@ export const ProfileMenu = () => {
 
   const onLogout = () => {
     onCloseMenu();
-    logout();
+    logOut();
     navigate(`/${ROUTES.LOG_IN}`, { replace: true });
   };
 
@@ -53,9 +53,9 @@ export const ProfileMenu = () => {
         onClick={onOpenMenu}
         sx={{
           border: "1px solid",
-          borderColor: "#2563EB",
-          color: "#1D4ED8",
-          bgcolor: "#EFF6FF",
+          borderColor: COLORS.primary.main,
+          color: COLORS.primary.dark,
+          bgcolor: COLORS.primary.light,
         }}
       >
         <AccountCircleOutlinedIcon />
@@ -74,8 +74,8 @@ export const ProfileMenu = () => {
           {t("profile.actions.resetPassword")}
         </MenuItem>
 
-        <MenuItem sx={{ color: "error.main" }} onClick={onLogout}>
-          {t("profile.actions.logout")}
+        <MenuItem sx={{ color: COLORS.system.error }} onClick={onLogout}>
+          {t("profile.actions.logOut")}
         </MenuItem>
       </Menu>
     </>

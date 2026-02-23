@@ -9,5 +9,5 @@ export interface AuthState {
   role: UserRole | null;
   accessToken: string | null;
   setAuth: (session: AuthSession) => void;
-  logout: () => void;
+  logOut: () => void;
 }

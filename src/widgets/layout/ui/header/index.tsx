@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { ROUTES } from "@shared/constants";
+import { COLORS, ROUTES } from "@shared/constants";
 import { HeaderNavigation } from "@shared/ui/header-navigation";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
 import { ProfileMenu } from "@shared/ui/profile-menu";
@@ -19,7 +19,7 @@ export const Header = () => {
         to={`/${ROUTES.USERS}`}
         style={{
           textDecoration: "none",
-          color: "#0F172A",
+          color: COLORS.neutral[900],
           fontSize: 24,
           fontWeight: 800,
           lineHeight: 1,

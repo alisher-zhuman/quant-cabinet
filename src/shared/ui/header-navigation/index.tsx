@@ -2,7 +2,7 @@ import { NavLink } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import { HEADER_NAVIGATION_ITEMS } from "@shared/constants";
+import { COLORS, HEADER_NAVIGATION_ITEMS } from "@shared/constants";
 
 export const HeaderNavigation = () => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ export const HeaderNavigation = () => {
         display: "flex",
         alignItems: "center",
         gap: 8,
-        background: "#F1F5F9",
+        background: COLORS.neutral[100],
         padding: 4,
         borderRadius: 12,
       }}
@@ -24,10 +24,10 @@ export const HeaderNavigation = () => {
           to={to}
           style={({ isActive }) => ({
             padding: "8px 24px",
-            color: isActive ? "#2563EB" : "#334155",
+            color: isActive ? COLORS.primary.main : COLORS.neutral[600],
             textDecoration: "none",
             fontWeight: 600,
-            background: isActive ? "#FFFFFF" : "transparent",
+            background: isActive ? COLORS.neutral.white : "transparent",
             borderRadius: 8,
           })}
         >

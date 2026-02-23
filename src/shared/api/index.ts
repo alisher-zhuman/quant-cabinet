@@ -29,10 +29,10 @@ api.interceptors.response.use(
     if (status === 401 && !isLoggingOut) {
       isLoggingOut = true;
 
-      const { logout } = useAuthStore.getState();
+      const { logOut } = useAuthStore.getState();
 
       try {
-        logout();
+        logOut();
       } finally {
         isLoggingOut = false;
       }
