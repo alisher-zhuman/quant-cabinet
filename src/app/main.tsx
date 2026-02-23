@@ -7,6 +7,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 
+import "./configs/i18n";
+
 import { QUERY_CLIENT } from "./configs/query";
 import { ROUTER } from "./router";
 import { THEME } from "./theme";

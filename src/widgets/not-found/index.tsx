@@ -4,8 +4,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import { useTranslation } from "react-i18next";
+
 export const NotFoundWidget = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -22,11 +26,11 @@ export const NotFoundWidget = () => {
       </Typography>
 
       <Typography variant="h6" color="text.secondary">
-        Похоже, вы свернули не туда. Страница не найдена.
+        {t("notFound.description")}
       </Typography>
 
       <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
-        Вернуться назад
+        {t("notFound.backButton")}
       </Button>
     </Box>
   );

@@ -4,14 +4,19 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
+import { useTranslation } from "react-i18next";
+
 import { ROUTES } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
+import { LanguageSwitcher } from "@shared/ui/language-switcher";
 
 import { useLogInForm } from "../../hooks/useLogInForm";
 
 export const LogInForm = () => {
+  const { t } = useTranslation();
+
   const { control, isValid, isPending, onBack, onSubmit } = useLogInForm();
 
   return (
@@ -31,8 +36,10 @@ export const LogInForm = () => {
         startIcon={<ArrowBackRoundedIcon />}
         sx={{ position: "absolute", top: 16, left: 16 }}
       >
-        Назад
+        {t("logIn.actions.back")}
       </Button>
+
+      <LanguageSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
 
       <Paper
         elevation={0}
@@ -52,12 +59,12 @@ export const LogInForm = () => {
           sx={{ display: "flex", flexDirection: "column", gap: 3 }}
         >
           <Typography variant="h5" component="h1" fontWeight={700}>
-            Вход в кабинет
+            {t("logIn.title")}
           </Typography>
 
           <FormFieldset disabled={isPending}>
             <FormTextField
-              label="Email"
+              label={t("logIn.fields.email")}
               type="email"
               autoComplete="email"
               fullWidth
@@ -67,7 +74,7 @@ export const LogInForm = () => {
             />
 
             <FormTextField
-              label="Пароль"
+              label={t("logIn.fields.password")}
               type="password"
               autoComplete="current-password"
               fullWidth
@@ -79,8 +86,8 @@ export const LogInForm = () => {
 
           <FormActions
             isSubmitting={isPending}
-            submitLabel="Войти"
-            submitLabelLoading="Вход..."
+            submitLabel={t("logIn.actions.submit")}
+            submitLabelLoading={t("logIn.actions.submitLoading")}
             align="center"
             fullWidth
             submitProps={{ size: "large", disabled: !isValid }}
@@ -91,7 +98,7 @@ export const LogInForm = () => {
             href={`/${ROUTES.RESET_PASSWORD}`}
             sx={{ mt: 1, width: "fit-content", margin: "auto" }}
           >
-            Забыли пароль?
+            {t("logIn.actions.forgotPassword")}
           </Button>
         </Box>
       </Paper>

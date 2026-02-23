@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
+import { useTranslation } from "react-i18next";
+
 import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
 
 import { ROUTES } from "@shared/constants";
@@ -12,6 +14,8 @@ import { useAuthStore } from "@shared/stores";
 
 export const useLogInForm = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -30,14 +34,13 @@ export const useLogInForm = () => {
 
   const mutation = useToastMutation({
     mutationFn: logIn,
-    pendingMessage: "Вход...",
+    pendingMessage: t("logIn.toast.loading"),
     onSuccess: (session) => {
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
     },
-    successMessage: "Успешный вход",
-    errorMessage: (error) =>
-      getApiErrorMessage(error, "Не удалось войти. Попробуйте снова."),
+    successMessage: t("logIn.toast.success"),
+    errorMessage: (error) => getApiErrorMessage(error, t("logIn.toast.error")),
   });
 
   const onSubmit = handleSubmit((values) => {

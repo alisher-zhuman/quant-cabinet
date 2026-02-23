@@ -1,3 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export const Users = () => {
-  return <div>Users</div>;
+  const { t } = useTranslation();
+
+  return <div>{t("users.title")}</div>;
 };
