@@ -30,5 +30,13 @@
   },
   "users": {
     "title": "Колдонуучулар"
+  },
+  "resetPassword": {
+    "title": "Сырсөздү калыбына келтирүү"
+  },
+  "validation": {
+    "requiredEmail": "Email милдеттүү",
+    "invalidEmail": "Туура email киргизиңиз",
+    "requiredPassword": "Сырсөз милдеттүү"
   }
 }

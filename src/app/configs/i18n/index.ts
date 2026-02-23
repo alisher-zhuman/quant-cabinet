@@ -7,11 +7,17 @@ import {
   I18N_STORAGE_KEY,
   SUPPORTED_LANGUAGES,
 } from "@shared/constants";
+import kgCommonTranslations from "@shared/locales/kg/common.json";
+import ruCommonTranslations from "@shared/locales/ru/common.json";
 
 const resources = {
-  kg: {},
-  ru: {},
-};
+  kg: {
+    common: kgCommonTranslations,
+  },
+  ru: {
+    common: ruCommonTranslations,
+  },
+} as const;
 
 void i18n
   .use(LanguageDetector)

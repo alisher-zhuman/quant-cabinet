@@ -30,5 +30,13 @@
   },
   "users": {
     "title": "Пользователи"
+  },
+  "resetPassword": {
+    "title": "Восстановление пароля"
+  },
+  "validation": {
+    "requiredEmail": "Email обязателен",
+    "invalidEmail": "Введите корректный email",
+    "requiredPassword": "Пароль обязателен"
   }
 }

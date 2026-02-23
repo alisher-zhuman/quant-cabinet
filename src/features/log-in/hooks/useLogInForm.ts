@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
-import { logIn, LogInFormSchema, type LogInFormValues } from "@entities/auth";
+import {
+  createLogInFormSchema,
+  logIn,
+  type LogInFormValues,
+} from "@entities/auth";
 
 import { ROUTES } from "@shared/constants";
 import { getApiErrorMessage } from "@shared/helpers";
@@ -24,7 +28,7 @@ export const useLogInForm = () => {
     handleSubmit,
     formState: { isValid },
   } = useForm<LogInFormValues>({
-    resolver: zodResolver(LogInFormSchema),
+    resolver: zodResolver(createLogInFormSchema()),
     mode: "onChange",
     defaultValues: {
       email: "",
