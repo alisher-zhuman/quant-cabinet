@@ -38,12 +38,4 @@ void i18n
     returnNull: false,
   });
 
-if (typeof document !== "undefined") {
-  document.documentElement.lang = i18n.resolvedLanguage ?? DEFAULT_LANGUAGE;
-
-  i18n.on("languageChanged", (language) => {
-    document.documentElement.lang = language;
-  });
-}
-
 export { i18n };
