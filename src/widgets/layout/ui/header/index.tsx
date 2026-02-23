@@ -1,12 +1,53 @@
-import { Link, NavLink } from "react-router";
+import { type MouseEvent, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+
 import { HEADER_NAVIGATION_ITEMS, ROUTES } from "@shared/constants";
+import { useAuthStore } from "@shared/stores";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
 
 export const Header = () => {
+  const [profileMenuAnchor, setProfileMenuAnchor] =
+    useState<HTMLElement | null>(null);
+
+  const role = useAuthStore((state) => state.role);
+  const logout = useAuthStore((state) => state.logout);
+
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const isProfileMenuOpen = Boolean(profileMenuAnchor);
+
+  const roleLabel =
+    role === "admin" ? t("profile.roles.admin") : t("profile.roles.user");
+
+  const onOpenProfileMenu = (event: MouseEvent<HTMLElement>) => {
+    setProfileMenuAnchor(event.currentTarget);
+  };
+
+  const onCloseProfileMenu = () => {
+    setProfileMenuAnchor(null);
+  };
+
+  const onOpenResetPassword = () => {
+    onCloseProfileMenu();
+    navigate(`/${ROUTES.RESET_PASSWORD}`);
+  };
+
+  const onLogout = () => {
+    onCloseProfileMenu();
+    logout();
+    navigate(`/${ROUTES.LOG_IN}`, { replace: true });
+  };
 
   return (
     <header
@@ -51,7 +92,7 @@ export const Header = () => {
               textDecoration: "none",
               fontWeight: 600,
               background: isActive ? "#FFFFFF" : "transparent",
-              borderRadius: 8 ,
+              borderRadius: 8,
             })}
           >
             {t(label)}
@@ -59,7 +100,45 @@ export const Header = () => {
         ))}
       </nav>
 
-      <LangSwitcher />
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <LangSwitcher />
+
+        <IconButton
+          aria-label={t("profile.label")}
+          onClick={onOpenProfileMenu}
+          sx={{
+            cursor: "pointer",
+            border: "1px solid",
+            borderColor: "#2563EB",
+            color: "#1D4ED8",
+            bgcolor: "#EFF6FF",
+          }}
+        >
+          <AccountCircleOutlinedIcon />
+        </IconButton>
+      </div>
+
+      <Menu
+        anchorEl={profileMenuAnchor}
+        open={isProfileMenuOpen}
+        onClose={onCloseProfileMenu}
+      >
+        <MenuItem disabled>
+          <Typography variant="body2">
+            {t("profile.roleLabel")}: {roleLabel}
+          </Typography>
+        </MenuItem>
+
+        <Divider />
+
+        <MenuItem onClick={onOpenResetPassword}>
+          {t("profile.actions.resetPassword")}
+        </MenuItem>
+
+        <MenuItem sx={{ color: "error.main" }} onClick={onLogout}>
+          {t("profile.actions.logout")}
+        </MenuItem>
+      </Menu>
     </header>
   );
 };

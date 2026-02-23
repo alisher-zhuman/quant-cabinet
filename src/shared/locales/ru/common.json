@@ -43,6 +43,18 @@
   "resetPassword": {
     "title": "Восстановление пароля"
   },
+  "profile": {
+    "label": "Профиль",
+    "roleLabel": "Роль",
+    "roles": {
+      "admin": "Админ",
+      "user": "Пользователь"
+    },
+    "actions": {
+      "resetPassword": "Сбросить пароль",
+      "logout": "Выйти"
+    }
+  },
   "validation": {
     "requiredEmail": "Email обязателен",
     "invalidEmail": "Введите корректный email",

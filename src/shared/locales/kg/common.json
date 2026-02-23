@@ -43,6 +43,18 @@
   "resetPassword": {
     "title": "Сырсөздү калыбына келтирүү"
   },
+  "profile": {
+    "label": "Профиль",
+    "roleLabel": "Роль",
+    "roles": {
+      "admin": "Админ",
+      "user": "Колдонуучу"
+    },
+    "actions": {
+      "resetPassword": "Сырсөздү алмаштыруу",
+      "logout": "Чыгуу"
+    }
+  },
   "validation": {
     "requiredEmail": "Email милдеттүү",
     "invalidEmail": "Туура email киргизиңиз",
