@@ -1,10 +1,10 @@
+import type { MouseEvent } from "react";
+import { useTranslation } from "react-i18next";
+
 import Box from "@mui/material/Box";
 import type { SxProps, Theme } from "@mui/material/styles";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-
-import type { MouseEvent } from "react";
-import { useTranslation } from "react-i18next";
 
 import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@shared/constants";
 import type { AppLanguage } from "@shared/types";

@@ -1,10 +1,10 @@
+import { useTranslation } from "react-i18next";
+
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-
-import { useTranslation } from "react-i18next";
 
 import { ROUTES } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";

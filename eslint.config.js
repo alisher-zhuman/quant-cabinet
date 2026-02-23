@@ -54,10 +54,10 @@ export default defineConfig([
               "^react-router(?:-dom)?(?:/.*|$)",
             ],
             ["^@hookform/resolvers(?:/.*|$)", "^react-hook-form$", "^zod$"],
-            ["^@mui(?:/.*|$)"],
             [
               "^(?!react(?:/.*|$)|react-dom(?:/.*|$)|react-router(?:-dom)?(?:/.*|$)|@hookform/resolvers(?:/.*|$)|react-hook-form$|zod$|@mui(?:/.*|$)|@(?:app|pages|widgets|features|entities|shared)(?:/|$))@?\\w",
             ],
+            ["^@mui(?:/.*|$)"],
             ["^@app(?:/.*|$)"],
             ["^@pages(?:/.*|$)"],
             ["^@widgets(?:/.*|$)"],
