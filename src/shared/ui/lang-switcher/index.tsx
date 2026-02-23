@@ -1,14 +1,11 @@
-import type { MouseEvent } from "react";
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import type { SxProps, Theme } from "@mui/material/styles";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
-import { SUPPORTED_LANGUAGES } from "@shared/constants";
+import { LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "@shared/constants";
 import { getResolvedLanguage } from "@shared/helpers";
-import type { AppLanguage } from "@shared/types";
 
 interface Props {
   sx?: SxProps<Theme>;
@@ -18,12 +15,16 @@ export const LangSwitcher = ({ sx }: Props) => {
   const { t, i18n } = useTranslation();
 
   const currentLanguage = getResolvedLanguage(i18n.resolvedLanguage);
+  const currentLanguageIndex = SUPPORTED_LANGUAGES.indexOf(currentLanguage);
+  const nextLanguage =
+    SUPPORTED_LANGUAGES[
+      (currentLanguageIndex + 1) % SUPPORTED_LANGUAGES.length
+    ] ?? SUPPORTED_LANGUAGES[0];
+
+  const currentLanguageBadge = LANGUAGE_BADGE[currentLanguage];
   const containerProps = sx ? { sx } : {};
 
-  const onChangeLanguage = (
-    _event: MouseEvent<HTMLElement>,
-    nextLanguage: AppLanguage | null,
-  ) => {
+  const onToggleLanguage = () => {
     if (!nextLanguage || nextLanguage === currentLanguage) {
       return;
     }
@@ -33,19 +34,39 @@ export const LangSwitcher = ({ sx }: Props) => {
 
   return (
     <Box {...containerProps}>
-      <ToggleButtonGroup
-        exclusive
-        size="small"
-        value={currentLanguage}
-        onChange={onChangeLanguage}
+      <Button
+        type="button"
+        variant="outlined"
+        onClick={onToggleLanguage}
         aria-label={t("common.language.label")}
+        sx={{
+          minWidth: "auto",
+          display: "flex",
+          gap: 0.5,
+          px: 1.5,
+          py: 1,
+          cursor: "pointer",
+          borderRadius: 2,
+          borderColor: "#2563EB",
+          color: "#1D4ED8",
+          bgcolor: "#EFF6FF",
+          textTransform: "none",
+          fontWeight: 700,
+          lineHeight: 1,
+          "&:hover": {
+            borderColor: "#1D4ED8",
+            bgcolor: "#DBEAFE",
+          },
+        }}
       >
-        {SUPPORTED_LANGUAGES.map((language) => (
-          <ToggleButton key={language} value={language}>
-            {t(`common.language.${language}`)}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
+        <Box component="span" sx={{ fontSize: 22, lineHeight: 1 }}>
+          {currentLanguageBadge.flag}
+        </Box>
+
+        <Box component="span" sx={{ fontSize: 14, lineHeight: 1 }}>
+          {currentLanguageBadge.code}
+        </Box>
+      </Button>
     </Box>
   );
 };

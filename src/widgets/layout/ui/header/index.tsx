@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +17,7 @@ export const Header = () => {
         padding: 16,
       }}
     >
-      <NavLink
+      <Link
         to={`/${ROUTES.USERS}`}
         style={{
           textDecoration: "none",
@@ -29,7 +29,7 @@ export const Header = () => {
         }}
       >
         Quant Cabinet
-      </NavLink>
+      </Link>
 
       <nav
         style={{
@@ -46,12 +46,12 @@ export const Header = () => {
             key={to}
             to={to}
             style={({ isActive }) => ({
-              padding: "12px 24px",
+              padding: "8px 24px",
               color: isActive ? "#2563EB" : "#334155",
               textDecoration: "none",
               fontWeight: 600,
               background: isActive ? "#FFFFFF" : "transparent",
-              borderRadius: isActive ? 8 : 0,
+              borderRadius: 8 ,
             })}
           >
             {t(label)}
