@@ -30,6 +30,7 @@ export const useLogInForm = () => {
 
   const mutation = useToastMutation({
     mutationFn: logIn,
+    pendingMessage: "Вход...",
     onSuccess: (session) => {
       setAuth(session);
       navigate(`/${ROUTES.USERS}`, { replace: true });
