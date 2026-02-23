@@ -7,19 +7,17 @@ import {
   I18N_STORAGE_KEY,
   SUPPORTED_LANGUAGES,
 } from "@shared/constants";
-import { KG_COMMON_TRANSLATIONS } from "@shared/locales/kg/common";
-import { RU_COMMON_TRANSLATIONS } from "@shared/locales/ru/common";
 
-const RESOURCES = {
-  ru: { common: RU_COMMON_TRANSLATIONS },
-  kg: { common: KG_COMMON_TRANSLATIONS },
-} as const;
+const resources = {
+  kg: {},
+  ru: {},
+};
 
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    resources: RESOURCES,
+    resources,
     supportedLngs: [...SUPPORTED_LANGUAGES],
     fallbackLng: DEFAULT_LANGUAGE,
     defaultNS: "common",

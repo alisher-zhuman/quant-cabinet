@@ -1,0 +1,34 @@
+{
+  "common": {
+    "language": {
+      "label": "Тил",
+      "ru": "RU",
+      "kg": "KG"
+    }
+  },
+  "logIn": {
+    "title": "Кабинетке кирүү",
+    "fields": {
+      "email": "Email",
+      "password": "Сырсөз"
+    },
+    "actions": {
+      "back": "Артка",
+      "submit": "Кирүү",
+      "submitLoading": "Кирүү...",
+      "forgotPassword": "Сырсөздү унуттуңузбу?"
+    },
+    "toast": {
+      "loading": "Кирүү...",
+      "success": "Ийгиликтүү кирдиңиз",
+      "error": "Кирүү мүмкүн болгон жок. Кайра аракет кылыңыз."
+    }
+  },
+  "notFound": {
+    "description": "Сиз туура эмес баракка өттүңүз. Барак табылган жок.",
+    "backButton": "Артка кайтуу"
+  },
+  "users": {
+    "title": "Колдонуучулар"
+  }
+}
