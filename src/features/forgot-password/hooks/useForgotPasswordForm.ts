@@ -11,7 +11,6 @@ import {
   type ForgotPasswordFormValues,
 } from "@entities/auth";
 
-import { ROUTES } from "@shared/constants";
 import { getApiErrorMessage } from "@shared/helpers";
 import { useToastMutation } from "@shared/hooks";
 
@@ -45,7 +44,7 @@ export const useForgotPasswordForm = () => {
   });
 
   const onBack = () => {
-    navigate(`/${ROUTES.LOG_IN}`);
+    navigate(-1);
   };
 
   return {
