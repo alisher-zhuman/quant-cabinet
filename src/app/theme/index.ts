@@ -35,4 +35,13 @@ export const THEME = createTheme({
   typography: {
     fontFamily: '"Manrope", sans-serif',
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundColor: COLORS.neutral.white,
+        },
+      },
+    },
+  },
 });
