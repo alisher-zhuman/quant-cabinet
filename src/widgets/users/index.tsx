@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-import { useUsersQuery } from "@features/users";
+import { useUsersQuery } from "@entities/users";
 
 export const UsersWidget = () => {
   const { t } = useTranslation();
