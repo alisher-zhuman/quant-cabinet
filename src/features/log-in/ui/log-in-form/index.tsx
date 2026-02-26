@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import { useTranslation } from "react-i18next";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
@@ -95,7 +97,8 @@ export const LogInForm = () => {
 
           <Button
             variant="text"
-            href={`/${ROUTES.FORGOT_PASSWORD}`}
+            component={Link}
+            to={`/${ROUTES.FORGOT_PASSWORD}`}
             sx={{ mt: 1, width: "fit-content", margin: "auto" }}
           >
             {t("logIn.actions.forgotPassword")}
