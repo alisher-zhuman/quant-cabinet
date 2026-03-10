@@ -25,6 +25,7 @@ import { TableSection } from "@shared/ui/table-section";
 
 export const CompaniesWidget = () => {
   const { t } = useTranslation();
+
   const initialSearchState = useInitialSearchState(parseCompaniesSearchState);
 
   const { isArchived, setIsArchived } = useCompanyFilters({
