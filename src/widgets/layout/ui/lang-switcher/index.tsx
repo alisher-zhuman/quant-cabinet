@@ -48,15 +48,9 @@ export const LangSwitcher = ({ sx }: Props) => {
           cursor: "pointer",
           borderRadius: 2,
           borderColor: COLORS.primary.main,
-          color: COLORS.primary.dark,
-          bgcolor: COLORS.primary.light,
           textTransform: "none",
           fontWeight: 700,
           lineHeight: 1,
-          "&:hover": {
-            borderColor: COLORS.primary.dark,
-            bgcolor: COLORS.neutral[100],
-          },
         }}
       >
         <Box component="span" sx={{ fontSize: 22, lineHeight: 1 }}>

@@ -55,7 +55,6 @@ export const ProfileMenu = () => {
           border: "1px solid",
           borderColor: COLORS.primary.main,
           color: COLORS.primary.dark,
-          bgcolor: COLORS.primary.light,
         }}
       >
         <AccountCircleOutlinedIcon />

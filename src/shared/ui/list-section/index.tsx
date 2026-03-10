@@ -25,27 +25,23 @@ export const ListSection = ({
   toolbar,
   pagination,
   children,
-}: Props) => {
-  if (isLoading) {
-    return <Loader />;
-  }
+}: Props) => (
+  <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    {toolbar}
 
-  if (isError) {
-    return <Alert severity="error">{errorText}</Alert>;
-  }
+    {isLoading ? <Loader /> : null}
 
-  return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-      {toolbar}
+    {!isLoading && isError ? <Alert severity="error">{errorText}</Alert> : null}
 
-      {!hasItems && emptyText ? <Alert severity="info">{emptyText}</Alert> : null}
+    {!isLoading && !isError && !hasItems && emptyText ? (
+      <Alert severity="info">{emptyText}</Alert>
+    ) : null}
 
-      {hasItems ? (
-        <>
-          {children}
-          {pagination}
-        </>
-      ) : null}
-    </Box>
-  );
-};
+    {!isLoading && !isError && hasItems ? (
+      <>
+        {children}
+        {pagination}
+      </>
+    ) : null}
+  </Box>
+);

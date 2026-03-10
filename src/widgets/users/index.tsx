@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -9,22 +9,33 @@ import { createUserColumns } from "@features/users";
 
 import { useUsersQuery } from "@entities/users";
 
-import { usePagination } from "@shared/hooks";
+import { useDebounce, usePagination } from "@shared/hooks";
+import { SearchInput } from "@shared/ui/search-input";
 import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
+  const [search, setSearch] = useState("");
+
   const { t } = useTranslation();
+
+  const debouncedSearch = useDebounce(search);
 
   const { page, limit, setPage, setLimit } = usePagination();
 
-  const { users, total, hasUsers, emptyText, isLoading, isError } =
+  const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
     useUsersQuery({
       page,
       limit,
+      search: debouncedSearch,
       isArchived: false,
     });
 
   const columns = useMemo(() => createUserColumns(t), [t]);
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(0);
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
@@ -41,6 +52,16 @@ export const UsersWidget = () => {
         rows={users}
         columns={columns}
         getRowId={(user) => user.email}
+        toolbar={
+          <SearchInput
+            value={search}
+            onChange={handleSearchChange}
+            isLoading={isFetching}
+            placeholder={t("users.search.placeholder")}
+            fullWidth
+            sx={{ maxWidth: 360 }}
+          />
+        }
         pagination={{
           page,
           limit,
