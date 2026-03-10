@@ -41,7 +41,7 @@ export const useLogInForm = () => {
     pendingMessage: t("logIn.toast.loading"),
     onSuccess: (session) => {
       setAuth(session);
-      navigate(`/${ROUTES.USERS}`, { replace: true });
+      navigate(`/${ROUTES.COMPANIES}`, { replace: true });
     },
     successMessage: t("logIn.toast.success"),
     errorMessage: (error) => getApiErrorMessage(error, t("logIn.toast.error")),

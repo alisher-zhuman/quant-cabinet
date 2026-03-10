@@ -65,21 +65,21 @@ export const ROUTER = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to={ROUTES.USERS} replace />,
-      },
-      {
-        path: ROUTES.USERS,
-        element: (
-          <WithSuspense>
-            <Users />
-          </WithSuspense>
-        ),
+        element: <Navigate to={ROUTES.COMPANIES} replace />,
       },
       {
         path: ROUTES.COMPANIES,
         element: (
           <WithSuspense>
             <Companies />
+          </WithSuspense>
+        ),
+      },
+      {
+        path: ROUTES.USERS,
+        element: (
+          <WithSuspense>
+            <Users />
           </WithSuspense>
         ),
       },
