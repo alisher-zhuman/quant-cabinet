@@ -6,10 +6,11 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
+import { LangSwitcher } from "@widgets/layout/ui/lang-switcher";
+
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
-import { LangSwitcher } from "@widgets/layout/ui/lang-switcher";
 
 import { useForgotPasswordForm } from "../../hooks/useForgotPasswordForm";
 
