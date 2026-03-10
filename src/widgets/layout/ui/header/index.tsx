@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 
 import { COLORS, ROUTES } from "@shared/constants";
+import { LangSwitcher } from "@shared/ui/lang-switcher";
 
-import { LangSwitcher } from "../lang-switcher";
 import { Navbar } from "../navbar";
 import { ProfileMenu } from "../profile-menu";
 
