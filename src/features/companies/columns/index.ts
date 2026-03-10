@@ -19,12 +19,7 @@ export const createCompanyColumns = (t: TFunction): Column<CompanyRow>[] => [
   {
     id: "user",
     header: t("companies.table.columns.user"),
-    cell: (company) => {
-      const fullName =
-        `${company.user?.firstName ?? ""} ${company.user?.lastName ?? ""}`.trim();
-
-      return fullName || company.user?.email || "-";
-    },
+    cell: (company) => company.user?.email || "-",
   },
   {
     id: "createdAt",
