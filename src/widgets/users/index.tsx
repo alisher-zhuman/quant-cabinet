@@ -27,7 +27,7 @@ export const UsersWidget = () => {
   const columns = useMemo(() => createUserColumns(t), [t]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
       <Typography component="h1" variant="h4">
         {t("users.title")}
       </Typography>
