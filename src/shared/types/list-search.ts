@@ -1,4 +1,4 @@
-export interface UsersSearchState {
+export interface ListSearchState {
   page: number;
   limit: number;
   search: string;

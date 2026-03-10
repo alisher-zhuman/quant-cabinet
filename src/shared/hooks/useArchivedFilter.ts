@@ -4,7 +4,7 @@ interface Params {
   initialIsArchived?: boolean;
 }
 
-export const useCompanyFilters = ({
+export const useArchivedFilter = ({
   initialIsArchived = false,
 }: Params = {}) => {
   const [isArchived, setIsArchived] = useState(initialIsArchived);

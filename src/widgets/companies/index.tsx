@@ -5,34 +5,31 @@ import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import {
-  CompaniesToolbar,
-  createCompaniesSearchString,
-  createCompanyColumns,
-  parseCompaniesSearchState,
-  useCompanyFilters,
-  useCompanySearch,
-} from "@features/companies";
+import { createCompanyColumns } from "@features/companies";
 
 import { useCompaniesQuery } from "@entities/companies";
 
+import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
+  useArchivedFilter,
   useInitialSearchState,
   usePagination,
+  useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const CompaniesWidget = () => {
   const { t } = useTranslation();
 
-  const initialSearchState = useInitialSearchState(parseCompaniesSearchState);
+  const initialSearchState = useInitialSearchState(parseListSearchState);
 
-  const { isArchived, setIsArchived } = useCompanyFilters({
+  const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: initialSearchState.isArchived,
   });
 
-  const { search, debouncedSearch, setSearch } = useCompanySearch({
+  const { search, debouncedSearch, setSearch } = useSearchState({
     initialSearch: initialSearchState.search,
   });
 
@@ -44,7 +41,7 @@ export const CompaniesWidget = () => {
 
   useSyncSearchParams(
     { page, limit, search, isArchived },
-    createCompaniesSearchString,
+    createListSearchString,
   );
 
   const {
@@ -90,8 +87,11 @@ export const CompaniesWidget = () => {
         columns={columns}
         getRowId={(company) => company.id}
         toolbar={
-          <CompaniesToolbar
+          <SearchTabsToolbar
             search={search}
+            searchPlaceholder={t("companies.search.placeholder")}
+            activeLabel={t("companies.tabs.active")}
+            archivedLabel={t("companies.tabs.archived")}
             isSearchLoading={isFetching}
             isArchived={isArchived}
             onSearchChange={handleSearchChange}

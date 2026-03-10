@@ -5,34 +5,31 @@ import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import {
-  createUserColumns,
-  createUsersSearchString,
-  parseUsersSearchState,
-  UsersToolbar,
-  useUserFilters,
-  useUserSearch,
-} from "@features/users";
+import { createUserColumns } from "@features/users";
 
 import { useUsersQuery } from "@entities/users";
 
+import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
+  useArchivedFilter,
   useInitialSearchState,
   usePagination,
+  useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
   const { t } = useTranslation();
 
-  const initialSearchState = useInitialSearchState(parseUsersSearchState);
+  const initialSearchState = useInitialSearchState(parseListSearchState);
 
-  const { isArchived, setIsArchived } = useUserFilters({
+  const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: initialSearchState.isArchived,
   });
 
-  const { search, debouncedSearch, setSearch } = useUserSearch({
+  const { search, debouncedSearch, setSearch } = useSearchState({
     initialSearch: initialSearchState.search,
   });
 
@@ -44,7 +41,7 @@ export const UsersWidget = () => {
 
   useSyncSearchParams(
     { page, limit, search, isArchived },
-    createUsersSearchString,
+    createListSearchString,
   );
 
   const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
@@ -83,8 +80,11 @@ export const UsersWidget = () => {
         columns={columns}
         getRowId={(user) => user.email}
         toolbar={
-          <UsersToolbar
+          <SearchTabsToolbar
             search={search}
+            searchPlaceholder={t("users.search.placeholder")}
+            activeLabel={t("users.tabs.active")}
+            archivedLabel={t("users.tabs.archived")}
             isSearchLoading={isFetching}
             isArchived={isArchived}
             onSearchChange={handleSearchChange}

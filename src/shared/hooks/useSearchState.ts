@@ -6,7 +6,7 @@ interface Params {
   initialSearch?: string;
 }
 
-export const useCompanySearch = ({ initialSearch = "" }: Params = {}) => {
+export const useSearchState = ({ initialSearch = "" }: Params = {}) => {
   const [search, setSearch] = useState(initialSearch);
   
   const debouncedSearch = useDebounce(search);

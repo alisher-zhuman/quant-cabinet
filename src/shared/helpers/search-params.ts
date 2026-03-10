@@ -1,11 +1,11 @@
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from "@shared/constants";
-import { parseBooleanFlag, parsePositiveInt } from "@shared/helpers";
+import type { ListSearchState } from "@shared/types";
 
-import type { UsersSearchState } from "../types";
+import { parseBooleanFlag, parsePositiveInt } from "./base";
 
-export const parseUsersSearchState = (
+export const parseListSearchState = (
   params: URLSearchParams,
-): UsersSearchState => {
+): ListSearchState => {
   const page = parsePositiveInt(params.get("page"));
   const limit = parsePositiveInt(params.get("limit"));
   const search = params.get("search")?.trim() ?? "";
@@ -19,12 +19,12 @@ export const parseUsersSearchState = (
   };
 };
 
-export const createUsersSearchString = ({
+export const createListSearchString = ({
   page,
   limit,
   search,
   isArchived,
-}: UsersSearchState) => {
+}: ListSearchState) => {
   const params = new URLSearchParams();
   const normalizedSearch = search.trim();
 
