@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { COLORS, HEADER_NAVIGATION_ITEMS } from "@shared/constants";
 
-export const HeaderNavigation = () => {
+export const Navbar = () => {
   const { t } = useTranslation();
 
   return (

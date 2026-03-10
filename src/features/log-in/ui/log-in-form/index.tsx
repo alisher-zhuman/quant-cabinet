@@ -12,7 +12,7 @@ import { ROUTES } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
-import { LangSwitcher } from "@shared/ui/lang-switcher";
+import { LangSwitcher } from "@widgets/layout/ui/lang-switcher";
 
 import { useLogInForm } from "../../hooks/useLogInForm";
 

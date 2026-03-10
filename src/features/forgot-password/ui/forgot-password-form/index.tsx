@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
-import { LangSwitcher } from "@shared/ui/lang-switcher";
+import { LangSwitcher } from "@widgets/layout/ui/lang-switcher";
 
 import { useForgotPasswordForm } from "../../hooks/useForgotPasswordForm";
 
