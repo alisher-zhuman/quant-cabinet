@@ -12,6 +12,7 @@ export const HeaderNavigation = () => {
       style={{
         display: "flex",
         alignItems: "center",
+        flexWrap: "wrap",
         gap: 8,
         background: COLORS.neutral[100],
         padding: 4,

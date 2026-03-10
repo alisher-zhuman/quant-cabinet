@@ -12,6 +12,8 @@ export const Header = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        flexWrap: "wrap",
+        gap: 8,
         padding: 16,
       }}
     >
@@ -31,7 +33,14 @@ export const Header = () => {
 
       <HeaderNavigation />
 
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 8,
+        }}
+      >
         <LangSwitcher />
 
         <ProfileMenu />
