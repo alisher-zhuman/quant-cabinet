@@ -4,4 +4,5 @@ export const API_PATHS = {
   USERS: "/users",
   COMPANIES: "/companies",
   CONTROLLERS: "/controllers",
+  METERS: "/meters",
 };

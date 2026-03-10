@@ -1,7 +1,3 @@
-import { useTranslation } from "react-i18next";
+import { MetersWidget } from "@widgets/meters";
 
-export const Meters = () => {
-  const { t } = useTranslation();
-
-  return <div>{t("meters.title")}</div>;
-};
+export const Meters = () => <MetersWidget />;
