@@ -20,6 +20,12 @@ export const SearchInput = ({
     {...props}
     size={size}
     value={value}
+    sx={{
+      "& .MuiOutlinedInput-root": {
+        borderRadius: 3,
+      },
+      ...props.sx,
+    }}
     onChange={(event) => {
       onChange(event.target.value);
     }}

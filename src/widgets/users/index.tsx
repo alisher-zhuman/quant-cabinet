@@ -1,39 +1,69 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { createUserColumns } from "@features/users";
+import {
+  createUserColumns,
+  createUsersSearchString,
+  parseUsersSearchState,
+  UsersToolbar,
+  useUserFilters,
+  useUserSearch,
+} from "@features/users";
 
 import { useUsersQuery } from "@entities/users";
 
-import { useDebounce, usePagination } from "@shared/hooks";
-import { SearchInput } from "@shared/ui/search-input";
+import {
+  useInitialSearchState,
+  usePagination,
+  useSyncSearchParams,
+} from "@shared/hooks";
 import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
-  const [search, setSearch] = useState("");
-
   const { t } = useTranslation();
 
-  const debouncedSearch = useDebounce(search);
+  const initialSearchState = useInitialSearchState(parseUsersSearchState);
 
-  const { page, limit, setPage, setLimit } = usePagination();
+  const { isArchived, setIsArchived } = useUserFilters({
+    initialIsArchived: initialSearchState.isArchived,
+  });
+
+  const { search, debouncedSearch, setSearch } = useUserSearch({
+    initialSearch: initialSearchState.search,
+  });
+
+  const { page, limit, setPage, setLimit } = usePagination({
+    initialPage: initialSearchState.page,
+    initialLimit: initialSearchState.limit,
+    resetPage: 0,
+  });
+
+  useSyncSearchParams(
+    { page, limit, search, isArchived },
+    createUsersSearchString,
+  );
 
   const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
     useUsersQuery({
       page,
       limit,
       search: debouncedSearch,
-      isArchived: false,
+      isArchived,
     });
 
   const columns = useMemo(() => createUserColumns(t), [t]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
+    setPage(0);
+  };
+
+  const handleArchivedChange = (value: boolean) => {
+    setIsArchived(value);
     setPage(0);
   };
 
@@ -53,13 +83,12 @@ export const UsersWidget = () => {
         columns={columns}
         getRowId={(user) => user.email}
         toolbar={
-          <SearchInput
-            value={search}
-            onChange={handleSearchChange}
-            isLoading={isFetching}
-            placeholder={t("users.search.placeholder")}
-            fullWidth
-            sx={{ maxWidth: 360 }}
+          <UsersToolbar
+            search={search}
+            isSearchLoading={isFetching}
+            isArchived={isArchived}
+            onSearchChange={handleSearchChange}
+            onArchivedChange={handleArchivedChange}
           />
         }
         pagination={{

@@ -45,3 +45,21 @@ export const formatDate = (value: string): string => {
 
   return `${day}/${month}/${year}`;
 };
+
+export const parsePositiveInt = (value: string | null): number | null => {
+  if (!value) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+
+  if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
+    return null;
+  }
+
+  return parsedValue;
+};
+
+export const parseBooleanFlag = (value: string | null): boolean => {
+  return value === "1" || value === "true";
+};
