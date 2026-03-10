@@ -3,4 +3,5 @@ export const API_PATHS = {
   FORGOT_PASSWORD: "/users/password/forgot",
   USERS: "/users",
   COMPANIES: "/companies",
+  CONTROLLERS: "/controllers",
 };

@@ -1,7 +1,3 @@
-import { useTranslation } from "react-i18next";
+import { ControllersWidget } from "@widgets/controllers";
 
-export const Controllers = () => {
-  const { t } = useTranslation();
-
-  return <div>{t("controllers.title")}</div>;
-};
+export const Controllers = () => <ControllersWidget />;
