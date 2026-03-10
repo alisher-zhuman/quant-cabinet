@@ -1,7 +1,3 @@
-import { useTranslation } from "react-i18next";
+import { CompaniesWidget } from "@widgets/companies";
 
-export const Companies = () => {
-  const { t } = useTranslation();
-
-  return <div>{t("companies.title")}</div>;
-};
+export const Companies = () => <CompaniesWidget />;
