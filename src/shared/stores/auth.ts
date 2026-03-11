@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import type { AuthState } from "@shared/types";
+import type { AuthState } from "../types";
 
 export const AUTH_STORAGE_KEY = "quant-cabinet-auth";
 

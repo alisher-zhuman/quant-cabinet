@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 
-import { Loader } from "@shared/ui/loader";
+import { Loader } from "../loader";
 
 interface Props {
   isLoading: boolean;

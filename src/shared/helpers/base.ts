@@ -1,7 +1,7 @@
 import axios from "axios";
 
-import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "@shared/constants";
-import type { AppLanguage } from "@shared/types";
+import { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } from "../constants";
+import type { AppLanguage } from "../types";
 
 export const getApiErrorMessage = (
   error: unknown,

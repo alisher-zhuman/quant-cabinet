@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
-import { SearchInput } from "@shared/ui/search-input";
+import { SearchInput } from "../search-input";
 
 interface Props {
   search: string;

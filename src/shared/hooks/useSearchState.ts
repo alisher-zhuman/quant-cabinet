@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { useDebounce } from "@shared/hooks";
+import { useDebounce } from "./useDebounce";
 
 interface Params {
   initialSearch?: string;
@@ -8,7 +8,7 @@ interface Params {
 
 export const useSearchState = ({ initialSearch = "" }: Params = {}) => {
   const [search, setSearch] = useState(initialSearch);
-  
+
   const debouncedSearch = useDebounce(search);
 
   return {

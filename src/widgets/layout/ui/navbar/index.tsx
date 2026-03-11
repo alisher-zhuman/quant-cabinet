@@ -2,7 +2,9 @@ import { NavLink } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import { COLORS, HEADER_NAVIGATION_ITEMS } from "@shared/constants";
+import { COLORS } from "@shared/constants";
+
+import { NAVBAR_LINKS } from "./constants";
 
 export const Navbar = () => {
   const { t } = useTranslation();
@@ -19,7 +21,7 @@ export const Navbar = () => {
         borderRadius: 12,
       }}
     >
-      {HEADER_NAVIGATION_ITEMS.map(({ to, label }) => (
+      {NAVBAR_LINKS.map(({ to, label }) => (
         <NavLink
           key={to}
           to={to}

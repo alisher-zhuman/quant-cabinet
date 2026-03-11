@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import type { SxProps, Theme } from "@mui/material/styles";
 
-import { COLORS, LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "@shared/constants";
-import { getResolvedLanguage } from "@shared/helpers";
+import { COLORS, LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "../../constants";
+import { getResolvedLanguage } from "../../helpers";
 
 interface Props {
   sx?: SxProps<Theme>;

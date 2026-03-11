@@ -1,6 +1,5 @@
-import { DEFAULT_LIMIT, DEFAULT_PAGE } from "@shared/constants";
-import type { ListSearchState } from "@shared/types";
-
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../constants";
+import type { ListSearchState } from "../types";
 import { parseBooleanFlag, parsePositiveInt } from "./base";
 
 export const parseListSearchState = (
