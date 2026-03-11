@@ -10,9 +10,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import "./configs/i18n";
 
 import { QUERY_CLIENT } from "./configs/query";
-import { AppErrorBoundary } from "./error-boundary/ui/app-error-boundary";
 import { ROUTER } from "./router";
 import { THEME } from "./theme";
+import { AppErrorBoundary } from "./ui/error-boundary";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,15 +1,15 @@
 import { useRouteError } from "react-router";
 
-import { ErrorFallbackScreen } from "../../../error-boundary/ui/error-fallback-screen";
+import { ErrorFallback } from "@shared/ui/error-fallback";
+
 import { getRouteError } from "../../helpers/getRouteError";
 
 export const RouteErrorBoundary = () => {
   const routeError = useRouteError();
-  
   const { error, componentStack } = getRouteError(routeError);
 
   return (
-    <ErrorFallbackScreen
+    <ErrorFallback
       error={error}
       {...(componentStack ? { componentStack } : {})}
     />

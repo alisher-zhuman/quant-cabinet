@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
-import { ErrorFallbackScreen } from "../error-fallback-screen";
+import { ErrorFallback } from "@shared/ui/error-fallback";
 
 interface Props {
   children: ReactNode;
@@ -38,7 +38,7 @@ export class AppErrorBoundary extends Component<Props, State> {
 
     if (error) {
       return (
-        <ErrorFallbackScreen
+        <ErrorFallback
           error={error}
           {...(componentStack ? { componentStack } : {})}
         />
