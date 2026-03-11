@@ -6,6 +6,7 @@ import { Layout } from "@widgets/layout";
 import { ROUTES } from "@shared/constants";
 
 import { ProtectedRoute } from "./ui/protected-route";
+import { RouteErrorBoundary } from "./ui/route-error-boundary";
 import { WithSuspense } from "./ui/with-suspense";
 
 const NotFound = lazy(() =>
@@ -32,72 +33,78 @@ const Meters = lazy(() =>
 
 export const ROUTER = createBrowserRouter([
   {
-    path: `/${ROUTES.LOG_IN}`,
-    element: (
-      <WithSuspense>
-        <LogIn />
-      </WithSuspense>
-    ),
-  },
-  {
-    path: `/${ROUTES.FORGOT_PASSWORD}`,
-    element: (
-      <WithSuspense>
-        <ForgotPassword />
-      </WithSuspense>
-    ),
-  },
-  {
-    path: "*",
-    element: (
-      <WithSuspense>
-        <NotFound />
-      </WithSuspense>
-    ),
-  },
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute allowedRoles={["admin"]}>
-        <Layout />
-      </ProtectedRoute>
-    ),
+    errorElement: <RouteErrorBoundary />,
     children: [
       {
-        index: true,
-        element: <Navigate to={ROUTES.COMPANIES} replace />,
-      },
-      {
-        path: ROUTES.COMPANIES,
+        path: `/${ROUTES.LOG_IN}`,
         element: (
           <WithSuspense>
-            <Companies />
+            <LogIn />
           </WithSuspense>
         ),
       },
       {
-        path: ROUTES.USERS,
+        path: `/${ROUTES.FORGOT_PASSWORD}`,
         element: (
           <WithSuspense>
-            <Users />
+            <ForgotPassword />
           </WithSuspense>
         ),
       },
       {
-        path: ROUTES.CONTROLLERS,
+        path: "*",
         element: (
           <WithSuspense>
-            <Controllers />
+            <NotFound />
           </WithSuspense>
         ),
       },
       {
-        path: ROUTES.METERS,
+        path: "/",
         element: (
-          <WithSuspense>
-            <Meters />
-          </WithSuspense>
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <Layout />
+          </ProtectedRoute>
         ),
+        errorElement: <RouteErrorBoundary />,
+        children: [
+          {
+            index: true,
+            element: <Navigate to={ROUTES.COMPANIES} replace />,
+          },
+          {
+            path: ROUTES.COMPANIES,
+            element: (
+              <WithSuspense>
+                <Companies />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: ROUTES.USERS,
+            element: (
+              <WithSuspense>
+                <Users />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: ROUTES.CONTROLLERS,
+            element: (
+              <WithSuspense>
+                <Controllers />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: ROUTES.METERS,
+            element: (
+              <WithSuspense>
+                <Meters />
+              </WithSuspense>
+            ),
+          },
+        ],
       },
     ],
   },

@@ -208,6 +208,19 @@
       "logOut": "Выйти"
     }
   },
+  "errorBoundary": {
+    "title": "Что-то пошло не так",
+    "description": "Во время отображения страницы произошла ошибка. Попробуйте обновить страницу или вернуться на главную.",
+    "actions": {
+      "reload": "Обновить страницу",
+      "home": "На главную"
+    },
+    "details": {
+      "title": "Технические детали",
+      "errorMessage": "Ошибка",
+      "componentStack": "Стек компонентов"
+    }
+  },
   "validation": {
     "requiredEmail": "Email обязателен",
     "invalidEmail": "Введите корректный email",

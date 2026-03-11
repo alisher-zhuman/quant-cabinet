@@ -208,6 +208,19 @@
       "logOut": "Чыгуу"
     }
   },
+  "errorBoundary": {
+    "title": "Бир нерсе туура эмес кетти",
+    "description": "Баракты көрсөтүү учурунда ката кетти. Баракты жаңылап көрүңүз же башкы бетке кайтыңыз.",
+    "actions": {
+      "reload": "Баракты жаңылоо",
+      "home": "Башкы бетке"
+    },
+    "details": {
+      "title": "Техникалык маалымат",
+      "errorMessage": "Ката",
+      "componentStack": "Компоненттердин стеги"
+    }
+  },
   "validation": {
     "requiredEmail": "Email милдеттүү",
     "invalidEmail": "Туура email киргизиңиз",

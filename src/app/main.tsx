@@ -10,19 +10,22 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import "./configs/i18n";
 
 import { QUERY_CLIENT } from "./configs/query";
+import { AppErrorBoundary } from "./error-boundary/ui/app-error-boundary";
 import { ROUTER } from "./router";
 import { THEME } from "./theme";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={QUERY_CLIENT}>
-      <ThemeProvider theme={THEME}>
-        <Toaster />
+    <AppErrorBoundary>
+      <QueryClientProvider client={QUERY_CLIENT}>
+        <ThemeProvider theme={THEME}>
+          <Toaster />
 
-        <CssBaseline />
+          <CssBaseline />
 
-        <RouterProvider router={ROUTER} />
-      </ThemeProvider>
-    </QueryClientProvider>
+          <RouterProvider router={ROUTER} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </AppErrorBoundary>
   </StrictMode>,
 );
