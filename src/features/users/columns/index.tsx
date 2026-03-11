@@ -31,6 +31,15 @@ export const createUserColumns = (t: TFunction): Column<UserRow>[] => [
     align: "center",
     cell: (user) => {
       const isAdmin = user.role === "admin";
+      const toneStyles = isAdmin
+        ? {
+            color: COLORS.primary.dark,
+            backgroundColor: alpha(COLORS.primary.main, 0.1),
+          }
+        : {
+            color: COLORS.system.success,
+            backgroundColor: alpha(COLORS.system.success, 0.12),
+          };
 
       return (
         <Box
@@ -39,17 +48,14 @@ export const createUserColumns = (t: TFunction): Column<UserRow>[] => [
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            minWidth: 96,
-            px: 2,
-            py: 0.75,
+            px: 1.75,
+            py: 0.625,
             borderRadius: 999,
-            fontSize: 14,
+            fontSize: 13,
             fontWeight: 600,
             lineHeight: 1,
-            color: isAdmin ? "primary.dark" : "warning.main",
-            backgroundColor: isAdmin
-              ? "primary.light"
-              : alpha(COLORS.system.warning, 0.16),
+            whiteSpace: "nowrap",
+            ...toneStyles,
           }}
         >
           {t(`profile.roles.${user.role}`)}
