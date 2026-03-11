@@ -5,6 +5,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
+import { createSameSliceImportConfigs } from "./eslint/helpers/internal-imports.js";
 
 export default defineConfig([
   globalIgnores(["dist"]),
@@ -73,4 +74,40 @@ export default defineConfig([
       "simple-import-sort/exports": "error",
     },
   },
+  {
+    files: ["src/shared/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@shared", "@shared/*"],
+              message: "Use relative imports inside shared.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ["src/app/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@app", "@app/*"],
+              message: "Use relative imports inside app.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  ...createSameSliceImportConfigs("entities"),
+  ...createSameSliceImportConfigs("features"),
+  ...createSameSliceImportConfigs("widgets"),
+  ...createSameSliceImportConfigs("pages"),
 ]);
