@@ -69,9 +69,11 @@ export const CompaniesWidget = () => {
   });
 
   const toggleCompanyArchiveMutation = useToggleCompanyArchive();
+
   const onCloseDeleteDialog = () => {
     setCompanyToDelete(null);
   };
+  
   const deleteCompanyMutation = useDeleteCompany(onCloseDeleteDialog);
 
   const columns = useMemo(
