@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -7,10 +7,11 @@ import Typography from "@mui/material/Typography";
 
 import {
   createCompanyColumns,
+  useDeleteCompany,
   useToggleCompanyArchive,
 } from "@features/companies";
 
-import { useCompaniesQuery } from "@entities/companies";
+import { type CompanyRow, useCompaniesQuery } from "@entities/companies";
 
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
@@ -20,10 +21,15 @@ import {
   useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const CompaniesWidget = () => {
+  const [companyToDelete, setCompanyToDelete] = useState<CompanyRow | null>(
+    null,
+  );
+
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
@@ -63,15 +69,23 @@ export const CompaniesWidget = () => {
   });
 
   const toggleCompanyArchiveMutation = useToggleCompanyArchive();
+  const onCloseDeleteDialog = () => {
+    setCompanyToDelete(null);
+  };
+  const deleteCompanyMutation = useDeleteCompany(onCloseDeleteDialog);
 
   const columns = useMemo(
     () =>
-      createCompanyColumns(t, (company) => {
-        toggleCompanyArchiveMutation.mutate({
-          id: company.id,
-          isArchived: company.isArchived,
-        });
-      }),
+      createCompanyColumns(
+        t,
+        (company) => {
+          toggleCompanyArchiveMutation.mutate({
+            id: company.id,
+            isArchived: company.isArchived,
+          });
+        },
+        setCompanyToDelete,
+      ),
     [t, toggleCompanyArchiveMutation],
   );
 
@@ -85,42 +99,63 @@ export const CompaniesWidget = () => {
     setPage(0);
   };
 
-  return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
-      <Typography component="h1" variant="h4">
-        {t("companies.title")}
-      </Typography>
+  const handleConfirmDelete = () => {
+    if (!companyToDelete) {
+      return;
+    }
 
-      <TableSection
-        isLoading={isLoading}
-        isError={isError}
-        errorText={t("companies.error")}
-        hasItems={hasCompanies}
-        emptyText={emptyText}
-        rows={companies}
-        columns={columns}
-        getRowId={(company) => company.id}
-        toolbar={
-          <SearchTabsToolbar
-            search={search}
-            searchPlaceholder={t("companies.search.placeholder")}
-            activeLabel={t("companies.tabs.active")}
-            archivedLabel={t("companies.tabs.archived")}
-            isSearchLoading={isFetching}
-            isArchived={isArchived}
-            onSearchChange={handleSearchChange}
-            onArchivedChange={handleArchivedChange}
-          />
-        }
-        pagination={{
-          page,
-          limit,
-          total,
-          onPageChange: setPage,
-          onLimitChange: setLimit,
-          labelRowsPerPage: t("companies.table.rowsPerPage"),
-        }}
+    deleteCompanyMutation.mutate({ id: companyToDelete.id });
+  };
+
+  return (
+    <>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
+        <Typography component="h1" variant="h4">
+          {t("companies.title")}
+        </Typography>
+
+        <TableSection
+          isLoading={isLoading}
+          isError={isError}
+          errorText={t("companies.error")}
+          hasItems={hasCompanies}
+          emptyText={emptyText}
+          rows={companies}
+          columns={columns}
+          getRowId={(company) => company.id}
+          toolbar={
+            <SearchTabsToolbar
+              search={search}
+              searchPlaceholder={t("companies.search.placeholder")}
+              activeLabel={t("companies.tabs.active")}
+              archivedLabel={t("companies.tabs.archived")}
+              isSearchLoading={isFetching}
+              isArchived={isArchived}
+              onSearchChange={handleSearchChange}
+              onArchivedChange={handleArchivedChange}
+            />
+          }
+          pagination={{
+            page,
+            limit,
+            total,
+            onPageChange: setPage,
+            onLimitChange: setLimit,
+            labelRowsPerPage: t("companies.table.rowsPerPage"),
+          }}
+        />
+      </Box>
+
+      <ConfirmDialog
+        open={Boolean(companyToDelete)}
+        title={t("companies.deleteDialog.title")}
+        description={t("companies.deleteDialog.description")}
+        cancelLabel={t("companies.deleteDialog.cancel")}
+        confirmLabel={t("companies.deleteDialog.confirm")}
+        isLoading={deleteCompanyMutation.isPending}
+        onClose={onCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
       />
-    </Box>
+    </>
   );
 };

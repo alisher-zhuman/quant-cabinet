@@ -1,9 +1,13 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
-import { CompaniesResponseSchema } from "../model/schemas";
+import {
+  CompaniesResponseSchema,
+  DeleteCompanyPayloadSchema,
+} from "../model/schemas";
 import type {
   CompaniesResponse,
+  DeleteCompanyPayload,
   ToggleCompanyArchivePayload,
 } from "../model/types";
 
@@ -43,4 +47,14 @@ export const toggleCompanyArchive = async ({
     : `${API_PATHS.COMPANIES_ARCHIVE}/${id}`;
 
   await api.post(endpoint);
+};
+
+export const deleteCompany = async (
+  payload: DeleteCompanyPayload,
+): Promise<void> => {
+  const validPayload = DeleteCompanyPayloadSchema.parse(payload);
+
+  await api.delete(API_PATHS.COMPANIES, {
+    data: validPayload,
+  });
 };

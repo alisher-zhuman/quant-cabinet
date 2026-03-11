@@ -22,3 +22,7 @@ export const CompaniesResponseSchema = z.looseObject({
   data: z.array(CompanyRowSchema),
   total: z.number(),
 });
+
+export const DeleteCompanyPayloadSchema = z.object({
+  id: z.string(),
+});

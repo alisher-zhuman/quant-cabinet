@@ -22,3 +22,7 @@ export interface ToggleCompanyArchivePayload {
   id: string;
   isArchived: boolean;
 }
+
+export interface DeleteCompanyPayload {
+  id: string;
+}
