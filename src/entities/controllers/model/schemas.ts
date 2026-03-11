@@ -22,3 +22,7 @@ export const ControllersResponseSchema = z.looseObject({
   data: z.array(ControllerRowSchema),
   total: z.number(),
 });
+
+export const DeleteControllerPayloadSchema = z.object({
+  id: z.string(),
+});

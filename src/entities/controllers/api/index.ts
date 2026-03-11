@@ -1,8 +1,14 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
-import { ControllersResponseSchema } from "../model/schemas";
-import type { ControllersResponse } from "../model/types";
+import {
+  ControllersResponseSchema,
+  DeleteControllerPayloadSchema,
+} from "../model/schemas";
+import type {
+  ControllersResponse,
+  DeleteControllerPayload,
+} from "../model/types";
 
 interface Params {
   page?: number;
@@ -29,4 +35,14 @@ export const getControllers = async ({
   });
 
   return ControllersResponseSchema.parse(response.data);
+};
+
+export const deleteController = async (
+  payload: DeleteControllerPayload,
+): Promise<void> => {
+  const validPayload = DeleteControllerPayloadSchema.parse(payload);
+
+  await api.delete(API_PATHS.CONTROLLERS, {
+    data: validPayload,
+  });
 };

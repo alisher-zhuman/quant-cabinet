@@ -1,13 +1,16 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { createControllerColumns } from "@features/controllers";
+import {
+  createControllerColumns,
+  useDeleteController,
+} from "@features/controllers";
 
-import { useControllersQuery } from "@entities/controllers";
+import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
@@ -17,10 +20,14 @@ import {
   useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const ControllersWidget = () => {
+  const [controllerToDelete, setControllerToDelete] =
+    useState<ControllerRow | null>(null);
+
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
@@ -59,7 +66,16 @@ export const ControllersWidget = () => {
     isArchived,
   });
 
-  const columns = useMemo(() => createControllerColumns(t), [t]);
+  const onCloseDeleteDialog = () => {
+    setControllerToDelete(null);
+  };
+
+  const deleteControllerMutation = useDeleteController(onCloseDeleteDialog);
+
+  const columns = useMemo(
+    () => createControllerColumns(t, setControllerToDelete),
+    [t],
+  );
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -71,42 +87,65 @@ export const ControllersWidget = () => {
     setPage(0);
   };
 
-  return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
-      <Typography component="h1" variant="h4">
-        {t("controllers.title")}
-      </Typography>
+  const handleConfirmDelete = () => {
+    if (!controllerToDelete) {
+      return;
+    }
 
-      <TableSection
-        isLoading={isLoading}
-        isError={isError}
-        errorText={t("controllers.error")}
-        hasItems={hasControllers}
-        emptyText={emptyText}
-        rows={controllers}
-        columns={columns}
-        getRowId={(controller) => controller.id}
-        toolbar={
-          <SearchTabsToolbar
-            search={search}
-            searchPlaceholder={t("controllers.search.placeholder")}
-            activeLabel={t("controllers.tabs.active")}
-            archivedLabel={t("controllers.tabs.archived")}
-            isSearchLoading={isFetching}
-            isArchived={isArchived}
-            onSearchChange={handleSearchChange}
-            onArchivedChange={handleArchivedChange}
-          />
-        }
-        pagination={{
-          page,
-          limit,
-          total,
-          onPageChange: setPage,
-          onLimitChange: setLimit,
-          labelRowsPerPage: t("controllers.table.rowsPerPage"),
-        }}
+    deleteControllerMutation.mutate({ id: controllerToDelete.id });
+  };
+
+  return (
+    <>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}
+      >
+        <Typography component="h1" variant="h4">
+          {t("controllers.title")}
+        </Typography>
+
+        <TableSection
+          isLoading={isLoading}
+          isError={isError}
+          errorText={t("controllers.error")}
+          hasItems={hasControllers}
+          emptyText={emptyText}
+          rows={controllers}
+          columns={columns}
+          getRowId={(controller) => controller.id}
+          toolbar={
+            <SearchTabsToolbar
+              search={search}
+              searchPlaceholder={t("controllers.search.placeholder")}
+              activeLabel={t("controllers.tabs.active")}
+              archivedLabel={t("controllers.tabs.archived")}
+              isSearchLoading={isFetching}
+              isArchived={isArchived}
+              onSearchChange={handleSearchChange}
+              onArchivedChange={handleArchivedChange}
+            />
+          }
+          pagination={{
+            page,
+            limit,
+            total,
+            onPageChange: setPage,
+            onLimitChange: setLimit,
+            labelRowsPerPage: t("controllers.table.rowsPerPage"),
+          }}
+        />
+      </Box>
+
+      <ConfirmDialog
+        open={Boolean(controllerToDelete)}
+        title={t("controllers.deleteDialog.title")}
+        description={t("controllers.deleteDialog.description")}
+        cancelLabel={t("controllers.deleteDialog.cancel")}
+        confirmLabel={t("controllers.deleteDialog.confirm")}
+        isLoading={deleteControllerMutation.isPending}
+        onClose={onCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
       />
-    </Box>
+    </>
   );
 };

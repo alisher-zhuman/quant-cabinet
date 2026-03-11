@@ -17,3 +17,7 @@ export interface ControllersResponse {
   data: ControllerRow[];
   total: number;
 }
+
+export interface DeleteControllerPayload {
+  id: string;
+}
