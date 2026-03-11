@@ -1,12 +1,11 @@
 import type { TFunction } from "i18next";
 
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import IconButton from "@mui/material/IconButton";
-
 import type { ControllerRow } from "@entities/controllers";
 
 import { formatDate } from "@shared/helpers";
 import type { Column } from "@shared/types";
+
+import { ControllerActions } from "../ui/controller-actions";
 
 export const createControllerColumns = (
   t: TFunction,
@@ -37,13 +36,11 @@ export const createControllerColumns = (
     header: t("controllers.table.columns.actions"),
     align: "right",
     cell: (controller) => (
-      <IconButton
-        aria-label={t("controllers.actions.delete")}
-        color="error"
-        onClick={() => onDelete(controller)}
-      >
-        <DeleteOutlineRoundedIcon />
-      </IconButton>
+      <ControllerActions
+        controller={controller}
+        deleteLabel={t("controllers.actions.delete")}
+        onDelete={onDelete}
+      />
     ),
   },
 ];

@@ -1,15 +1,11 @@
 import type { TFunction } from "i18next";
 
-import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import UnarchiveOutlinedIcon from "@mui/icons-material/UnarchiveOutlined";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-
 import type { CompanyRow } from "@entities/companies";
 
 import { formatDate } from "@shared/helpers";
 import type { Column } from "@shared/types";
+
+import { CompanyActions } from "../ui/company-actions";
 
 export const createCompanyColumns = (
   t: TFunction,
@@ -41,31 +37,14 @@ export const createCompanyColumns = (
     header: t("companies.table.columns.actions"),
     align: "right",
     cell: (company) => (
-      <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-        <IconButton
-          aria-label={
-            company.isArchived
-              ? t("companies.actions.unarchive")
-              : t("companies.actions.archive")
-          }
-          color={company.isArchived ? "success" : "warning"}
-          onClick={() => onToggleArchive(company)}
-        >
-          {company.isArchived ? (
-            <UnarchiveOutlinedIcon />
-          ) : (
-            <ArchiveOutlinedIcon />
-          )}
-        </IconButton>
-
-        <IconButton
-          aria-label={t("companies.actions.delete")}
-          color="error"
-          onClick={() => onDelete(company)}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Box>
+      <CompanyActions
+        company={company}
+        archiveLabel={t("companies.actions.archive")}
+        unarchiveLabel={t("companies.actions.unarchive")}
+        deleteLabel={t("companies.actions.delete")}
+        onToggleArchive={onToggleArchive}
+        onDelete={onDelete}
+      />
     ),
   },
 ];

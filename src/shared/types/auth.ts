@@ -1,4 +1,4 @@
-type UserRole = "user" | "admin";
+export type UserRole = "user" | "admin";
 
 interface AuthSession {
   role: UserRole;
