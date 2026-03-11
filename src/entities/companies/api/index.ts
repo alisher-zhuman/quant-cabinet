@@ -39,8 +39,8 @@ export const toggleCompanyArchive = async ({
   isArchived,
 }: ToggleCompanyArchivePayload): Promise<void> => {
   const endpoint = isArchived
-    ? API_PATHS.COMPANIES_UNARCHIVE(id)
-    : API_PATHS.COMPANIES_ARCHIVE(id);
+    ? `${API_PATHS.COMPANIES_UNARCHIVE}/${id}`
+    : `${API_PATHS.COMPANIES_ARCHIVE}/${id}`;
 
   await api.post(endpoint);
 };
