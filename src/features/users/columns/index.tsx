@@ -4,7 +4,8 @@ import type { UserRow } from "@entities/users";
 
 import { formatDate } from "@shared/helpers";
 import type { Column } from "@shared/types";
-import { RoleBadge } from "@shared/ui/role-badge";
+
+import { RoleBadge } from "../ui/role-badge";
 
 export const createUserColumns = (t: TFunction): Column<UserRow>[] => [
   {
