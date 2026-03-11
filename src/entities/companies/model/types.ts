@@ -9,10 +9,16 @@ export interface CompanyRow {
   name: string;
   address: string;
   createdAt: string;
+  isArchived: boolean;
   user?: CompanyUser | null | undefined;
 }
 
 export interface CompaniesResponse {
   data: CompanyRow[];
   total: number;
+}
+
+export interface ToggleCompanyArchivePayload {
+  id: string;
+  isArchived: boolean;
 }

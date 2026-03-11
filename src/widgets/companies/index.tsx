@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { createCompanyColumns } from "@features/companies";
+import {
+  createCompanyColumns,
+  useToggleCompanyArchive,
+} from "@features/companies";
 
 import { useCompaniesQuery } from "@entities/companies";
 
@@ -59,7 +62,18 @@ export const CompaniesWidget = () => {
     isArchived,
   });
 
-  const columns = useMemo(() => createCompanyColumns(t), [t]);
+  const toggleCompanyArchiveMutation = useToggleCompanyArchive();
+
+  const columns = useMemo(
+    () =>
+      createCompanyColumns(t, (company) => {
+        toggleCompanyArchiveMutation.mutate({
+          id: company.id,
+          isArchived: company.isArchived,
+        });
+      }),
+    [t, toggleCompanyArchiveMutation],
+  );
 
   const handleSearchChange = (value: string) => {
     setSearch(value);

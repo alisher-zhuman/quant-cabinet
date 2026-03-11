@@ -2,7 +2,10 @@ import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
 import { CompaniesResponseSchema } from "../model/schemas";
-import type { CompaniesResponse } from "../model/types";
+import type {
+  CompaniesResponse,
+  ToggleCompanyArchivePayload,
+} from "../model/types";
 
 interface Params {
   page?: number;
@@ -29,4 +32,15 @@ export const getCompanies = async ({
   });
 
   return CompaniesResponseSchema.parse(response.data);
+};
+
+export const toggleCompanyArchive = async ({
+  id,
+  isArchived,
+}: ToggleCompanyArchivePayload): Promise<void> => {
+  const endpoint = isArchived
+    ? API_PATHS.COMPANIES_UNARCHIVE(id)
+    : API_PATHS.COMPANIES_ARCHIVE(id);
+
+  await api.post(endpoint);
 };

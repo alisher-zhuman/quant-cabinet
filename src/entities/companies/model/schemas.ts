@@ -14,6 +14,7 @@ export const CompanyRowSchema = z.looseObject({
   name: z.string(),
   address: z.string(),
   createdAt: z.string(),
+  isArchived: z.boolean(),
   user: CompanyUserSchema,
 });
 
