@@ -6,5 +6,5 @@ export const API_PATHS = {
   COMPANIES_ARCHIVE: "/companies/archive",
   COMPANIES_UNARCHIVE: "/companies/unarchive",
   CONTROLLERS: "/controllers",
-  METERS: "/admin/meters",
+  METERS: "/meters",
 };
