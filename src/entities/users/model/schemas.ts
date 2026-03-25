@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UserRoleSchema = z.enum(["user", "admin"]);
+import { UserRoleSchema } from "@shared/schemas";
 
 export const UserRowSchema = z.looseObject({
   email: z.string(),

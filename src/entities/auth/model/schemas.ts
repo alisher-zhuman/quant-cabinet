@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import i18next from "i18next";
 
-export const UserRoleSchema = z.enum(["user", "admin"]);
+import { UserRoleSchema } from "@shared/schemas";
 
 export const createLogInFormSchema = () =>
   z.object({

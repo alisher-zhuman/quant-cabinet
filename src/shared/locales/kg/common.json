@@ -201,6 +201,7 @@
     "roleLabel": "Роль",
     "roles": {
       "admin": "Админ",
+      "manager": "Менеджер",
       "user": "Колдонуучу"
     },
     "actions": {

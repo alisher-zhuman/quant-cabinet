@@ -16,10 +16,15 @@ export const RoleBadge = ({ role, label }: Props) => {
           color: COLORS.primary.dark,
           backgroundColor: alpha(COLORS.primary.main, 0.1),
         }
-      : {
-          color: COLORS.system.success,
-          backgroundColor: alpha(COLORS.system.success, 0.12),
-        };
+      : role === "manager"
+        ? {
+            color: COLORS.system.warning,
+            backgroundColor: alpha(COLORS.system.warning, 0.14),
+          }
+        : {
+            color: COLORS.system.success,
+            backgroundColor: alpha(COLORS.system.success, 0.12),
+          };
 
   return (
     <Box

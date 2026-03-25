@@ -24,8 +24,7 @@ export const ProfileMenu = () => {
   const navigate = useNavigate();
 
   const isMenuOpen = Boolean(menuAnchor);
-  const roleLabel =
-    role === "admin" ? t("profile.roles.admin") : t("profile.roles.user");
+  const roleLabel = role ? t(`profile.roles.${role}`) : "-";
 
   const onOpenMenu = (event: MouseEvent<HTMLElement>) => {
     setMenuAnchor(event.currentTarget);

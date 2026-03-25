@@ -1,8 +1,10 @@
+import type { UserRole } from "@shared/types";
+
 export interface UserRow {
   email: string;
   firstName: string;
   lastName: string;
-  role: "user" | "admin";
+  role: UserRole;
   createdAt: string;
 }
 
