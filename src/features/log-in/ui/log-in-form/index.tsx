@@ -19,7 +19,8 @@ import { useLogInForm } from "../../hooks/useLogInForm";
 export const LogInForm = () => {
   const { t } = useTranslation();
 
-  const { control, isValid, isPending, onBack, onSubmit } = useLogInForm();
+  const { canGoBack, control, isValid, isPending, onBack, onSubmit } =
+    useLogInForm();
 
   return (
     <Box
@@ -31,15 +32,17 @@ export const LogInForm = () => {
       px={2}
       bgcolor="background.default"
     >
-      <Button
-        type="button"
-        variant="text"
-        onClick={onBack}
-        startIcon={<ArrowBackRoundedIcon />}
-        sx={{ position: "absolute", top: 16, left: 16 }}
-      >
-        {t("logIn.actions.back")}
-      </Button>
+      {canGoBack && (
+        <Button
+          type="button"
+          variant="text"
+          onClick={onBack}
+          startIcon={<ArrowBackRoundedIcon />}
+          sx={{ position: "absolute", top: 16, left: 16 }}
+        >
+          {t("logIn.actions.back")}
+        </Button>
+      )}
 
       <LangSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
 

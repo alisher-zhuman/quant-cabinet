@@ -21,6 +21,7 @@ export const useLogInForm = () => {
 
   const { t } = useTranslation();
 
+  const accessToken = useAuthStore((state) => state.accessToken);
   const setAuth = useAuthStore((state) => state.setAuth);
 
   const {
@@ -56,6 +57,7 @@ export const useLogInForm = () => {
   };
 
   return {
+    canGoBack: Boolean(accessToken),
     control,
     isValid,
     isPending: mutation.isPending,

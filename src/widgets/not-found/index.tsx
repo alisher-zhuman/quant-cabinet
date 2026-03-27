@@ -38,9 +38,9 @@ export const NotFoundWidget = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
         >
-          {t("notFound.backButton")}
+          {t("notFound.homeButton")}
         </Button>
       </Box>
     </Box>
