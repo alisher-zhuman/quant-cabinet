@@ -2,6 +2,7 @@ import type { infer as ZodInfer } from "zod";
 
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
+import { buildListQueryParams } from "@shared/helpers";
 
 import {
   ControllersResponseSchema,
@@ -24,15 +25,14 @@ export const getControllers = async ({
   search = "",
   isArchived = false,
 }: Params = {}): Promise<ControllersResponse> => {
-  const normalizedSearch = search.trim();
-
   const response = await api.get(API_PATHS.CONTROLLERS, {
-    params: {
+    params: buildListQueryParams({
       page,
       limit,
+      search,
       isArchived,
-      ...(normalizedSearch ? { companyName: normalizedSearch } : {}),
-    },
+      searchParamName: "companyName",
+    }),
   });
 
   return ControllersResponseSchema.parse(response.data);

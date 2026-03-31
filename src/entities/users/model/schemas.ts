@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { UserRoleSchema } from "@shared/schemas";
+import { createListResponseSchema, UserRoleSchema } from "@shared/schemas";
 
 const UserCompanySchema = z
   .looseObject({
@@ -19,10 +19,7 @@ export const UserRowSchema = z.looseObject({
   company: UserCompanySchema,
 });
 
-export const UsersResponseSchema = z.looseObject({
-  data: z.array(UserRowSchema),
-  total: z.number(),
-});
+export const UsersResponseSchema = createListResponseSchema(UserRowSchema);
 
 export const DeleteUserPayloadSchema = z.object({
   userId: z.string(),

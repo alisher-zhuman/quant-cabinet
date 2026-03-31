@@ -2,6 +2,7 @@ import type { infer as ZodInfer } from "zod";
 
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
+import { buildListQueryParams } from "@shared/helpers";
 
 import {
   CompaniesResponseSchema,
@@ -30,15 +31,8 @@ export const getCompanies = async ({
   search = "",
   isArchived = false,
 }: Params = {}): Promise<CompaniesResponse> => {
-  const normalizedSearch = search.trim();
-
   const response = await api.get(API_PATHS.COMPANIES, {
-    params: {
-      page,
-      limit,
-      isArchived,
-      ...(normalizedSearch ? { search: normalizedSearch } : {}),
-    },
+    params: buildListQueryParams({ page, limit, search, isArchived }),
   });
 
   return CompaniesResponseSchema.parse(response.data);

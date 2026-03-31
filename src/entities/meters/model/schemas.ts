@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { createListResponseSchema } from "@shared/schemas";
+
 export const MeterRowSchema = z.looseObject({
   id: z.string(),
   serialNumber: z.string(),
@@ -10,10 +12,7 @@ export const MeterRowSchema = z.looseObject({
   readings: z.number(),
 });
 
-export const MetersResponseSchema = z.looseObject({
-  data: z.array(MeterRowSchema),
-  total: z.number(),
-});
+export const MetersResponseSchema = createListResponseSchema(MeterRowSchema);
 
 export const DeleteMeterPayloadSchema = z.object({
   id: z.string(),

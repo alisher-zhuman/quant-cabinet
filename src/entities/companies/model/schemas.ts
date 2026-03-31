@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import type { TFunction } from "i18next";
 
+import { createListResponseSchema } from "@shared/schemas";
+
 const CompanyUserSchema = z
   .looseObject({
     email: z.string().optional(),
@@ -20,10 +22,7 @@ export const CompanyRowSchema = z.looseObject({
   user: CompanyUserSchema,
 });
 
-export const CompaniesResponseSchema = z.looseObject({
-  data: z.array(CompanyRowSchema),
-  total: z.number(),
-});
+export const CompaniesResponseSchema = createListResponseSchema(CompanyRowSchema);
 
 export const createCompanyFormSchema = (t: TFunction) =>
   z.object({

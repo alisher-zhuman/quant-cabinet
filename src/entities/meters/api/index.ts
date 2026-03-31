@@ -2,6 +2,7 @@ import type { infer as ZodInfer } from "zod";
 
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
+import { buildListQueryParams } from "@shared/helpers";
 
 import {
   DeleteMeterPayloadSchema,
@@ -24,15 +25,14 @@ export const getMeters = async ({
   search = "",
   isArchived = false,
 }: Params = {}): Promise<MetersResponse> => {
-  const normalizedSearch = search.trim();
-
   const response = await api.get(API_PATHS.METERS, {
-    params: {
+    params: buildListQueryParams({
       page,
       limit,
+      search,
       isArchived,
-      ...(normalizedSearch ? { serialNumber: normalizedSearch } : {}),
-    },
+      searchParamName: "serialNumber",
+    }),
   });
 
   return MetersResponseSchema.parse(response.data);

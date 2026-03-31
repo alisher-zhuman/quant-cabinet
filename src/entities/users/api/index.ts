@@ -2,6 +2,7 @@ import type { infer as ZodInfer } from "zod";
 
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
+import { buildListQueryParams } from "@shared/helpers";
 
 import {
   DeleteUserPayloadSchema,
@@ -24,15 +25,8 @@ export const getUsers = async ({
   search = "",
   isArchived = false,
 }: Params = {}): Promise<UsersResponse> => {
-  const normalizedSearch = search.trim();
-
   const response = await api.get(API_PATHS.USERS, {
-    params: {
-      page,
-      limit,
-      isArchived,
-      ...(normalizedSearch ? { search: normalizedSearch } : {}),
-    },
+    params: buildListQueryParams({ page, limit, search, isArchived }),
   });
 
   return UsersResponseSchema.parse(response.data);
