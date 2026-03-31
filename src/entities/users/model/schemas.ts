@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { SUPPORTED_LANGUAGES } from "@shared/constants";
 import { createListResponseSchema, UserRoleSchema } from "@shared/schemas";
 
 const UserCompanySchema = z
@@ -23,4 +24,8 @@ export const UsersResponseSchema = createListResponseSchema(UserRowSchema);
 
 export const DeleteUserPayloadSchema = z.object({
   userId: z.string(),
+});
+
+export const ChangeUserLanguagePayloadSchema = z.object({
+  lang: z.enum(SUPPORTED_LANGUAGES),
 });

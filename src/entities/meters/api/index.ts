@@ -1,30 +1,20 @@
-import type { infer as ZodInfer } from "zod";
-
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
+import type { ListQueryParams } from "@shared/types";
 
 import {
   DeleteMeterPayloadSchema,
   MetersResponseSchema,
 } from "../model/schemas";
-
-type DeleteMeterPayload = ZodInfer<typeof DeleteMeterPayloadSchema>;
-type MetersResponse = ZodInfer<typeof MetersResponseSchema>;
-
-interface Params {
-  page?: number;
-  limit?: number;
-  search?: string;
-  isArchived?: boolean;
-}
+import type { DeleteMeterPayload, MetersResponse } from "../model/types";
 
 export const getMeters = async ({
   page = 1,
   limit = 10,
   search = "",
   isArchived = false,
-}: Params = {}): Promise<MetersResponse> => {
+}: ListQueryParams = {}): Promise<MetersResponse> => {
   const response = await api.get(API_PATHS.METERS, {
     params: buildListQueryParams({
       page,

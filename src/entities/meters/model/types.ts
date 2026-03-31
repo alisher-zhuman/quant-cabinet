@@ -1,5 +1,11 @@
 import type { infer as ZodInfer } from "zod";
 
-import type { MeterRowSchema } from "./schemas";
+import type {
+  DeleteMeterPayloadSchema,
+  MeterRowSchema,
+  MetersResponseSchema,
+} from "./schemas";
 
 export type MeterRow = ZodInfer<typeof MeterRowSchema>;
+export type MetersResponse = ZodInfer<typeof MetersResponseSchema>;
+export type DeleteMeterPayload = ZodInfer<typeof DeleteMeterPayloadSchema>;

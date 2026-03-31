@@ -1,5 +1,3 @@
-import type { infer as ZodInfer } from "zod";
-
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
@@ -8,9 +6,11 @@ import {
   LogInPayloadSchema,
   LogInResponseSchema,
 } from "../model/schemas";
-import type { ForgotPasswordFormValues, LogInFormValues } from "../model/types";
-
-type LogInResponse = ZodInfer<typeof LogInResponseSchema>;
+import type {
+  ForgotPasswordFormValues,
+  LogInFormValues,
+  LogInResponse,
+} from "../model/types";
 
 export const logIn = async (
   payload: LogInFormValues,

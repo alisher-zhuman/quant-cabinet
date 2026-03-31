@@ -1,40 +1,25 @@
-import { z } from "zod";
-
-import type { infer as ZodInfer } from "zod";
-
 import { api } from "@shared/api";
-import { API_PATHS, SUPPORTED_LANGUAGES } from "@shared/constants";
+import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
-import type { AppLanguage } from "@shared/types";
+import type { ListQueryParams } from "@shared/types";
 
 import {
+  ChangeUserLanguagePayloadSchema,
   DeleteUserPayloadSchema,
   UsersResponseSchema,
 } from "../model/schemas";
-
-type DeleteUserPayload = ZodInfer<typeof DeleteUserPayloadSchema>;
-type UsersResponse = ZodInfer<typeof UsersResponseSchema>;
-type ChangeUserLanguagePayload = {
-  lang: AppLanguage;
-};
-
-const ChangeUserLanguagePayloadSchema = z.object({
-  lang: z.enum(SUPPORTED_LANGUAGES),
-});
-
-interface Params {
-  page?: number;
-  limit?: number;
-  search?: string;
-  isArchived?: boolean;
-}
+import type {
+  ChangeUserLanguagePayload,
+  DeleteUserPayload,
+  UsersResponse,
+} from "../model/types";
 
 export const getUsers = async ({
   page = 1,
   limit = 10,
   search = "",
   isArchived = false,
-}: Params = {}): Promise<UsersResponse> => {
+}: ListQueryParams = {}): Promise<UsersResponse> => {
   const response = await api.get(API_PATHS.USERS, {
     params: buildListQueryParams({ page, limit, search, isArchived }),
   });
