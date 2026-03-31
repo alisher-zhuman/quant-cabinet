@@ -3,8 +3,9 @@ import { z } from "zod";
 export const MeterRowSchema = z.looseObject({
   id: z.string(),
   serialNumber: z.string(),
-  lastValue: z.string().nullable().optional(),
-  valveState: z.string().optional(),
+  lastValue: z.string().nullable(),
+  valveState: z.string(),
+  meterStatus: z.string(),
   createdAt: z.string(),
   readings: z.number(),
 });
