@@ -5,14 +5,14 @@ import type { ListQueryParams } from "@shared/types";
 
 import {
   CompaniesResponseSchema,
-  CompanyRowSchema,
+  CompanyDetailsSchema,
   CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
   UpdateCompanyPayloadSchema,
 } from "../model/schemas";
 import type {
   CompaniesResponse,
-  CompanyRow,
+  CompanyDetails,
   CreateCompanyPayload,
   DeleteCompanyPayload,
   UpdateCompanyPayload,
@@ -31,10 +31,10 @@ export const getCompanies = async ({
   return CompaniesResponseSchema.parse(response.data);
 };
 
-export const getCompany = async (id: string): Promise<CompanyRow> => {
+export const getCompany = async (id: string): Promise<CompanyDetails> => {
   const response = await api.get(`${API_PATHS.COMPANIES}/${id}`);
 
-  return CompanyRowSchema.parse(response.data);
+  return CompanyDetailsSchema.parse(response.data);
 };
 
 export const createCompany = async (

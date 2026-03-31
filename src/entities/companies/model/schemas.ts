@@ -4,14 +4,11 @@ import type { TFunction } from "i18next";
 
 import { createListResponseSchema } from "@shared/schemas";
 
-const CompanyUserSchema = z
+const CompanyKeySchema = z
   .looseObject({
-    email: z.string().optional(),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
+    key: z.string(),
   })
-  .nullable()
-  .optional();
+  .nullable();
 
 export const CompanyRowSchema = z.looseObject({
   id: z.string(),
@@ -19,10 +16,17 @@ export const CompanyRowSchema = z.looseObject({
   address: z.string(),
   createdAt: z.string(),
   isArchived: z.boolean(),
-  user: CompanyUserSchema,
 });
 
 export const CompaniesResponseSchema = createListResponseSchema(CompanyRowSchema);
+
+export const CompanyDetailsSchema = z.looseObject({
+  id: z.string(),
+  name: z.string(),
+  address: z.string(),
+  createdAt: z.string(),
+  key: CompanyKeySchema,
+});
 
 export const createCompanyFormSchema = (t: TFunction) =>
   z.object({
