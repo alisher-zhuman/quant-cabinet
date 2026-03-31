@@ -1,3 +1,3 @@
 export * from "./api";
 export * from "./model/schemas";
-export * from "./model/types";
+export type * from "./model/types";

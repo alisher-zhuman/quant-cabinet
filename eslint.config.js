@@ -36,6 +36,12 @@ export default defineConfig([
           fixStyle: "inline-type-imports",
         },
       ],
+      "@typescript-eslint/consistent-type-exports": [
+        "error",
+        {
+          fixMixedExportsWithInlineTypeSpecifier: true,
+        },
+      ],
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-misused-promises": [
         "error",
