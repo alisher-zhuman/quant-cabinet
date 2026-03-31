@@ -1,23 +1,18 @@
-export interface ControllerCompany {
-  name?: string | undefined;
-}
+import type { infer as ZodInfer } from "zod";
 
-export interface ControllerMeter {
-  id?: string | undefined;
-}
+import type {
+  ControllerCompanySchema,
+  ControllerMeterSchema,
+  ControllerRowSchema,
+  ControllersResponseSchema,
+  DeleteControllerPayloadSchema,
+} from "./schemas";
 
-export interface ControllerRow {
-  id: string;
-  createdAt: string;
-  company?: ControllerCompany | null | undefined;
-  meters?: ControllerMeter[] | undefined;
-}
+export type ControllerCompany = ZodInfer<typeof ControllerCompanySchema>;
+export type ControllerMeter = ZodInfer<typeof ControllerMeterSchema>;
+export type ControllerRow = ZodInfer<typeof ControllerRowSchema>;
+export type ControllersResponse = ZodInfer<typeof ControllersResponseSchema>;
 
-export interface ControllersResponse {
-  data: ControllerRow[];
-  total: number;
-}
-
-export interface DeleteControllerPayload {
-  id: string;
-}
+export type DeleteControllerPayload = ZodInfer<
+  typeof DeleteControllerPayloadSchema
+>;

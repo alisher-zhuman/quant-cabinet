@@ -24,6 +24,11 @@ export const createUserColumns = (t: TFunction): Column<UserRow>[] => [
     cell: (user) => user.lastName || "-",
   },
   {
+    id: "company",
+    header: t("users.table.columns.company"),
+    cell: (user) => user.company?.name || "-",
+  },
+  {
     id: "role",
     header: t("users.table.columns.role"),
     align: "center",

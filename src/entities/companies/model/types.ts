@@ -1,28 +1,19 @@
-export interface CompanyUser {
-  email?: string | undefined;
-  firstName?: string | undefined;
-  lastName?: string | undefined;
-}
+import type { infer as ZodInfer } from "zod";
 
-export interface CompanyRow {
-  id: string;
-  name: string;
-  address: string;
-  createdAt: string;
-  isArchived: boolean;
-  user?: CompanyUser | null | undefined;
-}
+import type {
+  CompaniesResponseSchema,
+  CompanyRowSchema,
+  CompanyUserSchema,
+  DeleteCompanyPayloadSchema,
+} from "./schemas";
 
-export interface CompaniesResponse {
-  data: CompanyRow[];
-  total: number;
-}
+export type CompanyUser = ZodInfer<typeof CompanyUserSchema>;
+export type CompanyRow = ZodInfer<typeof CompanyRowSchema>;
+export type CompaniesResponse = ZodInfer<typeof CompaniesResponseSchema>;
 
 export interface ToggleCompanyArchivePayload {
   id: string;
   isArchived: boolean;
 }
 
-export interface DeleteCompanyPayload {
-  id: string;
-}
+export type DeleteCompanyPayload = ZodInfer<typeof DeleteCompanyPayloadSchema>;

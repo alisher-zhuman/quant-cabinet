@@ -1,14 +1,11 @@
-import type { UserRole } from "@shared/types";
+import type { infer as ZodInfer } from "zod";
 
-export interface UserRow {
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: UserRole;
-  createdAt: string;
-}
+import type {
+  UserCompanySchema,
+  UserRowSchema,
+  UsersResponseSchema,
+} from "./schemas";
 
-export interface UsersResponse {
-  data: UserRow[];
-  total: number;
-}
+export type UserCompany = ZodInfer<typeof UserCompanySchema>;
+export type UserRow = ZodInfer<typeof UserRowSchema>;
+export type UsersResponse = ZodInfer<typeof UsersResponseSchema>;
