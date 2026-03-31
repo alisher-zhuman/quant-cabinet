@@ -12,9 +12,15 @@ interface Props<T> {
   rows: T[];
   columns: Column<T>[];
   getRowId: (row: T, index: number) => string | number;
+  onRowClick?: ((row: T) => void) | undefined;
 }
 
-export const DataTable = <T,>({ rows, columns, getRowId }: Props<T>) => (
+export const DataTable = <T,>({
+  rows,
+  columns,
+  getRowId,
+  onRowClick,
+}: Props<T>) => (
   <TableContainer component={Paper} sx={{ borderRadius: 2 }}>
     <Table>
       <TableHead>
@@ -33,7 +39,18 @@ export const DataTable = <T,>({ rows, columns, getRowId }: Props<T>) => (
 
       <TableBody>
         {rows.map((row, index) => (
-          <TableRow key={getRowId(row, index)} hover>
+          <TableRow
+            key={getRowId(row, index)}
+            hover
+            {...(onRowClick ? { onClick: () => onRowClick(row) } : {})}
+            {...(onRowClick
+              ? {
+                  sx: {
+                    cursor: "pointer",
+                  },
+                }
+              : {})}
+          >
             {columns.map((column) => (
               <TableCell key={column.id} align={column.align ?? "left"}>
                 {column.cell(row)}

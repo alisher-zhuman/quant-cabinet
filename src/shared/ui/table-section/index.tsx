@@ -25,6 +25,7 @@ interface Props<T> {
   rows: T[];
   columns: Column<T>[];
   getRowId: (row: T, index: number) => string | number;
+  onRowClick?: ((row: T) => void) | undefined;
   pagination?: PaginationProps;
 }
 
@@ -38,6 +39,7 @@ export const TableSection = <T,>({
   rows,
   columns,
   getRowId,
+  onRowClick,
   pagination,
 }: Props<T>) => (
   <ListSection
@@ -61,6 +63,11 @@ export const TableSection = <T,>({
       ) : undefined
     }
   >
-    <DataTable rows={rows} columns={columns} getRowId={getRowId} />
+    <DataTable
+      rows={rows}
+      columns={columns}
+      getRowId={getRowId}
+      onRowClick={onRowClick}
+    />
   </ListSection>
 );

@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -15,6 +16,7 @@ import {
 
 import { type CompanyRow, useCompaniesQuery } from "@entities/companies";
 
+import { ROUTES } from "@shared/constants";
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
@@ -33,6 +35,8 @@ export const CompaniesWidget = () => {
   const [companyToDelete, setCompanyToDelete] = useState<CompanyRow | null>(
     null,
   );
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -128,6 +132,13 @@ export const CompaniesWidget = () => {
     deleteCompanyMutation.mutate({ id: companyToDelete.id });
   };
 
+  const handleRowClick = useCallback(
+    (company: CompanyRow) => {
+      navigate(`/${ROUTES.COMPANIES}/${company.id}`);
+    },
+    [navigate],
+  );
+
   return (
     <>
       <Box
@@ -146,6 +157,7 @@ export const CompaniesWidget = () => {
           rows={companies}
           columns={columns}
           getRowId={(company) => company.id}
+          onRowClick={handleRowClick}
           toolbar={
             <SearchTabsToolbar
               search={search}

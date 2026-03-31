@@ -24,6 +24,11 @@ const Users = lazy(() =>
 const Companies = lazy(() =>
   import("@pages/companies").then((m) => ({ default: m.Companies })),
 );
+const CompanyDetails = lazy(() =>
+  import("@pages/company-details").then((m) => ({
+    default: m.CompanyDetails,
+  })),
+);
 const Controllers = lazy(() =>
   import("@pages/controllers").then((m) => ({ default: m.Controllers })),
 );
@@ -77,6 +82,14 @@ export const ROUTER = createBrowserRouter([
             element: (
               <WithSuspense>
                 <Companies />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: `${ROUTES.COMPANIES}/:companyId`,
+            element: (
+              <WithSuspense>
+                <CompanyDetails />
               </WithSuspense>
             ),
           },

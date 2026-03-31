@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Box from "@mui/material/Box";
@@ -19,18 +21,34 @@ export const CompanyActions = ({
   deleteLabel,
   onEdit,
   onDelete,
-}: Props) => (
-  <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-    <IconButton aria-label={editLabel} color="primary" onClick={() => onEdit(company)}>
-      <EditOutlinedIcon />
-    </IconButton>
+}: Props) => {
+  const handleEditClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onEdit(company);
+  };
 
-    <IconButton
-      aria-label={deleteLabel}
-      color="error"
-      onClick={() => onDelete(company)}
-    >
-      <DeleteOutlineRoundedIcon />
-    </IconButton>
-  </Box>
-);
+  const handleDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onDelete(company);
+  };
+
+  return (
+    <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+      <IconButton
+        aria-label={editLabel}
+        color="primary"
+        onClick={handleEditClick}
+      >
+        <EditOutlinedIcon />
+      </IconButton>
+
+      <IconButton
+        aria-label={deleteLabel}
+        color="error"
+        onClick={handleDeleteClick}
+      >
+        <DeleteOutlineRoundedIcon />
+      </IconButton>
+    </Box>
+  );
+};
