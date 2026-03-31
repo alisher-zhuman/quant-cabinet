@@ -24,7 +24,7 @@ export const getMeters = async ({
       page,
       limit,
       isArchived,
-      ...(normalizedSearch ? { search: normalizedSearch } : {}),
+      ...(normalizedSearch ? { serialNumber: normalizedSearch } : {}),
     },
   });
 

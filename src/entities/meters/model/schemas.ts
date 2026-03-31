@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const MeterRowSchema = z.looseObject({
   id: z.string(),
+  serialNumber: z.string(),
   lastValue: z.string().nullable().optional(),
   valveState: z.string().optional(),
   createdAt: z.string(),

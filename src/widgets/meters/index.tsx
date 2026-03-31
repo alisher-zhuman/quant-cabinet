@@ -44,13 +44,20 @@ export const MetersWidget = () => {
     createListSearchString,
   );
 
-  const { meters, total, hasMeters, emptyText, isLoading, isError, isFetching } =
-    useMetersQuery({
-      page,
-      limit,
-      search: debouncedSearch,
-      isArchived,
-    });
+  const {
+    meters,
+    total,
+    hasMeters,
+    emptyText,
+    isLoading,
+    isError,
+    isFetching,
+  } = useMetersQuery({
+    page,
+    limit,
+    search: debouncedSearch,
+    isArchived,
+  });
 
   const columns = useMemo(() => createMeterColumns(t), [t]);
 

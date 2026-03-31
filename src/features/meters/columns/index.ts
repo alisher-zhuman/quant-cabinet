@@ -19,9 +19,9 @@ const getMeterStatusLabel = (valveState: string | undefined, t: TFunction) => {
 
 export const createMeterColumns = (t: TFunction): Column<MeterRow>[] => [
   {
-    id: "id",
+    id: "serialNumber",
     header: t("meters.table.columns.id"),
-    cell: (meter) => meter.id,
+    cell: (meter) => meter.serialNumber || "-",
   },
   {
     id: "lastValue",
