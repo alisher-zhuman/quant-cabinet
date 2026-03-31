@@ -1,8 +1,11 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
-import { MetersResponseSchema } from "../model/schemas";
-import type { MetersResponse } from "../model/types";
+import {
+  DeleteMeterPayloadSchema,
+  MetersResponseSchema,
+} from "../model/schemas";
+import type { DeleteMeterPayload, MetersResponse } from "../model/types";
 
 interface Params {
   page?: number;
@@ -29,4 +32,12 @@ export const getMeters = async ({
   });
 
   return MetersResponseSchema.parse(response.data);
+};
+
+export const deleteMeter = async (payload: DeleteMeterPayload): Promise<void> => {
+  const validPayload = DeleteMeterPayloadSchema.parse(payload);
+
+  await api.delete(API_PATHS.METERS, {
+    data: validPayload,
+  });
 };

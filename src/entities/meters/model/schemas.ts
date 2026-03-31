@@ -14,3 +14,7 @@ export const MetersResponseSchema = z.looseObject({
   data: z.array(MeterRowSchema),
   total: z.number(),
 });
+
+export const DeleteMeterPayloadSchema = z.object({
+  id: z.string(),
+});

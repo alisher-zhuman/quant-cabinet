@@ -5,6 +5,8 @@ import type { MeterRow } from "@entities/meters";
 import { formatDate } from "@shared/helpers";
 import type { Column } from "@shared/types";
 
+import { MeterActions } from "../ui/meter-actions";
+
 const getValveStatusLabel = (valveState: string, t: TFunction) => {
   if (valveState === "open") {
     return t("meters.valveStatus.open");
@@ -37,7 +39,10 @@ const getBatteryStatusLabel = (meterStatus: string, t: TFunction) => {
   return meterStatus;
 };
 
-export const createMeterColumns = (t: TFunction): Column<MeterRow>[] => [
+export const createMeterColumns = (
+  t: TFunction,
+  onDelete: (meter: MeterRow) => void,
+): Column<MeterRow>[] => [
   {
     id: "serialNumber",
     header: t("meters.table.columns.id"),
@@ -67,5 +72,17 @@ export const createMeterColumns = (t: TFunction): Column<MeterRow>[] => [
     id: "createdAt",
     header: t("meters.table.columns.createdAt"),
     cell: (meter) => formatDate(meter.createdAt),
+  },
+  {
+    id: "actions",
+    header: t("meters.table.columns.actions"),
+    align: "right",
+    cell: (meter) => (
+      <MeterActions
+        deleteLabel={t("meters.actions.delete")}
+        meter={meter}
+        onDelete={onDelete}
+      />
+    ),
   },
 ];
