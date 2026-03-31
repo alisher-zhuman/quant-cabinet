@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import type { TFunction } from "i18next";
 
-export const CompanyUserSchema = z
+const CompanyUserSchema = z
   .looseObject({
     email: z.string().optional(),
     firstName: z.string().optional(),

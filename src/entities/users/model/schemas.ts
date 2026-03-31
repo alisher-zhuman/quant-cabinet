@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { UserRoleSchema } from "@shared/schemas";
 
-export const UserCompanySchema = z
+const UserCompanySchema = z
   .looseObject({
     name: z.string(),
   })

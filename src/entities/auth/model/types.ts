@@ -1,16 +1,11 @@
 import type { infer as ZodInfer } from "zod";
 
 import type {
-  createForgotPasswordFormSchema,
-  createLogInFormSchema,
+  ForgotPasswordPayloadSchema,
+  LogInPayloadSchema,
   LogInResponseSchema,
 } from "./schemas";
 
-export type LogInFormSchema = ReturnType<typeof createLogInFormSchema>;
-export type ForgotPasswordFormSchema = ReturnType<
-  typeof createForgotPasswordFormSchema
->;
-
-export type ForgotPasswordFormValues = ZodInfer<ForgotPasswordFormSchema>;
-export type LogInFormValues = ZodInfer<LogInFormSchema>;
+export type ForgotPasswordFormValues = ZodInfer<typeof ForgotPasswordPayloadSchema>;
+export type LogInFormValues = ZodInfer<typeof LogInPayloadSchema>;
 export type LogInResponse = ZodInfer<typeof LogInResponseSchema>;

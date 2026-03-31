@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-export const ControllerCompanySchema = z
+const ControllerCompanySchema = z
   .looseObject({
     name: z.string().optional(),
   })
   .nullable()
   .optional();
 
-export const ControllerMeterSchema = z.looseObject({
+const ControllerMeterSchema = z.looseObject({
   id: z.string().optional(),
 });
 
