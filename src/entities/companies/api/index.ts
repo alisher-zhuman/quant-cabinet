@@ -13,7 +13,6 @@ import type {
   CompaniesResponse,
   CreateCompanyPayload,
   DeleteCompanyPayload,
-  ToggleCompanyArchivePayload,
   UpdateCompanyPayload,
 } from "../model/types";
 
@@ -48,17 +47,6 @@ export const updateCompany = async ({
   });
 
   await api.patch(`${API_PATHS.COMPANIES}/${validId}`, validPayload);
-};
-
-export const toggleCompanyArchive = async ({
-  id,
-  isArchived,
-}: ToggleCompanyArchivePayload): Promise<void> => {
-  const endpoint = isArchived
-    ? `${API_PATHS.COMPANIES_UNARCHIVE}/${id}`
-    : `${API_PATHS.COMPANIES_ARCHIVE}/${id}`;
-
-  await api.post(endpoint);
 };
 
 export const deleteCompany = async (

@@ -13,8 +13,3 @@ export type CompaniesResponse = ZodInfer<typeof CompaniesResponseSchema>;
 export type CreateCompanyPayload = ZodInfer<typeof CreateCompanyPayloadSchema>;
 export type UpdateCompanyPayload = ZodInfer<typeof UpdateCompanyPayloadSchema>;
 export type DeleteCompanyPayload = ZodInfer<typeof DeleteCompanyPayloadSchema>;
-
-export interface ToggleCompanyArchivePayload {
-  id: string;
-  isArchived: boolean;
-}

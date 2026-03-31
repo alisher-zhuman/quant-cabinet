@@ -11,7 +11,6 @@ import {
   createCompanyColumns,
   CreateCompanyDialog,
   useDeleteCompany,
-  useToggleCompanyArchive,
 } from "@features/companies";
 
 import { type CompanyRow, useCompaniesQuery } from "@entities/companies";
@@ -73,8 +72,6 @@ export const CompaniesWidget = () => {
     isArchived,
   });
 
-  const toggleCompanyArchiveMutation = useToggleCompanyArchive();
-
   const onCloseDeleteDialog = () => {
     setCompanyToDelete(null);
   };
@@ -87,19 +84,8 @@ export const CompaniesWidget = () => {
   }, []);
 
   const columns = useMemo(
-    () =>
-      createCompanyColumns(
-        t,
-        (company) => {
-          toggleCompanyArchiveMutation.mutate({
-            id: company.id,
-            isArchived: company.isArchived,
-          });
-        },
-        handleEditCompany,
-        setCompanyToDelete,
-      ),
-    [t, toggleCompanyArchiveMutation, handleEditCompany],
+    () => createCompanyColumns(t, handleEditCompany, setCompanyToDelete),
+    [t, handleEditCompany],
   );
 
   const handleSearchChange = (value: string) => {
