@@ -25,7 +25,7 @@ export const Header = () => {
       }}
     >
       <Link
-        to={`/${ROUTES.USERS}`}
+        to={`/${ROUTES.COMPANIES}`}
         style={{
           textDecoration: "none",
           color: COLORS.neutral[900],
