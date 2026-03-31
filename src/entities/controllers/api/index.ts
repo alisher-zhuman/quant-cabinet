@@ -30,7 +30,7 @@ export const getControllers = async ({
       page,
       limit,
       isArchived,
-      ...(normalizedSearch ? { search: normalizedSearch } : {}),
+      ...(normalizedSearch ? { companyName: normalizedSearch } : {}),
     },
   });
 

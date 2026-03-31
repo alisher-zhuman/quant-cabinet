@@ -112,7 +112,9 @@ export const ControllersWidget = () => {
           emptyText={emptyText}
           rows={controllers}
           columns={columns}
-          getRowId={(controller) => controller.id}
+          getRowId={(controller) =>
+            controller.serialNumber ?? controller.id ?? controller.createdAt
+          }
           toolbar={
             <SearchTabsToolbar
               search={search}

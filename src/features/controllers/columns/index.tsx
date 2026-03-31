@@ -12,9 +12,9 @@ export const createControllerColumns = (
   onDelete: (controller: ControllerRow) => void,
 ): Column<ControllerRow>[] => [
   {
-    id: "id",
+    id: "serialNumber",
     header: t("controllers.table.columns.id"),
-    cell: (controller) => controller.id,
+    cell: (controller) => controller.serialNumber || "-",
   },
   {
     id: "company",

@@ -13,6 +13,7 @@ export const ControllerMeterSchema = z.looseObject({
 
 export const ControllerRowSchema = z.looseObject({
   id: z.string(),
+  serialNumber: z.string(),
   createdAt: z.string(),
   company: ControllerCompanySchema,
   meters: z.array(ControllerMeterSchema).optional(),
