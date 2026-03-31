@@ -23,11 +23,6 @@ export const createCompanyColumns = (
     cell: (company) => company.address || "-",
   },
   {
-    id: "user",
-    header: t("companies.table.columns.user"),
-    cell: (company) => company.user?.email || "-",
-  },
-  {
     id: "createdAt",
     header: t("companies.table.columns.createdAt"),
     cell: (company) => formatDate(company.createdAt),
