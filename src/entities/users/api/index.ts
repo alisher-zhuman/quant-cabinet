@@ -1,3 +1,5 @@
+import type { infer as ZodInfer } from "zod";
+
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
@@ -5,7 +7,9 @@ import {
   DeleteUserPayloadSchema,
   UsersResponseSchema,
 } from "../model/schemas";
-import type { DeleteUserPayload, UsersResponse } from "../model/types";
+
+type DeleteUserPayload = ZodInfer<typeof DeleteUserPayloadSchema>;
+type UsersResponse = ZodInfer<typeof UsersResponseSchema>;
 
 interface Params {
   page?: number;

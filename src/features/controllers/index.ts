@@ -1,2 +1,2 @@
-export { createControllerColumns } from "./columns";
-export { useDeleteController } from "./hooks/useDeleteController";
+export * from "./columns";
+export * from "./hooks/useDeleteController";

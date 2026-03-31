@@ -1,2 +1,2 @@
-export { createUserColumns } from "./columns";
-export { useDeleteUser } from "./hooks/useDeleteUser";
+export * from "./columns";
+export * from "./hooks/useDeleteUser";

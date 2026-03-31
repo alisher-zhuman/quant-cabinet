@@ -1,3 +1,5 @@
+import type { infer as ZodInfer } from "zod";
+
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
@@ -6,12 +8,14 @@ import {
   CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
 } from "../model/schemas";
-import type {
-  CompaniesResponse,
-  CreateCompanyPayload,
-  DeleteCompanyPayload,
-  ToggleCompanyArchivePayload,
-} from "../model/types";
+import type { CreateCompanyPayload } from "../model/types";
+
+type CompaniesResponse = ZodInfer<typeof CompaniesResponseSchema>;
+type DeleteCompanyPayload = ZodInfer<typeof DeleteCompanyPayloadSchema>;
+type ToggleCompanyArchivePayload = {
+  id: string;
+  isArchived: boolean;
+};
 
 interface Params {
   page?: number;
