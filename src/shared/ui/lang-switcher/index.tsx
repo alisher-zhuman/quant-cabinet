@@ -6,12 +6,15 @@ import type { SxProps, Theme } from "@mui/material/styles";
 
 import { COLORS, LANGUAGE_BADGE, SUPPORTED_LANGUAGES } from "../../constants";
 import { getResolvedLanguage } from "../../helpers";
+import type { AppLanguage } from "../../types";
 
 interface Props {
+  isLoading?: boolean;
+  onChangeLanguage?: (language: AppLanguage) => void | Promise<void>;
   sx?: SxProps<Theme>;
 }
 
-export const LangSwitcher = ({ sx }: Props) => {
+export const LangSwitcher = ({ isLoading = false, onChangeLanguage, sx }: Props) => {
   const { t, i18n } = useTranslation();
 
   const currentLanguage = getResolvedLanguage(i18n.resolvedLanguage);
@@ -25,7 +28,13 @@ export const LangSwitcher = ({ sx }: Props) => {
   const containerProps = sx ? { sx } : {};
 
   const onToggleLanguage = () => {
-    if (!nextLanguage || nextLanguage === currentLanguage) {
+    if (!nextLanguage || nextLanguage === currentLanguage || isLoading) {
+      return;
+    }
+
+    if (onChangeLanguage) {
+      void onChangeLanguage(nextLanguage);
+
       return;
     }
 
@@ -37,6 +46,7 @@ export const LangSwitcher = ({ sx }: Props) => {
       <Button
         type="button"
         variant="outlined"
+        disabled={isLoading}
         onClick={onToggleLanguage}
         aria-label={t("common.language.label")}
         sx={{

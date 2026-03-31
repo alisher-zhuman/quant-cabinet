@@ -8,11 +8,12 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
+import { LangSwitcher } from "@features/change-language";
+
 import { ROUTES } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
-import { LangSwitcher } from "@shared/ui/lang-switcher";
 
 import { useLogInForm } from "../../hooks/useLogInForm";
 
