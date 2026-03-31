@@ -11,7 +11,7 @@ interface State {
   componentStack?: string;
 }
 
-export class AppErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   override state: State = {
     error: null,
   };
