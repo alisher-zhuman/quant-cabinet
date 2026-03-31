@@ -10,6 +10,7 @@ import { CompanyActions } from "../ui/company-actions";
 export const createCompanyColumns = (
   t: TFunction,
   onToggleArchive: (company: CompanyRow) => void,
+  onEdit: (company: CompanyRow) => void,
   onDelete: (company: CompanyRow) => void,
 ): Column<CompanyRow>[] => [
   {
@@ -36,8 +37,10 @@ export const createCompanyColumns = (
         company={company}
         archiveLabel={t("companies.actions.archive")}
         unarchiveLabel={t("companies.actions.unarchive")}
+        editLabel={t("companies.actions.edit")}
         deleteLabel={t("companies.actions.delete")}
         onToggleArchive={onToggleArchive}
+        onEdit={onEdit}
         onDelete={onDelete}
       />
     ),

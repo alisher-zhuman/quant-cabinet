@@ -8,8 +8,12 @@ import {
   CompaniesResponseSchema,
   CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
+  UpdateCompanyPayloadSchema,
 } from "../model/schemas";
-import type { CreateCompanyPayload } from "../model/types";
+import type {
+  CreateCompanyPayload,
+  UpdateCompanyPayload,
+} from "../model/types";
 
 type CompaniesResponse = ZodInfer<typeof CompaniesResponseSchema>;
 type DeleteCompanyPayload = ZodInfer<typeof DeleteCompanyPayloadSchema>;
@@ -44,6 +48,18 @@ export const createCompany = async (
   const validPayload = CreateCompanyPayloadSchema.parse(payload);
 
   await api.post(API_PATHS.COMPANIES, validPayload);
+};
+
+export const updateCompany = async ({
+  id,
+  ...payload
+}: UpdateCompanyPayload): Promise<void> => {
+  const { id: validId, ...validPayload } = UpdateCompanyPayloadSchema.parse({
+    id,
+    ...payload,
+  });
+
+  await api.patch(`${API_PATHS.COMPANIES}/${validId}`, validPayload);
 };
 
 export const toggleCompanyArchive = async ({

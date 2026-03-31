@@ -4,22 +4,32 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
+import type { CompanyRow } from "@entities/companies";
+
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
 
-import { useCreateCompanyForm } from "../../hooks/useCreateCompanyForm";
+import { useCompanyForm } from "../../hooks/useCompanyForm";
 
 interface Props {
+  company?: CompanyRow | null;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const CreateCompanyDialog = ({ open, onClose, onSuccess }: Props) => {
+export const CreateCompanyDialog = ({
+  company,
+  open,
+  onClose,
+  onSuccess,
+}: Props) => {
   const { t } = useTranslation();
+  const isEditMode = Boolean(company);
 
-  const { control, isPending, isValid, onSubmit } = useCreateCompanyForm({
+  const { control, isPending, isValid, onSubmit } = useCompanyForm({
+    company,
     onSuccess,
   });
 
@@ -30,7 +40,13 @@ export const CreateCompanyDialog = ({ open, onClose, onSuccess }: Props) => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{t("companies.createDialog.title")}</DialogTitle>
+      <DialogTitle>
+        {t(
+          isEditMode
+            ? "companies.editDialog.title"
+            : "companies.createDialog.title",
+        )}
+      </DialogTitle>
 
       <DialogContent>
         <form onSubmit={onSubmit}>
@@ -51,9 +67,21 @@ export const CreateCompanyDialog = ({ open, onClose, onSuccess }: Props) => {
 
             <FormActions
               onCancel={onClose}
-              cancelLabel={t("companies.createDialog.cancel")}
-              submitLabel={t("companies.createDialog.submit")}
-              submitLabelLoading={t("companies.createDialog.submitLoading")}
+              cancelLabel={t(
+                isEditMode
+                  ? "companies.editDialog.cancel"
+                  : "companies.createDialog.cancel",
+              )}
+              submitLabel={t(
+                isEditMode
+                  ? "companies.editDialog.submit"
+                  : "companies.createDialog.submit",
+              )}
+              submitLabelLoading={t(
+                isEditMode
+                  ? "companies.editDialog.submitLoading"
+                  : "companies.createDialog.submitLoading",
+              )}
               isSubmitting={isPending}
               submitProps={{ disabled: !isValid }}
             />

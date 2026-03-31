@@ -39,6 +39,10 @@ export const CreateCompanyPayloadSchema = z.object({
   address: z.string().trim().min(1),
 });
 
+export const UpdateCompanyPayloadSchema = CreateCompanyPayloadSchema.extend({
+  id: z.string(),
+});
+
 export const DeleteCompanyPayloadSchema = z.object({
   id: z.string(),
 });

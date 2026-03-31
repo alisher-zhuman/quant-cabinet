@@ -30,6 +30,7 @@ import { TableSection } from "@shared/ui/table-section";
 
 export const CompaniesWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [companyToEdit, setCompanyToEdit] = useState<CompanyRow | null>(null);
   const [companyToDelete, setCompanyToDelete] = useState<CompanyRow | null>(
     null,
   );
@@ -80,6 +81,11 @@ export const CompaniesWidget = () => {
 
   const deleteCompanyMutation = useDeleteCompany(onCloseDeleteDialog);
 
+  const handleEditCompany = useCallback((company: CompanyRow) => {
+    setCompanyToEdit(company);
+    setIsCreateDialogOpen(true);
+  }, []);
+
   const columns = useMemo(
     () =>
       createCompanyColumns(
@@ -90,9 +96,10 @@ export const CompaniesWidget = () => {
             isArchived: company.isArchived,
           });
         },
+        handleEditCompany,
         setCompanyToDelete,
       ),
-    [t, toggleCompanyArchiveMutation],
+    [t, toggleCompanyArchiveMutation, handleEditCompany],
   );
 
   const handleSearchChange = (value: string) => {
@@ -106,18 +113,26 @@ export const CompaniesWidget = () => {
   };
 
   const handleOpenCreateDialog = () => {
+    setCompanyToEdit(null);
     setIsCreateDialogOpen(true);
   };
 
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
+    setCompanyToEdit(null);
   };
 
   const handleCreateSuccess = useCallback(() => {
     setIsCreateDialogOpen(false);
+    setCompanyToEdit(null);
     setIsArchived(false);
     setPage(0);
   }, [setIsArchived, setPage]);
+
+  const handleEditSuccess = useCallback(() => {
+    setIsCreateDialogOpen(false);
+    setCompanyToEdit(null);
+  }, []);
 
   const handleConfirmDelete = () => {
     if (!companyToDelete) {
@@ -189,9 +204,10 @@ export const CompaniesWidget = () => {
       />
 
       <CreateCompanyDialog
+        company={companyToEdit}
         open={isCreateDialogOpen}
         onClose={handleCloseCreateDialog}
-        onSuccess={handleCreateSuccess}
+        onSuccess={companyToEdit ? handleEditSuccess : handleCreateSuccess}
       />
     </>
   );
