@@ -5,7 +5,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import { createSameSliceImportConfigs } from "./eslint/helpers/internal-imports.js";
+import { createSameLayerImportConfig } from "./eslint/helpers/internal-imports.js";
 
 export default defineConfig([
   globalIgnores(["dist"]),
@@ -106,8 +106,8 @@ export default defineConfig([
       ],
     },
   },
-  ...createSameSliceImportConfigs("entities"),
-  ...createSameSliceImportConfigs("features"),
-  ...createSameSliceImportConfigs("widgets"),
-  ...createSameSliceImportConfigs("pages"),
+  createSameLayerImportConfig("entities"),
+  createSameLayerImportConfig("features"),
+  createSameLayerImportConfig("widgets"),
+  createSameLayerImportConfig("pages"),
 ]);

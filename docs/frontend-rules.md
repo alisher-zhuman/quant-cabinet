@@ -11,6 +11,11 @@
 - `widgets`: композиция нескольких features/entities/shared.
 - `pages`: сборка страницы из widget.
 - `app`: bootstrap, router, providers, theme, app-level orchestration.
+- `feature` не импортирует `feature`.
+- `entity` не импортирует `entity`.
+- `widget` не импортирует `widget`.
+- `page` не импортирует `page`.
+- Если код нужен нескольким слайсам одного слоя, его опускаем ниже в `shared` или поднимаем выше в слой-компоновщик.
 
 ## Exports
 
