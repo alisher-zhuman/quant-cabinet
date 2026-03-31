@@ -1,8 +1,11 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 
-import { UsersResponseSchema } from "../model/schemas";
-import type { UsersResponse } from "../model/types";
+import {
+  DeleteUserPayloadSchema,
+  UsersResponseSchema,
+} from "../model/schemas";
+import type { DeleteUserPayload, UsersResponse } from "../model/types";
 
 interface Params {
   page?: number;
@@ -29,4 +32,12 @@ export const getUsers = async ({
   });
 
   return UsersResponseSchema.parse(response.data);
+};
+
+export const deleteUser = async (payload: DeleteUserPayload): Promise<void> => {
+  const validPayload = DeleteUserPayloadSchema.parse(payload);
+
+  await api.delete(API_PATHS.USERS, {
+    data: validPayload,
+  });
 };

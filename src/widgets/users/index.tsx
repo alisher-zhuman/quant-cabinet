@@ -1,12 +1,13 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { createUserColumns } from "@features/users";
+import { createUserColumns, useDeleteUser } from "@features/users";
 
+import type { UserRow } from "@entities/users";
 import { useUsersQuery } from "@entities/users";
 
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
@@ -22,6 +23,7 @@ import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
   const { t } = useTranslation();
+  const deleteUserMutation = useDeleteUser();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
 
@@ -52,7 +54,17 @@ export const UsersWidget = () => {
       isArchived,
     });
 
-  const columns = useMemo(() => createUserColumns(t), [t]);
+  const handleDeleteUser = useCallback(
+    (user: UserRow) => {
+      deleteUserMutation.mutate({ userId: user.id });
+    },
+    [deleteUserMutation],
+  );
+
+  const columns = useMemo(
+    () => createUserColumns(t, handleDeleteUser),
+    [t, handleDeleteUser],
+  );
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -78,7 +90,7 @@ export const UsersWidget = () => {
         emptyText={emptyText}
         rows={users}
         columns={columns}
-        getRowId={(user) => user.email}
+        getRowId={(user) => user.id}
         toolbar={
           <SearchTabsToolbar
             search={search}

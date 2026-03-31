@@ -10,6 +10,7 @@ export const UserCompanySchema = z
   .optional();
 
 export const UserRowSchema = z.looseObject({
+  id: z.string(),
   email: z.string(),
   firstName: z.string(),
   lastName: z.string(),
@@ -21,4 +22,8 @@ export const UserRowSchema = z.looseObject({
 export const UsersResponseSchema = z.looseObject({
   data: z.array(UserRowSchema),
   total: z.number(),
+});
+
+export const DeleteUserPayloadSchema = z.object({
+  userId: z.string(),
 });
