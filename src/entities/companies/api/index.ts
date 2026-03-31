@@ -8,6 +8,7 @@ import {
   CompanyDetailsSchema,
   CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
+  RefreshCompanyTokenPayloadSchema,
   UpdateCompanyPayloadSchema,
 } from "../model/schemas";
 import type {
@@ -15,6 +16,7 @@ import type {
   CompanyDetails,
   CreateCompanyPayload,
   DeleteCompanyPayload,
+  RefreshCompanyTokenPayload,
   UpdateCompanyPayload,
 } from "../model/types";
 
@@ -65,4 +67,12 @@ export const deleteCompany = async (
   await api.delete(API_PATHS.COMPANIES, {
     data: validPayload,
   });
+};
+
+export const refreshCompanyToken = async (
+  payload: RefreshCompanyTokenPayload,
+): Promise<void> => {
+  const validPayload = RefreshCompanyTokenPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.COMPANIES_TOKEN_REFRESH, validPayload);
 };

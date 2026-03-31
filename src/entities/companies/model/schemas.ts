@@ -50,3 +50,7 @@ export const UpdateCompanyPayloadSchema = CreateCompanyPayloadSchema.extend({
 export const DeleteCompanyPayloadSchema = z.object({
   id: z.string(),
 });
+
+export const RefreshCompanyTokenPayloadSchema = z.object({
+  companyId: z.string(),
+});
