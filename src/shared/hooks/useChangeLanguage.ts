@@ -1,17 +1,17 @@
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
-import { changeUserLanguage } from "@entities/users";
-
-import { useAuthStore } from "@shared/stores";
-import type { AppLanguage } from "@shared/types";
+import { changeLanguage } from "../api";
+import { useAuthStore } from "../stores";
+import type { AppLanguage } from "../types";
 
 export const useChangeLanguage = () => {
   const { i18n } = useTranslation();
+
   const accessToken = useAuthStore((state) => state.accessToken);
 
   const mutation = useMutation({
-    mutationFn: changeUserLanguage,
+    mutationFn: changeLanguage,
   });
 
   const handleChangeLanguage = async (language: AppLanguage) => {

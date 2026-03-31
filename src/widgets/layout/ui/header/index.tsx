@@ -1,9 +1,8 @@
 import { Link } from "react-router";
 
-import { LangSwitcher } from "@features/change-language";
-
 import { COLORS, ROUTES } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
+import { LangSwitcher } from "@shared/ui/lang-switcher";
 
 import { Navbar } from "../navbar";
 import { ProfileMenu } from "../profile-menu";

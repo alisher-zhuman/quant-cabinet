@@ -4,15 +4,10 @@ import { buildListQueryParams } from "@shared/helpers";
 import type { ListQueryParams } from "@shared/types";
 
 import {
-  ChangeUserLanguagePayloadSchema,
   DeleteUserPayloadSchema,
   UsersResponseSchema,
 } from "../model/schemas";
-import type {
-  ChangeUserLanguagePayload,
-  DeleteUserPayload,
-  UsersResponse,
-} from "../model/types";
+import type { DeleteUserPayload, UsersResponse } from "../model/types";
 
 export const getUsers = async ({
   page = 1,
@@ -33,12 +28,4 @@ export const deleteUser = async (payload: DeleteUserPayload): Promise<void> => {
   await api.delete(API_PATHS.USERS, {
     data: validPayload,
   });
-};
-
-export const changeUserLanguage = async (
-  payload: ChangeUserLanguagePayload,
-): Promise<void> => {
-  const validPayload = ChangeUserLanguagePayloadSchema.parse(payload);
-
-  await api.post(API_PATHS.USERS_LANG, validPayload);
 };
