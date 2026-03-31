@@ -29,7 +29,7 @@ export const useLogInForm = () => {
     handleSubmit,
     formState: { isValid },
   } = useForm<LogInFormValues>({
-    resolver: zodResolver(createLogInFormSchema()),
+    resolver: zodResolver(createLogInFormSchema(t)),
     mode: "onChange",
     defaultValues: {
       email: "",

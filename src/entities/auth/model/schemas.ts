@@ -1,33 +1,36 @@
 import { z } from "zod";
 
-import i18next from "i18next";
+import type { TFunction } from "i18next";
 
 import { UserRoleSchema } from "@shared/schemas";
 
-export const createLogInFormSchema = () =>
+export const createLogInFormSchema = (t: TFunction) =>
   z.object({
     email: z
       .string()
       .trim()
-      .min(1, i18next.t("validation.requiredEmail"))
-      .pipe(z.email(i18next.t("validation.invalidEmail"))),
-    password: z.string().min(1, i18next.t("validation.requiredPassword")),
+      .min(1, t("validation.requiredEmail"))
+      .pipe(z.email(t("validation.invalidEmail"))),
+    password: z.string().min(1, t("validation.requiredPassword")),
   });
 
-export type LogInFormSchema = ReturnType<typeof createLogInFormSchema>;
+export const LogInPayloadSchema = z.object({
+  email: z.string().trim().min(1).pipe(z.email()),
+  password: z.string().min(1),
+});
 
-export const createForgotPasswordFormSchema = () =>
+export const createForgotPasswordFormSchema = (t: TFunction) =>
   z.object({
     email: z
       .string()
       .trim()
-      .min(1, i18next.t("validation.requiredEmail"))
-      .pipe(z.email(i18next.t("validation.invalidEmail"))),
+      .min(1, t("validation.requiredEmail"))
+      .pipe(z.email(t("validation.invalidEmail"))),
   });
 
-export type ForgotPasswordFormSchema = ReturnType<
-  typeof createForgotPasswordFormSchema
->;
+export const ForgotPasswordPayloadSchema = z.object({
+  email: z.string().trim().min(1).pipe(z.email()),
+});
 
 export const LogInResponseSchema = z.object({
   accessToken: z.string().min(1),

@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -11,6 +13,7 @@ interface Props {
   archivedLabel: string;
   isSearchLoading: boolean;
   isArchived: boolean;
+  actions?: ReactNode;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
 }
@@ -22,6 +25,7 @@ export const SearchTabsToolbar = ({
   archivedLabel,
   isSearchLoading,
   isArchived,
+  actions,
   onSearchChange,
   onArchivedChange,
 }: Props) => (
@@ -43,19 +47,31 @@ export const SearchTabsToolbar = ({
       sx={{ maxWidth: { xs: "100%", sm: 360 } }}
     />
 
-    <Tabs
-      value={isArchived ? "archived" : "active"}
-      onChange={(_event, value: string) => {
-        if (!value) {
-          return;
-        }
-
-        onArchivedChange(value === "archived");
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: { xs: "space-between", sm: "flex-end" },
+        flexWrap: "wrap",
+        gap: 1.5,
       }}
-      sx={{ minHeight: 40 }}
     >
-      <Tab value="active" label={activeLabel} sx={{ minHeight: 40 }} />
-      <Tab value="archived" label={archivedLabel} sx={{ minHeight: 40 }} />
-    </Tabs>
+      <Tabs
+        value={isArchived ? "archived" : "active"}
+        onChange={(_event, value: string) => {
+          if (!value) {
+            return;
+          }
+
+          onArchivedChange(value === "archived");
+        }}
+        sx={{ minHeight: 40 }}
+      >
+        <Tab value="active" label={activeLabel} sx={{ minHeight: 40 }} />
+        <Tab value="archived" label={archivedLabel} sx={{ minHeight: 40 }} />
+      </Tabs>
+
+      {actions}
+    </Box>
   </Box>
 );

@@ -3,10 +3,12 @@ import { API_PATHS } from "@shared/constants";
 
 import {
   CompaniesResponseSchema,
+  CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
 } from "../model/schemas";
 import type {
   CompaniesResponse,
+  CreateCompanyPayload,
   DeleteCompanyPayload,
   ToggleCompanyArchivePayload,
 } from "../model/types";
@@ -36,6 +38,14 @@ export const getCompanies = async ({
   });
 
   return CompaniesResponseSchema.parse(response.data);
+};
+
+export const createCompany = async (
+  payload: CreateCompanyPayload,
+): Promise<void> => {
+  const validPayload = CreateCompanyPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.COMPANIES, validPayload);
 };
 
 export const toggleCompanyArchive = async ({

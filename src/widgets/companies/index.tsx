@@ -1,12 +1,15 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import {
   createCompanyColumns,
+  CreateCompanyDialog,
   useDeleteCompany,
   useToggleCompanyArchive,
 } from "@features/companies";
@@ -26,6 +29,7 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const CompaniesWidget = () => {
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [companyToDelete, setCompanyToDelete] = useState<CompanyRow | null>(
     null,
   );
@@ -101,6 +105,20 @@ export const CompaniesWidget = () => {
     setPage(0);
   };
 
+  const handleOpenCreateDialog = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleCloseCreateDialog = () => {
+    setIsCreateDialogOpen(false);
+  };
+
+  const handleCreateSuccess = useCallback(() => {
+    setIsCreateDialogOpen(false);
+    setIsArchived(false);
+    setPage(0);
+  }, [setIsArchived, setPage]);
+
   const handleConfirmDelete = () => {
     if (!companyToDelete) {
       return;
@@ -135,6 +153,15 @@ export const CompaniesWidget = () => {
               archivedLabel={t("companies.tabs.archived")}
               isSearchLoading={isFetching}
               isArchived={isArchived}
+              actions={
+                <Button
+                  variant="contained"
+                  startIcon={<AddRoundedIcon />}
+                  onClick={handleOpenCreateDialog}
+                >
+                  {t("companies.actions.create")}
+                </Button>
+              }
               onSearchChange={handleSearchChange}
               onArchivedChange={handleArchivedChange}
             />
@@ -159,6 +186,12 @@ export const CompaniesWidget = () => {
         isLoading={deleteCompanyMutation.isPending}
         onClose={onCloseDeleteDialog}
         onConfirm={handleConfirmDelete}
+      />
+
+      <CreateCompanyDialog
+        open={isCreateDialogOpen}
+        onClose={handleCloseCreateDialog}
+        onSuccess={handleCreateSuccess}
       />
     </>
   );

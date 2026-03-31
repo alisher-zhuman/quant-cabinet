@@ -24,7 +24,7 @@ export const useForgotPasswordForm = () => {
     handleSubmit,
     formState: { isValid },
   } = useForm<ForgotPasswordFormValues>({
-    resolver: zodResolver(createForgotPasswordFormSchema()),
+    resolver: zodResolver(createForgotPasswordFormSchema(t)),
     mode: "onChange",
     defaultValues: {
       email: "",

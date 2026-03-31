@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { TFunction } from "i18next";
+
 export const CompanyUserSchema = z
   .looseObject({
     email: z.string().optional(),
@@ -21,6 +23,21 @@ export const CompanyRowSchema = z.looseObject({
 export const CompaniesResponseSchema = z.looseObject({
   data: z.array(CompanyRowSchema),
   total: z.number(),
+});
+
+export const createCompanyFormSchema = (t: TFunction) =>
+  z.object({
+    name: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredCompanyName"))
+      .min(3, t("validation.minCompanyName")),
+    address: z.string().trim().min(1, t("validation.requiredAddress")),
+  });
+
+export const CreateCompanyPayloadSchema = z.object({
+  name: z.string().trim().min(3),
+  address: z.string().trim().min(1),
 });
 
 export const DeleteCompanyPayloadSchema = z.object({
