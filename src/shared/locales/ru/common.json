@@ -33,6 +33,7 @@
     "error": "Не удалось загрузить пользователей",
     "actions": {
       "create": "Добавить",
+      "details": "Открыть подробности",
       "edit": "Редактировать пользователя",
       "delete": "Удалить пользователя"
     },
@@ -90,13 +91,44 @@
       "submit": "Сохранить",
       "submitLoading": "Сохранение..."
     },
+    "details": {
+      "title": "Информация о пользователе",
+      "close": "Закрыть",
+      "sections": {
+        "user": "Пользователь",
+        "company": "Компания"
+      },
+      "fields": {
+        "id": "ID",
+        "email": "Почта",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "role": "Роль",
+        "phoneNumber": "Номер телефона",
+        "descriptions": "Описание",
+        "passwordChange": "Смена пароля",
+        "createdAt": "Дата создания",
+        "updatedAt": "Дата обновления",
+        "isArchived": "Статус",
+        "companyId": "ID компании",
+        "companyName": "Компания",
+        "companyAddress": "Адрес компании",
+        "companyStatus": "Статус компании",
+        "companyCreatedAt": "Дата создания компании",
+        "companyUpdatedAt": "Дата обновления компании"
+      },
+      "values": {
+        "yes": "Да",
+        "no": "Нет",
+        "active": "Активный",
+        "archived": "В архиве"
+      }
+    },
     "table": {
       "rowsPerPage": "Строк на странице:",
       "columns": {
         "email": "Почта",
-        "firstName": "Имя",
-        "phoneNumber": "Номер телефона",
-        "lastName": "Фамилия",
+        "fullName": "ФИО",
         "company": "Компания",
         "role": "Роль пользователя",
         "createdAt": "Дата создания",
@@ -343,6 +375,7 @@
     "requiredPhoneNumber": "Номер телефона обязателен",
     "requiredDescriptions": "Описание обязательно",
     "requiredCompany": "Компания обязательна",
+    "invalidCreateUserRole": "Для создания доступны только пользователь и менеджер",
     "requiredCompanyName": "Название компании обязательно",
     "minCompanyName": "Название компании должно содержать минимум 3 символа",
     "requiredAddress": "Адрес обязателен",

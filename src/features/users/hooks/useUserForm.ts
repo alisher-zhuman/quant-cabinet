@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import type { UserFormValues, UserRow } from "@entities/users";
-import { createUserFormSchema } from "@entities/users";
+import { createUserFormSchema, updateUserFormSchema } from "@entities/users";
 
 import { useCreateUser } from "./useCreateUser";
 import { useUpdateUser } from "./useUpdateUser";
@@ -20,7 +20,7 @@ const getDefaultValues = (user?: UserRow | null): UserFormValues => ({
   email: user?.email ?? "",
   firstName: user?.firstName ?? "",
   lastName: user?.lastName ?? "",
-  role: user?.role === "admin" ? "user" : user?.role ?? "user",
+  role: user?.role ?? "user",
   phoneNumber: user?.phoneNumber ?? "",
   descriptions: user?.descriptions ?? "",
   company: user?.company?.id ?? "",
@@ -29,6 +29,7 @@ const getDefaultValues = (user?: UserRow | null): UserFormValues => ({
 
 export const useUserForm = ({ user, onSuccess }: Params = {}) => {
   const { t } = useTranslation();
+  const isEditMode = Boolean(user);
 
   const defaultValues = useMemo(() => getDefaultValues(user), [user]);
 
@@ -38,7 +39,7 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
     reset,
     formState: { isValid },
   } = useForm<UserFormValues>({
-    resolver: zodResolver(createUserFormSchema(t)),
+    resolver: zodResolver(isEditMode ? updateUserFormSchema(t) : createUserFormSchema(t)),
     mode: "onChange",
     defaultValues,
   });
@@ -70,6 +71,10 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
         isArchived: values.isArchived,
       });
 
+      return;
+    }
+
+    if (values.role === "admin") {
       return;
     }
 

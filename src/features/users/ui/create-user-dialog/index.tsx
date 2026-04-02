@@ -49,11 +49,18 @@ export const CreateUserDialog = ({
   );
 
   const roleOptions = useMemo(
-    () => [
-      { value: "user", label: t("profile.roles.user") },
-      { value: "manager", label: t("profile.roles.manager") },
-    ],
-    [t],
+    () =>
+      isEditMode
+        ? [
+            { value: "admin", label: t("profile.roles.admin") },
+            { value: "manager", label: t("profile.roles.manager") },
+            { value: "user", label: t("profile.roles.user") },
+          ]
+        : [
+            { value: "user", label: t("profile.roles.user") },
+            { value: "manager", label: t("profile.roles.manager") },
+          ],
+    [isEditMode, t],
   );
 
   const { control, isPending, isValid, onSubmit } = useUserForm({

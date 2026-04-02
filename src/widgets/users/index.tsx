@@ -11,10 +11,10 @@ import {
   createUserColumns,
   CreateUserDialog,
   useDeleteUser,
+  UserDetailsDialog,
 } from "@features/users";
 
-import type { UserRow } from "@entities/users";
-import { useUsersQuery } from "@entities/users";
+import { type UserRow, useUsersQuery } from "@entities/users";
 
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
@@ -30,9 +30,10 @@ import { TableSection } from "@shared/ui/table-section";
 export const UsersWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
+  const [userToView, setUserToView] = useState<UserRow | null>(null);
 
   const { t } = useTranslation();
-  
+
   const deleteUserMutation = useDeleteUser();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
@@ -83,9 +84,13 @@ export const UsersWidget = () => {
     setIsCreateDialogOpen(true);
   }, []);
 
+  const handleViewUser = useCallback((user: UserRow) => {
+    setUserToView(user);
+  }, []);
+
   const columns = useMemo(
-    () => createUserColumns(t, handleEditUser, handleDeleteUser),
-    [t, handleEditUser, handleDeleteUser],
+    () => createUserColumns(t, handleViewUser, handleEditUser, handleDeleteUser),
+    [t, handleViewUser, handleEditUser, handleDeleteUser],
   );
 
   const handleSearchChange = (value: string) => {
@@ -106,6 +111,10 @@ export const UsersWidget = () => {
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
     setUserToEdit(null);
+  };
+
+  const handleCloseDetailsDialog = () => {
+    setUserToView(null);
   };
 
   const handleCreateSuccess = useCallback(() => {
@@ -176,6 +185,12 @@ export const UsersWidget = () => {
           onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
         />
       )}
+
+      <UserDetailsDialog
+        open={Boolean(userToView)}
+        user={userToView}
+        onClose={handleCloseDetailsDialog}
+      />
     </>
   );
 };

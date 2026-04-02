@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { useRefreshCompanyToken } from "@features/companies";
@@ -18,6 +19,7 @@ import { useCompanyQuery } from "@entities/companies";
 
 import { ROUTES } from "@shared/constants";
 import { formatDate } from "@shared/helpers";
+import { DetailRow } from "@shared/ui/detail-row";
 
 export const CompanyDetailsWidget = () => {
   const { t } = useTranslation();
@@ -91,76 +93,20 @@ export const CompanyDetailsWidget = () => {
             </Typography>
           </Box>
 
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "repeat(2, minmax(0, 1fr))",
-              },
-              gap: 2,
-            }}
-          >
-            <Box
-              sx={{
-                p: 2,
-                borderRadius: 2.5,
-                backgroundColor: "background.default",
-              }}
-            >
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 0.75 }}
-              >
-                {t("companies.details.fields.name")}
-              </Typography>
-
-              <Typography variant="body1" fontWeight={600}>
-                {company?.name ?? "-"}
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                p: 2,
-                borderRadius: 2.5,
-                backgroundColor: "background.default",
-              }}
-            >
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 0.75 }}
-              >
-                {t("companies.details.fields.address")}
-              </Typography>
-
-              <Typography variant="body1" fontWeight={600}>
-                {company?.address ?? "-"}
-              </Typography>
-            </Box>
-
-            <Box
-              sx={{
-                p: 2,
-                borderRadius: 2.5,
-                backgroundColor: "background.default",
-              }}
-            >
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 0.75 }}
-              >
-                {t("companies.details.fields.createdAt")}
-              </Typography>
-
-              <Typography variant="body1" fontWeight={600}>
-                {company?.createdAt ? formatDate(company.createdAt) : "-"}
-              </Typography>
-            </Box>
-          </Box>
+          <Stack spacing={1.25}>
+            <DetailRow
+              label={t("companies.details.fields.name")}
+              value={company?.name ?? "-"}
+            />
+            <DetailRow
+              label={t("companies.details.fields.address")}
+              value={company?.address ?? "-"}
+            />
+            <DetailRow
+              label={t("companies.details.fields.createdAt")}
+              value={company?.createdAt ? formatDate(company.createdAt) : "-"}
+            />
+          </Stack>
 
           <Box
             sx={{
@@ -176,23 +122,27 @@ export const CompanyDetailsWidget = () => {
           >
             <Box sx={{ minWidth: 0 }}>
               <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ display: "block", mb: 0.75 }}
-              >
-                {t("companies.details.fields.key")}
-              </Typography>
-
-              <Typography
                 variant="body1"
-                fontWeight={600}
                 sx={{
-                  fontFamily:
-                    '"SFMono-Regular", "SFMono-Regular", Consolas, monospace',
                   wordBreak: "break-all",
+                  lineHeight: 1.65,
                 }}
               >
-                {companyKey || "-"}
+                <Box
+                  component="span"
+                  sx={{ fontWeight: 700, color: "text.secondary" }}
+                >
+                  {t("companies.details.fields.key")}:
+                </Box>{" "}
+                <Box
+                  component="span"
+                  sx={{
+                    fontFamily:
+                      '"SFMono-Regular", "SFMono-Regular", Consolas, monospace',
+                  }}
+                >
+                  {companyKey || "-"}
+                </Box>
               </Typography>
             </Box>
 

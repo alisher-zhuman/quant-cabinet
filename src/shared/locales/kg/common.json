@@ -33,6 +33,7 @@
     "error": "Колдонуучуларды жүктөө мүмкүн болгон жок",
     "actions": {
       "create": "Кошуу",
+      "details": "Толук маалыматты ачуу",
       "edit": "Колдонуучуну түзөтүү",
       "delete": "Колдонуучуну өчүрүү"
     },
@@ -90,13 +91,44 @@
       "submit": "Сактоо",
       "submitLoading": "Сакталууда..."
     },
+    "details": {
+      "title": "Колдонуучу тууралуу маалымат",
+      "close": "Жабуу",
+      "sections": {
+        "user": "Колдонуучу",
+        "company": "Компания"
+      },
+      "fields": {
+        "id": "ID",
+        "email": "Почта",
+        "firstName": "Аты",
+        "lastName": "Фамилиясы",
+        "role": "Роль",
+        "phoneNumber": "Телефон номери",
+        "descriptions": "Сүрөттөмө",
+        "passwordChange": "Сырсөздү алмаштыруу",
+        "createdAt": "Түзүлгөн күнү",
+        "updatedAt": "Жаңыртылган күнү",
+        "isArchived": "Статус",
+        "companyId": "Компаниянын ID'си",
+        "companyName": "Компания",
+        "companyAddress": "Компаниянын дареги",
+        "companyStatus": "Компаниянын статусу",
+        "companyCreatedAt": "Компания түзүлгөн күнү",
+        "companyUpdatedAt": "Компания жаңыртылган күнү"
+      },
+      "values": {
+        "yes": "Ооба",
+        "no": "Жок",
+        "active": "Активдүү",
+        "archived": "Архивде"
+      }
+    },
     "table": {
       "rowsPerPage": "Бир беттеги саптар:",
       "columns": {
         "email": "Почта",
-        "firstName": "Аты",
-        "phoneNumber": "Телефон номери",
-        "lastName": "Фамилиясы",
+        "fullName": "Толук аты-жөнү",
         "company": "Компания",
         "role": "Колдонуучунун ролу",
         "createdAt": "Түзүлгөн күнү",
@@ -343,6 +375,7 @@
     "requiredPhoneNumber": "Телефон номери милдеттүү",
     "requiredDescriptions": "Сүрөттөмө милдеттүү",
     "requiredCompany": "Компания милдеттүү",
+    "invalidCreateUserRole": "Түзүү үчүн колдонуучу жана менеджер гана жеткиликтүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",
     "requiredAddress": "Дарек милдеттүү",
