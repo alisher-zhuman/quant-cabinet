@@ -14,7 +14,7 @@ const UserCompanySchema = z
 export const UserRowSchema = z.looseObject({
   id: z.string(),
   email: z.string(),
-  phoneNumber: z.string().nullable(),
+  phoneNumber: z.string(),
   firstName: z.string(),
   lastName: z.string(),
   role: UserRoleSchema,
@@ -39,7 +39,10 @@ export const createUserFormSchema = (t: (key: string) => string) =>
     lastName: z.string().trim().min(1, t("validation.requiredLastName")),
     role: CreateUserRoleSchema,
     phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-    descriptions: z.string().trim().min(1, t("validation.requiredDescriptions")),
+    descriptions: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredDescriptions")),
     company: z.string().trim().min(1, t("validation.requiredCompany")),
   });
 
