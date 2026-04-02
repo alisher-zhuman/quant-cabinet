@@ -57,6 +57,7 @@ export const CreateUserDialog = ({
             { value: "user", label: t("profile.roles.user") },
           ]
         : [
+            { value: "admin", label: t("profile.roles.admin") },
             { value: "user", label: t("profile.roles.user") },
             { value: "manager", label: t("profile.roles.manager") },
           ],

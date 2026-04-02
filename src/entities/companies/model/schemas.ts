@@ -7,6 +7,8 @@ import { createListResponseSchema } from "@shared/schemas";
 const CompanyKeySchema = z
   .looseObject({
     key: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
   })
   .nullable();
 
@@ -25,6 +27,7 @@ export const CompanyDetailsSchema = z.looseObject({
   name: z.string(),
   address: z.string(),
   createdAt: z.string(),
+  updatedAt: z.string(),
   isArchived: z.boolean(),
   key: CompanyKeySchema,
 });

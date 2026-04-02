@@ -10,7 +10,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { useRefreshCompanyToken } from "@features/companies";
@@ -60,7 +59,8 @@ export const CompanyDetailsWidget = () => {
         flexDirection: "column",
         gap: 3,
         padding: 2,
-        maxWidth: 920,
+        width: "100%",
+        maxWidth: "none",
       }}
     >
       <Button
@@ -93,20 +93,53 @@ export const CompanyDetailsWidget = () => {
             </Typography>
           </Box>
 
-          <Stack spacing={1.25}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                lg: "repeat(2, minmax(0, 1fr))",
+              },
+              gap: 1.25,
+            }}
+          >
             <DetailRow
               label={t("companies.details.fields.name")}
               value={company?.name ?? "-"}
             />
             <DetailRow
-              label={t("companies.details.fields.address")}
-              value={company?.address ?? "-"}
+              label={t("companies.details.fields.isArchived")}
+              value={
+                company
+                  ? t(
+                      company.isArchived
+                        ? "companies.details.values.archived"
+                        : "companies.details.values.active",
+                    )
+                  : "-"
+              }
             />
+            <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
+              <DetailRow
+                label={t("companies.details.fields.address")}
+                value={company?.address ?? "-"}
+              />
+            </Box>
             <DetailRow
               label={t("companies.details.fields.createdAt")}
               value={company?.createdAt ? formatDate(company.createdAt) : "-"}
             />
-          </Stack>
+            <DetailRow
+              label={t("companies.details.fields.updatedAt")}
+              value={company?.updatedAt ? formatDate(company.updatedAt) : "-"}
+            />
+            <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
+              <DetailRow
+                label={t("companies.details.fields.id")}
+                value={company?.id ?? companyId ?? "-"}
+              />
+            </Box>
+          </Box>
 
           <Box
             sx={{
@@ -144,6 +177,29 @@ export const CompanyDetailsWidget = () => {
                   {companyKey || "-"}
                 </Box>
               </Typography>
+
+              {company?.key && (
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: "1fr",
+                      lg: "repeat(2, minmax(0, 1fr))",
+                    },
+                    gap: 1.25,
+                    mt: 1.25,
+                  }}
+                >
+                  <DetailRow
+                    label={t("companies.details.fields.keyCreatedAt")}
+                    value={formatDate(company.key.createdAt)}
+                  />
+                  <DetailRow
+                    label={t("companies.details.fields.keyUpdatedAt")}
+                    value={formatDate(company.key.updatedAt)}
+                  />
+                </Box>
+              )}
             </Box>
 
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

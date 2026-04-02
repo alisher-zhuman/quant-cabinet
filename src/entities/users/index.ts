@@ -1,4 +1,5 @@
 export * from "./api";
+export * from "./hooks/useUserQuery";
 export * from "./hooks/useUsersQuery";
 export * from "./model/keys";
 export * from "./model/schemas";

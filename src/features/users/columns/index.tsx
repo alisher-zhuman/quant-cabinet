@@ -10,7 +10,6 @@ import { UserActions } from "../ui/user-actions";
 
 export const createUserColumns = (
   t: TFunction,
-  onView: (user: UserRow) => void,
   onEdit: (user: UserRow) => void,
   onDelete: (user: UserRow) => void,
 ): Column<UserRow>[] => [
@@ -48,10 +47,8 @@ export const createUserColumns = (
     align: "right",
     cell: (user) => (
       <UserActions
-        detailsLabel={t("users.actions.details")}
         editLabel={t("users.actions.edit")}
         deleteLabel={t("users.actions.delete")}
-        onView={onView}
         onEdit={onEdit}
         onDelete={onDelete}
         user={user}

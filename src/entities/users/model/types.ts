@@ -10,6 +10,7 @@ import type {
 } from "./schemas";
 
 export type UserRow = ZodInfer<typeof UserRowSchema>;
+export type UserDetails = ZodInfer<typeof UserRowSchema>;
 export type UsersResponse = ZodInfer<typeof UsersResponseSchema>;
 export type UserFormValues = ZodInfer<ReturnType<typeof createUserFormSchema>>;
 export type CreateUserPayload = ZodInfer<typeof CreateUserPayloadSchema>;

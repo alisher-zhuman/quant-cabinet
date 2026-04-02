@@ -21,6 +21,9 @@ const ForgotPassword = lazy(() =>
 const Users = lazy(() =>
   import("@pages/users").then((m) => ({ default: m.Users })),
 );
+const UserDetails = lazy(() =>
+  import("@pages/user-details").then((m) => ({ default: m.UserDetails })),
+);
 const Companies = lazy(() =>
   import("@pages/companies").then((m) => ({ default: m.Companies })),
 );
@@ -98,6 +101,14 @@ export const ROUTER = createBrowserRouter([
             element: (
               <WithSuspense>
                 <Users />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: `${ROUTES.USERS}/:userEmail`,
+            element: (
+              <WithSuspense>
+                <UserDetails />
               </WithSuspense>
             ),
           },

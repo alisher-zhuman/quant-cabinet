@@ -2,8 +2,6 @@ import { z } from "zod";
 
 import { createListResponseSchema, UserRoleSchema } from "@shared/schemas";
 
-const CreateUserRoleSchema = UserRoleSchema.exclude(["admin"]);
-
 const UserCompanySchema = z
   .looseObject({
     id: z.string(),
@@ -26,7 +24,6 @@ export const UserRowSchema = z.looseObject({
     (value) => (value === null ? "" : value),
     z.string(),
   ),
-  passwordChange: z.boolean(),
   role: UserRoleSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
@@ -60,15 +57,7 @@ export const createUserFormSchema = (t: (key: string) => string) =>
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (values.role === "admin") {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: t("validation.invalidCreateUserRole"),
-          path: ["role"],
-        });
-      }
-
-      if (!values.company) {
+      if (values.role !== "admin" && !values.company) {
         context.addIssue({
           code: z.ZodIssueCode.custom,
           message: t("validation.requiredCompany"),
@@ -106,23 +95,43 @@ export const updateUserFormSchema = (t: (key: string) => string) =>
       }
     });
 
-export const CreateUserPayloadSchema = z.object({
-  email: z.string().trim().email(),
-  firstName: z.string().trim().min(1),
-  lastName: z.string().trim().min(1),
-  role: CreateUserRoleSchema,
-  phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
-  company: z.string().trim().min(1),
-});
+export const CreateUserPayloadSchema = z
+  .object({
+    email: z.string().trim().email(),
+    firstName: z.string().trim().min(1),
+    lastName: z.string().trim().min(1),
+    role: UserRoleSchema,
+    phoneNumber: z.string().trim().min(1),
+    descriptions: z.string().trim().min(1),
+    company: z.string().trim().optional(),
+  })
+  .superRefine((values, context) => {
+    if (values.role !== "admin" && !values.company) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Company is required",
+        path: ["company"],
+      });
+    }
+  });
 
-export const UpdateUserPayloadSchema = z.object({
-  userId: z.string(),
-  firstName: z.string().trim().min(1),
-  lastName: z.string().trim().min(1),
-  role: UserRoleSchema,
-  phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
-  company: z.string().trim(),
-  isArchived: z.boolean(),
-});
+export const UpdateUserPayloadSchema = z
+  .object({
+    userId: z.string(),
+    firstName: z.string().trim().min(1),
+    lastName: z.string().trim().min(1),
+    role: UserRoleSchema,
+    phoneNumber: z.string().trim().min(1),
+    descriptions: z.string().trim().min(1),
+    company: z.string().trim(),
+    isArchived: z.boolean(),
+  })
+  .superRefine((values, context) => {
+    if (values.role !== "admin" && !values.company) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Company is required",
+        path: ["company"],
+      });
+    }
+  });

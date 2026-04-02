@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,11 +12,11 @@ import {
   createUserColumns,
   CreateUserDialog,
   useDeleteUser,
-  UserDetailsDialog,
 } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
+import { ROUTES } from "@shared/constants";
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
@@ -28,9 +29,9 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
+  const navigate = useNavigate();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
-  const [userToView, setUserToView] = useState<UserRow | null>(null);
 
   const { t } = useTranslation();
 
@@ -84,13 +85,13 @@ export const UsersWidget = () => {
     setIsCreateDialogOpen(true);
   }, []);
 
-  const handleViewUser = useCallback((user: UserRow) => {
-    setUserToView(user);
-  }, []);
+  const handleRowClick = useCallback((user: UserRow) => {
+    navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`);
+  }, [navigate]);
 
   const columns = useMemo(
-    () => createUserColumns(t, handleViewUser, handleEditUser, handleDeleteUser),
-    [t, handleViewUser, handleEditUser, handleDeleteUser],
+    () => createUserColumns(t, handleEditUser, handleDeleteUser),
+    [t, handleEditUser, handleDeleteUser],
   );
 
   const handleSearchChange = (value: string) => {
@@ -111,10 +112,6 @@ export const UsersWidget = () => {
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
     setUserToEdit(null);
-  };
-
-  const handleCloseDetailsDialog = () => {
-    setUserToView(null);
   };
 
   const handleCreateSuccess = useCallback(() => {
@@ -145,6 +142,7 @@ export const UsersWidget = () => {
           rows={users}
           columns={columns}
           getRowId={(user) => user.id}
+          onRowClick={handleRowClick}
           toolbar={
             <SearchTabsToolbar
               search={search}
@@ -185,12 +183,6 @@ export const UsersWidget = () => {
           onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
         />
       )}
-
-      <UserDetailsDialog
-        open={Boolean(userToView)}
-        user={userToView}
-        onClose={handleCloseDetailsDialog}
-      />
     </>
   );
 };

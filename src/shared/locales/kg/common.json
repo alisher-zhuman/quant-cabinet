@@ -93,7 +93,7 @@
     },
     "details": {
       "title": "Колдонуучу тууралуу маалымат",
-      "close": "Жабуу",
+      "back": "Артка",
       "sections": {
         "user": "Колдонуучу",
         "company": "Компания"
@@ -106,7 +106,6 @@
         "role": "Роль",
         "phoneNumber": "Телефон номери",
         "descriptions": "Сүрөттөмө",
-        "passwordChange": "Сырсөздү алмаштыруу",
         "createdAt": "Түзүлгөн күнү",
         "updatedAt": "Жаңыртылган күнү",
         "isArchived": "Статус",
@@ -118,8 +117,6 @@
         "companyUpdatedAt": "Компания жаңыртылган күнү"
       },
       "values": {
-        "yes": "Ооба",
-        "no": "Жок",
         "active": "Активдүү",
         "archived": "Архивде"
       }
@@ -158,10 +155,19 @@
         "copyError": "Ачкычты көчүрүү мүмкүн болгон жок"
       },
       "fields": {
+        "id": "ID",
         "name": "Аталышы",
         "address": "Дареги",
         "createdAt": "Түзүлгөн күнү",
-        "key": "Ачкыч"
+        "updatedAt": "Жаңыртылган күнү",
+        "isArchived": "Статус",
+        "key": "Ачкыч",
+        "keyCreatedAt": "Ачкыч түзүлгөн",
+        "keyUpdatedAt": "Ачкыч жаңыртылган"
+      },
+      "values": {
+        "active": "Активдүү",
+        "archived": "Архивде"
       }
     },
     "tabs": {
@@ -375,7 +381,6 @@
     "requiredPhoneNumber": "Телефон номери милдеттүү",
     "requiredDescriptions": "Сүрөттөмө милдеттүү",
     "requiredCompany": "Компания милдеттүү",
-    "invalidCreateUserRole": "Түзүү үчүн колдонуучу жана менеджер гана жеткиликтүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",
     "requiredAddress": "Дарек милдеттүү",

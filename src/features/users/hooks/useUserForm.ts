@@ -75,10 +75,6 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
       return;
     }
 
-    if (values.role === "admin") {
-      return;
-    }
-
     createMutation.mutate({
       email: values.email,
       firstName: values.firstName,
@@ -86,7 +82,7 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
       role: values.role,
       phoneNumber: values.phoneNumber,
       descriptions: values.descriptions,
-      company: values.company,
+      ...(values.company ? { company: values.company } : {}),
     });
   });
 

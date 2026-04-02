@@ -7,12 +7,14 @@ import {
   CreateUserPayloadSchema,
   DeleteUserPayloadSchema,
   UpdateUserPayloadSchema,
+  UserRowSchema,
   UsersResponseSchema,
 } from "../model/schemas";
 import type {
   CreateUserPayload,
   DeleteUserPayload,
   UpdateUserPayload,
+  UserDetails,
   UsersResponse,
 } from "../model/types";
 
@@ -33,6 +35,12 @@ export const getUsers = async ({
   });
 
   return UsersResponseSchema.parse(response.data);
+};
+
+export const getUser = async (email: string): Promise<UserDetails> => {
+  const response = await api.get(`${API_PATHS.USERS}/${encodeURIComponent(email)}`);
+
+  return UserRowSchema.parse(response.data);
 };
 
 export const deleteUser = async (payload: DeleteUserPayload): Promise<void> => {
