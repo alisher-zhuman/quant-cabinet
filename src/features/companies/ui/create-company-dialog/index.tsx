@@ -1,8 +1,12 @@
+import { Controller } from "react-hook-form";
+
 import { useTranslation } from "react-i18next";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 import type { CompanyRow } from "@entities/companies";
 
@@ -64,6 +68,24 @@ export const CreateCompanyDialog = ({
               label={t("companies.createDialog.fields.address")}
               fullWidth
             />
+
+            {isEditMode && (
+              <Controller
+                name="isArchived"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    label={t("companies.editDialog.fields.isArchived")}
+                    control={
+                      <Switch
+                        checked={field.value}
+                        onChange={(_, checked) => field.onChange(checked)}
+                      />
+                    }
+                  />
+                )}
+              />
+            )}
 
             <FormActions
               onCancel={onClose}

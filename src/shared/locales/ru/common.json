@@ -143,6 +143,9 @@
     },
     "editDialog": {
       "title": "Редактировать компанию",
+      "fields": {
+        "isArchived": "В архиве"
+      },
       "cancel": "Отмена",
       "submit": "Сохранить",
       "submitLoading": "Сохранение..."

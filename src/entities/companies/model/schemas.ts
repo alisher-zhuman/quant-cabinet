@@ -25,6 +25,7 @@ export const CompanyDetailsSchema = z.looseObject({
   name: z.string(),
   address: z.string(),
   createdAt: z.string(),
+  isArchived: z.boolean(),
   key: CompanyKeySchema,
 });
 
@@ -36,6 +37,7 @@ export const createCompanyFormSchema = (t: TFunction) =>
       .min(1, t("validation.requiredCompanyName"))
       .min(3, t("validation.minCompanyName")),
     address: z.string().trim().min(1, t("validation.requiredAddress")),
+    isArchived: z.boolean(),
   });
 
 export const CreateCompanyPayloadSchema = z.object({
@@ -45,6 +47,7 @@ export const CreateCompanyPayloadSchema = z.object({
 
 export const UpdateCompanyPayloadSchema = CreateCompanyPayloadSchema.extend({
   id: z.string(),
+  isArchived: z.boolean(),
 });
 
 export const DeleteCompanyPayloadSchema = z.object({

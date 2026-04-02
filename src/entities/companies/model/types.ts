@@ -4,6 +4,7 @@ import type {
   CompaniesResponseSchema,
   CompanyDetailsSchema,
   CompanyRowSchema,
+  createCompanyFormSchema,
   CreateCompanyPayloadSchema,
   DeleteCompanyPayloadSchema,
   RefreshCompanyTokenPayloadSchema,
@@ -13,6 +14,7 @@ import type {
 export type CompanyRow = ZodInfer<typeof CompanyRowSchema>;
 export type CompanyDetails = ZodInfer<typeof CompanyDetailsSchema>;
 export type CompaniesResponse = ZodInfer<typeof CompaniesResponseSchema>;
+export type CompanyFormValues = ZodInfer<ReturnType<typeof createCompanyFormSchema>>;
 export type CreateCompanyPayload = ZodInfer<typeof CreateCompanyPayloadSchema>;
 export type UpdateCompanyPayload = ZodInfer<typeof UpdateCompanyPayloadSchema>;
 export type DeleteCompanyPayload = ZodInfer<typeof DeleteCompanyPayloadSchema>;

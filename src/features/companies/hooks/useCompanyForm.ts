@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
-import type { CompanyRow, CreateCompanyPayload } from "@entities/companies";
+import type { CompanyFormValues, CompanyRow } from "@entities/companies";
 import { createCompanyFormSchema } from "@entities/companies";
 
 import { useCreateCompany } from "./useCreateCompany";
@@ -18,9 +18,10 @@ interface Params {
 
 const getDefaultValues = (
   company?: CompanyRow | null,
-): CreateCompanyPayload => ({
+): CompanyFormValues => ({
   name: company?.name ?? "",
   address: company?.address ?? "",
+  isArchived: company?.isArchived ?? false,
 });
 
 export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
@@ -32,7 +33,7 @@ export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
     handleSubmit,
     reset,
     formState: { isValid },
-  } = useForm<CreateCompanyPayload>({
+  } = useForm<CompanyFormValues>({
     resolver: zodResolver(createCompanyFormSchema(t)),
     mode: "onChange",
     defaultValues,
@@ -63,7 +64,10 @@ export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
       return;
     }
 
-    createMutation.mutate(values);
+    createMutation.mutate({
+      name: values.name,
+      address: values.address,
+    });
   });
 
   return {

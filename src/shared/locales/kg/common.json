@@ -143,6 +143,9 @@
     },
     "editDialog": {
       "title": "Компанияны түзөтүү",
+      "fields": {
+        "isArchived": "Архивде"
+      },
       "cancel": "Жокко чыгаруу",
       "submit": "Сактоо",
       "submitLoading": "Сакталууда..."
