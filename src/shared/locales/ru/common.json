@@ -32,6 +32,7 @@
     "title": "Пользователи",
     "error": "Не удалось загрузить пользователей",
     "actions": {
+      "create": "Добавить",
       "delete": "Удалить пользователя"
     },
     "search": {
@@ -47,11 +48,32 @@
       "search": "По вашему запросу ничего не найдено"
     },
     "toast": {
+      "create": {
+        "loading": "Создание пользователя...",
+        "success": "Пользователь создан",
+        "error": "Не удалось создать пользователя"
+      },
       "delete": {
         "loading": "Удаление пользователя...",
         "success": "Пользователь удален",
         "error": "Не удалось удалить пользователя"
       }
+    },
+    "createDialog": {
+      "title": "Добавить пользователя",
+      "fields": {
+        "email": "Почта",
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "role": "Роль",
+        "phoneNumber": "Номер телефона",
+        "descriptions": "Должность",
+        "company": "Компания",
+        "companyPlaceholder": "Выберите компанию"
+      },
+      "cancel": "Отмена",
+      "submit": "Сохранить",
+      "submitLoading": "Создание..."
     },
     "table": {
       "rowsPerPage": "Строк на странице:",
@@ -300,6 +322,11 @@
   },
   "validation": {
     "requiredEmail": "Email обязателен",
+    "requiredFirstName": "Имя обязательно",
+    "requiredLastName": "Фамилия обязательна",
+    "requiredPhoneNumber": "Номер телефона обязателен",
+    "requiredDescriptions": "Должность обязательна",
+    "requiredCompany": "Компания обязательна",
     "requiredCompanyName": "Название компании обязательно",
     "minCompanyName": "Название компании должно содержать минимум 3 символа",
     "requiredAddress": "Адрес обязателен",

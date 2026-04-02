@@ -4,10 +4,21 @@ import { buildListQueryParams } from "@shared/helpers";
 import type { ListQueryParams } from "@shared/types";
 
 import {
+  CreateUserPayloadSchema,
   DeleteUserPayloadSchema,
   UsersResponseSchema,
 } from "../model/schemas";
-import type { DeleteUserPayload, UsersResponse } from "../model/types";
+import type {
+  CreateUserPayload,
+  DeleteUserPayload,
+  UsersResponse,
+} from "../model/types";
+
+export const createUser = async (payload: CreateUserPayload): Promise<void> => {
+  const validPayload = CreateUserPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.USERS, validPayload);
+};
 
 export const getUsers = async ({
   page = 1,

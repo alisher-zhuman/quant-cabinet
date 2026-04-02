@@ -32,6 +32,7 @@
     "title": "Колдонуучулар",
     "error": "Колдонуучуларды жүктөө мүмкүн болгон жок",
     "actions": {
+      "create": "Кошуу",
       "delete": "Колдонуучуну өчүрүү"
     },
     "search": {
@@ -47,11 +48,32 @@
       "search": "Сиздин сурооңуз боюнча эч нерсе табылган жок"
     },
     "toast": {
+      "create": {
+        "loading": "Колдонуучу түзүлүүдө...",
+        "success": "Колдонуучу түзүлдү",
+        "error": "Колдонуучуну түзүү мүмкүн болгон жок"
+      },
       "delete": {
         "loading": "Колдонуучу өчүрүлүүдө...",
         "success": "Колдонуучу өчүрүлдү",
         "error": "Колдонуучуну өчүрүү мүмкүн болгон жок"
       }
+    },
+    "createDialog": {
+      "title": "Колдонуучу кошуу",
+      "fields": {
+        "email": "Почта",
+        "firstName": "Аты",
+        "lastName": "Фамилиясы",
+        "role": "Роль",
+        "phoneNumber": "Телефон номери",
+        "descriptions": "Кызматы",
+        "company": "Компания",
+        "companyPlaceholder": "Компанияны тандаңыз"
+      },
+      "cancel": "Жокко чыгаруу",
+      "submit": "Сактоо",
+      "submitLoading": "Түзүлүүдө..."
     },
     "table": {
       "rowsPerPage": "Бир беттеги саптар:",
@@ -300,6 +322,11 @@
   },
   "validation": {
     "requiredEmail": "Email милдеттүү",
+    "requiredFirstName": "Аты милдеттүү",
+    "requiredLastName": "Фамилиясы милдеттүү",
+    "requiredPhoneNumber": "Телефон номери милдеттүү",
+    "requiredDescriptions": "Кызматы милдеттүү",
+    "requiredCompany": "Компания милдеттүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",
     "requiredAddress": "Дарек милдеттүү",

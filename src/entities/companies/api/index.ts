@@ -20,6 +20,14 @@ import type {
   UpdateCompanyPayload,
 } from "../model/types";
 
+export const createCompany = async (
+  payload: CreateCompanyPayload,
+): Promise<void> => {
+  const validPayload = CreateCompanyPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.COMPANIES, validPayload);
+};
+
 export const getCompanies = async ({
   page = 1,
   limit = 10,
@@ -37,14 +45,6 @@ export const getCompany = async (id: string): Promise<CompanyDetails> => {
   const response = await api.get(`${API_PATHS.COMPANIES}/${id}`);
 
   return CompanyDetailsSchema.parse(response.data);
-};
-
-export const createCompany = async (
-  payload: CreateCompanyPayload,
-): Promise<void> => {
-  const validPayload = CreateCompanyPayloadSchema.parse(payload);
-
-  await api.post(API_PATHS.COMPANIES, validPayload);
 };
 
 export const updateCompany = async ({
