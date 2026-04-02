@@ -44,7 +44,7 @@ export const createUserFormSchema = (t: (key: string) => string) =>
         .string()
         .trim()
         .min(1, t("validation.requiredEmail"))
-        .email(t("validation.invalidEmail")),
+        .pipe(z.email(t("validation.invalidEmail"))),
       firstName: z.string().trim().min(1, t("validation.requiredFirstName")),
       lastName: z.string().trim().min(1, t("validation.requiredLastName")),
       role: UserRoleSchema,
@@ -59,7 +59,7 @@ export const createUserFormSchema = (t: (key: string) => string) =>
     .superRefine((values, context) => {
       if (values.role !== "admin" && !values.company) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: t("validation.requiredCompany"),
           path: ["company"],
         });
@@ -73,7 +73,7 @@ export const updateUserFormSchema = (t: (key: string) => string) =>
         .string()
         .trim()
         .min(1, t("validation.requiredEmail"))
-        .email(t("validation.invalidEmail")),
+        .pipe(z.email(t("validation.invalidEmail"))),
       firstName: z.string().trim().min(1, t("validation.requiredFirstName")),
       lastName: z.string().trim().min(1, t("validation.requiredLastName")),
       role: UserRoleSchema,
@@ -88,7 +88,7 @@ export const updateUserFormSchema = (t: (key: string) => string) =>
     .superRefine((values, context) => {
       if (values.role !== "admin" && !values.company) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: t("validation.requiredCompany"),
           path: ["company"],
         });
@@ -97,7 +97,7 @@ export const updateUserFormSchema = (t: (key: string) => string) =>
 
 export const CreateUserPayloadSchema = z
   .object({
-    email: z.string().trim().email(),
+    email: z.string().trim().pipe(z.email()),
     firstName: z.string().trim().min(1),
     lastName: z.string().trim().min(1),
     role: UserRoleSchema,
@@ -108,7 +108,7 @@ export const CreateUserPayloadSchema = z
   .superRefine((values, context) => {
     if (values.role !== "admin" && !values.company) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: "Company is required",
         path: ["company"],
       });
@@ -129,7 +129,7 @@ export const UpdateUserPayloadSchema = z
   .superRefine((values, context) => {
     if (values.role !== "admin" && !values.company) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: "Company is required",
         path: ["company"],
       });
