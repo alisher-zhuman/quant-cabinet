@@ -14,6 +14,7 @@ const UserCompanySchema = z
 export const UserRowSchema = z.looseObject({
   id: z.string(),
   email: z.string(),
+  phoneNumber: z.string(),
   firstName: z.string(),
   lastName: z.string(),
   role: UserRoleSchema,

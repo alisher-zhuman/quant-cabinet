@@ -80,6 +80,7 @@
       "columns": {
         "email": "Почта",
         "firstName": "Имя",
+        "phoneNumber": "Номер телефона",
         "lastName": "Фамилия",
         "company": "Компания",
         "role": "Роль пользователя",

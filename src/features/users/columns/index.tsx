@@ -23,6 +23,11 @@ export const createUserColumns = (
     cell: (user) => user.firstName || "-",
   },
   {
+    id: "phoneNumber",
+    header: t("users.table.columns.phoneNumber"),
+    cell: (user) => user.phoneNumber || "-",
+  },
+  {
     id: "lastName",
     header: t("users.table.columns.lastName"),
     cell: (user) => user.lastName || "-",

@@ -19,6 +19,7 @@ export const useControllersQuery = ({
   isArchived,
 }: Params) => {
   const { t } = useTranslation();
+  
   const normalizedSearch = search.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({

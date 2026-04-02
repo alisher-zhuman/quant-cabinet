@@ -14,6 +14,7 @@ interface Params {
 
 export const useUsersQuery = ({ page, limit, search, isArchived }: Params) => {
   const { t } = useTranslation();
+
   const normalizedSearch = search.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({
