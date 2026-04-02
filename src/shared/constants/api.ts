@@ -3,6 +3,7 @@ export const API_PATHS = {
   FORGOT_PASSWORD: "/users/password/forgot",
   USERS: "/users",
   USERS_LANG: "/users/lang",
+  USERS_UPDATE: "/users/update",
   COMPANIES: "/companies",
   COMPANIES_TOKEN_REFRESH: "/companies/token/refresh",
   CONTROLLERS: "/controllers",

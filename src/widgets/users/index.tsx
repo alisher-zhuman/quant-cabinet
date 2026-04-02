@@ -29,6 +29,7 @@ import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
 
   const { t } = useTranslation();
   
@@ -77,9 +78,14 @@ export const UsersWidget = () => {
     [deleteUserMutation],
   );
 
+  const handleEditUser = useCallback((user: UserRow) => {
+    setUserToEdit(user);
+    setIsCreateDialogOpen(true);
+  }, []);
+
   const columns = useMemo(
-    () => createUserColumns(t, handleDeleteUser),
-    [t, handleDeleteUser],
+    () => createUserColumns(t, handleEditUser, handleDeleteUser),
+    [t, handleEditUser, handleDeleteUser],
   );
 
   const handleSearchChange = (value: string) => {
@@ -93,18 +99,26 @@ export const UsersWidget = () => {
   };
 
   const handleOpenCreateDialog = () => {
+    setUserToEdit(null);
     setIsCreateDialogOpen(true);
   };
 
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
+    setUserToEdit(null);
   };
 
   const handleCreateSuccess = useCallback(() => {
     setIsCreateDialogOpen(false);
+    setUserToEdit(null);
     setIsArchived(false);
     setPage(0);
   }, [setIsArchived, setPage]);
+
+  const handleEditSuccess = useCallback(() => {
+    setIsCreateDialogOpen(false);
+    setUserToEdit(null);
+  }, []);
 
   return (
     <>
@@ -156,9 +170,10 @@ export const UsersWidget = () => {
 
       {isCreateDialogOpen && (
         <CreateUserDialog
+          user={userToEdit}
           open={isCreateDialogOpen}
           onClose={handleCloseCreateDialog}
-          onSuccess={handleCreateSuccess}
+          onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
         />
       )}
     </>

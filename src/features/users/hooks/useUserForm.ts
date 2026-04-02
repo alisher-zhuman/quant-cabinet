@@ -1,0 +1,93 @@
+import { useEffect, useMemo } from "react";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
+import { useTranslation } from "react-i18next";
+
+import type { UserFormValues, UserRow } from "@entities/users";
+import { createUserFormSchema } from "@entities/users";
+
+import { useCreateUser } from "./useCreateUser";
+import { useUpdateUser } from "./useUpdateUser";
+
+interface Params {
+  user?: UserRow | null | undefined;
+  onSuccess?: (() => void) | undefined;
+}
+
+const getDefaultValues = (user?: UserRow | null): UserFormValues => ({
+  email: user?.email ?? "",
+  firstName: user?.firstName ?? "",
+  lastName: user?.lastName ?? "",
+  role: user?.role === "admin" ? "user" : user?.role ?? "user",
+  phoneNumber: user?.phoneNumber ?? "",
+  descriptions: user?.descriptions ?? "",
+  company: user?.company?.id ?? "",
+  isArchived: user?.isArchived ?? false,
+});
+
+export const useUserForm = ({ user, onSuccess }: Params = {}) => {
+  const { t } = useTranslation();
+
+  const defaultValues = useMemo(() => getDefaultValues(user), [user]);
+
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid },
+  } = useForm<UserFormValues>({
+    resolver: zodResolver(createUserFormSchema(t)),
+    mode: "onChange",
+    defaultValues,
+  });
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
+
+  const handleSuccess = () => {
+    reset(getDefaultValues());
+    onSuccess?.();
+  };
+
+  const createMutation = useCreateUser(handleSuccess);
+  const updateMutation = useUpdateUser(handleSuccess);
+
+  const isPending = user ? updateMutation.isPending : createMutation.isPending;
+
+  const onSubmit = handleSubmit((values) => {
+    if (user) {
+      updateMutation.mutate({
+        userId: user.id,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        role: values.role,
+        phoneNumber: values.phoneNumber,
+        descriptions: values.descriptions,
+        company: values.company,
+        isArchived: values.isArchived,
+      });
+
+      return;
+    }
+
+    createMutation.mutate({
+      email: values.email,
+      firstName: values.firstName,
+      lastName: values.lastName,
+      role: values.role,
+      phoneNumber: values.phoneNumber,
+      descriptions: values.descriptions,
+      company: values.company,
+    });
+  });
+
+  return {
+    control,
+    isPending,
+    isValid,
+    onSubmit,
+  };
+};

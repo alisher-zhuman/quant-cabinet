@@ -1,28 +1,40 @@
 import { useMemo } from "react";
 
+import { Controller } from "react-hook-form";
+
 import { useTranslation } from "react-i18next";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 import { useCompaniesQuery } from "@entities/companies";
+import type { UserRow } from "@entities/users";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormSelectField } from "@shared/ui/form-select-field";
 import { FormTextField } from "@shared/ui/form-text-field";
 
-import { useCreateUserForm } from "../../hooks/useCreateUserForm";
+import { useUserForm } from "../../hooks/useUserForm";
 
 interface Props {
+  user?: UserRow | null;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-export const CreateUserDialog = ({ open, onClose, onSuccess }: Props) => {
+export const CreateUserDialog = ({
+  user,
+  open,
+  onClose,
+  onSuccess,
+}: Props) => {
   const { t } = useTranslation();
+  const isEditMode = Boolean(user);
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
@@ -44,7 +56,8 @@ export const CreateUserDialog = ({ open, onClose, onSuccess }: Props) => {
     [t],
   );
 
-  const { control, isPending, isValid, onSubmit } = useCreateUserForm({
+  const { control, isPending, isValid, onSubmit } = useUserForm({
+    user,
     onSuccess,
   });
 
@@ -55,7 +68,9 @@ export const CreateUserDialog = ({ open, onClose, onSuccess }: Props) => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{t("users.createDialog.title")}</DialogTitle>
+      <DialogTitle>
+        {t(isEditMode ? "users.editDialog.title" : "users.createDialog.title")}
+      </DialogTitle>
 
       <DialogContent>
         <form onSubmit={onSubmit}>
@@ -66,6 +81,7 @@ export const CreateUserDialog = ({ open, onClose, onSuccess }: Props) => {
               label={t("users.createDialog.fields.email")}
               type="email"
               fullWidth
+              disabled={isEditMode}
             />
 
             <FormTextField
@@ -114,11 +130,41 @@ export const CreateUserDialog = ({ open, onClose, onSuccess }: Props) => {
               emptyOptionLabel={t("users.createDialog.fields.companyPlaceholder")}
             />
 
+            {isEditMode && (
+              <Controller
+                name="isArchived"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    label={t("users.editDialog.fields.isArchived")}
+                    control={
+                      <Switch
+                        checked={field.value}
+                        onChange={(_, checked) => field.onChange(checked)}
+                      />
+                    }
+                  />
+                )}
+              />
+            )}
+
             <FormActions
               onCancel={onClose}
-              cancelLabel={t("users.createDialog.cancel")}
-              submitLabel={t("users.createDialog.submit")}
-              submitLabelLoading={t("users.createDialog.submitLoading")}
+              cancelLabel={t(
+                isEditMode
+                  ? "users.editDialog.cancel"
+                  : "users.createDialog.cancel",
+              )}
+              submitLabel={t(
+                isEditMode
+                  ? "users.editDialog.submit"
+                  : "users.createDialog.submit",
+              )}
+              submitLabelLoading={t(
+                isEditMode
+                  ? "users.editDialog.submitLoading"
+                  : "users.createDialog.submitLoading",
+              )}
               isSubmitting={isPending}
               submitProps={{ disabled: !isValid }}
             />

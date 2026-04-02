@@ -6,11 +6,13 @@ import type { ListQueryParams } from "@shared/types";
 import {
   CreateUserPayloadSchema,
   DeleteUserPayloadSchema,
+  UpdateUserPayloadSchema,
   UsersResponseSchema,
 } from "../model/schemas";
 import type {
   CreateUserPayload,
   DeleteUserPayload,
+  UpdateUserPayload,
   UsersResponse,
 } from "../model/types";
 
@@ -39,4 +41,10 @@ export const deleteUser = async (payload: DeleteUserPayload): Promise<void> => {
   await api.delete(API_PATHS.USERS, {
     data: validPayload,
   });
+};
+
+export const updateUser = async (payload: UpdateUserPayload): Promise<void> => {
+  const validPayload = UpdateUserPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.USERS_UPDATE, validPayload);
 };

@@ -6,6 +6,7 @@ const CreateUserRoleSchema = UserRoleSchema.exclude(["admin"]);
 
 const UserCompanySchema = z
   .looseObject({
+    id: z.string(),
     name: z.string(),
   })
   .nullable()
@@ -14,11 +15,16 @@ const UserCompanySchema = z
 export const UserRowSchema = z.looseObject({
   id: z.string(),
   email: z.string(),
-  phoneNumber: z.string(),
+  phoneNumber: z.preprocess((value) => (value === null ? "" : value), z.string()),
   firstName: z.string(),
   lastName: z.string(),
+  descriptions: z.preprocess(
+    (value) => (value === null ? "" : value),
+    z.string(),
+  ),
   role: UserRoleSchema,
   createdAt: z.string(),
+  isArchived: z.boolean(),
   company: UserCompanySchema,
 });
 
@@ -44,6 +50,7 @@ export const createUserFormSchema = (t: (key: string) => string) =>
       .trim()
       .min(1, t("validation.requiredDescriptions")),
     company: z.string().trim().min(1, t("validation.requiredCompany")),
+    isArchived: z.boolean(),
   });
 
 export const CreateUserPayloadSchema = z.object({
@@ -54,4 +61,15 @@ export const CreateUserPayloadSchema = z.object({
   phoneNumber: z.string().trim().min(1),
   descriptions: z.string().trim().min(1),
   company: z.string().trim().min(1),
+});
+
+export const UpdateUserPayloadSchema = z.object({
+  userId: z.string(),
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1),
+  role: CreateUserRoleSchema,
+  phoneNumber: z.string().trim().min(1),
+  descriptions: z.string().trim().min(1),
+  company: z.string().trim().min(1),
+  isArchived: z.boolean(),
 });
