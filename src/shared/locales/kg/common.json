@@ -67,7 +67,7 @@
         "lastName": "Фамилиясы",
         "role": "Роль",
         "phoneNumber": "Телефон номери",
-        "descriptions": "Кызматы",
+        "descriptions": "Сүрөттөмө",
         "company": "Компания",
         "companyPlaceholder": "Компанияны тандаңыз"
       },
@@ -325,7 +325,7 @@
     "requiredFirstName": "Аты милдеттүү",
     "requiredLastName": "Фамилиясы милдеттүү",
     "requiredPhoneNumber": "Телефон номери милдеттүү",
-    "requiredDescriptions": "Кызматы милдеттүү",
+    "requiredDescriptions": "Сүрөттөмө милдеттүү",
     "requiredCompany": "Компания милдеттүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",

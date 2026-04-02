@@ -67,7 +67,7 @@
         "lastName": "Фамилия",
         "role": "Роль",
         "phoneNumber": "Номер телефона",
-        "descriptions": "Должность",
+        "descriptions": "Описание",
         "company": "Компания",
         "companyPlaceholder": "Выберите компанию"
       },
@@ -325,7 +325,7 @@
     "requiredFirstName": "Имя обязательно",
     "requiredLastName": "Фамилия обязательна",
     "requiredPhoneNumber": "Номер телефона обязателен",
-    "requiredDescriptions": "Должность обязательна",
+    "requiredDescriptions": "Описание обязательно",
     "requiredCompany": "Компания обязательна",
     "requiredCompanyName": "Название компании обязательно",
     "minCompanyName": "Название компании должно содержать минимум 3 символа",
