@@ -37,6 +37,7 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { isValid },
   } = useForm<UserFormValues>({
     resolver: zodResolver(isEditMode ? updateUserFormSchema(t) : createUserFormSchema(t)),
@@ -94,5 +95,6 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
     isPending,
     isValid,
     onSubmit,
+    setValue,
   };
 };

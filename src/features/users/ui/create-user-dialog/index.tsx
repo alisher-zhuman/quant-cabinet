@@ -1,6 +1,6 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
@@ -63,10 +63,18 @@ export const CreateUserDialog = ({
     [isEditMode, t],
   );
 
-  const { control, isPending, isValid, onSubmit } = useUserForm({
+  const { control, isPending, isValid, onSubmit, setValue } = useUserForm({
     user,
     onSuccess,
   });
+  const selectedRole = useWatch({ control, name: "role" });
+  const shouldShowCompanyField = selectedRole !== "admin";
+
+  useEffect(() => {
+    if (!shouldShowCompanyField) {
+      setValue("company", "", { shouldDirty: true, shouldValidate: true });
+    }
+  }, [setValue, shouldShowCompanyField]);
 
   return (
     <Dialog
@@ -82,14 +90,15 @@ export const CreateUserDialog = ({
       <DialogContent>
         <form onSubmit={onSubmit}>
           <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
-            <FormTextField
-              name="email"
-              control={control}
-              label={t("users.createDialog.fields.email")}
-              type="email"
-              fullWidth
-              disabled={isEditMode}
-            />
+            {!isEditMode && (
+              <FormTextField
+                name="email"
+                control={control}
+                label={t("users.createDialog.fields.email")}
+                type="email"
+                fullWidth
+              />
+            )}
 
             <FormTextField
               name="firstName"
@@ -127,15 +136,17 @@ export const CreateUserDialog = ({
               fullWidth
             />
 
-            <FormSelectField
-              name="company"
-              control={control}
-              label={t("users.createDialog.fields.company")}
-              fullWidth
-              disabled={isCompaniesLoading}
-              options={companyOptions}
-              emptyOptionLabel={t("users.createDialog.fields.companyPlaceholder")}
-            />
+            {shouldShowCompanyField && (
+              <FormSelectField
+                name="company"
+                control={control}
+                label={t("users.createDialog.fields.company")}
+                fullWidth
+                disabled={isCompaniesLoading}
+                options={companyOptions}
+                emptyOptionLabel={t("users.createDialog.fields.companyPlaceholder")}
+              />
+            )}
 
             {isEditMode && (
               <Controller
