@@ -55,13 +55,20 @@ export const UsersWidget = () => {
     createListSearchString,
   );
 
-  const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
-    useUsersQuery({
-      page,
-      limit,
-      search: debouncedSearch,
-      isArchived,
-    });
+  const {
+    users,
+    total,
+    hasUsers,
+    emptyText,
+    isLoading,
+    isError,
+    isFetching,
+  } = useUsersQuery({
+    page,
+    limit,
+    search: debouncedSearch,
+    isArchived,
+  });
 
   const handleDeleteUser = useCallback(
     (user: UserRow) => {
