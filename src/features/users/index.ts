@@ -1,3 +1,3 @@
-export * from "./columns";
-export * from "./hooks/useDeleteUser";
-export * from "./ui/create-user-dialog";
+export { createUserColumns } from "./columns";
+export { useDeleteUser } from "./hooks/useDeleteUser";
+export { CreateUserDialog } from "./ui/create-user-dialog";

@@ -1,2 +1,2 @@
-export * from "./api";
-export * from "./change-language";
+export { api } from "./api";
+export { changeLanguage } from "./change-language";
