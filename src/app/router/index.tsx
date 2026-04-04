@@ -35,6 +35,11 @@ const CompanyDetails = lazy(() =>
 const Controllers = lazy(() =>
   import("@pages/controllers").then((m) => ({ default: m.Controllers })),
 );
+const ControllerDetails = lazy(() =>
+  import("@pages/controller-details").then((m) => ({
+    default: m.ControllerDetails,
+  })),
+);
 const Meters = lazy(() =>
   import("@pages/meters").then((m) => ({ default: m.Meters })),
 );
@@ -117,6 +122,14 @@ export const ROUTER = createBrowserRouter([
             element: (
               <WithSuspense>
                 <Controllers />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: `${ROUTES.CONTROLLERS}/:id`,
+            element: (
+              <WithSuspense>
+                <ControllerDetails />
               </WithSuspense>
             ),
           },

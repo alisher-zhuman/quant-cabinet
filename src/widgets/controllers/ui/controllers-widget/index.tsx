@@ -46,9 +46,10 @@ export const ControllersWidget = () => {
     handleCloseFiltersDialog,
     handleApplyFilters,
     handleConfirmDelete,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleTransferSuccess,
+    onCreateSuccess,
+    onEditSuccess,
+    onTransferSuccess,
+    onRowClick,
     onCloseDeleteDialog,
     setPage,
     setLimit,
@@ -74,6 +75,7 @@ export const ControllersWidget = () => {
           getRowId={(controller) =>
             controller.serialNumber ?? controller.id ?? controller.createdAt
           }
+          onRowClick={onRowClick}
           toolbar={
             <SearchTabsToolbar
               search={search}
@@ -145,9 +147,9 @@ export const ControllersWidget = () => {
         onApplyFilters={handleApplyFilters}
         onCloseCreateDialog={handleCloseCreateDialog}
         onCloseTransferDialog={handleCloseTransferDialog}
-        onCreateSuccess={handleCreateSuccess}
-        onEditSuccess={handleEditSuccess}
-        onTransferSuccess={handleTransferSuccess}
+        onCreateSuccess={onCreateSuccess}
+        onEditSuccess={onEditSuccess}
+        onTransferSuccess={onTransferSuccess}
       />
     </>
   );

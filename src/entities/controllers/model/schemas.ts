@@ -4,12 +4,14 @@ import { createListResponseSchema } from "@shared/schemas";
 
 const ControllerCompanySchema = z
   .looseObject({
-    id: z.string().optional(),
-    name: z.string().optional(),
+    id: z.string(),
+    name: z.string(),
+    address: z.string(),
+    isArchived: z.boolean(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
   })
-  .nullable()
-  .optional();
-
+  .nullable();
 const ControllerMeterSchema = z.looseObject({
   id: z.string().optional(),
 });
@@ -48,6 +50,7 @@ export const ControllerRowSchema = z.looseObject({
   ),
   isArchived: z.boolean(),
   createdAt: z.string(),
+  updatedAt: z.string().optional(),
   company: ControllerCompanySchema,
   meters: z.array(ControllerMeterSchema).optional(),
 });

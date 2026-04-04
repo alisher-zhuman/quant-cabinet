@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +12,7 @@ import {
 
 import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
+import { ROUTES } from "@shared/constants";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -30,6 +32,8 @@ export const useControllersWidget = () => {
     useState<ControllerRow | null>(null);
 
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const initialSearchState = useInitialSearchState(parseControllersSearchState);
 
@@ -114,6 +118,10 @@ export const useControllersWidget = () => {
       ),
     [t],
   );
+
+  const handleRowClick = (controller: ControllerRow) => {
+    navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`);
+  };
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -232,9 +240,10 @@ export const useControllersWidget = () => {
     handleCloseFiltersDialog,
     handleApplyFilters,
     handleConfirmDelete,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleTransferSuccess,
+    onCreateSuccess: handleCreateSuccess,
+    onEditSuccess: handleEditSuccess,
+    onTransferSuccess: handleTransferSuccess,
+    onRowClick: handleRowClick,
     onCloseDeleteDialog,
     setPage,
     setLimit,

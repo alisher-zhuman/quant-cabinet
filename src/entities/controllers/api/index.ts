@@ -3,6 +3,7 @@ import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
 
 import {
+  ControllerRowSchema,
   ControllersResponseSchema,
   CreateControllerPayloadSchema,
   DeleteControllerPayloadSchema,
@@ -10,6 +11,7 @@ import {
   UpdateControllerPayloadSchema,
 } from "../model/schemas";
 import type {
+  ControllerRow,
   ControllersListQueryParams,
   ControllersResponse,
   CreateControllerPayload,
@@ -17,8 +19,6 @@ import type {
   TransferControllerPayload,
   UpdateControllerPayload,
 } from "../model/types";
-
-
 
 export const createController = async (
   payload: CreateControllerPayload,
@@ -55,6 +55,12 @@ export const getControllers = async ({
   });
 
   return ControllersResponseSchema.parse(response.data);
+};
+
+export const getController = async (id: string): Promise<ControllerRow> => {
+  const response = await api.get(API_PATHS.GET_CONTROLLER(id));
+
+  return ControllerRowSchema.parse(response.data);
 };
 
 export const deleteController = async (

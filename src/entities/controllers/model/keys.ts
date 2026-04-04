@@ -21,4 +21,5 @@ export const controllersKeys = {
       phoneNumber,
       simIMSI,
     ] as const,
+  details: (id: string) => [...controllersKeys.all, "details", id] as const,
 };

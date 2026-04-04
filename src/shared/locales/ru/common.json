@@ -322,6 +322,43 @@
       "submit": "Передать",
       "submitLoading": "Передача..."
     },
+    "details": {
+      "title": "Информация о контроллере",
+      "back": "Назад",
+      "sections": {
+        "controller": "Контроллер",
+        "company": "Компания"
+      },
+      "fields": {
+        "id": "ID",
+        "serialNumber": "Серийный номер",
+        "batteryStatus": "Заряд батареи",
+        "signalStatus": "Уровень сигнала",
+        "controllerStatus": "Статус",
+        "controllerType": "Тип",
+        "simIMSI": "IMSI",
+        "phoneNumber": "Номер телефона",
+        "descriptions": "Описание",
+        "correctTime": "Корректировка времени",
+        "correctInterval": "Корректировка интервала",
+        "setInterval": "Интервал опроса (ч)",
+        "createdAt": "Дата создания",
+        "updatedAt": "Дата обновления",
+        "isArchived": "В архиве",
+        "companyId": "ID компании",
+        "companyName": "Название компании",
+        "companyAddress": "Адрес компании",
+        "companyStatus": "Статус компании",
+        "companyCreatedAt": "Дата создания компании",
+        "companyUpdatedAt": "Дата обновления компании"
+      },
+      "values": {
+        "yes": "Да",
+        "no": "Нет",
+        "active": "Активный",
+        "archived": "В архиве"
+      }
+    },
     "toast": {
       "create": {
         "loading": "Создание контроллера...",
