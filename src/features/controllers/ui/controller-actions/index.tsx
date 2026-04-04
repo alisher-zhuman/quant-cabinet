@@ -3,6 +3,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 import type { ControllerRow } from "@entities/controllers";
 
@@ -26,28 +27,34 @@ export const ControllerActions = ({
   onDelete,
 }: Props) => (
   <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
-    <IconButton
-      aria-label={editLabel}
-      color="primary"
-      onClick={() => onEdit(controller)}
-    >
-      <EditRoundedIcon />
-    </IconButton>
+    <Tooltip title={editLabel}>
+      <IconButton
+        aria-label={editLabel}
+        color="primary"
+        onClick={() => onEdit(controller)}
+      >
+        <EditRoundedIcon />
+      </IconButton>
+    </Tooltip>
 
-    <IconButton
-      aria-label={transferLabel}
-      color="secondary"
-      onClick={() => onTransfer(controller)}
-    >
-      <SwapHorizRoundedIcon />
-    </IconButton>
+    <Tooltip title={transferLabel}>
+      <IconButton
+        aria-label={transferLabel}
+        color="secondary"
+        onClick={() => onTransfer(controller)}
+      >
+        <SwapHorizRoundedIcon />
+      </IconButton>
+    </Tooltip>
 
-    <IconButton
-      aria-label={deleteLabel}
-      color="error"
-      onClick={() => onDelete(controller)}
-    >
-      <DeleteOutlineRoundedIcon />
-    </IconButton>
+    <Tooltip title={deleteLabel}>
+      <IconButton
+        aria-label={deleteLabel}
+        color="error"
+        onClick={() => onDelete(controller)}
+      >
+        <DeleteOutlineRoundedIcon />
+      </IconButton>
+    </Tooltip>
   </Box>
 );

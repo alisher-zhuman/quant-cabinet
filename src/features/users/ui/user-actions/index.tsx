@@ -4,6 +4,7 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 import type { UserRow } from "@entities/users";
 
@@ -34,13 +35,25 @@ export const UserActions = ({
 
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 0.5 }}>
-      <IconButton aria-label={editLabel} color="primary" onClick={handleEditClick}>
-        <EditRoundedIcon />
-      </IconButton>
+      <Tooltip title={editLabel}>
+        <IconButton
+          aria-label={editLabel}
+          color="primary"
+          onClick={handleEditClick}
+        >
+          <EditRoundedIcon />
+        </IconButton>
+      </Tooltip>
 
-      <IconButton aria-label={deleteLabel} color="error" onClick={handleDeleteClick}>
-        <DeleteOutlineRoundedIcon />
-      </IconButton>
+      <Tooltip title={deleteLabel}>
+        <IconButton
+          aria-label={deleteLabel}
+          color="error"
+          onClick={handleDeleteClick}
+        >
+          <DeleteOutlineRoundedIcon />
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 };
