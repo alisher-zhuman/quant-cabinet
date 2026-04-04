@@ -41,7 +41,7 @@ export const createControllerColumns = (
     header: t("controllers.table.columns.statusAndSignal"),
     cell: (controller) => (
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-        <Tooltip title={controller.controllerStatus || "Offline"}>
+        <Tooltip title={t(`controllers.statuses.${controller.controllerStatus || "offline"}`)}>
           <CircleRoundedIcon
             sx={{ fontSize: 12, color: getStatusColor(controller.controllerStatus) }}
           />
@@ -73,8 +73,8 @@ export const createControllerColumns = (
     id: "controllerType",
     header: t("controllers.table.columns.controllerType"),
     cell: (controller) => (
-      <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
-        {controller.controllerType || "-"}
+      <Typography variant="body2">
+        {controller.controllerType ? t(`controllers.types.${controller.controllerType}`) : "-"}
       </Typography>
     ),
   },

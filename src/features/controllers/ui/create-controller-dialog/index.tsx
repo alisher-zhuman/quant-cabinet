@@ -52,10 +52,10 @@ export const CreateControllerDialog = ({
 
   const typeOptions = useMemo(
     () => [
-      { value: "single", label: t("controllers.createDialog.type.single") },
+      { value: "single", label: t("controllers.types.single") },
       {
         value: "multiple",
-        label: t("controllers.createDialog.type.multiple"),
+        label: t("controllers.types.multiple"),
       },
     ],
     [t],
