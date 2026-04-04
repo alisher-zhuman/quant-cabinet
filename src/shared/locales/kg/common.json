@@ -241,6 +241,7 @@
     "error": "Контроллерлерди жүктөө мүмкүн болгон жок",
     "actions": {
       "create": "Кошуу",
+      "edit": "Контроллерди түзөтүү",
       "delete": "Контроллерди өчүрүү",
       "filters": "Чыпкалар"
     },
@@ -293,11 +294,28 @@
       "submit": "Сактоо",
       "submitLoading": "Түзүлүүдө..."
     },
+    "editDialog": {
+      "title": "Контроллерди түзөтүү",
+      "fields": {
+        "correctTime": "Убакытты тууралоо",
+        "correctInterval": "Интервалды тууралоо",
+        "setInterval": "Сурам интервалу, саат",
+        "isArchived": "Архивде"
+      },
+      "cancel": "Жокко чыгаруу",
+      "submit": "Сактоо",
+      "submitLoading": "Сакталууда..."
+    },
     "toast": {
       "create": {
         "loading": "Контроллер түзүлүүдө...",
         "success": "Контроллер түзүлдү",
         "error": "Контроллерди түзүү мүмкүн болгон жок"
+      },
+      "update": {
+        "loading": "Контроллер жаңыртылууда...",
+        "success": "Контроллер жаңыртылды",
+        "error": "Контроллерди жаңыртуу мүмкүн болгон жок"
       },
       "delete": {
         "loading": "Контроллер өчүрүлүүдө...",
@@ -419,12 +437,16 @@
     "requiredPhoneNumber": "Телефон номери милдеттүү",
     "requiredSerialNumber": "Сериялык номер милдеттүү",
     "requiredSimIMSI": "SIM картанын номери милдеттүү",
+    "requiredSetInterval": "Интервал милдеттүү",
     "requiredDescriptions": "Сүрөттөмө милдеттүү",
     "requiredCompany": "Компания милдеттүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",
     "requiredAddress": "Дарек милдеттүү",
     "invalidEmail": "Туура email киргизиңиз",
+    "invalidSetInterval": "Интервал бүтүн сан болушу керек",
+    "minSetInterval": "Минималдуу интервал: 1 саат",
+    "maxSetInterval": "Максималдуу интервал: 255 саат",
     "requiredPassword": "Сырсөз милдеттүү"
   }
 }

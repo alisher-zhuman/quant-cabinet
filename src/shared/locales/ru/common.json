@@ -241,6 +241,7 @@
     "error": "Не удалось загрузить контроллеры",
     "actions": {
       "create": "Добавить",
+      "edit": "Редактировать контроллер",
       "delete": "Удалить контроллер",
       "filters": "Фильтры"
     },
@@ -293,11 +294,28 @@
       "submit": "Сохранить",
       "submitLoading": "Создание..."
     },
+    "editDialog": {
+      "title": "Редактировать контроллер",
+      "fields": {
+        "correctTime": "Корректировать время",
+        "correctInterval": "Корректировать интервал",
+        "setInterval": "Интервал опроса, ч",
+        "isArchived": "В архиве"
+      },
+      "cancel": "Отмена",
+      "submit": "Сохранить",
+      "submitLoading": "Сохранение..."
+    },
     "toast": {
       "create": {
         "loading": "Создание контроллера...",
         "success": "Контроллер создан",
         "error": "Не удалось создать контроллер"
+      },
+      "update": {
+        "loading": "Обновление контроллера...",
+        "success": "Контроллер обновлен",
+        "error": "Не удалось обновить контроллер"
       },
       "delete": {
         "loading": "Удаление контроллера...",
@@ -419,12 +437,16 @@
     "requiredPhoneNumber": "Номер телефона обязателен",
     "requiredSerialNumber": "Серийный номер обязателен",
     "requiredSimIMSI": "Номер симкарты обязателен",
+    "requiredSetInterval": "Интервал обязателен",
     "requiredDescriptions": "Описание обязательно",
     "requiredCompany": "Компания обязательна",
     "requiredCompanyName": "Название компании обязательно",
     "minCompanyName": "Название компании должно содержать минимум 3 символа",
     "requiredAddress": "Адрес обязателен",
     "invalidEmail": "Введите корректный email",
+    "invalidSetInterval": "Интервал должен быть целым числом",
+    "minSetInterval": "Минимальный интервал: 1 час",
+    "maxSetInterval": "Максимальный интервал: 255 часов",
     "requiredPassword": "Пароль обязателен"
   }
 }

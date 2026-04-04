@@ -34,6 +34,8 @@ import { TableSection } from "@shared/ui/table-section";
 export const ControllersWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
+  const [controllerToEdit, setControllerToEdit] =
+    useState<ControllerRow | null>(null);
   const [controllerToDelete, setControllerToDelete] =
     useState<ControllerRow | null>(null);
 
@@ -59,7 +61,9 @@ export const ControllersWidget = () => {
   const [serialNumber, setSerialNumber] = useState(
     initialSearchState.serialNumber,
   );
-  const [phoneNumber, setPhoneNumber] = useState(initialSearchState.phoneNumber);
+  const [phoneNumber, setPhoneNumber] = useState(
+    initialSearchState.phoneNumber,
+  );
   const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
 
   useSyncSearchParams(
@@ -102,7 +106,8 @@ export const ControllersWidget = () => {
   const deleteControllerMutation = useDeleteController(onCloseDeleteDialog);
 
   const columns = useMemo(
-    () => createControllerColumns(t, setControllerToDelete),
+    () =>
+      createControllerColumns(t, setControllerToEdit, setControllerToDelete),
     [t],
   );
 
@@ -121,11 +126,13 @@ export const ControllersWidget = () => {
   };
 
   const handleOpenCreateDialog = () => {
+    setControllerToEdit(null);
     setIsCreateDialogOpen(true);
   };
 
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
+    setControllerToEdit(null);
   };
 
   const handleCloseFiltersDialog = () => {
@@ -153,9 +160,9 @@ export const ControllersWidget = () => {
 
   const hasActiveFilters = Boolean(
     companyId.trim() ||
-      serialNumber.trim() ||
-      phoneNumber.trim() ||
-      simIMSI.trim(),
+    serialNumber.trim() ||
+    phoneNumber.trim() ||
+    simIMSI.trim(),
   );
 
   const handleConfirmDelete = () => {
@@ -168,8 +175,14 @@ export const ControllersWidget = () => {
 
   const handleCreateSuccess = () => {
     setIsCreateDialogOpen(false);
+    setControllerToEdit(null);
     setIsArchived(false);
     setPage(0);
+  };
+
+  const handleEditSuccess = () => {
+    setIsCreateDialogOpen(false);
+    setControllerToEdit(null);
   };
 
   return (
@@ -270,9 +283,10 @@ export const ControllersWidget = () => {
 
       {isCreateDialogOpen && (
         <CreateControllerDialog
+          controller={controllerToEdit}
           open={isCreateDialogOpen}
           onClose={handleCloseCreateDialog}
-          onSuccess={handleCreateSuccess}
+          onSuccess={controllerToEdit ? handleEditSuccess : handleCreateSuccess}
         />
       )}
     </>

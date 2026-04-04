@@ -6,12 +6,14 @@ import {
   ControllersResponseSchema,
   CreateControllerPayloadSchema,
   DeleteControllerPayloadSchema,
+  UpdateControllerPayloadSchema,
 } from "../model/schemas";
 import type {
   ControllersListQueryParams,
   ControllersResponse,
   CreateControllerPayload,
   DeleteControllerPayload,
+  UpdateControllerPayload,
 } from "../model/types";
 
 export const createController = async (
@@ -59,4 +61,12 @@ export const deleteController = async (
   await api.delete(API_PATHS.CONTROLLERS, {
     data: validPayload,
   });
+};
+
+export const updateController = async (
+  payload: UpdateControllerPayload,
+): Promise<void> => {
+  const validPayload = UpdateControllerPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.CONTROLLERS_UPDATE, validPayload);
 };

@@ -7,5 +7,6 @@ export const API_PATHS = {
   COMPANIES: "/companies",
   COMPANIES_TOKEN_REFRESH: "/companies/token/refresh",
   CONTROLLERS: "/controllers",
+  CONTROLLERS_UPDATE: "/controllers/update",
   METERS: "/meters",
 };

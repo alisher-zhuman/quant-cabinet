@@ -9,6 +9,7 @@ import { ControllerActions } from "../ui/controller-actions";
 
 export const createControllerColumns = (
   t: TFunction,
+  onEdit: (controller: ControllerRow) => void,
   onDelete: (controller: ControllerRow) => void,
 ): Column<ControllerRow>[] => [
   {
@@ -38,7 +39,9 @@ export const createControllerColumns = (
     cell: (controller) => (
       <ControllerActions
         controller={controller}
+        editLabel={t("controllers.actions.edit")}
         deleteLabel={t("controllers.actions.delete")}
+        onEdit={onEdit}
         onDelete={onDelete}
       />
     ),
