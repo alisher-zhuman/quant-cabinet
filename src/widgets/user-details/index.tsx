@@ -18,6 +18,7 @@ import { DetailRow } from "@shared/ui/detail-row";
 
 export const UserDetailsWidget = () => {
   const { t } = useTranslation();
+
   const { userEmail } = useParams();
 
   const { user } = useUserQuery(userEmail);
@@ -126,7 +127,10 @@ export const UserDetailsWidget = () => {
                 value={user?.updatedAt ? formatDate(user.updatedAt) : "-"}
               />
               <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                <DetailRow label={t("users.details.fields.id")} value={user?.id ?? "-"} />
+                <DetailRow
+                  label={t("users.details.fields.id")}
+                  value={user?.id ?? "-"}
+                />
               </Box>
             </Box>
           </Stack>
@@ -167,13 +171,17 @@ export const UserDetailsWidget = () => {
                   <DetailRow
                     label={t("users.details.fields.companyCreatedAt")}
                     value={
-                      user?.company?.createdAt ? formatDate(user.company.createdAt) : "-"
+                      user?.company?.createdAt
+                        ? formatDate(user.company.createdAt)
+                        : "-"
                     }
                   />
                   <DetailRow
                     label={t("users.details.fields.companyUpdatedAt")}
                     value={
-                      user?.company?.updatedAt ? formatDate(user.company.updatedAt) : "-"
+                      user?.company?.updatedAt
+                        ? formatDate(user.company.updatedAt)
+                        : "-"
                     }
                   />
                   <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>

@@ -29,9 +29,10 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const UsersWidget = () => {
-  const navigate = useNavigate();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -58,20 +59,13 @@ export const UsersWidget = () => {
     createListSearchString,
   );
 
-  const {
-    users,
-    total,
-    hasUsers,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-  } = useUsersQuery({
-    page,
-    limit,
-    search: debouncedSearch,
-    isArchived,
-  });
+  const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
+    useUsersQuery({
+      page,
+      limit,
+      search: debouncedSearch,
+      isArchived,
+    });
 
   const handleDeleteUser = useCallback(
     (user: UserRow) => {
@@ -85,9 +79,12 @@ export const UsersWidget = () => {
     setIsCreateDialogOpen(true);
   }, []);
 
-  const handleRowClick = useCallback((user: UserRow) => {
-    navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`);
-  }, [navigate]);
+  const handleRowClick = useCallback(
+    (user: UserRow) => {
+      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`);
+    },
+    [navigate],
+  );
 
   const columns = useMemo(
     () => createUserColumns(t, handleEditUser, handleDeleteUser),
@@ -128,7 +125,9 @@ export const UsersWidget = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", gap: 3, padding: 2 }}
+      >
         <Typography component="h1" variant="h4">
           {t("users.title")}
         </Typography>

@@ -23,6 +23,7 @@ import { TableSection } from "@shared/ui/table-section";
 
 export const MetersWidget = () => {
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
+  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
