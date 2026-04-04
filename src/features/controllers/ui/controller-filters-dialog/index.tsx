@@ -43,7 +43,7 @@ export const ControllerFiltersDialog = ({
     };
 
   const handleReset = () => {
-    setValues({
+    onApply({
       companyId: "",
       serialNumber: "",
       phoneNumber: "",

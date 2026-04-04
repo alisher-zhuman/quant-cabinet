@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
+import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -139,6 +140,13 @@ export const ControllersWidget = () => {
     setIsFiltersDialogOpen(false);
   };
 
+  const hasActiveFilters = Boolean(
+    companyId.trim() ||
+      serialNumber.trim() ||
+      phoneNumber.trim() ||
+      simIMSI.trim(),
+  );
+
   const handleConfirmDelete = () => {
     if (!controllerToDelete) {
       return;
@@ -178,7 +186,16 @@ export const ControllersWidget = () => {
               actions={
                 <Button
                   variant="outlined"
-                  startIcon={<FilterListRoundedIcon />}
+                  startIcon={
+                    <Badge
+                      color="primary"
+                      overlap="circular"
+                      variant="dot"
+                      invisible={!hasActiveFilters}
+                    >
+                      <FilterListRoundedIcon />
+                    </Badge>
+                  }
                   onClick={handleOpenFiltersDialog}
                 >
                   {t("controllers.actions.filters")}
