@@ -15,6 +15,7 @@ import {
   CreateControllerDialog,
   createControllersSearchString,
   parseControllersSearchState,
+  TransferControllerDialog,
   useDeleteController,
 } from "@features/controllers";
 
@@ -35,6 +36,8 @@ export const ControllersWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [controllerToEdit, setControllerToEdit] =
+    useState<ControllerRow | null>(null);
+  const [controllerToTransfer, setControllerToTransfer] =
     useState<ControllerRow | null>(null);
   const [controllerToDelete, setControllerToDelete] =
     useState<ControllerRow | null>(null);
@@ -110,11 +113,16 @@ export const ControllersWidget = () => {
     setIsCreateDialogOpen(true);
   };
 
+  const handleTransferController = (controller: ControllerRow) => {
+    setControllerToTransfer(controller);
+  };
+
   const columns = useMemo(
     () =>
       createControllerColumns(
         t,
         handleEditController,
+        handleTransferController,
         setControllerToDelete,
       ),
     [t],
@@ -142,6 +150,10 @@ export const ControllersWidget = () => {
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
     setControllerToEdit(null);
+  };
+
+  const handleCloseTransferDialog = () => {
+    setControllerToTransfer(null);
   };
 
   const handleCloseFiltersDialog = () => {
@@ -192,6 +204,11 @@ export const ControllersWidget = () => {
   const handleEditSuccess = () => {
     setIsCreateDialogOpen(false);
     setControllerToEdit(null);
+  };
+
+  const handleTransferSuccess = () => {
+    setControllerToTransfer(null);
+    setPage(0);
   };
 
   return (
@@ -296,6 +313,15 @@ export const ControllersWidget = () => {
           open={isCreateDialogOpen}
           onClose={handleCloseCreateDialog}
           onSuccess={controllerToEdit ? handleEditSuccess : handleCreateSuccess}
+        />
+      )}
+
+      {Boolean(controllerToTransfer) && (
+        <TransferControllerDialog
+          controller={controllerToTransfer}
+          open={Boolean(controllerToTransfer)}
+          onClose={handleCloseTransferDialog}
+          onSuccess={handleTransferSuccess}
         />
       )}
     </>

@@ -1,5 +1,6 @@
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 
@@ -8,16 +9,20 @@ import type { ControllerRow } from "@entities/controllers";
 interface Props {
   controller: ControllerRow;
   editLabel: string;
+  transferLabel: string;
   deleteLabel: string;
   onEdit: (controller: ControllerRow) => void;
+  onTransfer: (controller: ControllerRow) => void;
   onDelete: (controller: ControllerRow) => void;
 }
 
 export const ControllerActions = ({
   controller,
   editLabel,
+  transferLabel,
   deleteLabel,
   onEdit,
+  onTransfer,
   onDelete,
 }: Props) => (
   <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
@@ -27,6 +32,14 @@ export const ControllerActions = ({
       onClick={() => onEdit(controller)}
     >
       <EditRoundedIcon />
+    </IconButton>
+
+    <IconButton
+      aria-label={transferLabel}
+      color="secondary"
+      onClick={() => onTransfer(controller)}
+    >
+      <SwapHorizRoundedIcon />
     </IconButton>
 
     <IconButton

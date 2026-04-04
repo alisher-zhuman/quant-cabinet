@@ -8,6 +8,8 @@ import type {
   createControllerFormSchema,
   CreateControllerPayloadSchema,
   DeleteControllerPayloadSchema,
+  transferControllerFormSchema,
+  TransferControllerPayloadSchema,
   UpdateControllerPayloadSchema,
 } from "./schemas";
 
@@ -24,6 +26,12 @@ export type UpdateControllerPayload = ZodInfer<
 >;
 export type DeleteControllerPayload = ZodInfer<
   typeof DeleteControllerPayloadSchema
+>;
+export type TransferControllerFormValues = ZodInfer<
+  ReturnType<typeof transferControllerFormSchema>
+>;
+export type TransferControllerPayload = ZodInfer<
+  typeof TransferControllerPayloadSchema
 >;
 
 export interface ControllersListQueryParams extends ListQueryParams {

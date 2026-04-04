@@ -13,6 +13,16 @@ const ControllerMeterSchema = z.looseObject({
   id: z.string().optional(),
 });
 
+export const transferControllerFormSchema = (t: (key: string) => string) =>
+  z.object({
+    companyId: z.string().trim().min(1, t("validation.requiredCompany")),
+  });
+
+export const TransferControllerPayloadSchema = z.object({
+  controllerId: z.string(),
+  companyId: z.string().trim().min(1),
+});
+
 export const ControllerRowSchema = z.looseObject({
   id: z.string(),
   serialNumber: z.string(),
