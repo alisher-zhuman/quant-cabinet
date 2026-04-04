@@ -18,17 +18,15 @@ export const MetersDialogs = ({
   isDeletePending,
   onCloseDeleteDialog,
   onConfirmDelete,
-}: Props) => {
-  return (
-    <ConfirmDialog
-      open={Boolean(meterToDelete)}
-      title={t("meters.deleteDialog.title")}
-      description={t("meters.deleteDialog.description")}
-      cancelLabel={t("meters.deleteDialog.cancel")}
-      confirmLabel={t("meters.deleteDialog.confirm")}
-      isLoading={isDeletePending}
-      onClose={onCloseDeleteDialog}
-      onConfirm={onConfirmDelete}
-    />
-  );
-};
+}: Props) => (
+  <ConfirmDialog
+    open={Boolean(meterToDelete)}
+    title={t("meters.deleteDialog.title")}
+    description={t("meters.deleteDialog.description")}
+    cancelLabel={t("meters.deleteDialog.cancel")}
+    confirmLabel={t("meters.deleteDialog.confirm")}
+    isLoading={isDeletePending}
+    onClose={onCloseDeleteDialog}
+    onConfirm={onConfirmDelete}
+  />
+);

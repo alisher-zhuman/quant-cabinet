@@ -16,17 +16,15 @@ export const UsersDialogs = ({
   onCloseCreateDialog,
   onEditSuccess,
   onCreateSuccess,
-}: Props) => {
-  return (
-    <>
-      {isCreateDialogOpen && (
-        <CreateUserDialog
-          user={userToEdit}
-          open={isCreateDialogOpen}
-          onClose={onCloseCreateDialog}
-          onSuccess={userToEdit ? onEditSuccess : onCreateSuccess}
-        />
-      )}
-    </>
-  );
-};
+}: Props) => (
+  <>
+    {isCreateDialogOpen && (
+      <CreateUserDialog
+        user={userToEdit}
+        open={isCreateDialogOpen}
+        onClose={onCloseCreateDialog}
+        onSuccess={userToEdit ? onEditSuccess : onCreateSuccess}
+      />
+    )}
+  </>
+);

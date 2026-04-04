@@ -58,46 +58,44 @@ export const ControllersDialogs = ({
   onCreateSuccess,
   onEditSuccess,
   onTransferSuccess,
-}: Props) => {
-  return (
-    <>
-      <ConfirmDialog
-        open={Boolean(controllerToDelete)}
-        title={t("controllers.deleteDialog.title")}
-        description={t("controllers.deleteDialog.description")}
-        cancelLabel={t("controllers.deleteDialog.cancel")}
-        confirmLabel={t("controllers.deleteDialog.confirm")}
-        isLoading={isDeletePending}
-        onClose={onCloseDeleteDialog}
-        onConfirm={onConfirmDelete}
+}: Props) => (
+  <>
+    <ConfirmDialog
+      open={Boolean(controllerToDelete)}
+      title={t("controllers.deleteDialog.title")}
+      description={t("controllers.deleteDialog.description")}
+      cancelLabel={t("controllers.deleteDialog.cancel")}
+      confirmLabel={t("controllers.deleteDialog.confirm")}
+      isLoading={isDeletePending}
+      onClose={onCloseDeleteDialog}
+      onConfirm={onConfirmDelete}
+    />
+
+    {isFiltersDialogOpen && (
+      <ControllerFiltersDialog
+        open={isFiltersDialogOpen}
+        filters={filters}
+        onClose={onCloseFiltersDialog}
+        onApply={onApplyFilters}
       />
+    )}
 
-      {isFiltersDialogOpen && (
-        <ControllerFiltersDialog
-          open={isFiltersDialogOpen}
-          filters={filters}
-          onClose={onCloseFiltersDialog}
-          onApply={onApplyFilters}
-        />
-      )}
+    {isCreateDialogOpen && (
+      <CreateControllerDialog
+        controller={controllerToEdit}
+        open={isCreateDialogOpen}
+        onClose={onCloseCreateDialog}
+        onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
+      />
+    )}
 
-      {isCreateDialogOpen && (
-        <CreateControllerDialog
-          controller={controllerToEdit}
-          open={isCreateDialogOpen}
-          onClose={onCloseCreateDialog}
-          onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
-        />
-      )}
-
-      {Boolean(controllerToTransfer) && (
-        <TransferControllerDialog
-          controller={controllerToTransfer}
-          open={Boolean(controllerToTransfer)}
-          onClose={onCloseTransferDialog}
-          onSuccess={onTransferSuccess}
-        />
-      )}
-    </>
-  );
-};
+    {Boolean(controllerToTransfer) && (
+      <TransferControllerDialog
+        controller={controllerToTransfer}
+        open={Boolean(controllerToTransfer)}
+        onClose={onCloseTransferDialog}
+        onSuccess={onTransferSuccess}
+      />
+    )}
+  </>
+);

@@ -30,26 +30,24 @@ export const CompaniesDialogs = ({
   onCloseCreateDialog,
   onEditSuccess,
   onCreateSuccess,
-}: Props) => {
-  return (
-    <>
-      <ConfirmDialog
-        open={Boolean(companyToDelete)}
-        title={t("companies.deleteDialog.title")}
-        description={t("companies.deleteDialog.description")}
-        cancelLabel={t("companies.deleteDialog.cancel")}
-        confirmLabel={t("companies.deleteDialog.confirm")}
-        isLoading={isDeletePending}
-        onClose={onCloseDeleteDialog}
-        onConfirm={onConfirmDelete}
-      />
+}: Props) => (
+  <>
+    <ConfirmDialog
+      open={Boolean(companyToDelete)}
+      title={t("companies.deleteDialog.title")}
+      description={t("companies.deleteDialog.description")}
+      cancelLabel={t("companies.deleteDialog.cancel")}
+      confirmLabel={t("companies.deleteDialog.confirm")}
+      isLoading={isDeletePending}
+      onClose={onCloseDeleteDialog}
+      onConfirm={onConfirmDelete}
+    />
 
-      <CreateCompanyDialog
-        company={companyToEdit}
-        open={isCreateDialogOpen}
-        onClose={onCloseCreateDialog}
-        onSuccess={companyToEdit ? onEditSuccess : onCreateSuccess}
-      />
-    </>
-  );
-};
+    <CreateCompanyDialog
+      company={companyToEdit}
+      open={isCreateDialogOpen}
+      onClose={onCloseCreateDialog}
+      onSuccess={companyToEdit ? onEditSuccess : onCreateSuccess}
+    />
+  </>
+);
