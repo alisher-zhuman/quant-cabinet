@@ -43,5 +43,14 @@ export const THEME = createTheme({
         },
       },
     },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          width: "fit-content",
+          alignSelf: "flex-start",
+          marginRight: 0,
+        },
+      },
+    },
   },
 });
