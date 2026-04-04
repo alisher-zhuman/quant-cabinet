@@ -4,13 +4,23 @@ import { buildListQueryParams } from "@shared/helpers";
 
 import {
   ControllersResponseSchema,
+  CreateControllerPayloadSchema,
   DeleteControllerPayloadSchema,
 } from "../model/schemas";
 import type {
   ControllersListQueryParams,
   ControllersResponse,
+  CreateControllerPayload,
   DeleteControllerPayload,
 } from "../model/types";
+
+export const createController = async (
+  payload: CreateControllerPayload,
+): Promise<void> => {
+  const validPayload = CreateControllerPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.CONTROLLERS, validPayload);
+};
 
 export const getControllers = async ({
   page = 1,

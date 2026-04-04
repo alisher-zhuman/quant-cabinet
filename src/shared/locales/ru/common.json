@@ -240,6 +240,7 @@
     "title": "Контроллеры",
     "error": "Не удалось загрузить контроллеры",
     "actions": {
+      "create": "Добавить",
       "delete": "Удалить контроллер",
       "filters": "Фильтры"
     },
@@ -273,7 +274,31 @@
       "cancel": "Отмена",
       "confirm": "Удалить"
     },
+    "createDialog": {
+      "title": "Добавить контроллер",
+      "fields": {
+        "serialNumber": "Серийный номер",
+        "company": "Компания",
+        "companyPlaceholder": "Выберите компанию",
+        "type": "Тип",
+        "simIMSI": "Номер симкарты (IMSI)",
+        "phoneNumber": "Номер телефона для пополнения",
+        "descriptions": "Описание"
+      },
+      "type": {
+        "single": "Один счетчик",
+        "multiple": "Несколько счетчиков"
+      },
+      "cancel": "Отмена",
+      "submit": "Сохранить",
+      "submitLoading": "Создание..."
+    },
     "toast": {
+      "create": {
+        "loading": "Создание контроллера...",
+        "success": "Контроллер создан",
+        "error": "Не удалось создать контроллер"
+      },
       "delete": {
         "loading": "Удаление контроллера...",
         "success": "Контроллер удален",
@@ -392,6 +417,8 @@
     "requiredFirstName": "Имя обязательно",
     "requiredLastName": "Фамилия обязательна",
     "requiredPhoneNumber": "Номер телефона обязателен",
+    "requiredSerialNumber": "Серийный номер обязателен",
+    "requiredSimIMSI": "Номер симкарты обязателен",
     "requiredDescriptions": "Описание обязательно",
     "requiredCompany": "Компания обязательна",
     "requiredCompanyName": "Название компании обязательно",

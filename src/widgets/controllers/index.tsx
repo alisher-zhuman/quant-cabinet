@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
@@ -11,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import {
   ControllerFiltersDialog,
   createControllerColumns,
+  CreateControllerDialog,
   createControllersSearchString,
   parseControllersSearchState,
   useDeleteController,
@@ -30,6 +32,7 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const ControllersWidget = () => {
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [controllerToDelete, setControllerToDelete] =
     useState<ControllerRow | null>(null);
@@ -117,6 +120,14 @@ export const ControllersWidget = () => {
     setIsFiltersDialogOpen(true);
   };
 
+  const handleOpenCreateDialog = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleCloseCreateDialog = () => {
+    setIsCreateDialogOpen(false);
+  };
+
   const handleCloseFiltersDialog = () => {
     setIsFiltersDialogOpen(false);
   };
@@ -155,6 +166,12 @@ export const ControllersWidget = () => {
     deleteControllerMutation.mutate({ id: controllerToDelete.id });
   };
 
+  const handleCreateSuccess = () => {
+    setIsCreateDialogOpen(false);
+    setIsArchived(false);
+    setPage(0);
+  };
+
   return (
     <>
       <Box
@@ -184,22 +201,32 @@ export const ControllersWidget = () => {
               isSearchLoading={isFetching}
               isArchived={isArchived}
               actions={
-                <Button
-                  variant="outlined"
-                  startIcon={
-                    <Badge
-                      color="primary"
-                      overlap="circular"
-                      variant="dot"
-                      invisible={!hasActiveFilters}
-                    >
-                      <FilterListRoundedIcon />
-                    </Badge>
-                  }
-                  onClick={handleOpenFiltersDialog}
-                >
-                  {t("controllers.actions.filters")}
-                </Button>
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+                  <Button
+                    variant="outlined"
+                    startIcon={
+                      <Badge
+                        color="primary"
+                        overlap="circular"
+                        variant="dot"
+                        invisible={!hasActiveFilters}
+                      >
+                        <FilterListRoundedIcon />
+                      </Badge>
+                    }
+                    onClick={handleOpenFiltersDialog}
+                  >
+                    {t("controllers.actions.filters")}
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    startIcon={<AddRoundedIcon />}
+                    onClick={handleOpenCreateDialog}
+                  >
+                    {t("controllers.actions.create")}
+                  </Button>
+                </Box>
               }
               onSearchChange={handleSearchChange}
               onArchivedChange={handleArchivedChange}
@@ -238,6 +265,14 @@ export const ControllersWidget = () => {
           }}
           onClose={handleCloseFiltersDialog}
           onApply={handleApplyFilters}
+        />
+      )}
+
+      {isCreateDialogOpen && (
+        <CreateControllerDialog
+          open={isCreateDialogOpen}
+          onClose={handleCloseCreateDialog}
+          onSuccess={handleCreateSuccess}
         />
       )}
     </>

@@ -240,6 +240,7 @@
     "title": "Контроллерлер",
     "error": "Контроллерлерди жүктөө мүмкүн болгон жок",
     "actions": {
+      "create": "Кошуу",
       "delete": "Контроллерди өчүрүү",
       "filters": "Чыпкалар"
     },
@@ -273,7 +274,31 @@
       "cancel": "Жокко чыгаруу",
       "confirm": "Өчүрүү"
     },
+    "createDialog": {
+      "title": "Контроллер кошуу",
+      "fields": {
+        "serialNumber": "Сериялык номер",
+        "company": "Компания",
+        "companyPlaceholder": "Компанияны тандаңыз",
+        "type": "Түрү",
+        "simIMSI": "SIM картанын номери (IMSI)",
+        "phoneNumber": "Толуктоо үчүн телефон номери",
+        "descriptions": "Сүрөттөмө"
+      },
+      "type": {
+        "single": "Бир эсептегич",
+        "multiple": "Бир нече эсептегич"
+      },
+      "cancel": "Жокко чыгаруу",
+      "submit": "Сактоо",
+      "submitLoading": "Түзүлүүдө..."
+    },
     "toast": {
+      "create": {
+        "loading": "Контроллер түзүлүүдө...",
+        "success": "Контроллер түзүлдү",
+        "error": "Контроллерди түзүү мүмкүн болгон жок"
+      },
       "delete": {
         "loading": "Контроллер өчүрүлүүдө...",
         "success": "Контроллер өчүрүлдү",
@@ -392,6 +417,8 @@
     "requiredFirstName": "Аты милдеттүү",
     "requiredLastName": "Фамилиясы милдеттүү",
     "requiredPhoneNumber": "Телефон номери милдеттүү",
+    "requiredSerialNumber": "Сериялык номер милдеттүү",
+    "requiredSimIMSI": "SIM картанын номери милдеттүү",
     "requiredDescriptions": "Сүрөттөмө милдеттүү",
     "requiredCompany": "Компания милдеттүү",
     "requiredCompanyName": "Компаниянын аталышы милдеттүү",
