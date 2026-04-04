@@ -10,6 +10,10 @@ interface Params {
   limit: number;
   search: string;
   isArchived: boolean;
+  companyId: string;
+  serialNumber: string;
+  phoneNumber: string;
+  simIMSI: string;
 }
 
 export const useControllersQuery = ({
@@ -17,19 +21,40 @@ export const useControllersQuery = ({
   limit,
   search,
   isArchived,
+  companyId,
+  serialNumber,
+  phoneNumber,
+  simIMSI,
 }: Params) => {
   const { t } = useTranslation();
-  
+
   const normalizedSearch = search.trim();
+  const normalizedCompanyId = companyId.trim();
+  const normalizedSerialNumber = serialNumber.trim();
+  const normalizedPhoneNumber = phoneNumber.trim();
+  const normalizedSimIMSI = simIMSI.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({
-    queryKey: controllersKeys.list(page, limit, normalizedSearch, isArchived),
+    queryKey: controllersKeys.list(
+      page,
+      limit,
+      normalizedSearch,
+      isArchived,
+      normalizedCompanyId,
+      normalizedSerialNumber,
+      normalizedPhoneNumber,
+      normalizedSimIMSI,
+    ),
     queryFn: () =>
       getControllers({
         page: page + 1,
         limit,
         search: normalizedSearch,
         isArchived,
+        companyId: normalizedCompanyId,
+        serialNumber: normalizedSerialNumber,
+        phoneNumber: normalizedPhoneNumber,
+        simIMSI: normalizedSimIMSI,
       }),
   });
 
@@ -37,7 +62,15 @@ export const useControllersQuery = ({
   const total = data?.total ?? 0;
   const hasControllers = controllers.length > 0;
 
-  const emptyText = normalizedSearch
+  const hasFilters = Boolean(
+    normalizedSearch ||
+      normalizedCompanyId ||
+      normalizedSerialNumber ||
+      normalizedPhoneNumber ||
+      normalizedSimIMSI,
+  );
+
+  const emptyText = hasFilters
     ? t("controllers.empty.search")
     : isArchived
       ? t("controllers.empty.archived")

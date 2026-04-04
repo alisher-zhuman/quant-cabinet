@@ -2,17 +2,21 @@ import { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import {
+  ControllerFiltersDialog,
   createControllerColumns,
+  createControllersSearchString,
+  parseControllersSearchState,
   useDeleteController,
 } from "@features/controllers";
 
 import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
-import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -25,12 +29,13 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 export const ControllersWidget = () => {
+  const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [controllerToDelete, setControllerToDelete] =
     useState<ControllerRow | null>(null);
 
   const { t } = useTranslation();
 
-  const initialSearchState = useInitialSearchState(parseListSearchState);
+  const initialSearchState = useInitialSearchState(parseControllersSearchState);
 
   const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: initialSearchState.isArchived,
@@ -46,9 +51,25 @@ export const ControllersWidget = () => {
     resetPage: 0,
   });
 
+  const [companyId, setCompanyId] = useState(initialSearchState.companyId);
+  const [serialNumber, setSerialNumber] = useState(
+    initialSearchState.serialNumber,
+  );
+  const [phoneNumber, setPhoneNumber] = useState(initialSearchState.phoneNumber);
+  const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
+
   useSyncSearchParams(
-    { page, limit, search, isArchived },
-    createListSearchString,
+    {
+      page,
+      limit,
+      search,
+      isArchived,
+      companyId,
+      serialNumber,
+      phoneNumber,
+      simIMSI,
+    },
+    createControllersSearchString,
   );
 
   const {
@@ -64,6 +85,10 @@ export const ControllersWidget = () => {
     limit,
     search: debouncedSearch,
     isArchived,
+    companyId,
+    serialNumber,
+    phoneNumber,
+    simIMSI,
   });
 
   const onCloseDeleteDialog = () => {
@@ -85,6 +110,33 @@ export const ControllersWidget = () => {
   const handleArchivedChange = (value: boolean) => {
     setIsArchived(value);
     setPage(0);
+  };
+
+  const handleOpenFiltersDialog = () => {
+    setIsFiltersDialogOpen(true);
+  };
+
+  const handleCloseFiltersDialog = () => {
+    setIsFiltersDialogOpen(false);
+  };
+
+  const handleApplyFilters = ({
+    companyId: nextCompanyId,
+    serialNumber: nextSerialNumber,
+    phoneNumber: nextPhoneNumber,
+    simIMSI: nextSimIMSI,
+  }: {
+    companyId: string;
+    serialNumber: string;
+    phoneNumber: string;
+    simIMSI: string;
+  }) => {
+    setCompanyId(nextCompanyId);
+    setSerialNumber(nextSerialNumber);
+    setPhoneNumber(nextPhoneNumber);
+    setSimIMSI(nextSimIMSI);
+    setPage(0);
+    setIsFiltersDialogOpen(false);
   };
 
   const handleConfirmDelete = () => {
@@ -123,6 +175,15 @@ export const ControllersWidget = () => {
               archivedLabel={t("controllers.tabs.archived")}
               isSearchLoading={isFetching}
               isArchived={isArchived}
+              actions={
+                <Button
+                  variant="outlined"
+                  startIcon={<FilterListRoundedIcon />}
+                  onClick={handleOpenFiltersDialog}
+                >
+                  {t("controllers.actions.filters")}
+                </Button>
+              }
               onSearchChange={handleSearchChange}
               onArchivedChange={handleArchivedChange}
             />
@@ -148,6 +209,20 @@ export const ControllersWidget = () => {
         onClose={onCloseDeleteDialog}
         onConfirm={handleConfirmDelete}
       />
+
+      {isFiltersDialogOpen && (
+        <ControllerFiltersDialog
+          open={isFiltersDialogOpen}
+          filters={{
+            companyId,
+            serialNumber,
+            phoneNumber,
+            simIMSI,
+          }}
+          onClose={handleCloseFiltersDialog}
+          onApply={handleApplyFilters}
+        />
+      )}
     </>
   );
 };
