@@ -12,6 +12,17 @@ The project is built using a modern React stack:
 - **Linting & Typing**: ESLint with strict Feature-Sliced Design (FSD) rules enforced.
 - **Internationalization (i18n)**: i18next & react-i18next.
 
+## Environment Variables
+
+The project uses a `.env` file to store environment-specific configurations.
+Expected public variables for the frontend include:
+
+```env
+VITE_API_URL="https://quant.l.mycloud.kg/api"
+```
+
+Create a `.env` file in the root directory before running or building the app.
+
 ## Setup & Run
 
 Ensure you have a recent version of Node.js installed.
