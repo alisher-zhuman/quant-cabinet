@@ -5,7 +5,11 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
-import { createSameLayerImportConfig } from "./eslint/helpers/internal-imports.js";
+import {
+  createSameLayerImportConfig,
+  createSelfLayerImportConfig,
+  createBarrelImportConfig,
+} from "./eslint/helpers/internal-imports.js";
 
 export default defineConfig([
   globalIgnores(["dist"]),
@@ -29,6 +33,18 @@ export default defineConfig([
       "simple-import-sort": simpleImportSort,
     },
     rules: {
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-var": "error",
+      "prefer-const": "error",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {
@@ -80,40 +96,38 @@ export default defineConfig([
       "simple-import-sort/exports": "error",
     },
   },
-  {
-    files: ["src/shared/**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["@shared", "@shared/*"],
-              message: "Use relative imports inside shared.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-  {
-    files: ["src/app/**/*.{ts,tsx}"],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["@app", "@app/*"],
-              message: "Use relative imports inside app.",
-            },
-          ],
-        },
-      ],
-    },
-  },
+  createSelfLayerImportConfig("shared"),
+  createSelfLayerImportConfig("app"),
   createSameLayerImportConfig("entities"),
   createSameLayerImportConfig("features"),
   createSameLayerImportConfig("widgets"),
   createSameLayerImportConfig("pages"),
+  createBarrelImportConfig({
+    files: ["src/app/**/*.{ts,tsx}"],
+    layer: "widgets",
+    pattern: "*/*",
+    message: "Use widget barrel exports.",
+  }),
+  createBarrelImportConfig({
+    files: ["src/**/*.{ts,tsx}"],
+    layer: "features",
+    pattern: "*/*",
+    message: "Use feature barrel exports.",
+  }),
+  {
+    files: ["src/features/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["@entities/*/ui/*", "@entities/*/hooks/*"],
+              message: "Use entity barrel exports.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]);
