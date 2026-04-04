@@ -4,6 +4,7 @@ import { createListResponseSchema } from "@shared/schemas";
 
 const ControllerCompanySchema = z
   .looseObject({
+    id: z.string().optional(),
     name: z.string().optional(),
   })
   .nullable()

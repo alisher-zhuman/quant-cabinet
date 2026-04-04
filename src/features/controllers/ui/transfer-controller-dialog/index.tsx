@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -53,6 +53,7 @@ export const TransferControllerDialog = ({
   const {
     control,
     handleSubmit,
+    reset,
     formState: { isValid },
   } = useForm<TransferControllerFormValues>({
     resolver: zodResolver(transferControllerFormSchema(t)),
@@ -61,6 +62,12 @@ export const TransferControllerDialog = ({
     },
     mode: "onChange",
   });
+
+  useEffect(() => {
+    if (open) {
+      reset({ companyId: controller?.company?.id ?? "" });
+    }
+  }, [open, controller, reset]);
 
   const transferMutation = useTransferController(onSuccess);
 
