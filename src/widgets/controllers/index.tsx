@@ -105,9 +105,18 @@ export const ControllersWidget = () => {
 
   const deleteControllerMutation = useDeleteController(onCloseDeleteDialog);
 
+  const handleEditController = (controller: ControllerRow) => {
+    setControllerToEdit(controller);
+    setIsCreateDialogOpen(true);
+  };
+
   const columns = useMemo(
     () =>
-      createControllerColumns(t, setControllerToEdit, setControllerToDelete),
+      createControllerColumns(
+        t,
+        handleEditController,
+        setControllerToDelete,
+      ),
     [t],
   );
 
