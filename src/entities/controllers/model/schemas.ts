@@ -27,6 +27,10 @@ export const TransferControllerPayloadSchema = z.object({
 export const ControllerRowSchema = z.looseObject({
   id: z.string(),
   serialNumber: z.string(),
+  batteryStatus: z.number(),
+  signalStatus: z.number(),
+  controllerStatus: z.string(),
+  controllerType: z.string(),
   simIMSI: z.preprocess((value) => (value === null ? "" : value), z.string()),
   phoneNumber: z.preprocess(
     (value) => (value === null ? "" : value),

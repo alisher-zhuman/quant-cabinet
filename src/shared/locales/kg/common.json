@@ -344,6 +344,10 @@
       "columns": {
         "id": "Сериялык номер",
         "company": "Компаниянын аталышы",
+        "statusAndSignal": "Статус жана сигнал",
+        "battery": "Батареянын кубаты",
+        "controllerType": "Түзмөктүн түрү",
+        "setInterval": "Сурам интервалу",
         "metersCount": "Эсептегичтердин саны",
         "createdAt": "Түзүлгөн күнү",
         "actions": "Аракеттер"

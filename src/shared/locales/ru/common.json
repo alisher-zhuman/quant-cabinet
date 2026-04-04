@@ -344,6 +344,10 @@
       "columns": {
         "id": "Серийный номер",
         "company": "Название компании",
+        "statusAndSignal": "Статус и сигнал",
+        "battery": "Заряд батареи",
+        "controllerType": "Тип устройства",
+        "setInterval": "Интервал опроса",
         "metersCount": "Количество счетчиков",
         "createdAt": "Дата создания",
         "actions": "Действия"
