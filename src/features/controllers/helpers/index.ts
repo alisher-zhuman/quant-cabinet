@@ -39,3 +39,22 @@ export const createControllersSearchString = ({
 
   return params.toString();
 };
+
+export const getStatusColor = (status?: string | null) => {
+  if (status === "normal") return "success.main";
+  if (status === "error") return "error.main";
+  return "text.disabled";
+};
+
+export const getTypeStyles = (type?: string | null) => {
+  if (type === "single") {
+    return {
+      color: "#0288d1",
+      backgroundColor: "rgba(2, 136, 209, 0.08)",
+    };
+  }
+  return {
+    color: "#7b1fa2",
+    backgroundColor: "rgba(123, 31, 162, 0.08)",
+  };
+};

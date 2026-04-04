@@ -12,13 +12,8 @@ import type { ControllerRow } from "@entities/controllers";
 import { formatDate } from "@shared/helpers";
 import type { Column } from "@shared/types";
 
+import { getStatusColor, getTypeStyles } from "../helpers";
 import { ControllerActions } from "../ui/controller-actions";
-
-const getStatusColor = (status?: string | null) => {
-  if (status === "normal") return "success.main";
-  if (status === "error") return "error.main";
-  return "text.disabled";
-};
 
 export const createControllerColumns = (
   t: TFunction,
@@ -73,20 +68,21 @@ export const createControllerColumns = (
     id: "controllerType",
     header: t("controllers.table.columns.controllerType"),
     cell: (controller) => (
-      <Typography variant="body2">
+      <Box
+        component="span"
+        sx={{
+          display: "inline-flex",
+          px: 1.5,
+          py: 0.5,
+          borderRadius: 1,
+          fontSize: "0.75rem",
+          fontWeight: 600,
+          ...getTypeStyles(controller.controllerType),
+        }}
+      >
         {controller.controllerType ? t(`controllers.types.${controller.controllerType}`) : "-"}
-      </Typography>
+      </Box>
     ),
-  },
-  {
-    id: "setInterval",
-    header: t("controllers.table.columns.setInterval"),
-    cell: (controller) => (controller.setInterval ? `${controller.setInterval} ч` : "-"),
-  },
-  {
-    id: "metersCount",
-    header: t("controllers.table.columns.metersCount"),
-    cell: (controller) => controller.meters?.length ?? 0,
   },
   {
     id: "createdAt",
