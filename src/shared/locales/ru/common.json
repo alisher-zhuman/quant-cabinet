@@ -261,7 +261,7 @@
     "filters": {
       "title": "Фильтры контроллеров",
       "fields": {
-        "companyId": "ID компании",
+        "companyId": "Компания",
         "serialNumber": "Серийный номер счетчика",
         "phoneNumber": "Номер телефона для пополнения",
         "simIMSI": "Номер симкарты (IMSI)"

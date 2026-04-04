@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
@@ -25,36 +27,45 @@ export const ControllerActions = ({
   onEdit,
   onTransfer,
   onDelete,
-}: Props) => (
-  <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
-    <Tooltip title={editLabel}>
-      <IconButton
-        aria-label={editLabel}
-        color="primary"
-        onClick={() => onEdit(controller)}
-      >
-        <EditRoundedIcon />
-      </IconButton>
-    </Tooltip>
+}: Props) => {
+  const handleActionClick =
+    (callback: (controller: ControllerRow) => void) =>
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      callback(controller);
+    };
 
-    <Tooltip title={transferLabel}>
-      <IconButton
-        aria-label={transferLabel}
-        color="secondary"
-        onClick={() => onTransfer(controller)}
-      >
-        <SwapHorizRoundedIcon />
-      </IconButton>
-    </Tooltip>
+  return (
+    <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
+      <Tooltip title={editLabel}>
+        <IconButton
+          aria-label={editLabel}
+          color="primary"
+          onClick={handleActionClick(onEdit)}
+        >
+          <EditRoundedIcon />
+        </IconButton>
+      </Tooltip>
 
-    <Tooltip title={deleteLabel}>
-      <IconButton
-        aria-label={deleteLabel}
-        color="error"
-        onClick={() => onDelete(controller)}
-      >
-        <DeleteOutlineRoundedIcon />
-      </IconButton>
-    </Tooltip>
-  </Box>
-);
+      <Tooltip title={transferLabel}>
+        <IconButton
+          aria-label={transferLabel}
+          color="secondary"
+          onClick={handleActionClick(onTransfer)}
+        >
+          <SwapHorizRoundedIcon />
+        </IconButton>
+      </Tooltip>
+
+      <Tooltip title={deleteLabel}>
+        <IconButton
+          aria-label={deleteLabel}
+          color="error"
+          onClick={handleActionClick(onDelete)}
+        >
+          <DeleteOutlineRoundedIcon />
+        </IconButton>
+      </Tooltip>
+    </Box>
+  );
+};
