@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
@@ -8,7 +8,10 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+
+import { useCompaniesQuery } from "@entities/companies";
 
 import type { ControllerFilters } from "../../types";
 
@@ -28,6 +31,23 @@ export const ControllerFiltersDialog = ({
   const [values, setValues] = useState(() => filters);
 
   const { t } = useTranslation();
+
+  const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
+    page: 0,
+    limit: 1000,
+    search: "",
+    isArchived: false,
+    enabled: open,
+  });
+
+  const companyOptions = useMemo(
+    () =>
+      companies.map((company) => ({
+        value: company.id,
+        label: company.name,
+      })),
+    [companies],
+  );
 
   const handleChange = (field: keyof ControllerFilters, value: string) => {
     setValues((prev) => ({
@@ -72,10 +92,21 @@ export const ControllerFiltersDialog = ({
           }}
         >
           <TextField
+            select
             value={values.companyId}
             label={t("controllers.filters.fields.companyId")}
             onChange={createChangeHandler("companyId")}
-          />
+            disabled={isCompaniesLoading}
+          >
+            <MenuItem value="">
+              <em>{t("controllers.createDialog.fields.companyPlaceholder")}</em>
+            </MenuItem>
+            {companyOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <TextField
             value={values.serialNumber}
