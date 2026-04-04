@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 import { useMetersWidget } from "../../hooks/useMetersWidget";
-import { MetersDialogs } from "../meters-dialogs";
 
 export const MetersWidget = () => {
   const {
@@ -71,12 +71,15 @@ export const MetersWidget = () => {
         />
       </Box>
 
-      <MetersDialogs
-        t={t}
-        meterToDelete={meterToDelete}
-        isDeletePending={deleteMeterMutation.isPending}
-        onCloseDeleteDialog={onCloseDeleteDialog}
-        onConfirmDelete={handleConfirmDelete}
+      <ConfirmDialog
+        open={Boolean(meterToDelete)}
+        title={t("meters.deleteDialog.title")}
+        description={t("meters.deleteDialog.description")}
+        cancelLabel={t("meters.deleteDialog.cancel")}
+        confirmLabel={t("meters.deleteDialog.confirm")}
+        isLoading={deleteMeterMutation.isPending}
+        onClose={onCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
       />
     </>
   );

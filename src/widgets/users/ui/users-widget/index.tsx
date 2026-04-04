@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import { CreateUserDialog } from "@features/users";
+
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 import { useUsersWidget } from "../../hooks/useUsersWidget";
-import { UsersDialogs } from "../users-dialogs";
 
 export const UsersWidget = () => {
   const {
@@ -88,13 +89,14 @@ export const UsersWidget = () => {
         />
       </Box>
 
-      <UsersDialogs
-        userToEdit={userToEdit}
-        isCreateDialogOpen={isCreateDialogOpen}
-        onCloseCreateDialog={handleCloseCreateDialog}
-        onEditSuccess={handleEditSuccess}
-        onCreateSuccess={handleCreateSuccess}
-      />
+      {isCreateDialogOpen && (
+        <CreateUserDialog
+          user={userToEdit}
+          open={isCreateDialogOpen}
+          onClose={handleCloseCreateDialog}
+          onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
+        />
+      )}
     </>
   );
 };
