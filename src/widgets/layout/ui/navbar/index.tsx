@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 
 import { COLORS } from "@shared/constants";
 
-import { NAVBAR_LINKS } from "./constants";
+import { NAVBAR_LINKS } from "../../constants";
 
 export const Navbar = () => {
   const { t } = useTranslation();
