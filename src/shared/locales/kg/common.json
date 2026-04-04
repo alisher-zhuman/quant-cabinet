@@ -404,6 +404,9 @@
       "rowsPerPage": "Бир беттеги саптар:",
       "columns": {
         "id": "Сериялык номер",
+        "clientName": "Абонент",
+        "accountNumber": "Жеке эсеп",
+        "company": "Компания",
         "lastValue": "Акыркы көрсөткүч",
         "readings": "Жазуулардын саны",
         "batteryStatus": "Батареянын статусу",

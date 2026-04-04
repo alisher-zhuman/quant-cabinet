@@ -441,6 +441,9 @@
       "rowsPerPage": "Строк на странице:",
       "columns": {
         "id": "Серийный номер",
+        "clientName": "Абонент",
+        "accountNumber": "Лицевой счет",
+        "company": "Компания",
         "lastValue": "Последнее показание",
         "readings": "Количество записей",
         "batteryStatus": "Статус батареи",

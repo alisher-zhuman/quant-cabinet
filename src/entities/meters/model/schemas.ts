@@ -8,6 +8,14 @@ export const MeterRowSchema = z.looseObject({
   lastValue: z.string().nullable(),
   valveState: z.string(),
   meterStatus: z.string(),
+  accountNumber: z.string().nullable(),
+  clientName: z.string().nullable(),
+  company: z
+    .object({
+      id: z.string(),
+      name: z.string(),
+    })
+    .nullable(),
   createdAt: z.string(),
   readings: z.number(),
 });

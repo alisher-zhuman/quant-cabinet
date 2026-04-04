@@ -21,6 +21,21 @@ export const createMeterColumns = (
     cell: (meter) => meter.serialNumber || "-",
   },
   {
+    id: "clientName",
+    header: t("meters.table.columns.clientName"),
+    cell: (meter) => meter.clientName || "-",
+  },
+  {
+    id: "accountNumber",
+    header: t("meters.table.columns.accountNumber"),
+    cell: (meter) => meter.accountNumber || "-",
+  },
+  {
+    id: "company",
+    header: t("meters.table.columns.company"),
+    cell: (meter) => meter.company?.name || "-",
+  },
+  {
     id: "lastValue",
     header: t("meters.table.columns.lastValue"),
     cell: (meter) => meter.lastValue || "-",
