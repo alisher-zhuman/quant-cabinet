@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Quant Cabinet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Quant Cabinet** is an administrative dashboard (cabinet) for monitoring and managing companies, users, controllers, and meters.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project is built using a modern React stack:
+- **Core**: React 19, TypeScript, Vite (with SWC compiler).
+- **State Management**: Zustand (client state) and React Query (server state / API).
+- **UI & Forms**: Material UI (MUI v7), React Hook Form, Zod.
+- **Routing**: React Router v7.
+- **Linting & Typing**: ESLint with strict Feature-Sliced Design (FSD) rules enforced.
+- **Internationalization (i18n)**: i18next & react-i18next.
 
-## React Compiler
+## Setup & Run
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Ensure you have a recent version of Node.js installed.
 
-## Expanding the ESLint configuration
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Available Scripts
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- `npm run dev` — Starts the local development server.
+- `npm run build` — Builds the app for production (includes type checking).
+- `npm run preview` — Locally previews the built production bundle.
+- `npm run lint` — Checks code quality using ESLint.
+- `npm run typecheck` — Validates typings using TypeScript.
+- `npm run check` — Runs both the linter and type checker.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Architecture: Feature-Sliced Design (FSD)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The project strictly follows the **Feature-Sliced Design** methodology. Development takes place inside the `src/` directory, which is divided into the following layers:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `app` — App initialization (global providers, router, themes).
+- `pages` — Route-level components mapping UI to URLs.
+- `widgets` — Large, self-contained UI blocks composed of multiple features and entities (e.g., navigation, complex tables).
+- `features` — User scenarios and specific actions (e.g., login, profile edit, password reset).
+- `entities` — Business domain models, API endpoints, hooks, and base UI components (`companies`, `users`, `controllers`, `meters`).
+- `shared` — Reusable, domain-agnostic infrastructure code (e.g., locales, base validation schemas, axios instance).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+**Key Architectural Rules:**
+- **Unidirectional Layer Flow**: A module can only import logic from layers below it. Importing from `pages` to `features` is strictly prohibited.
+- **Public API (Barrel Exports)**: Communication between slices occurs strictly via their `index.ts`. Deep imports (e.g., `import { Button } from '@entities/user/ui/Button'`) are forbidden and enforced by ESLint.
+- **No Cross-Imports**: Slices within the same layer cannot import each other directly. If entities need to interact, this must be orchestrated at a higher layer (`features` or `widgets`).
+
+> Detailed architectural and code style agreements are documented in [docs/development-guidelines.md](docs/development-guidelines.md).
