@@ -42,6 +42,7 @@ export const CreateControllerDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
+    enabled: !isEditMode,
   });
 
   const companyOptions = useMemo(

@@ -25,21 +25,20 @@ export const ControllerRowSchema = z.looseObject({
     (value) => (value === null ? "" : value),
     z.string(),
   ),
-  correctTime: z.boolean().optional(),
-  correctInterval: z.boolean().optional(),
+  correctTime: z.boolean(),
+  correctInterval: z.boolean(),
   setInterval: z.preprocess(
     (value) => (value === null ? undefined : value),
     z.number().int().min(1).max(255).optional(),
   ),
-  isArchived: z.boolean().optional(),
+  isArchived: z.boolean(),
   createdAt: z.string(),
   company: ControllerCompanySchema,
   meters: z.array(ControllerMeterSchema).optional(),
 });
 
-export const ControllersResponseSchema = createListResponseSchema(
-  ControllerRowSchema,
-);
+export const ControllersResponseSchema =
+  createListResponseSchema(ControllerRowSchema);
 
 export const DeleteControllerPayloadSchema = z.object({
   id: z.string(),
@@ -49,7 +48,10 @@ export const ControllerTypeSchema = z.enum(["single", "multiple"]);
 
 export const createControllerFormSchema = (t: (key: string) => string) =>
   z.object({
-    serialNumber: z.string().trim().min(1, t("validation.requiredSerialNumber")),
+    serialNumber: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredSerialNumber")),
     companyId: z.string().trim().min(1, t("validation.requiredCompany")),
     type: ControllerTypeSchema,
     simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),

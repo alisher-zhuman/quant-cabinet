@@ -10,6 +10,7 @@ interface Params {
   limit: number;
   search: string;
   isArchived: boolean;
+  enabled?: boolean;
 }
 
 export const useCompaniesQuery = ({
@@ -17,13 +18,15 @@ export const useCompaniesQuery = ({
   limit,
   search,
   isArchived,
+  enabled = true,
 }: Params) => {
   const { t } = useTranslation();
-  
+
   const normalizedSearch = search.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({
     queryKey: companiesKeys.list(page, limit, normalizedSearch, isArchived),
+    enabled,
     queryFn: () =>
       getCompanies({
         page: page + 1,
