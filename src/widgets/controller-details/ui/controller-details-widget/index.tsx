@@ -18,7 +18,7 @@ import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidg
 export const ControllerDetailsWidget = () => {
   const {
     t,
-    id,
+    controllerId,
     controller,
     isLoading,
     isError,
@@ -167,7 +167,7 @@ export const ControllerDetailsWidget = () => {
               <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
                 <DetailRow
                   label={t("controllers.details.fields.id")}
-                  value={id}
+                  value={controllerId}
                 />
               </Box>
             </Box>

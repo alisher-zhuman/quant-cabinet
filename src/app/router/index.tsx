@@ -129,7 +129,7 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.CONTROLLERS}/:id`,
+            path: `${ROUTES.CONTROLLERS}/:controllerId`,
             element: (
               <WithSuspense>
                 <ControllerDetails />
@@ -145,7 +145,7 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.METERS}/:id`,
+            path: `${ROUTES.METERS}/:meterId`,
             element: (
               <WithSuspense>
                 <MeterDetails />

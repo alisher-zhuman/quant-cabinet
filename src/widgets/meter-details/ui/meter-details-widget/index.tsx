@@ -18,7 +18,7 @@ import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
 export const MeterDetailsWidget = () => {
   const {
     t,
-    id,
+    meterId,
     meter,
     isLoading,
     isError,
@@ -170,7 +170,10 @@ export const MeterDetailsWidget = () => {
                 value={meter.updatedAt ? formatDate(meter.updatedAt) : "-"}
               />
               <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                <DetailRow label={t("meters.details.fields.id")} value={id} />
+                <DetailRow
+                  label={t("meters.details.fields.id")}
+                  value={meterId}
+                />
               </Box>
             </Box>
           </Stack>

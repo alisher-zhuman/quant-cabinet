@@ -7,9 +7,9 @@ import { useControllerQuery } from "@entities/controllers";
 export const useControllerDetailsWidget = () => {
   const { t } = useTranslation();
 
-  const { id = "" } = useParams<{ id: string }>();
+  const { controllerId = "" } = useParams<{ controllerId: string }>();
 
-  const { controller, isLoading, isError } = useControllerQuery(id);
+  const { controller, isLoading, isError } = useControllerQuery(controllerId);
 
   const controllerStatus = controller?.controllerStatus
     ? t(`controllers.statuses.${controller.controllerStatus}`)
@@ -37,7 +37,7 @@ export const useControllerDetailsWidget = () => {
 
   return {
     t,
-    id,
+    controllerId,
     controller,
     isLoading,
     isError,

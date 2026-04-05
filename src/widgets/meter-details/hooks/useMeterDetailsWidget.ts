@@ -7,9 +7,9 @@ import { useMeterQuery } from "@entities/meters";
 export const useMeterDetailsWidget = () => {
   const { t } = useTranslation();
 
-  const { id = "" } = useParams<{ id: string }>();
+  const { meterId = "" } = useParams<{ meterId: string }>();
 
-  const { meter, isLoading, isError } = useMeterQuery(id);
+  const { meter, isLoading, isError } = useMeterQuery(meterId);
 
   const meterStatus = meter?.meterStatus
     ? t(`meters.batteryStatus.${meter.meterStatus}`)
@@ -57,7 +57,7 @@ export const useMeterDetailsWidget = () => {
 
   return {
     t,
-    id,
+    meterId,
     meter,
     isLoading,
     isError,
