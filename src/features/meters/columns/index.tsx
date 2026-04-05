@@ -7,9 +7,12 @@ import type { Column } from "@shared/types";
 
 import {
   getBatteryStatusLabel,
+  getBatteryStatusTone,
   getValveStatusLabel,
+  getValveStatusTone,
 } from "../helpers";
 import { MeterActions } from "../ui/meter-actions";
+import { MeterStatusBadge } from "../ui/meter-status-badge";
 
 export const createMeterColumns = (
   t: TFunction,
@@ -48,12 +51,22 @@ export const createMeterColumns = (
   {
     id: "batteryStatus",
     header: t("meters.table.columns.batteryStatus"),
-    cell: (meter) => getBatteryStatusLabel(meter.meterStatus, t),
+    cell: (meter) => (
+      <MeterStatusBadge
+        label={getBatteryStatusLabel(meter.meterStatus, t)}
+        tone={getBatteryStatusTone(meter.meterStatus)}
+      />
+    ),
   },
   {
     id: "valveStatus",
     header: t("meters.table.columns.valveStatus"),
-    cell: (meter) => getValveStatusLabel(meter.valveState, t),
+    cell: (meter) => (
+      <MeterStatusBadge
+        label={getValveStatusLabel(meter.valveState, t)}
+        tone={getValveStatusTone(meter.valveState)}
+      />
+    ),
   },
   {
     id: "createdAt",
