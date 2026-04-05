@@ -1,1 +1,1 @@
-export type CompanyDetailsTab = "users" | "controllers" | "meters";
+export type CompanyDetailsTab = "users" | "controllers";

@@ -217,7 +217,6 @@ export const CompanyDetailsWidget = () => {
       >
         <Tab value="users" label={t("users.title")} />
         <Tab value="controllers" label={t("controllers.title")} />
-        <Tab value="meters" label={t("meters.title")} />
       </Tabs>
     </Box>
   );
