@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 
 import { ROUTES } from "@shared/constants";
@@ -14,6 +16,7 @@ import { formatDate } from "@shared/helpers";
 import { DetailRow } from "@shared/ui/detail-row";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
+import type { CompanyDetailsTab } from "../../types";
 
 export const CompanyDetailsWidget = () => {
   const {
@@ -21,8 +24,10 @@ export const CompanyDetailsWidget = () => {
     companyId,
     company,
     companyKey,
+    activeTab,
     handleCopyKey,
     handleRefreshKey,
+    handleTabChange,
     isRefreshPending,
   } = useCompanyDetailsWidget();
 
@@ -201,6 +206,19 @@ export const CompanyDetailsWidget = () => {
           </Box>
         </Box>
       </Paper>
+
+      <Tabs
+        value={activeTab}
+        onChange={(_, nextValue: string) =>
+          handleTabChange(nextValue as CompanyDetailsTab)
+        }
+        variant="scrollable"
+        allowScrollButtonsMobile
+      >
+        <Tab value="users" label={t("users.title")} />
+        <Tab value="controllers" label={t("controllers.title")} />
+        <Tab value="meters" label={t("meters.title")} />
+      </Tabs>
     </Box>
   );
 };
