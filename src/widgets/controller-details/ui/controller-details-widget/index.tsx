@@ -9,11 +9,11 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { ROUTES } from "@shared/constants";
-import { formatDate } from "@shared/helpers";
-import { DetailRow } from "@shared/ui/detail-row";
 import { Loader } from "@shared/ui/loader";
 
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
+import { ControllerCompanySection } from "../controller-company-section";
+import { ControllerInfoSection } from "../controller-info-section";
 
 export const ControllerDetailsWidget = () => {
   const {
@@ -92,144 +92,27 @@ export const ControllerDetailsWidget = () => {
           </Box>
 
           <Stack spacing={1.5}>
-            <Typography variant="subtitle2" color="text.secondary">
-              {t("controllers.details.sections.controller")}
-            </Typography>
-
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  lg: "repeat(2, minmax(0, 1fr))",
-                },
-                gap: 1.25,
-              }}
-            >
-              <DetailRow
-                label={t("controllers.details.fields.serialNumber")}
-                value={controller.serialNumber}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.controllerType")}
-                value={controllerType}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.controllerStatus")}
-                value={controllerStatus}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.batteryStatus")}
-                value={`${controller.batteryStatus}%`}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.signalStatus")}
-                value={`${controller.signalStatus}%`}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.isArchived")}
-                value={archivedStatus}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.phoneNumber")}
-                value={controller.phoneNumber || "-"}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.simIMSI")}
-                value={controller.simIMSI || "-"}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.setInterval")}
-                value={String(controller.setInterval ?? "-")}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.correctTime")}
-                value={correctTimeLabel}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.correctInterval")}
-                value={correctIntervalLabel}
-              />
-              <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                <DetailRow
-                  label={t("controllers.details.fields.descriptions")}
-                  value={controller.descriptions || "-"}
-                />
-              </Box>
-              <DetailRow
-                label={t("controllers.details.fields.createdAt")}
-                value={formatDate(controller.createdAt)}
-              />
-              <DetailRow
-                label={t("controllers.details.fields.updatedAt")}
-                value={controller.updatedAt ? formatDate(controller.updatedAt) : "-"}
-              />
-              <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                <DetailRow
-                  label={t("controllers.details.fields.id")}
-                  value={controllerId}
-                />
-              </Box>
-            </Box>
+            <ControllerInfoSection
+              t={t}
+              controller={controller}
+              controllerId={controllerId}
+              controllerStatus={controllerStatus}
+              controllerType={controllerType}
+              archivedStatus={archivedStatus}
+              correctTimeLabel={correctTimeLabel}
+              correctIntervalLabel={correctIntervalLabel}
+            />
           </Stack>
 
           {controller.company && (
             <>
               <Divider />
 
-              <Stack spacing={1.5}>
-                <Typography variant="subtitle2" color="text.secondary">
-                  {t("controllers.details.sections.company")}
-                </Typography>
-
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      lg: "repeat(2, minmax(0, 1fr))",
-                    },
-                    gap: 1.25,
-                  }}
-                >
-                  <DetailRow
-                    label={t("controllers.details.fields.companyName")}
-                    value={controller.company.name ?? "-"}
-                  />
-                  <DetailRow
-                    label={t("controllers.details.fields.companyStatus")}
-                    value={companyStatus}
-                  />
-                  <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                    <DetailRow
-                      label={t("controllers.details.fields.companyAddress")}
-                      value={controller.company.address || "-"}
-                    />
-                  </Box>
-                  <DetailRow
-                    label={t("controllers.details.fields.companyCreatedAt")}
-                    value={
-                      controller.company.createdAt
-                        ? formatDate(controller.company.createdAt)
-                        : "-"
-                    }
-                  />
-                  <DetailRow
-                    label={t("controllers.details.fields.companyUpdatedAt")}
-                    value={
-                      controller.company.updatedAt
-                        ? formatDate(controller.company.updatedAt)
-                        : "-"
-                    }
-                  />
-                  <Box sx={{ gridColumn: { xs: "auto", lg: "1 / -1" } }}>
-                    <DetailRow
-                      label={t("controllers.details.fields.companyId")}
-                      value={controller.company.id ?? "-"}
-                    />
-                  </Box>
-                </Box>
-              </Stack>
+              <ControllerCompanySection
+                t={t}
+                controller={controller.company}
+                companyStatus={companyStatus}
+              />
             </>
           )}
         </Stack>
