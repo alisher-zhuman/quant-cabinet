@@ -390,6 +390,46 @@
       "cancel": "Жокко чыгаруу",
       "confirm": "Өчүрүү"
     },
+    "details": {
+      "back": "Артка",
+      "sections": {
+        "meter": "Эсептегич",
+        "controller": "Контроллер"
+      },
+      "fields": {
+        "id": "ID",
+        "serialNumber": "Сериялык номер",
+        "accountNumber": "Жеке эсеп",
+        "clientName": "Абонент",
+        "lastValue": "Акыркы көрсөткүч",
+        "meterStatus": "Эсептегичтин статусу",
+        "valveState": "Клапандын абалы",
+        "pendingCommand": "Күтүүдөгү буйрук",
+        "locationType": "Жайгашуусу",
+        "port": "Порт",
+        "address": "Дарек",
+        "descriptions": "Сүрөттөмө",
+        "isValveLockedByManager": "Клапан менеджер тарабынан бөгөттөлгөн",
+        "isArchived": "Статус",
+        "createdAt": "Түзүлгөн күнү",
+        "updatedAt": "Жаңыртылган күнү"
+      },
+      "values": {
+        "active": "Активдүү",
+        "archived": "Архивде",
+        "yes": "Ооба",
+        "no": "Жок"
+      },
+      "locationType": {
+        "indoor": "Имарат ичинде",
+        "outdoor": "Сыртта"
+      },
+      "pendingCommand": {
+        "none": "Жок",
+        "open": "Ачуу",
+        "close": "Жабуу"
+      }
+    },
     "batteryStatus": {
       "normal": "Нормалдуу",
       "low": "Төмөн",

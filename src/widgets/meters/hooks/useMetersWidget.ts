@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -6,6 +7,7 @@ import { createMeterColumns, useDeleteMeter } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
+import { ROUTES } from "@shared/constants";
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
@@ -18,6 +20,8 @@ import {
 export const useMetersWidget = () => {
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
   
+  const navigate = useNavigate();
+
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
@@ -82,6 +86,13 @@ export const useMetersWidget = () => {
     deleteMeterMutation.mutate({ id: meterToDelete.id });
   };
 
+  const handleRowClick = useCallback(
+    (meter: MeterRow) => {
+      navigate(`/${ROUTES.METERS}/${meter.id}`);
+    },
+    [navigate],
+  );
+
   return {
     t,
     meterToDelete,
@@ -101,6 +112,7 @@ export const useMetersWidget = () => {
     handleSearchChange,
     handleArchivedChange,
     handleConfirmDelete,
+    handleRowClick,
     onCloseDeleteDialog,
     setPage,
     setLimit,

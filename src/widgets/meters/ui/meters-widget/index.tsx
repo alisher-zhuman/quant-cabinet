@@ -27,6 +27,7 @@ export const MetersWidget = () => {
     handleSearchChange,
     handleArchivedChange,
     handleConfirmDelete,
+    handleRowClick,
     onCloseDeleteDialog,
     setPage,
     setLimit,
@@ -48,6 +49,7 @@ export const MetersWidget = () => {
           rows={meters}
           columns={columns}
           getRowId={(meter) => meter.id}
+          onRowClick={handleRowClick}
           toolbar={
             <SearchTabsToolbar
               search={search}

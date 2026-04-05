@@ -5,9 +5,14 @@ import type { ListQueryParams } from "@shared/types";
 
 import {
   DeleteMeterPayloadSchema,
+  MeterDetailsSchema,
   MetersResponseSchema,
 } from "../model/schemas";
-import type { DeleteMeterPayload, MetersResponse } from "../model/types";
+import type {
+  DeleteMeterPayload,
+  MeterDetails,
+  MetersResponse,
+} from "../model/types";
 
 export const getMeters = async ({
   page = 1,
@@ -26,6 +31,12 @@ export const getMeters = async ({
   });
 
   return MetersResponseSchema.parse(response.data);
+};
+
+export const getMeter = async (id: string): Promise<MeterDetails> => {
+  const response = await api.get(API_PATHS.GET_METER(id));
+
+  return MeterDetailsSchema.parse(response.data);
 };
 
 export const deleteMeter = async (payload: DeleteMeterPayload): Promise<void> => {

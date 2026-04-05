@@ -427,6 +427,46 @@
       "cancel": "Отмена",
       "confirm": "Удалить"
     },
+    "details": {
+      "back": "Назад",
+      "sections": {
+        "meter": "Счетчик",
+        "controller": "Контроллер"
+      },
+      "fields": {
+        "id": "ID",
+        "serialNumber": "Серийный номер",
+        "accountNumber": "Лицевой счет",
+        "clientName": "Абонент",
+        "lastValue": "Последнее показание",
+        "meterStatus": "Статус счетчика",
+        "valveState": "Состояние клапана",
+        "pendingCommand": "Ожидающая команда",
+        "locationType": "Расположение",
+        "port": "Порт",
+        "address": "Адрес",
+        "descriptions": "Описание",
+        "isValveLockedByManager": "Клапан заблокирован менеджером",
+        "isArchived": "Статус",
+        "createdAt": "Дата создания",
+        "updatedAt": "Дата обновления"
+      },
+      "values": {
+        "active": "Активный",
+        "archived": "В архиве",
+        "yes": "Да",
+        "no": "Нет"
+      },
+      "locationType": {
+        "indoor": "Внутри помещения",
+        "outdoor": "Снаружи"
+      },
+      "pendingCommand": {
+        "none": "Нет",
+        "open": "Открыть",
+        "close": "Закрыть"
+      }
+    },
     "batteryStatus": {
       "normal": "Нормальный",
       "low": "Низкий",

@@ -43,6 +43,9 @@ const ControllerDetails = lazy(() =>
 const Meters = lazy(() =>
   import("@pages/meters").then((m) => ({ default: m.Meters })),
 );
+const MeterDetails = lazy(() =>
+  import("@pages/meter-details").then((m) => ({ default: m.MeterDetails })),
+);
 
 export const ROUTER = createBrowserRouter([
   {
@@ -138,6 +141,14 @@ export const ROUTER = createBrowserRouter([
             element: (
               <WithSuspense>
                 <Meters />
+              </WithSuspense>
+            ),
+          },
+          {
+            path: `${ROUTES.METERS}/:id`,
+            element: (
+              <WithSuspense>
+                <MeterDetails />
               </WithSuspense>
             ),
           },
