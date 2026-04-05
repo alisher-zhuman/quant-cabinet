@@ -38,7 +38,7 @@
       "delete": "Удалить пользователя"
     },
     "search": {
-      "placeholder": "Поиск по почте пользователя"
+      "placeholder": "Поиск по email или ФИО"
     },
     "tabs": {
       "active": "Активные",
