@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -34,6 +34,7 @@ export const useControllersWidget = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const initialSearchState = useInitialSearchState(parseControllersSearchState);
 
@@ -120,7 +121,11 @@ export const useControllersWidget = () => {
   );
 
   const handleRowClick = (controller: ControllerRow) => {
-    navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`);
+    navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
+      state: {
+        backTo: `${location.pathname}${location.search}`,
+      },
+    });
   };
 
   const handleSearchChange = (value: string) => {

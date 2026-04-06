@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -21,6 +21,7 @@ export const useMetersWidget = () => {
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
   
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { t } = useTranslation();
 
@@ -88,9 +89,13 @@ export const useMetersWidget = () => {
 
   const handleRowClick = useCallback(
     (meter: MeterRow) => {
-      navigate(`/${ROUTES.METERS}/${meter.id}`);
+      navigate(`/${ROUTES.METERS}/${meter.id}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
     },
-    [navigate],
+    [location.pathname, location.search, navigate],
   );
 
   return {

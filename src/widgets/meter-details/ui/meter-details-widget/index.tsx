@@ -8,7 +8,6 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { ROUTES } from "@shared/constants";
 import { Loader } from "@shared/ui/loader";
 
 import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
@@ -20,6 +19,7 @@ export const MeterDetailsWidget = () => {
     t,
     meterId,
     meter,
+    backTo,
     isLoading,
     isError,
     meterStatus,
@@ -44,7 +44,7 @@ export const MeterDetailsWidget = () => {
       <Box sx={{ p: 4, textAlign: "center" }}>
         <Typography color="error">{t("meters.error")}</Typography>
 
-        <Button component={Link} to={`/${ROUTES.METERS}`} sx={{ mt: 2 }}>
+        <Button component={Link} to={backTo} sx={{ mt: 2 }}>
           {t("meters.details.back")}
         </Button>
       </Box>
@@ -64,7 +64,7 @@ export const MeterDetailsWidget = () => {
     >
       <Button
         component={Link}
-        to={`/${ROUTES.METERS}`}
+        to={backTo}
         variant="text"
         startIcon={<ArrowBackRoundedIcon />}
         sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}

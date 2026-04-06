@@ -1,15 +1,22 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
 import { useMeterQuery } from "@entities/meters";
+
+import { ROUTES } from "@shared/constants";
+import { getBackTo } from "@shared/helpers";
 
 export const useMeterDetailsWidget = () => {
   const { t } = useTranslation();
 
   const { meterId = "" } = useParams<{ meterId: string }>();
 
+  const location = useLocation() as { state: unknown };
+
   const { meter, isLoading, isError } = useMeterQuery(meterId);
+
+  const backTo = getBackTo(location.state, `/${ROUTES.METERS}`);
 
   const meterStatus = meter?.meterStatus
     ? t(`meters.batteryStatus.${meter.meterStatus}`)
@@ -59,6 +66,7 @@ export const useMeterDetailsWidget = () => {
     t,
     meterId,
     meter,
+    backTo,
     isLoading,
     isError,
     meterStatus,

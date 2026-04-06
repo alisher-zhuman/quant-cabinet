@@ -8,7 +8,6 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { ROUTES } from "@shared/constants";
 import { Loader } from "@shared/ui/loader";
 
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
@@ -20,6 +19,7 @@ export const ControllerDetailsWidget = () => {
     t,
     controllerId,
     controller,
+    backTo,
     isLoading,
     isError,
     controllerStatus,
@@ -41,7 +41,7 @@ export const ControllerDetailsWidget = () => {
 
         <Button
           component={Link}
-          to={`/${ROUTES.CONTROLLERS}`}
+          to={backTo}
           sx={{ mt: 2 }}
         >
           {t("controllers.details.back")}
@@ -63,7 +63,7 @@ export const ControllerDetailsWidget = () => {
     >
       <Button
         component={Link}
-        to={`/${ROUTES.CONTROLLERS}`}
+        to={backTo}
         variant="text"
         startIcon={<ArrowBackRoundedIcon />}
         sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
