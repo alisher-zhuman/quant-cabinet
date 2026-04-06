@@ -8,7 +8,6 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { ROUTES } from "@shared/constants";
 import { formatDate } from "@shared/helpers";
 import { DetailRow } from "@shared/ui/detail-row";
 
@@ -19,6 +18,7 @@ export const UserDetailsWidget = () => {
     t,
     userEmail,
     user,
+    backTo,
     userStatus,
     companyStatus,
     fullName,
@@ -38,7 +38,7 @@ export const UserDetailsWidget = () => {
     >
       <Button
         component={Link}
-        to={`/${ROUTES.USERS}`}
+        to={backTo}
         variant="text"
         startIcon={<ArrowBackRoundedIcon />}
         sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}

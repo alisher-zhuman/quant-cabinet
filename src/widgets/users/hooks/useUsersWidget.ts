@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
@@ -28,6 +28,7 @@ export const useUsersWidget = () => {
   const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
   
   const { t } = useTranslation();
 
@@ -79,9 +80,13 @@ export const useUsersWidget = () => {
 
   const handleRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`);
+      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
     },
-    [navigate],
+    [location.pathname, location.search, navigate],
   );
 
   const columns = useMemo(

@@ -1,15 +1,22 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
 import { useUserQuery } from "@entities/users";
 
+import { ROUTES } from "@shared/constants";
+import { getBackTo } from "@shared/helpers";
+
 export const useUserDetailsWidget = () => {
   const { t } = useTranslation();
+  
+  const location = useLocation() as { state: unknown };
 
   const { userEmail } = useParams();
-  
+
   const { user } = useUserQuery(userEmail);
+
+  const backTo = getBackTo(location.state, `/${ROUTES.USERS}`);
 
   const userStatus = user?.isArchived
     ? t("users.details.values.archived")
@@ -26,6 +33,7 @@ export const useUserDetailsWidget = () => {
     t,
     userEmail,
     user,
+    backTo,
     userStatus,
     companyStatus,
     fullName,

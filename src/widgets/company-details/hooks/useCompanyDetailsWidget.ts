@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -45,6 +45,7 @@ export const useCompanyDetailsWidget = () => {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { companyId } = useParams();
 
@@ -136,9 +137,13 @@ export const useCompanyDetailsWidget = () => {
 
   const handleUserRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`);
+      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
     },
-    [navigate],
+    [location.pathname, location.search, navigate],
   );
 
   const userColumns = useMemo(
