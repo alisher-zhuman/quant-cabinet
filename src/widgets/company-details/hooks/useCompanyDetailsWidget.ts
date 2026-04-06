@@ -32,6 +32,7 @@ import type { CompanyDetailsTab } from "../types";
 export const useCompanyDetailsWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
+  const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
 
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
@@ -123,9 +124,9 @@ export const useCompanyDetailsWidget = () => {
 
   const handleDeleteUser = useCallback(
     (user: UserRow) => {
-      deleteUserMutation.mutate({ userId: user.id });
+      setUserToDelete(user);
     },
-    [deleteUserMutation],
+    [],
   );
 
   const handleEditUser = useCallback((user: UserRow) => {
@@ -177,6 +178,25 @@ export const useCompanyDetailsWidget = () => {
     setUserToEdit(null);
   }, []);
 
+  const handleCloseDeleteDialog = () => {
+    setUserToDelete(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!userToDelete) {
+      return;
+    }
+
+    deleteUserMutation.mutate(
+      { userId: userToDelete.id },
+      {
+        onSuccess: () => {
+          setUserToDelete(null);
+        },
+      },
+    );
+  };
+
   return {
     t,
     companyId,
@@ -185,6 +205,7 @@ export const useCompanyDetailsWidget = () => {
     activeTab,
     isCreateDialogOpen,
     userToEdit,
+    userToDelete,
     isArchived,
     search,
     page,
@@ -206,7 +227,10 @@ export const useCompanyDetailsWidget = () => {
     handleCloseCreateDialog,
     handleCreateSuccess,
     handleEditSuccess,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
     handleUserRowClick,
+    deleteUserMutation,
     isRefreshPending: refreshCompanyTokenMutation.isPending,
     setPage,
     setLimit,

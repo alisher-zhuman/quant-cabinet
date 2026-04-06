@@ -28,6 +28,7 @@ export const CompanyDetailsWidget = () => {
     activeTab,
     isCreateDialogOpen,
     userToEdit,
+    userToDelete,
     isArchived,
     search,
     page,
@@ -49,7 +50,10 @@ export const CompanyDetailsWidget = () => {
     handleCloseCreateDialog,
     handleCreateSuccess,
     handleEditSuccess,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
     handleUserRowClick,
+    deleteUserMutation,
     isRefreshPending,
     setPage,
     setLimit,
@@ -248,6 +252,7 @@ export const CompanyDetailsWidget = () => {
           t={t}
           isCreateDialogOpen={isCreateDialogOpen}
           userToEdit={userToEdit}
+          userToDelete={userToDelete}
           isArchived={isArchived}
           search={search}
           page={page}
@@ -266,7 +271,10 @@ export const CompanyDetailsWidget = () => {
           handleCloseCreateDialog={handleCloseCreateDialog}
           handleCreateSuccess={handleCreateSuccess}
           handleEditSuccess={handleEditSuccess}
+          handleCloseDeleteDialog={handleCloseDeleteDialog}
+          handleConfirmDelete={handleConfirmDelete}
           handleUserRowClick={handleUserRowClick}
+          deleteUserMutationIsPending={deleteUserMutation.isPending}
           setPage={setPage}
           setLimit={setLimit}
         />

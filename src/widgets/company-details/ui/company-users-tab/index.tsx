@@ -8,6 +8,7 @@ import { CreateUserDialog } from "@features/users";
 import { type UserRow } from "@entities/users";
 
 import { type Column } from "@shared/types";
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
@@ -15,6 +16,7 @@ interface Props {
   t: TFunction;
   isCreateDialogOpen: boolean;
   userToEdit: UserRow | null;
+  userToDelete: UserRow | null;
   isArchived: boolean;
   search: string;
   page: number;
@@ -33,7 +35,10 @@ interface Props {
   handleCloseCreateDialog: () => void;
   handleCreateSuccess: () => void;
   handleEditSuccess: () => void;
+  handleCloseDeleteDialog: () => void;
+  handleConfirmDelete: () => void;
   handleUserRowClick: (user: UserRow) => void;
+  deleteUserMutationIsPending: boolean;
   setPage: (newPage: number) => void;
   setLimit: (newLimit: number) => void;
 }
@@ -42,6 +47,7 @@ export const CompanyUsersTab = ({
   t,
   isCreateDialogOpen,
   userToEdit,
+  userToDelete,
   isArchived,
   search,
   page,
@@ -60,7 +66,10 @@ export const CompanyUsersTab = ({
   handleCloseCreateDialog,
   handleCreateSuccess,
   handleEditSuccess,
+  handleCloseDeleteDialog,
+  handleConfirmDelete,
   handleUserRowClick,
+  deleteUserMutationIsPending,
   setPage,
   setLimit,
 }: Props) => (
@@ -114,5 +123,16 @@ export const CompanyUsersTab = ({
         onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
       />
     )}
+
+    <ConfirmDialog
+      open={Boolean(userToDelete)}
+      title={t("users.deleteDialog.title")}
+      description={t("users.deleteDialog.description")}
+      cancelLabel={t("users.deleteDialog.cancel")}
+      confirmLabel={t("users.deleteDialog.confirm")}
+      isLoading={deleteUserMutationIsPending}
+      onClose={handleCloseDeleteDialog}
+      onConfirm={handleConfirmDelete}
+    />
   </>
 );

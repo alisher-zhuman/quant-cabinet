@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 
 import { CreateUserDialog } from "@features/users";
 
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
@@ -15,6 +16,7 @@ export const UsersWidget = () => {
     t,
     isCreateDialogOpen,
     userToEdit,
+    userToDelete,
     isArchived,
     search,
     page,
@@ -33,7 +35,10 @@ export const UsersWidget = () => {
     handleCloseCreateDialog,
     handleCreateSuccess,
     handleEditSuccess,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
     handleRowClick,
+    deleteUserMutation,
     setPage,
     setLimit,
   } = useUsersWidget();
@@ -97,6 +102,17 @@ export const UsersWidget = () => {
           onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
         />
       )}
+
+      <ConfirmDialog
+        open={Boolean(userToDelete)}
+        title={t("users.deleteDialog.title")}
+        description={t("users.deleteDialog.description")}
+        cancelLabel={t("users.deleteDialog.cancel")}
+        confirmLabel={t("users.deleteDialog.confirm")}
+        isLoading={deleteUserMutation.isPending}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
     </>
   );
 };

@@ -25,6 +25,7 @@ import {
 export const useUsersWidget = () => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
+  const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
 
   const navigate = useNavigate();
   
@@ -66,9 +67,9 @@ export const useUsersWidget = () => {
 
   const handleDeleteUser = useCallback(
     (user: UserRow) => {
-      deleteUserMutation.mutate({ userId: user.id });
+      setUserToDelete(user);
     },
-    [deleteUserMutation],
+    [],
   );
 
   const handleEditUser = useCallback((user: UserRow) => {
@@ -120,10 +121,30 @@ export const useUsersWidget = () => {
     setUserToEdit(null);
   }, []);
 
+  const handleCloseDeleteDialog = () => {
+    setUserToDelete(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!userToDelete) {
+      return;
+    }
+
+    deleteUserMutation.mutate(
+      { userId: userToDelete.id },
+      {
+        onSuccess: () => {
+          setUserToDelete(null);
+        },
+      },
+    );
+  };
+
   return {
     t,
     isCreateDialogOpen,
     userToEdit,
+    userToDelete,
     isArchived,
     search,
     page,
@@ -142,7 +163,10 @@ export const useUsersWidget = () => {
     handleCloseCreateDialog,
     handleCreateSuccess,
     handleEditSuccess,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
     handleRowClick,
+    deleteUserMutation,
     setPage,
     setLimit,
   };
