@@ -1,4 +1,4 @@
-import type { CompanyDetailsTab } from "./types";
+import type { CompanyDetailsTab } from "../types";
 
 export const DEFAULT_COMPANY_DETAILS_TAB: CompanyDetailsTab = "users";
 
