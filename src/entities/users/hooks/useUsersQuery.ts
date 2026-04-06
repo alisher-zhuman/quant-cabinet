@@ -8,31 +8,54 @@ import type { UserRow } from "../model/types";
 interface Params {
   page: number;
   limit: number;
-  search: string;
+  firstName: string;
+  lastName: string;
   isArchived: boolean;
+  companyId?: string;
+  enabled?: boolean;
 }
 
-export const useUsersQuery = ({ page, limit, search, isArchived }: Params) => {
+export const useUsersQuery = ({
+  page,
+  limit,
+  firstName,
+  lastName,
+  isArchived,
+  companyId = "",
+  enabled = true,
+}: Params) => {
   const { t } = useTranslation();
 
-  const normalizedSearch = search.trim();
+  const normalizedFirstName = firstName.trim();
+  const normalizedLastName = lastName.trim();
+  const hasSearch = Boolean(normalizedFirstName || normalizedLastName);
 
   const { data, isLoading, isError, isFetching } = useQuery({
-    queryKey: usersKeys.list(page, limit, normalizedSearch, isArchived),
+    queryKey: usersKeys.list(
+      page,
+      limit,
+      normalizedFirstName,
+      normalizedLastName,
+      isArchived,
+      companyId,
+    ),
     queryFn: () =>
       getUsers({
         page: page + 1,
         limit,
-        search: normalizedSearch,
+        firstName: normalizedFirstName,
+        lastName: normalizedLastName,
         isArchived,
+        companyId,
       }),
+    enabled,
   });
 
   const users: UserRow[] = data?.data ?? [];
   const total = data?.total ?? 0;
   const hasUsers = users.length > 0;
 
-  const emptyText = normalizedSearch
+  const emptyText = hasSearch
     ? t("users.empty.search")
     : isArchived
       ? t("users.empty.archived")

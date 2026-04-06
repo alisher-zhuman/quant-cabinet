@@ -17,6 +17,7 @@ import { DetailRow } from "@shared/ui/detail-row";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
 import type { CompanyDetailsTab } from "../../types";
+import { CompanyUsersTab } from "../company-users-tab";
 
 export const CompanyDetailsWidget = () => {
   const {
@@ -25,10 +26,33 @@ export const CompanyDetailsWidget = () => {
     company,
     companyKey,
     activeTab,
+    isCreateDialogOpen,
+    userToEdit,
+    isArchived,
+    search,
+    page,
+    limit,
+    users,
+    total,
+    hasUsers,
+    emptyText,
+    isUsersLoading,
+    isUsersError,
+    isUsersFetching,
+    userColumns,
     handleCopyKey,
     handleRefreshKey,
     handleTabChange,
+    handleSearchChange,
+    handleArchivedChange,
+    handleOpenCreateDialog,
+    handleCloseCreateDialog,
+    handleCreateSuccess,
+    handleEditSuccess,
+    handleUserRowClick,
     isRefreshPending,
+    setPage,
+    setLimit,
   } = useCompanyDetailsWidget();
 
   return (
@@ -218,6 +242,35 @@ export const CompanyDetailsWidget = () => {
         <Tab value="users" label={t("users.title")} />
         <Tab value="controllers" label={t("controllers.title")} />
       </Tabs>
+
+      {activeTab === "users" && (
+        <CompanyUsersTab
+          t={t}
+          isCreateDialogOpen={isCreateDialogOpen}
+          userToEdit={userToEdit}
+          isArchived={isArchived}
+          search={search}
+          page={page}
+          limit={limit}
+          users={users}
+          total={total}
+          hasUsers={hasUsers}
+          emptyText={emptyText}
+          isUsersLoading={isUsersLoading}
+          isUsersError={isUsersError}
+          isUsersFetching={isUsersFetching}
+          userColumns={userColumns}
+          handleSearchChange={handleSearchChange}
+          handleArchivedChange={handleArchivedChange}
+          handleOpenCreateDialog={handleOpenCreateDialog}
+          handleCloseCreateDialog={handleCloseCreateDialog}
+          handleCreateSuccess={handleCreateSuccess}
+          handleEditSuccess={handleEditSuccess}
+          handleUserRowClick={handleUserRowClick}
+          setPage={setPage}
+          setLimit={setLimit}
+        />
+      )}
     </Box>
   );
 };

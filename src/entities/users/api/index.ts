@@ -1,7 +1,6 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
-import type { ListQueryParams } from "@shared/types";
 
 import {
   CreateUserPayloadSchema,
@@ -15,6 +14,7 @@ import type {
   DeleteUserPayload,
   UpdateUserPayload,
   UserDetails,
+  UsersListQueryParams,
   UsersResponse,
 } from "../model/types";
 
@@ -27,12 +27,25 @@ export const createUser = async (payload: CreateUserPayload): Promise<void> => {
 export const getUsers = async ({
   page = 1,
   limit = 10,
-  search = "",
+  firstName = "",
+  lastName = "",
+  companyId = "",
   isArchived = false,
-}: ListQueryParams = {}): Promise<UsersResponse> => {
-  const response = await api.get(API_PATHS.USERS, {
-    params: buildListQueryParams({ page, limit, search, isArchived }),
-  });
+}: UsersListQueryParams = {}): Promise<UsersResponse> => {
+  const response = await api.get(
+    companyId ? `${API_PATHS.USERS}/${companyId}` : API_PATHS.USERS,
+    {
+      params: buildListQueryParams({
+        page,
+        limit,
+        isArchived,
+        extraParams: {
+          firstName,
+          lastName,
+        },
+      }),
+    },
+  );
 
   return UsersResponseSchema.parse(response.data);
 };

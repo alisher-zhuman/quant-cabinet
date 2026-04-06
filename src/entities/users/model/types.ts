@@ -1,5 +1,7 @@
 import type { infer as ZodInfer } from "zod";
 
+import type { ListQueryParams } from "@shared/types";
+
 import type {
   createUserFormSchema,
   CreateUserPayloadSchema,
@@ -16,3 +18,9 @@ export type UserFormValues = ZodInfer<ReturnType<typeof createUserFormSchema>>;
 export type CreateUserPayload = ZodInfer<typeof CreateUserPayloadSchema>;
 export type DeleteUserPayload = ZodInfer<typeof DeleteUserPayloadSchema>;
 export type UpdateUserPayload = ZodInfer<typeof UpdateUserPayloadSchema>;
+
+export interface UsersListQueryParams extends ListQueryParams {
+  firstName?: string;
+  lastName?: string;
+  companyId?: string;
+}

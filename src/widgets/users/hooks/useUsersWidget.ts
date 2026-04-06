@@ -5,13 +5,15 @@ import { useTranslation } from "react-i18next";
 
 import {
   createUserColumns,
+  createUsersSearchString,
+  getUsersNameSearchParams,
+  parseUsersSearchState,
   useDeleteUser,
 } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
 import { ROUTES } from "@shared/constants";
-import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -30,7 +32,7 @@ export const useUsersWidget = () => {
 
   const deleteUserMutation = useDeleteUser();
 
-  const initialSearchState = useInitialSearchState(parseListSearchState);
+  const initialSearchState = useInitialSearchState(parseUsersSearchState);
 
   const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: initialSearchState.isArchived,
@@ -48,14 +50,17 @@ export const useUsersWidget = () => {
 
   useSyncSearchParams(
     { page, limit, search, isArchived },
-    createListSearchString,
+    createUsersSearchString,
   );
+
+  const { firstName, lastName } = getUsersNameSearchParams(debouncedSearch);
 
   const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
     useUsersQuery({
       page,
       limit,
-      search: debouncedSearch,
+      firstName,
+      lastName,
       isArchived,
     });
 
