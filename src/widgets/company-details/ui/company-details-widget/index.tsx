@@ -249,6 +249,7 @@ export const CompanyDetailsWidget = () => {
 
       {activeTab === "users" && (
         <CompanyUsersTab
+          companyId={companyId ?? ""}
           t={t}
           isCreateDialogOpen={isCreateDialogOpen}
           userToEdit={userToEdit}

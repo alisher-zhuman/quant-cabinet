@@ -22,6 +22,7 @@ import { useUserForm } from "../../hooks/useUserForm";
 
 interface Props {
   user?: UserRow | null;
+  companyId?: string;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
@@ -29,6 +30,7 @@ interface Props {
 
 export const CreateUserDialog = ({
   user,
+  companyId,
   open,
   onClose,
   onSuccess,
@@ -66,16 +68,20 @@ export const CreateUserDialog = ({
 
   const { control, isPending, isValid, onSubmit, setValue } = useUserForm({
     user,
+    companyId,
     onSuccess,
   });
   const selectedRole = useWatch({ control, name: "role" });
-  const shouldShowCompanyField = selectedRole !== "admin";
+  const shouldShowCompanyField = selectedRole !== "admin" && !companyId;
 
   useEffect(() => {
     if (!shouldShowCompanyField) {
-      setValue("company", "", { shouldDirty: true, shouldValidate: true });
+      setValue("company", companyId ?? "", {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     }
-  }, [setValue, shouldShowCompanyField]);
+  }, [companyId, setValue, shouldShowCompanyField]);
 
   return (
     <Dialog

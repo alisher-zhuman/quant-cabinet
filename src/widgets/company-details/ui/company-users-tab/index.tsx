@@ -13,6 +13,7 @@ import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
 interface Props {
+  companyId: string;
   t: TFunction;
   isCreateDialogOpen: boolean;
   userToEdit: UserRow | null;
@@ -44,6 +45,7 @@ interface Props {
 }
 
 export const CompanyUsersTab = ({
+  companyId,
   t,
   isCreateDialogOpen,
   userToEdit,
@@ -121,6 +123,7 @@ export const CompanyUsersTab = ({
         open={isCreateDialogOpen}
         onClose={handleCloseCreateDialog}
         onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
+        {...(!userToEdit ? { companyId } : {})}
       />
     )}
 

@@ -13,25 +13,32 @@ import { useUpdateUser } from "./useUpdateUser";
 
 interface Params {
   user?: UserRow | null | undefined;
+  companyId?: string | undefined;
   onSuccess?: (() => void) | undefined;
 }
 
-const getDefaultValues = (user?: UserRow | null): UserFormValues => ({
+const getDefaultValues = (
+  user?: UserRow | null,
+  companyId?: string,
+): UserFormValues => ({
   email: user?.email ?? "",
   firstName: user?.firstName ?? "",
   lastName: user?.lastName ?? "",
   role: user?.role ?? "user",
   phoneNumber: user?.phoneNumber ?? "",
   descriptions: user?.descriptions ?? "",
-  company: user?.company?.id ?? "",
+  company: user?.company?.id ?? companyId ?? "",
   isArchived: user?.isArchived ?? false,
 });
 
-export const useUserForm = ({ user, onSuccess }: Params = {}) => {
+export const useUserForm = ({ user, companyId, onSuccess }: Params = {}) => {
   const { t } = useTranslation();
   const isEditMode = Boolean(user);
 
-  const defaultValues = useMemo(() => getDefaultValues(user), [user]);
+  const defaultValues = useMemo(
+    () => getDefaultValues(user, companyId),
+    [companyId, user],
+  );
 
   const {
     control,
@@ -50,7 +57,7 @@ export const useUserForm = ({ user, onSuccess }: Params = {}) => {
   }, [defaultValues, reset]);
 
   const handleSuccess = () => {
-    reset(getDefaultValues());
+    reset(getDefaultValues(undefined, companyId));
     onSuccess?.();
   };
 
