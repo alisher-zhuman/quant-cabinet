@@ -426,9 +426,15 @@
         "yes": "Ооба",
         "no": "Жок"
       },
+      "statuses": {
+        "normal": "Нормада",
+        "low": "Төмөн",
+        "critical": "Критикалык"
+      },
       "locationType": {
         "indoor": "Имарат ичинде",
-        "outdoor": "Сыртта"
+        "outdoor": "Сыртта",
+        "well": "Кудукта"
       },
       "pendingCommand": {
         "none": "Жок",

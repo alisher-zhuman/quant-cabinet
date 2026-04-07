@@ -30,7 +30,7 @@ const MeterControllerSchema = z
     correctInterval: z.boolean(),
     setInterval: z.preprocess(
       (value) => (value === null ? undefined : value),
-      z.number().int().min(1).max(255),
+      z.number().int().min(1).max(255).optional(),
     ),
     createdAt: z.string(),
     updatedAt: z.string(),

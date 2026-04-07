@@ -19,7 +19,9 @@ export const useMeterDetailsWidget = () => {
   const backTo = getBackTo(location.state, `/${ROUTES.METERS}`);
 
   const meterStatus = meter?.meterStatus
-    ? t(`meters.batteryStatus.${meter.meterStatus}`)
+    ? t(`meters.details.statuses.${meter.meterStatus}`, {
+        defaultValue: meter.meterStatus,
+      })
     : "-";
 
   const valveStatus = meter?.valveState
@@ -31,7 +33,9 @@ export const useMeterDetailsWidget = () => {
     : "-";
 
   const locationType = meter?.locationType
-    ? t(`meters.details.locationType.${meter.locationType}`)
+    ? t(`meters.details.locationType.${meter.locationType}`, {
+        defaultValue: meter.locationType,
+      })
     : "-";
 
   const archivedStatus = meter?.isArchived

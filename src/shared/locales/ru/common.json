@@ -463,9 +463,15 @@
         "yes": "Да",
         "no": "Нет"
       },
+      "statuses": {
+        "normal": "В норме",
+        "low": "Низкий",
+        "critical": "Критический"
+      },
       "locationType": {
         "indoor": "Внутри помещения",
-        "outdoor": "Снаружи"
+        "outdoor": "Снаружи",
+        "well": "Колодец"
       },
       "pendingCommand": {
         "none": "Нет",
