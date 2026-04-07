@@ -14,6 +14,7 @@ interface Params {
   serialNumber: string;
   phoneNumber: string;
   simIMSI: string;
+  enabled?: boolean;
 }
 
 export const useControllersQuery = ({
@@ -25,6 +26,7 @@ export const useControllersQuery = ({
   serialNumber,
   phoneNumber,
   simIMSI,
+  enabled = true,
 }: Params) => {
   const { t } = useTranslation();
 
@@ -56,6 +58,7 @@ export const useControllersQuery = ({
         phoneNumber: normalizedPhoneNumber,
         simIMSI: normalizedSimIMSI,
       }),
+    enabled,
   });
 
   const controllers: ControllerRow[] = data?.data ?? [];

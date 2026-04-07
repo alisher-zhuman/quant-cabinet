@@ -3,12 +3,10 @@ export {
   deleteController,
   getController,
   getControllers,
-  getControllersByCompany,
   transferController,
   updateController,
 } from "./api";
 export { useControllerQuery } from "./hooks/useControllerQuery";
-export { useControllersByCompanyQuery } from "./hooks/useControllersByCompanyQuery";
 export { useControllersQuery } from "./hooks/useControllersQuery";
 export { controllersKeys } from "./model/keys";
 export {

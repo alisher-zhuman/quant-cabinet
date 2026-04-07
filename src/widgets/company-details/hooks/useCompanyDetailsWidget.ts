@@ -18,7 +18,7 @@ import {
 import { useCompanyQuery } from "@entities/companies";
 import {
   type ControllerRow,
-  useControllersByCompanyQuery,
+  useControllersQuery,
 } from "@entities/controllers";
 import { type UserRow, useUsersQuery } from "@entities/users";
 
@@ -135,7 +135,7 @@ export const useCompanyDetailsWidget = () => {
     isLoading: isControllersLoading,
     isError: isControllersError,
     isFetching: isControllersFetching,
-  } = useControllersByCompanyQuery({
+  } = useControllersQuery({
     companyId: normalizedCompanyId,
     page,
     limit,

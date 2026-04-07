@@ -9,7 +9,6 @@ export const API_PATHS = {
   CONTROLLERS: "/controllers",
   CONTROLLERS_UPDATE: "/controllers/update",
   GET_CONTROLLER: (id: string) => `/controllers/${id}`,
-  CONTROLLERS_BY_COMPANY: (id: string) => `/controllers/by-company/${id}`,
   METERS: "/meters",
   GET_METER: (id: string) => `/meters/${id}`,
 };
