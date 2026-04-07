@@ -1,12 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import {
-  createCompanyColumns,
-  useDeleteCompany,
-} from "@features/companies";
+import { createCompanyColumns } from "@features/companies";
 
 import { type CompanyRow, useCompaniesQuery } from "@entities/companies";
 
@@ -20,15 +17,10 @@ import {
   useSyncSearchParams,
 } from "@shared/hooks";
 
-export const useCompaniesWidget = () => {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [companyToEdit, setCompanyToEdit] = useState<CompanyRow | null>(null);
-  const [companyToDelete, setCompanyToDelete] = useState<CompanyRow | null>(
-    null,
-  );
+import { useCompanyDialogs } from "./useCompanyDialogs";
 
+export const useCompaniesWidget = () => {
   const navigate = useNavigate();
-  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);
@@ -67,20 +59,15 @@ export const useCompaniesWidget = () => {
     isArchived,
   });
 
-  const onCloseDeleteDialog = () => {
-    setCompanyToDelete(null);
-  };
-
-  const deleteCompanyMutation = useDeleteCompany(onCloseDeleteDialog);
-
-  const handleEditCompany = useCallback((company: CompanyRow) => {
-    setCompanyToEdit(company);
-    setIsCreateDialogOpen(true);
-  }, []);
+  const { dialogProps, toolbarProps, handleEditCompany, setCompanyToDelete } =
+    useCompanyDialogs({
+      setIsArchived,
+      setPage,
+    });
 
   const columns = useMemo(
     () => createCompanyColumns(t, handleEditCompany, setCompanyToDelete),
-    [t, handleEditCompany],
+    [t, handleEditCompany, setCompanyToDelete],
   );
 
   const handleSearchChange = (value: string) => {
@@ -93,36 +80,6 @@ export const useCompaniesWidget = () => {
     setPage(0);
   };
 
-  const handleOpenCreateDialog = () => {
-    setCompanyToEdit(null);
-    setIsCreateDialogOpen(true);
-  };
-
-  const handleCloseCreateDialog = () => {
-    setIsCreateDialogOpen(false);
-    setCompanyToEdit(null);
-  };
-
-  const handleCreateSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setCompanyToEdit(null);
-    setIsArchived(false);
-    setPage(0);
-  }, [setIsArchived, setPage]);
-
-  const handleEditSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setCompanyToEdit(null);
-  }, []);
-
-  const handleConfirmDelete = () => {
-    if (!companyToDelete) {
-      return;
-    }
-
-    deleteCompanyMutation.mutate({ id: companyToDelete.id });
-  };
-
   const handleRowClick = useCallback(
     (company: CompanyRow) => {
       navigate(`/${ROUTES.COMPANIES}/${company.id}`);
@@ -132,32 +89,36 @@ export const useCompaniesWidget = () => {
 
   return {
     t,
-    isCreateDialogOpen,
-    companyToEdit,
-    companyToDelete,
-    isArchived,
-    search,
-    page,
-    limit,
-    companies,
-    total,
-    hasCompanies,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    columns,
-    deleteCompanyMutation,
-    handleSearchChange,
-    handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleConfirmDelete,
-    handleRowClick,
-    onCloseDeleteDialog,
-    setPage,
-    setLimit,
+    tableSectionProps: {
+      isLoading,
+      isError,
+      errorText: t("companies.error"),
+      hasItems: hasCompanies,
+      emptyText,
+      rows: companies,
+      columns,
+      onRowClick: handleRowClick,
+      pagination: {
+        page,
+        limit,
+        total,
+        onPageChange: setPage,
+        onLimitChange: setLimit,
+        labelRowsPerPage: t("companies.table.rowsPerPage"),
+      },
+    },
+    toolbarProps: {
+      t,
+      search,
+      isSearchLoading: isFetching,
+      isArchived,
+      onOpenCreateDialog: toolbarProps.onOpenCreateDialog,
+      onSearchChange: handleSearchChange,
+      onArchivedChange: handleArchivedChange,
+    },
+    dialogProps: {
+      t,
+      ...dialogProps,
+    },
   };
 };
