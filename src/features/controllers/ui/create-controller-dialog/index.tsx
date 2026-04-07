@@ -67,7 +67,7 @@ export const CreateControllerDialog = ({
   const { control, isPending, isValid, onSubmit } = useControllerForm({
     controller,
     onSuccess,
-    initialCompanyId,
+    ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
   });
 
   return (

@@ -88,7 +88,7 @@ export const ControllersDialogs = ({
         open={isCreateDialogOpen}
         onClose={onCloseCreateDialog}
         onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
-        initialCompanyId={initialCompanyId}
+        {...(initialCompanyId !== undefined ? { initialCompanyId } : {})}
       />
     )}
 
