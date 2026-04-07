@@ -1,24 +1,22 @@
 import { useEffect, useMemo } from "react";
 
-import { Controller, useWatch } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 
 import { useCompaniesQuery } from "@entities/companies";
 import type { UserRow } from "@entities/users";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
-import { FormSelectField } from "@shared/ui/form-select-field";
-import { FormTextField } from "@shared/ui/form-text-field";
 
 import { useUserForm } from "../../hooks/useUserForm";
+import { UserCompanyFields } from "../user-company-fields";
+import { UserMainFields } from "../user-main-fields";
 
 interface Props {
   user?: UserRow | null;
@@ -97,81 +95,21 @@ export const CreateUserDialog = ({
       <DialogContent>
         <form onSubmit={onSubmit}>
           <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
-            {!isEditMode && (
-              <FormTextField
-                name="email"
-                control={control}
-                label={t("users.createDialog.fields.email")}
-                type="email"
-                fullWidth
-              />
-            )}
-
-            <FormTextField
-              name="firstName"
+            <UserMainFields
+              t={t}
               control={control}
-              label={t("users.createDialog.fields.firstName")}
-              fullWidth
+              isEditMode={isEditMode}
+              roleOptions={roleOptions}
             />
 
-            <FormTextField
-              name="lastName"
+            <UserCompanyFields
+              t={t}
               control={control}
-              label={t("users.createDialog.fields.lastName")}
-              fullWidth
+              isEditMode={isEditMode}
+              shouldShowCompanyField={shouldShowCompanyField}
+              isCompaniesLoading={isCompaniesLoading}
+              companyOptions={companyOptions}
             />
-
-            <FormSelectField
-              name="role"
-              control={control}
-              label={t("users.createDialog.fields.role")}
-              fullWidth
-              options={roleOptions}
-            />
-
-            <FormTextField
-              name="phoneNumber"
-              control={control}
-              label={t("users.createDialog.fields.phoneNumber")}
-              fullWidth
-            />
-
-            <FormTextField
-              name="descriptions"
-              control={control}
-              label={t("users.createDialog.fields.descriptions")}
-              fullWidth
-            />
-
-            {shouldShowCompanyField && (
-              <FormSelectField
-                name="company"
-                control={control}
-                label={t("users.createDialog.fields.company")}
-                fullWidth
-                disabled={isCompaniesLoading}
-                options={companyOptions}
-                emptyOptionLabel={t("users.createDialog.fields.companyPlaceholder")}
-              />
-            )}
-
-            {isEditMode && (
-              <Controller
-                name="isArchived"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    label={t("users.editDialog.fields.isArchived")}
-                    control={
-                      <Switch
-                        checked={field.value}
-                        onChange={(_, checked) => field.onChange(checked)}
-                      />
-                    }
-                  />
-                )}
-              />
-            )}
 
             <FormActions
               onCancel={onClose}
