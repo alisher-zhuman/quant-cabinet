@@ -1,25 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 
-import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
-import { useRefreshCompanyToken } from "@features/companies";
-import {
-  createControllerColumns,
-  useDeleteController,
-} from "@features/controllers";
-import {
-  createUserColumns,
-  useDeleteUser,
-} from "@features/users";
-
 import { useCompanyQuery } from "@entities/companies";
-import {
-  type ControllerRow,
-  useControllersQuery,
-} from "@entities/controllers";
-import { type UserRow, useUsersQuery } from "@entities/users";
 
 import { ROUTES } from "@shared/constants";
 import {
@@ -35,22 +19,11 @@ import {
   parseCompanyDetailsSearchState,
 } from "../helpers";
 import type { CompanyDetailsTab } from "../types";
+import { useCompanyControllersTab } from "./useCompanyControllersTab";
+import { useCompanyKeyActions } from "./useCompanyKeyActions";
+import { useCompanyUsersTab } from "./useCompanyUsersTab";
 
 export const useCompanyDetailsWidget = () => {
-  const [isCreateUserDialogOpen, setIsCreateUserDialogOpen] = useState(false);
-  const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
-  const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
-  const [isCreateControllerDialogOpen, setIsCreateControllerDialogOpen] =
-    useState(false);
-  const [isControllerFiltersDialogOpen, setIsControllerFiltersDialogOpen] =
-    useState(false);
-  const [controllerToEdit, setControllerToEdit] =
-    useState<ControllerRow | null>(null);
-  const [controllerToDelete, setControllerToDelete] =
-    useState<ControllerRow | null>(null);
-  const [controllerToTransfer, setControllerToTransfer] =
-    useState<ControllerRow | null>(null);
-
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
   );
@@ -82,13 +55,58 @@ export const useCompanyDetailsWidget = () => {
     resetPage: 0,
   });
 
-  const [serialNumber, setSerialNumber] = useState(
-    initialSearchState.serialNumber,
-  );
-  const [phoneNumber, setPhoneNumber] = useState(
-    initialSearchState.phoneNumber,
-  );
-  const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
+  const backTo = `${location.pathname}${location.search}`;
+
+  const navigateToUser = (userId: string, nextBackTo: string) => {
+    navigate(`/${ROUTES.USERS}/${userId}`, {
+      state: {
+        backTo: nextBackTo,
+      },
+    });
+  };
+
+  const navigateToController = (controllerId: string, nextBackTo: string) => {
+    navigate(`/${ROUTES.CONTROLLERS}/${controllerId}`, {
+      state: {
+        backTo: nextBackTo,
+      },
+    });
+  };
+
+  const { company } = useCompanyQuery(companyId);
+
+  const companyKeyActions = useCompanyKeyActions({ company, t });
+
+  const usersTab = useCompanyUsersTab({
+    t,
+    companyId: normalizedCompanyId,
+    page,
+    limit,
+    search: debouncedSearch,
+    isArchived,
+    enabled: activeTab === "users" && Boolean(normalizedCompanyId),
+    backTo,
+    navigateToUser,
+    setIsArchived,
+    setPage,
+  });
+
+  const controllersTab = useCompanyControllersTab({
+    t,
+    companyId: normalizedCompanyId,
+    page,
+    limit,
+    search: debouncedSearch,
+    isArchived,
+    enabled: activeTab === "controllers" && Boolean(normalizedCompanyId),
+    initialSerialNumber: initialSearchState.serialNumber,
+    initialPhoneNumber: initialSearchState.phoneNumber,
+    initialSimIMSI: initialSearchState.simIMSI,
+    backTo,
+    navigateToController,
+    setIsArchived,
+    setPage,
+  });
 
   useSyncSearchParams(
     {
@@ -97,266 +115,15 @@ export const useCompanyDetailsWidget = () => {
       limit,
       search,
       isArchived,
-      serialNumber,
-      phoneNumber,
-      simIMSI,
+      serialNumber: controllersTab.serialNumber,
+      phoneNumber: controllersTab.phoneNumber,
+      simIMSI: controllersTab.simIMSI,
     },
     createCompanyDetailsSearchString,
   );
 
-  const { company } = useCompanyQuery(companyId);
-
-  const {
-    users,
-    total: usersTotal,
-    hasUsers,
-    emptyText: usersEmptyText,
-    isLoading: isUsersLoading,
-    isError: isUsersError,
-    isFetching: isUsersFetching,
-  } = useUsersQuery({
-    page,
-    limit,
-    search: debouncedSearch,
-    isArchived,
-    companyId: normalizedCompanyId,
-    enabled: activeTab === "users" && Boolean(normalizedCompanyId),
-  });
-
-  const {
-    controllers,
-    total: controllersTotal,
-    hasControllers,
-    emptyText: controllersEmptyText,
-    isLoading: isControllersLoading,
-    isError: isControllersError,
-    isFetching: isControllersFetching,
-  } = useControllersQuery({
-    companyId: normalizedCompanyId,
-    page,
-    limit,
-    search: debouncedSearch,
-    isArchived,
-    serialNumber,
-    phoneNumber,
-    simIMSI,
-    enabled: activeTab === "controllers" && Boolean(normalizedCompanyId),
-  });
-
-  const refreshCompanyTokenMutation = useRefreshCompanyToken(company?.id);
-
-  const deleteUserMutation = useDeleteUser();
-
-  const handleCloseDeleteControllerDialog = () => {
-    setControllerToDelete(null);
-  };
-
-  const deleteControllerMutation = useDeleteController(
-    handleCloseDeleteControllerDialog,
-  );
-
-  const companyKey = company?.key?.key ?? "";
-
-  const handleCopyKey = async () => {
-    if (!companyKey) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(companyKey);
-      toast.success(t("companies.details.toast.copySuccess"));
-    } catch {
-      toast.error(t("companies.details.toast.copyError"));
-    }
-  };
-
-  const handleRefreshKey = () => {
-    if (!company?.id) {
-      return;
-    }
-
-    refreshCompanyTokenMutation.mutate({ companyId: company.id });
-  };
-
   const handleTabChange = (tab: CompanyDetailsTab) => {
     setActiveTab(tab);
-    setPage(0);
-  };
-
-  // User Handlers
-  const handleDeleteUser = useCallback((user: UserRow) => {
-    setUserToDelete(user);
-  }, []);
-
-  const handleEditUser = useCallback((user: UserRow) => {
-    setUserToEdit(user);
-    setIsCreateUserDialogOpen(true);
-  }, []);
-
-  const handleUserRowClick = useCallback(
-    (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${user.id}`, {
-        state: {
-          backTo: `${location.pathname}${location.search}`,
-        },
-      });
-    },
-    [location.pathname, location.search, navigate],
-  );
-
-  const userColumns = useMemo(
-    () => createUserColumns(t, handleEditUser, handleDeleteUser, { showCompanyColumn: false }),
-    [t, handleEditUser, handleDeleteUser],
-  );
-
-  const handleOpenCreateUserDialog = () => {
-    setUserToEdit(null);
-    setIsCreateUserDialogOpen(true);
-  };
-
-  const handleCloseCreateUserDialog = () => {
-    setIsCreateUserDialogOpen(false);
-    setUserToEdit(null);
-  };
-
-  const handleCreateUserSuccess = useCallback(() => {
-    setIsCreateUserDialogOpen(false);
-    setUserToEdit(null);
-    setIsArchived(false);
-    setPage(0);
-  }, [setIsArchived, setPage]);
-
-  const handleEditUserSuccess = useCallback(() => {
-    setIsCreateUserDialogOpen(false);
-    setUserToEdit(null);
-  }, []);
-
-  const handleConfirmDeleteUser = () => {
-    if (!userToDelete) {
-      return;
-    }
-
-    deleteUserMutation.mutate(
-      { userId: userToDelete.id },
-      {
-        onSuccess: () => {
-          setUserToDelete(null);
-        },
-      },
-    );
-  };
-
-  const handleCloseDeleteUserDialog = () => {
-    setUserToDelete(null);
-  };
-
-  const handleDeleteController = useCallback((controller: ControllerRow) => {
-    setControllerToDelete(controller);
-  }, []);
-
-  const handleEditController = useCallback((controller: ControllerRow) => {
-    setControllerToEdit(controller);
-    setIsCreateControllerDialogOpen(true);
-  }, []);
-
-  const handleTransferController = useCallback((controller: ControllerRow) => {
-    setControllerToTransfer(controller);
-  }, []);
-
-  const handleControllerRowClick = useCallback(
-    (controller: ControllerRow) => {
-      navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
-        state: {
-          backTo: `${location.pathname}${location.search}`,
-        },
-      });
-    },
-    [location.pathname, location.search, navigate],
-  );
-
-  const controllerColumns = useMemo(
-    () =>
-      createControllerColumns(
-        t,
-        handleEditController,
-        handleTransferController,
-        handleDeleteController,
-        { showCompanyColumn: false },
-      ),
-    [t, handleEditController, handleTransferController, handleDeleteController],
-  );
-
-  const handleOpenCreateControllerDialog = () => {
-    setControllerToEdit(null);
-    setIsCreateControllerDialogOpen(true);
-  };
-
-  const handleCloseCreateControllerDialog = () => {
-    setIsCreateControllerDialogOpen(false);
-    setControllerToEdit(null);
-  };
-
-  const handleCreateControllerSuccess = useCallback(() => {
-    setIsCreateControllerDialogOpen(false);
-    setControllerToEdit(null);
-    setIsArchived(false);
-    setPage(0);
-  }, [setIsArchived, setPage]);
-
-  const handleEditControllerSuccess = useCallback(() => {
-    setIsCreateControllerDialogOpen(false);
-    setControllerToEdit(null);
-  }, []);
-
-  const handleConfirmDeleteController = () => {
-    if (!controllerToDelete) {
-      return;
-    }
-
-    deleteControllerMutation.mutate({ id: controllerToDelete.id });
-  };
-
-  const handleCloseTransferControllerDialog = () => {
-    setControllerToTransfer(null);
-  };
-
-  const handleTransferControllerSuccess = useCallback(() => {
-    setControllerToTransfer(null);
-    setPage(0);
-  }, [setPage]);
-
-  const handleOpenControllerFiltersDialog = () => {
-    setIsControllerFiltersDialogOpen(true);
-  };
-
-  const handleCloseControllerFiltersDialog = () => {
-    setIsControllerFiltersDialogOpen(false);
-  };
-
-  const handleControllersApplyFilters = ({
-    serialNumber: nextSerialNumber,
-    phoneNumber: nextPhoneNumber,
-    simIMSI: nextSimIMSI,
-  }: {
-    serialNumber: string;
-    phoneNumber: string;
-    simIMSI: string;
-  }) => {
-    setSerialNumber(nextSerialNumber);
-    setPhoneNumber(nextPhoneNumber);
-    setSimIMSI(nextSimIMSI);
-    setPage(0);
-    setIsControllerFiltersDialogOpen(false);
-  };
-
-  const hasControllersActiveFilters = Boolean(
-    serialNumber.trim() || phoneNumber.trim() || simIMSI.trim(),
-  );
-
-  const handleResetControllersFilters = () => {
-    setSerialNumber("");
-    setPhoneNumber("");
-    setSimIMSI("");
     setPage(0);
   };
 
@@ -374,68 +141,70 @@ export const useCompanyDetailsWidget = () => {
     t,
     companyId,
     company,
-    companyKey,
+    companyKey: companyKeyActions.companyKey,
     activeTab,
-    isCreateUserDialogOpen,
-    userToEdit,
-    userToDelete,
     isArchived,
     search,
     page,
     limit,
-    users,
-    usersTotal,
-    hasUsers,
-    usersEmptyText,
-    isUsersLoading,
-    isUsersError,
-    isUsersFetching,
-    userColumns,
-    controllers,
-    controllersTotal,
-    hasControllers,
-    controllersEmptyText,
-    isControllersLoading,
-    isControllersError,
-    isControllersFetching,
-    controllerColumns,
-    isCreateControllerDialogOpen,
-    isControllerFiltersDialogOpen,
-    controllerToEdit,
-    controllerToDelete,
-    controllerToTransfer,
-    serialNumber,
-    phoneNumber,
-    simIMSI,
-    hasControllersActiveFilters,
-    handleResetControllersFilters,
-    handleCopyKey,
-    handleRefreshKey,
+    isCreateUserDialogOpen: usersTab.isCreateDialogOpen,
+    userToEdit: usersTab.userToEdit,
+    userToDelete: usersTab.userToDelete,
+    users: usersTab.users,
+    usersTotal: usersTab.total,
+    hasUsers: usersTab.hasUsers,
+    usersEmptyText: usersTab.emptyText,
+    isUsersLoading: usersTab.isLoading,
+    isUsersError: usersTab.isError,
+    isUsersFetching: usersTab.isFetching,
+    userColumns: usersTab.userColumns,
+    controllers: controllersTab.controllers,
+    controllersTotal: controllersTab.total,
+    hasControllers: controllersTab.hasControllers,
+    controllersEmptyText: controllersTab.emptyText,
+    isControllersLoading: controllersTab.isLoading,
+    isControllersError: controllersTab.isError,
+    isControllersFetching: controllersTab.isFetching,
+    controllerColumns: controllersTab.controllerColumns,
+    isCreateControllerDialogOpen: controllersTab.isCreateDialogOpen,
+    isControllerFiltersDialogOpen: controllersTab.isFiltersDialogOpen,
+    controllerToEdit: controllersTab.controllerToEdit,
+    controllerToDelete: controllersTab.controllerToDelete,
+    controllerToTransfer: controllersTab.controllerToTransfer,
+    serialNumber: controllersTab.serialNumber,
+    phoneNumber: controllersTab.phoneNumber,
+    simIMSI: controllersTab.simIMSI,
+    hasControllersActiveFilters: controllersTab.hasActiveFilters,
+    handleResetControllersFilters: controllersTab.handleResetFilters,
+    handleCopyKey: companyKeyActions.handleCopyKey,
+    handleRefreshKey: companyKeyActions.handleRefreshKey,
     handleTabChange,
     handleSearchChange,
     handleArchivedChange,
-    handleOpenCreateUserDialog,
-    handleCloseCreateUserDialog,
-    handleCreateUserSuccess,
-    handleEditUserSuccess,
-    handleCloseDeleteUserDialog,
-    handleConfirmDeleteUser,
-    handleUserRowClick,
-    deleteUserMutation,
-    handleOpenCreateControllerDialog,
-    handleCloseCreateControllerDialog,
-    handleCreateControllerSuccess,
-    handleEditControllerSuccess,
-    handleCloseDeleteControllerDialog,
-    handleConfirmDeleteController,
-    handleControllerRowClick,
-    deleteControllerMutation,
-    handleOpenControllerFiltersDialog,
-    handleCloseControllerFiltersDialog,
-    handleControllersApplyFilters,
-    handleCloseTransferControllerDialog,
-    handleTransferControllerSuccess,
-    isRefreshPending: refreshCompanyTokenMutation.isPending,
+    handleOpenCreateUserDialog: usersTab.handleOpenCreateDialog,
+    handleCloseCreateUserDialog: usersTab.handleCloseCreateDialog,
+    handleCreateUserSuccess: usersTab.handleCreateSuccess,
+    handleEditUserSuccess: usersTab.handleEditSuccess,
+    handleCloseDeleteUserDialog: usersTab.handleCloseDeleteDialog,
+    handleConfirmDeleteUser: usersTab.handleConfirmDelete,
+    handleUserRowClick: usersTab.handleUserRowClick,
+    deleteUserMutation: usersTab.deleteUserMutation,
+    handleOpenCreateControllerDialog: controllersTab.handleOpenCreateDialog,
+    handleCloseCreateControllerDialog: controllersTab.handleCloseCreateDialog,
+    handleCreateControllerSuccess: controllersTab.handleCreateSuccess,
+    handleEditControllerSuccess: controllersTab.handleEditSuccess,
+    handleCloseDeleteControllerDialog: controllersTab.handleCloseDeleteDialog,
+    handleConfirmDeleteController: controllersTab.handleConfirmDelete,
+    handleControllerRowClick: controllersTab.handleControllerRowClick,
+    deleteControllerMutation: controllersTab.deleteControllerMutation,
+    handleOpenControllerFiltersDialog: controllersTab.handleOpenFiltersDialog,
+    handleCloseControllerFiltersDialog:
+      controllersTab.handleCloseFiltersDialog,
+    handleControllersApplyFilters: controllersTab.handleApplyFilters,
+    handleCloseTransferControllerDialog:
+      controllersTab.handleCloseTransferDialog,
+    handleTransferControllerSuccess: controllersTab.handleTransferSuccess,
+    isRefreshPending: companyKeyActions.isRefreshPending,
     setPage,
     setLimit,
   };
