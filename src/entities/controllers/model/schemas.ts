@@ -11,9 +11,35 @@ const ControllerCompanySchema = z
     createdAt: z.string(),
     updatedAt: z.string(),
   })
-  .nullable();
+  .nullable()
+  .optional();
+
 const ControllerMeterSchema = z.looseObject({
-  id: z.string().optional(),
+  id: z.string(),
+  serialNumber: z.string(),
+  lastValue: z.string().nullable(),
+  valveState: z.string(),
+  pendingCommand: z.string(),
+  locationType: z.string(),
+  meterStatus: z.string(),
+  port: z.number(),
+  accountNumber: z.preprocess(
+    (value) => (value === null ? "" : value),
+    z.string(),
+  ),
+  clientName: z.preprocess(
+    (value) => (value === null ? "" : value),
+    z.string(),
+  ),
+  address: z.preprocess((value) => (value === null ? "" : value), z.string()),
+  descriptions: z.preprocess(
+    (value) => (value === null ? "" : value),
+    z.string(),
+  ),
+  isValveLockedByManager: z.boolean(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+  isArchived: z.boolean(),
 });
 
 export const transferControllerFormSchema = (t: (key: string) => string) =>

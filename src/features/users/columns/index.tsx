@@ -12,6 +12,7 @@ export const createUserColumns = (
   t: TFunction,
   onEdit: (user: UserRow) => void,
   onDelete: (user: UserRow) => void,
+  options: { showCompanyColumn?: boolean } = {},
 ): Column<UserRow>[] => [
   {
     id: "email",
@@ -23,11 +24,15 @@ export const createUserColumns = (
     header: t("users.table.columns.fullName"),
     cell: (user) => [user.firstName, user.lastName].filter(Boolean).join(" ") || "-",
   },
-  {
-    id: "company",
-    header: t("users.table.columns.company"),
-    cell: (user) => user.company?.name || "-",
-  },
+  ...(options.showCompanyColumn !== false
+    ? [
+        {
+          id: "company",
+          header: t("users.table.columns.company"),
+          cell: (user: UserRow) => user.company?.name || "-",
+        } as Column<UserRow>,
+      ]
+    : []),
   {
     id: "role",
     header: t("users.table.columns.role"),

@@ -1,4 +1,11 @@
-import { createUsersSearchString, parseUsersSearchState } from "@features/users";
+import {
+  createControllersSearchString,
+  parseControllersSearchState,
+} from "@features/controllers";
+import {
+  createUsersSearchString,
+  parseUsersSearchState,
+} from "@features/users";
 
 import {
   COMPANY_DETAILS_TABS,
@@ -13,6 +20,7 @@ export const parseCompanyDetailsSearchState = (
 
   return {
     ...parseUsersSearchState(params),
+    ...parseControllersSearchState(params),
     tab: COMPANY_DETAILS_TABS.includes(tab as CompanyDetailsTab)
       ? (tab as CompanyDetailsTab)
       : DEFAULT_COMPANY_DETAILS_TAB,
@@ -23,11 +31,21 @@ export const createCompanyDetailsSearchString = ({
   tab,
   ...listState
 }: CompanyDetailsSearchState) => {
-  const params = new URLSearchParams(createUsersSearchString(listState));
+  const usersParams = new URLSearchParams(createUsersSearchString(listState));
+  const controllersParams = new URLSearchParams(
+    createControllersSearchString({
+      ...listState,
+      companyId: "",
+    }),
+  );
+
+  const mergedParams = new URLSearchParams();
+  usersParams.forEach((value, key) => mergedParams.set(key, value));
+  controllersParams.forEach((value, key) => mergedParams.set(key, value));
 
   if (tab !== DEFAULT_COMPANY_DETAILS_TAB) {
-    params.set("tab", tab);
+    mergedParams.set("tab", tab);
   }
 
-  return params.toString();
+  return mergedParams.toString();
 };

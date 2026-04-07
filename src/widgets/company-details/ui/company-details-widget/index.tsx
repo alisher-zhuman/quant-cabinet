@@ -17,6 +17,7 @@ import { DetailRow } from "@shared/ui/detail-row";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
 import type { CompanyDetailsTab } from "../../types";
+import { CompanyControllersTab } from "../company-controllers-tab";
 import { CompanyUsersTab } from "../company-users-tab";
 
 export const CompanyDetailsWidget = () => {
@@ -26,7 +27,7 @@ export const CompanyDetailsWidget = () => {
     company,
     companyKey,
     activeTab,
-    isCreateDialogOpen,
+    isCreateUserDialogOpen,
     userToEdit,
     userToDelete,
     isArchived,
@@ -34,26 +35,56 @@ export const CompanyDetailsWidget = () => {
     page,
     limit,
     users,
-    total,
+    usersTotal,
     hasUsers,
-    emptyText,
+    usersEmptyText,
     isUsersLoading,
     isUsersError,
     isUsersFetching,
     userColumns,
+    controllers,
+    controllersTotal,
+    hasControllers,
+    controllersEmptyText,
+    isControllersLoading,
+    isControllersError,
+    isControllersFetching,
+    controllerColumns,
+    isCreateControllerDialogOpen,
+    isControllerFiltersDialogOpen,
+    controllerToEdit,
+    controllerToDelete,
+    controllerToTransfer,
+    serialNumber,
+    phoneNumber,
+    simIMSI,
+    hasControllersActiveFilters,
     handleCopyKey,
     handleRefreshKey,
     handleTabChange,
     handleSearchChange,
     handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
+    handleOpenCreateUserDialog,
+    handleCloseCreateUserDialog,
+    handleCreateUserSuccess,
+    handleEditUserSuccess,
+    handleCloseDeleteUserDialog,
+    handleConfirmDeleteUser,
     handleUserRowClick,
     deleteUserMutation,
+    handleOpenCreateControllerDialog,
+    handleCloseCreateControllerDialog,
+    handleCreateControllerSuccess,
+    handleEditControllerSuccess,
+    handleCloseDeleteControllerDialog,
+    handleConfirmDeleteController,
+    handleControllerRowClick,
+    deleteControllerMutation,
+    handleOpenControllerFiltersDialog,
+    handleCloseControllerFiltersDialog,
+    handleControllersApplyFilters,
+    handleCloseTransferControllerDialog,
+    handleTransferControllerSuccess,
     isRefreshPending,
     setPage,
     setLimit,
@@ -251,7 +282,7 @@ export const CompanyDetailsWidget = () => {
         <CompanyUsersTab
           companyId={companyId ?? ""}
           t={t}
-          isCreateDialogOpen={isCreateDialogOpen}
+          isCreateDialogOpen={isCreateUserDialogOpen}
           userToEdit={userToEdit}
           userToDelete={userToDelete}
           isArchived={isArchived}
@@ -259,23 +290,68 @@ export const CompanyDetailsWidget = () => {
           page={page}
           limit={limit}
           users={users}
-          total={total}
+          total={usersTotal}
           hasUsers={hasUsers}
-          emptyText={emptyText}
+          emptyText={usersEmptyText}
           isUsersLoading={isUsersLoading}
           isUsersError={isUsersError}
           isUsersFetching={isUsersFetching}
           userColumns={userColumns}
           handleSearchChange={handleSearchChange}
           handleArchivedChange={handleArchivedChange}
-          handleOpenCreateDialog={handleOpenCreateDialog}
-          handleCloseCreateDialog={handleCloseCreateDialog}
-          handleCreateSuccess={handleCreateSuccess}
-          handleEditSuccess={handleEditSuccess}
-          handleCloseDeleteDialog={handleCloseDeleteDialog}
-          handleConfirmDelete={handleConfirmDelete}
+          handleOpenCreateDialog={handleOpenCreateUserDialog}
+          handleCloseCreateDialog={handleCloseCreateUserDialog}
+          handleCreateSuccess={handleCreateUserSuccess}
+          handleEditSuccess={handleEditUserSuccess}
+          handleCloseDeleteDialog={handleCloseDeleteUserDialog}
+          handleConfirmDelete={handleConfirmDeleteUser}
           handleUserRowClick={handleUserRowClick}
           deleteUserMutationIsPending={deleteUserMutation.isPending}
+          setPage={setPage}
+          setLimit={setLimit}
+        />
+      )}
+
+      {activeTab === "controllers" && (
+        <CompanyControllersTab
+          companyId={companyId ?? ""}
+          t={t}
+          isCreateDialogOpen={isCreateControllerDialogOpen}
+          isFiltersDialogOpen={isControllerFiltersDialogOpen}
+          controllerToEdit={controllerToEdit}
+          controllerToDelete={controllerToDelete}
+          controllerToTransfer={controllerToTransfer}
+          isArchived={isArchived}
+          search={search}
+          page={page}
+          limit={limit}
+          controllers={controllers}
+          total={controllersTotal}
+          hasControllers={hasControllers}
+          emptyText={controllersEmptyText}
+          isControllersLoading={isControllersLoading}
+          isControllersError={isControllersError}
+          isControllersFetching={isControllersFetching}
+          controllerColumns={controllerColumns}
+          serialNumber={serialNumber}
+          phoneNumber={phoneNumber}
+          simIMSI={simIMSI}
+          hasActiveFilters={hasControllersActiveFilters}
+          handleSearchChange={handleSearchChange}
+          handleArchivedChange={handleArchivedChange}
+          handleOpenCreateDialog={handleOpenCreateControllerDialog}
+          handleCloseCreateDialog={handleCloseCreateControllerDialog}
+          handleCreateSuccess={handleCreateControllerSuccess}
+          handleEditSuccess={handleEditControllerSuccess}
+          handleOpenFiltersDialog={handleOpenControllerFiltersDialog}
+          handleCloseFiltersDialog={handleCloseControllerFiltersDialog}
+          handleApplyFilters={handleControllersApplyFilters}
+          handleCloseDeleteDialog={handleCloseDeleteControllerDialog}
+          handleConfirmDelete={handleConfirmDeleteController}
+          handleCloseTransferDialog={handleCloseTransferControllerDialog}
+          handleTransferSuccess={handleTransferControllerSuccess}
+          handleControllerRowClick={handleControllerRowClick}
+          deleteControllerMutationIsPending={deleteControllerMutation.isPending}
           setPage={setPage}
           setLimit={setLimit}
         />

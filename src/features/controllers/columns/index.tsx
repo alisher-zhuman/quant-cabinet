@@ -20,17 +20,22 @@ export const createControllerColumns = (
   onEdit: (controller: ControllerRow) => void,
   onTransfer: (controller: ControllerRow) => void,
   onDelete: (controller: ControllerRow) => void,
+  options: { showCompanyColumn?: boolean } = {},
 ): Column<ControllerRow>[] => [
   {
     id: "serialNumber",
     header: t("controllers.table.columns.id"),
     cell: (controller) => controller.serialNumber || "-",
   },
-  {
-    id: "company",
-    header: t("controllers.table.columns.company"),
-    cell: (controller) => controller.company?.name || "-",
-  },
+  ...(options.showCompanyColumn !== false
+    ? [
+        {
+          id: "company",
+          header: t("controllers.table.columns.company"),
+          cell: (controller: ControllerRow) => controller.company?.name || "-",
+        } as Column<ControllerRow>,
+      ]
+    : []),
   {
     id: "statusAndSignal",
     header: t("controllers.table.columns.statusAndSignal"),

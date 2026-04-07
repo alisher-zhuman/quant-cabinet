@@ -21,5 +21,27 @@ export const controllersKeys = {
       phoneNumber,
       simIMSI,
     ] as const,
+  companyList: (
+    companyId: string,
+    page: number,
+    limit: number,
+    search: string,
+    isArchived: boolean,
+    serialNumber: string,
+    phoneNumber: string,
+    simIMSI: string,
+  ) =>
+    [
+      ...controllersKeys.all,
+      "company",
+      companyId,
+      page,
+      limit,
+      search,
+      isArchived,
+      serialNumber,
+      phoneNumber,
+      simIMSI,
+    ] as const,
   details: (id: string) => [...controllersKeys.all, "details", id] as const,
 };

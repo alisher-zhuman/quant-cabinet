@@ -4,4 +4,7 @@ export type CompanyDetailsTab = "users" | "controllers";
 
 export interface CompanyDetailsSearchState extends ListSearchState {
   tab: CompanyDetailsTab;
+  serialNumber: string;
+  phoneNumber: string;
+  simIMSI: string;
 }

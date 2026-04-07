@@ -6,12 +6,20 @@ import { useTranslation } from "react-i18next";
 
 import { useRefreshCompanyToken } from "@features/companies";
 import {
+  createControllerColumns,
+  useDeleteController,
+} from "@features/controllers";
+import {
   createUserColumns,
   getUsersNameSearchParams,
   useDeleteUser,
 } from "@features/users";
 
 import { useCompanyQuery } from "@entities/companies";
+import {
+  type ControllerRow,
+  useControllersByCompanyQuery,
+} from "@entities/controllers";
 import { type UserRow, useUsersQuery } from "@entities/users";
 
 import { ROUTES } from "@shared/constants";
@@ -30,9 +38,19 @@ import {
 import type { CompanyDetailsTab } from "../types";
 
 export const useCompanyDetailsWidget = () => {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isCreateUserDialogOpen, setIsCreateUserDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
   const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
+  const [isCreateControllerDialogOpen, setIsCreateControllerDialogOpen] =
+    useState(false);
+  const [isControllerFiltersDialogOpen, setIsControllerFiltersDialogOpen] =
+    useState(false);
+  const [controllerToEdit, setControllerToEdit] =
+    useState<ControllerRow | null>(null);
+  const [controllerToDelete, setControllerToDelete] =
+    useState<ControllerRow | null>(null);
+  const [controllerToTransfer, setControllerToTransfer] =
+    useState<ControllerRow | null>(null);
 
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
@@ -65,22 +83,37 @@ export const useCompanyDetailsWidget = () => {
     resetPage: 0,
   });
 
+  const [serialNumber, setSerialNumber] = useState(
+    initialSearchState.serialNumber,
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    initialSearchState.phoneNumber,
+  );
+  const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
+
   useSyncSearchParams(
-    { tab: activeTab, page, limit, search, isArchived },
+    {
+      tab: activeTab,
+      page,
+      limit,
+      search,
+      isArchived,
+      serialNumber,
+      phoneNumber,
+      simIMSI,
+    },
     createCompanyDetailsSearchString,
   );
 
   const { firstName, lastName } = getUsersNameSearchParams(debouncedSearch);
 
-  const deleteUserMutation = useDeleteUser();
-
   const { company } = useCompanyQuery(companyId);
 
   const {
     users,
-    total,
+    total: usersTotal,
     hasUsers,
-    emptyText,
+    emptyText: usersEmptyText,
     isLoading: isUsersLoading,
     isError: isUsersError,
     isFetching: isUsersFetching,
@@ -94,7 +127,37 @@ export const useCompanyDetailsWidget = () => {
     enabled: activeTab === "users" && Boolean(normalizedCompanyId),
   });
 
+  const {
+    controllers,
+    total: controllersTotal,
+    hasControllers,
+    emptyText: controllersEmptyText,
+    isLoading: isControllersLoading,
+    isError: isControllersError,
+    isFetching: isControllersFetching,
+  } = useControllersByCompanyQuery({
+    companyId: normalizedCompanyId,
+    page,
+    limit,
+    search: debouncedSearch,
+    isArchived,
+    serialNumber,
+    phoneNumber,
+    simIMSI,
+    enabled: activeTab === "controllers" && Boolean(normalizedCompanyId),
+  });
+
   const refreshCompanyTokenMutation = useRefreshCompanyToken(company?.id);
+
+  const deleteUserMutation = useDeleteUser();
+
+  const handleCloseDeleteControllerDialog = () => {
+    setControllerToDelete(null);
+  };
+
+  const deleteControllerMutation = useDeleteController(
+    handleCloseDeleteControllerDialog,
+  );
 
   const companyKey = company?.key?.key ?? "";
 
@@ -121,18 +184,17 @@ export const useCompanyDetailsWidget = () => {
 
   const handleTabChange = (tab: CompanyDetailsTab) => {
     setActiveTab(tab);
+    setPage(0);
   };
 
-  const handleDeleteUser = useCallback(
-    (user: UserRow) => {
-      setUserToDelete(user);
-    },
-    [],
-  );
+  // User Handlers
+  const handleDeleteUser = useCallback((user: UserRow) => {
+    setUserToDelete(user);
+  }, []);
 
   const handleEditUser = useCallback((user: UserRow) => {
     setUserToEdit(user);
-    setIsCreateDialogOpen(true);
+    setIsCreateUserDialogOpen(true);
   }, []);
 
   const handleUserRowClick = useCallback(
@@ -147,47 +209,33 @@ export const useCompanyDetailsWidget = () => {
   );
 
   const userColumns = useMemo(
-    () => createUserColumns(t, handleEditUser, handleDeleteUser),
+    () => createUserColumns(t, handleEditUser, handleDeleteUser, { showCompanyColumn: false }),
     [t, handleEditUser, handleDeleteUser],
   );
 
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setPage(0);
-  };
-
-  const handleArchivedChange = (value: boolean) => {
-    setIsArchived(value);
-    setPage(0);
-  };
-
-  const handleOpenCreateDialog = () => {
+  const handleOpenCreateUserDialog = () => {
     setUserToEdit(null);
-    setIsCreateDialogOpen(true);
+    setIsCreateUserDialogOpen(true);
   };
 
-  const handleCloseCreateDialog = () => {
-    setIsCreateDialogOpen(false);
+  const handleCloseCreateUserDialog = () => {
+    setIsCreateUserDialogOpen(false);
     setUserToEdit(null);
   };
 
-  const handleCreateSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
+  const handleCreateUserSuccess = useCallback(() => {
+    setIsCreateUserDialogOpen(false);
     setUserToEdit(null);
     setIsArchived(false);
     setPage(0);
   }, [setIsArchived, setPage]);
 
-  const handleEditSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
+  const handleEditUserSuccess = useCallback(() => {
+    setIsCreateUserDialogOpen(false);
     setUserToEdit(null);
   }, []);
 
-  const handleCloseDeleteDialog = () => {
-    setUserToDelete(null);
-  };
-
-  const handleConfirmDelete = () => {
+  const handleConfirmDeleteUser = () => {
     if (!userToDelete) {
       return;
     }
@@ -202,13 +250,130 @@ export const useCompanyDetailsWidget = () => {
     );
   };
 
+  const handleCloseDeleteUserDialog = () => {
+    setUserToDelete(null);
+  };
+
+  const handleDeleteController = useCallback((controller: ControllerRow) => {
+    setControllerToDelete(controller);
+  }, []);
+
+  const handleEditController = useCallback((controller: ControllerRow) => {
+    setControllerToEdit(controller);
+    setIsCreateControllerDialogOpen(true);
+  }, []);
+
+  const handleTransferController = useCallback((controller: ControllerRow) => {
+    setControllerToTransfer(controller);
+  }, []);
+
+  const handleControllerRowClick = useCallback(
+    (controller: ControllerRow) => {
+      navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
+    },
+    [location.pathname, location.search, navigate],
+  );
+
+  const controllerColumns = useMemo(
+    () =>
+      createControllerColumns(
+        t,
+        handleEditController,
+        handleTransferController,
+        handleDeleteController,
+        { showCompanyColumn: false },
+      ),
+    [t, handleEditController, handleTransferController, handleDeleteController],
+  );
+
+  const handleOpenCreateControllerDialog = () => {
+    setControllerToEdit(null);
+    setIsCreateControllerDialogOpen(true);
+  };
+
+  const handleCloseCreateControllerDialog = () => {
+    setIsCreateControllerDialogOpen(false);
+    setControllerToEdit(null);
+  };
+
+  const handleCreateControllerSuccess = useCallback(() => {
+    setIsCreateControllerDialogOpen(false);
+    setControllerToEdit(null);
+    setIsArchived(false);
+    setPage(0);
+  }, [setIsArchived, setPage]);
+
+  const handleEditControllerSuccess = useCallback(() => {
+    setIsCreateControllerDialogOpen(false);
+    setControllerToEdit(null);
+  }, []);
+
+  const handleConfirmDeleteController = () => {
+    if (!controllerToDelete) {
+      return;
+    }
+
+    deleteControllerMutation.mutate({ id: controllerToDelete.id });
+  };
+
+  const handleCloseTransferControllerDialog = () => {
+    setControllerToTransfer(null);
+  };
+
+  const handleTransferControllerSuccess = useCallback(() => {
+    setControllerToTransfer(null);
+    setPage(0);
+  }, [setPage]);
+
+  const handleOpenControllerFiltersDialog = () => {
+    setIsControllerFiltersDialogOpen(true);
+  };
+
+  const handleCloseControllerFiltersDialog = () => {
+    setIsControllerFiltersDialogOpen(false);
+  };
+
+  const handleControllersApplyFilters = ({
+    serialNumber: nextSerialNumber,
+    phoneNumber: nextPhoneNumber,
+    simIMSI: nextSimIMSI,
+  }: {
+    serialNumber: string;
+    phoneNumber: string;
+    simIMSI: string;
+  }) => {
+    setSerialNumber(nextSerialNumber);
+    setPhoneNumber(nextPhoneNumber);
+    setSimIMSI(nextSimIMSI);
+    setPage(0);
+    setIsControllerFiltersDialogOpen(false);
+  };
+
+  const hasControllersActiveFilters = Boolean(
+    serialNumber.trim() || phoneNumber.trim() || simIMSI.trim(),
+  );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(0);
+  };
+
+  const handleArchivedChange = (value: boolean) => {
+    setIsArchived(value);
+    setPage(0);
+  };
+
   return {
     t,
     companyId,
     company,
     companyKey,
     activeTab,
-    isCreateDialogOpen,
+    isCreateUserDialogOpen,
     userToEdit,
     userToDelete,
     isArchived,
@@ -216,26 +381,56 @@ export const useCompanyDetailsWidget = () => {
     page,
     limit,
     users,
-    total,
+    usersTotal,
     hasUsers,
-    emptyText,
+    usersEmptyText,
     isUsersLoading,
     isUsersError,
     isUsersFetching,
     userColumns,
+    controllers,
+    controllersTotal,
+    hasControllers,
+    controllersEmptyText,
+    isControllersLoading,
+    isControllersError,
+    isControllersFetching,
+    controllerColumns,
+    isCreateControllerDialogOpen,
+    isControllerFiltersDialogOpen,
+    controllerToEdit,
+    controllerToDelete,
+    controllerToTransfer,
+    serialNumber,
+    phoneNumber,
+    simIMSI,
+    hasControllersActiveFilters,
     handleCopyKey,
     handleRefreshKey,
     handleTabChange,
     handleSearchChange,
     handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
+    handleOpenCreateUserDialog,
+    handleCloseCreateUserDialog,
+    handleCreateUserSuccess,
+    handleEditUserSuccess,
+    handleCloseDeleteUserDialog,
+    handleConfirmDeleteUser,
     handleUserRowClick,
     deleteUserMutation,
+    handleOpenCreateControllerDialog,
+    handleCloseCreateControllerDialog,
+    handleCreateControllerSuccess,
+    handleEditControllerSuccess,
+    handleCloseDeleteControllerDialog,
+    handleConfirmDeleteController,
+    handleControllerRowClick,
+    deleteControllerMutation,
+    handleOpenControllerFiltersDialog,
+    handleCloseControllerFiltersDialog,
+    handleControllersApplyFilters,
+    handleCloseTransferControllerDialog,
+    handleTransferControllerSuccess,
     isRefreshPending: refreshCompanyTokenMutation.isPending,
     setPage,
     setLimit,

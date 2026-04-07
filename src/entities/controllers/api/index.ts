@@ -57,6 +57,35 @@ export const getControllers = async ({
   return ControllersResponseSchema.parse(response.data);
 };
 
+export const getControllersByCompany = async (
+  companyId: string,
+  {
+    page = 1,
+    limit = 10,
+    search = "",
+    isArchived = false,
+    serialNumber = "",
+    phoneNumber = "",
+    simIMSI = "",
+  }: Omit<ControllersListQueryParams, "companyId"> = {},
+): Promise<ControllersResponse> => {
+  const response = await api.get(API_PATHS.CONTROLLERS_BY_COMPANY(companyId), {
+    params: buildListQueryParams({
+      page,
+      limit,
+      search,
+      isArchived,
+      extraParams: {
+        serialNumber,
+        phoneNumber,
+        simIMSI,
+      },
+    }),
+  });
+
+  return ControllersResponseSchema.parse(response.data);
+};
+
 export const getController = async (id: string): Promise<ControllerRow> => {
   const response = await api.get(API_PATHS.GET_CONTROLLER(id));
 
