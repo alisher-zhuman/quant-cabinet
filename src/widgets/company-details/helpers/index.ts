@@ -2,10 +2,8 @@ import {
   createControllersSearchString,
   parseControllersSearchState,
 } from "@features/controllers";
-import {
-  createUsersSearchString,
-  parseUsersSearchState,
-} from "@features/users";
+
+import { createListSearchString, parseListSearchState } from "@shared/helpers";
 
 import {
   COMPANY_DETAILS_TABS,
@@ -19,7 +17,7 @@ export const parseCompanyDetailsSearchState = (
   const tab = params.get("tab");
 
   return {
-    ...parseUsersSearchState(params),
+    ...parseListSearchState(params),
     ...parseControllersSearchState(params),
     tab: COMPANY_DETAILS_TABS.includes(tab as CompanyDetailsTab)
       ? (tab as CompanyDetailsTab)
@@ -31,7 +29,7 @@ export const createCompanyDetailsSearchString = ({
   tab,
   ...listState
 }: CompanyDetailsSearchState) => {
-  const usersParams = new URLSearchParams(createUsersSearchString(listState));
+  const usersParams = new URLSearchParams(createListSearchString(listState));
   const controllersParams = new URLSearchParams(
     createControllersSearchString({
       ...listState,

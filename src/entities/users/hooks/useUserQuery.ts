@@ -3,17 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../api";
 import { usersKeys } from "../model/keys";
 
-export const useUserQuery = (email: string | undefined) => {
+export const useUserQuery = (userId: string | undefined) => {
   const query = useQuery({
-    queryKey: email ? usersKeys.detail(email) : [...usersKeys.all, "detail"],
+    queryKey: userId ? usersKeys.detail(userId) : [...usersKeys.all, "detail"],
     queryFn: () => {
-      if (!email) {
-        throw new Error("User email is required");
+      if (!userId) {
+        throw new Error("User id is required");
       }
 
-      return getUser(email);
+      return getUser(userId);
     },
-    enabled: Boolean(email),
+    enabled: Boolean(userId),
   });
 
   return {

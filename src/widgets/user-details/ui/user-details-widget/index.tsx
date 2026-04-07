@@ -16,7 +16,7 @@ import { useUserDetailsWidget } from "../../hooks/useUserDetailsWidget";
 export const UserDetailsWidget = () => {
   const {
     t,
-    userEmail,
+    userId,
     user,
     backTo,
     userStatus,
@@ -62,7 +62,7 @@ export const UserDetailsWidget = () => {
             </Typography>
 
             <Typography color="text.secondary">
-              {user?.email ?? userEmail ?? "-"}
+              {user?.email ?? userId ?? "-"}
             </Typography>
           </Box>
 

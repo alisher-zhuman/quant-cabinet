@@ -2,6 +2,7 @@ export const API_PATHS = {
   LOG_IN: "/auth/login",
   FORGOT_PASSWORD: "/users/password/forgot",
   USERS: "/users",
+  USERS_EMAIL: "/users/email",
   USERS_LANG: "/users/lang",
   USERS_UPDATE: "/users/update",
   COMPANIES: "/companies",

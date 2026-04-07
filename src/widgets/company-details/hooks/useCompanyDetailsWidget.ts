@@ -11,7 +11,6 @@ import {
 } from "@features/controllers";
 import {
   createUserColumns,
-  getUsersNameSearchParams,
   useDeleteUser,
 } from "@features/users";
 
@@ -105,8 +104,6 @@ export const useCompanyDetailsWidget = () => {
     createCompanyDetailsSearchString,
   );
 
-  const { firstName, lastName } = getUsersNameSearchParams(debouncedSearch);
-
   const { company } = useCompanyQuery(companyId);
 
   const {
@@ -120,8 +117,7 @@ export const useCompanyDetailsWidget = () => {
   } = useUsersQuery({
     page,
     limit,
-    firstName,
-    lastName,
+    search: debouncedSearch,
     isArchived,
     companyId: normalizedCompanyId,
     enabled: activeTab === "users" && Boolean(normalizedCompanyId),
@@ -199,7 +195,7 @@ export const useCompanyDetailsWidget = () => {
 
   const handleUserRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`, {
+      navigate(`/${ROUTES.USERS}/${user.id}`, {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

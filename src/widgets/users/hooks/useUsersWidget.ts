@@ -80,7 +80,7 @@ export const useUsersWidget = () => {
 
   const handleRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${encodeURIComponent(user.email)}`, {
+      navigate(`/${ROUTES.USERS}/${user.id}`, {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

@@ -113,7 +113,7 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.USERS}/:userEmail`,
+            path: `${ROUTES.USERS}/:userId`,
             element: (
               <WithSuspense>
                 <UserDetails />

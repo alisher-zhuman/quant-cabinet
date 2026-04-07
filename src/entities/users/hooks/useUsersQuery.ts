@@ -8,8 +8,9 @@ import type { UserRow } from "../model/types";
 interface Params {
   page: number;
   limit: number;
-  firstName: string;
-  lastName: string;
+  search?: string;
+  firstName?: string;
+  lastName?: string;
   isArchived: boolean;
   companyId?: string;
   enabled?: boolean;
@@ -18,22 +19,27 @@ interface Params {
 export const useUsersQuery = ({
   page,
   limit,
-  firstName,
-  lastName,
+  search = "",
+  firstName = "",
+  lastName = "",
   isArchived,
   companyId = "",
   enabled = true,
 }: Params) => {
   const { t } = useTranslation();
 
+  const normalizedSearch = search.trim();
   const normalizedFirstName = firstName.trim();
   const normalizedLastName = lastName.trim();
-  const hasSearch = Boolean(normalizedFirstName || normalizedLastName);
+  const hasSearch = Boolean(
+    companyId ? normalizedSearch : normalizedFirstName || normalizedLastName,
+  );
 
   const { data, isLoading, isError, isFetching } = useQuery({
     queryKey: usersKeys.list(
       page,
       limit,
+      normalizedSearch,
       normalizedFirstName,
       normalizedLastName,
       isArchived,
@@ -43,6 +49,7 @@ export const useUsersQuery = ({
       getUsers({
         page: page + 1,
         limit,
+        search: normalizedSearch,
         firstName: normalizedFirstName,
         lastName: normalizedLastName,
         isArchived,

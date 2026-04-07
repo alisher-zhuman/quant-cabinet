@@ -3,6 +3,7 @@ export const usersKeys = {
   list: (
     page: number,
     limit: number,
+    search: string,
     firstName: string,
     lastName: string,
     isArchived: boolean,
@@ -12,10 +13,11 @@ export const usersKeys = {
       ...usersKeys.all,
       page,
       limit,
+      search,
       firstName,
       lastName,
       isArchived,
       companyId,
     ] as const,
-  detail: (email: string) => [...usersKeys.all, "detail", email] as const,
+  detail: (userId: string) => [...usersKeys.all, "detail", userId] as const,
 };

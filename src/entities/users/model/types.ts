@@ -20,6 +20,7 @@ export type DeleteUserPayload = ZodInfer<typeof DeleteUserPayloadSchema>;
 export type UpdateUserPayload = ZodInfer<typeof UpdateUserPayloadSchema>;
 
 export interface UsersListQueryParams extends ListQueryParams {
+  search?: string;
   firstName?: string;
   lastName?: string;
   companyId?: string;

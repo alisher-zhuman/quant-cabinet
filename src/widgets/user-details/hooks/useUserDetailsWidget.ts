@@ -12,9 +12,9 @@ export const useUserDetailsWidget = () => {
   
   const location = useLocation() as { state: unknown };
 
-  const { userEmail } = useParams();
+  const { userId } = useParams();
 
-  const { user } = useUserQuery(userEmail);
+  const { user } = useUserQuery(userId);
 
   const backTo = getBackTo(location.state, `/${ROUTES.USERS}`);
 
@@ -31,7 +31,7 @@ export const useUserDetailsWidget = () => {
 
   return {
     t,
-    userEmail,
+    userId,
     user,
     backTo,
     userStatus,

@@ -27,11 +27,16 @@ export const createUser = async (payload: CreateUserPayload): Promise<void> => {
 export const getUsers = async ({
   page = 1,
   limit = 10,
+  search = "",
   firstName = "",
   lastName = "",
   companyId = "",
   isArchived = false,
 }: UsersListQueryParams = {}): Promise<UsersResponse> => {
+  const normalizedSearch = search.trim();
+  const normalizedFirstName = firstName.trim();
+  const normalizedLastName = lastName.trim();
+
   const response = await api.get(
     companyId ? `${API_PATHS.USERS}/${companyId}` : API_PATHS.USERS,
     {
@@ -40,8 +45,14 @@ export const getUsers = async ({
         limit,
         isArchived,
         extraParams: {
-          firstName,
-          lastName,
+          ...(companyId
+            ? normalizedSearch
+              ? { search: normalizedSearch }
+              : {}
+            : {
+                firstName: normalizedFirstName,
+                lastName: normalizedLastName,
+              }),
         },
       }),
     },
@@ -50,8 +61,12 @@ export const getUsers = async ({
   return UsersResponseSchema.parse(response.data);
 };
 
-export const getUser = async (email: string): Promise<UserDetails> => {
-  const response = await api.get(`${API_PATHS.USERS}/${encodeURIComponent(email)}`);
+export const getUser = async (userId: string): Promise<UserDetails> => {
+  const response = await api.get(API_PATHS.USERS_EMAIL, {
+    params: {
+      userId,
+    },
+  });
 
   return UserRowSchema.parse(response.data);
 };
