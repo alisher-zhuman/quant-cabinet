@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import { createUserColumns, useDeleteUser } from "@features/users";
+import { createUserColumns } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
@@ -21,6 +21,7 @@ import {
   createCompanyDetailsSearchString,
   parseCompanyDetailsSearchState,
 } from "../helpers";
+import { useCompanyUserDialogs } from "./useCompanyUserDialogs";
 
 interface Params {
   companyId: string;
@@ -78,9 +79,6 @@ export const useCompanyUsersTab = ({
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
   );
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
-  const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -115,7 +113,10 @@ export const useCompanyUsersTab = ({
     isActive,
   );
 
-  const deleteUserMutation = useDeleteUser();
+  const dialogs = useCompanyUserDialogs({
+    setIsArchived,
+    setPage,
+  });
 
   const {
     users,
@@ -134,15 +135,6 @@ export const useCompanyUsersTab = ({
     enabled: isActive && Boolean(companyId),
   });
 
-  const handleDeleteUser = useCallback((user: UserRow) => {
-    setUserToDelete(user);
-  }, []);
-
-  const handleEditUser = useCallback((user: UserRow) => {
-    setUserToEdit(user);
-    setIsCreateDialogOpen(true);
-  }, []);
-
   const handleUserRowClick = useCallback(
     (user: UserRow) => {
       navigate(`/${ROUTES.USERS}/${user.id}`, {
@@ -156,10 +148,10 @@ export const useCompanyUsersTab = ({
 
   const userColumns = useMemo(
     () =>
-      createUserColumns(t, handleEditUser, handleDeleteUser, {
+      createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser, {
         showCompanyColumn: false,
       }),
-    [t, handleDeleteUser, handleEditUser],
+    [dialogs.handleDeleteUser, dialogs.handleEditUser, t],
   );
 
   const handleSearchChange = (value: string) => {
@@ -170,47 +162,6 @@ export const useCompanyUsersTab = ({
   const handleArchivedChange = (value: boolean) => {
     setIsArchived(value);
     setPage(0);
-  };
-
-  const handleOpenCreateDialog = () => {
-    setUserToEdit(null);
-    setIsCreateDialogOpen(true);
-  };
-
-  const handleCloseCreateDialog = () => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-  };
-
-  const handleCreateSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-    setIsArchived(false);
-    setPage(0);
-  }, [setIsArchived, setPage]);
-
-  const handleEditSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-  }, []);
-
-  const handleCloseDeleteDialog = () => {
-    setUserToDelete(null);
-  };
-
-  const handleConfirmDelete = () => {
-    if (!userToDelete) {
-      return;
-    }
-
-    deleteUserMutation.mutate(
-      { userId: userToDelete.id },
-      {
-        onSuccess: () => {
-          setUserToDelete(null);
-        },
-      },
-    );
   };
 
   return {
@@ -238,22 +189,22 @@ export const useCompanyUsersTab = ({
       search,
       isSearchLoading: isFetching,
       isArchived,
-      onOpenCreateDialog: handleOpenCreateDialog,
+      onOpenCreateDialog: dialogs.handleOpenCreateDialog,
       onSearchChange: handleSearchChange,
       onArchivedChange: handleArchivedChange,
     },
     dialogsProps: {
       t,
       companyId,
-      isCreateDialogOpen,
-      userToEdit,
-      userToDelete,
-      isDeletePending: deleteUserMutation.isPending,
-      onCloseCreateDialog: handleCloseCreateDialog,
-      onCreateSuccess: handleCreateSuccess,
-      onEditSuccess: handleEditSuccess,
-      onCloseDeleteDialog: handleCloseDeleteDialog,
-      onConfirmDelete: handleConfirmDelete,
+      isCreateDialogOpen: dialogs.isCreateDialogOpen,
+      userToEdit: dialogs.userToEdit,
+      userToDelete: dialogs.userToDelete,
+      isDeletePending: dialogs.isDeletePending,
+      onCloseCreateDialog: dialogs.handleCloseCreateDialog,
+      onCreateSuccess: dialogs.handleCreateSuccess,
+      onEditSuccess: dialogs.handleEditSuccess,
+      onCloseDeleteDialog: dialogs.handleCloseDeleteDialog,
+      onConfirmDelete: dialogs.handleConfirmDelete,
     },
   };
 };
