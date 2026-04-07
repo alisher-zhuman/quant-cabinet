@@ -29,33 +29,46 @@ interface Params {
 
 interface CompanyUsersTab {
   t: ReturnType<typeof useTranslation>["t"];
-  isCreateDialogOpen: boolean;
-  userToEdit: UserRow | null;
-  userToDelete: UserRow | null;
-  isArchived: boolean;
-  search: string;
-  page: number;
-  limit: number;
-  users: UserRow[];
-  total: number;
-  hasUsers: boolean;
-  emptyText: string;
-  isLoading: boolean;
-  isError: boolean;
-  isFetching: boolean;
-  userColumns: Column<UserRow>[];
-  handleSearchChange: (value: string) => void;
-  handleArchivedChange: (value: boolean) => void;
-  handleOpenCreateDialog: () => void;
-  handleCloseCreateDialog: () => void;
-  handleCreateSuccess: () => void;
-  handleEditSuccess: () => void;
-  handleCloseDeleteDialog: () => void;
-  handleConfirmDelete: () => void;
-  handleUserRowClick: (user: UserRow) => void;
-  deleteUserMutation: ReturnType<typeof useDeleteUser>;
-  setPage: (value: number) => void;
-  setLimit: (value: number) => void;
+  tableSectionProps: {
+    isLoading: boolean;
+    isError: boolean;
+    errorText: string;
+    hasItems: boolean;
+    emptyText: string;
+    rows: UserRow[];
+    columns: Column<UserRow>[];
+    onRowClick: (user: UserRow) => void;
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      onPageChange: (value: number) => void;
+      onLimitChange: (value: number) => void;
+      labelRowsPerPage: string;
+    };
+  };
+  toolbarProps: {
+    t: ReturnType<typeof useTranslation>["t"];
+    search: string;
+    isSearchLoading: boolean;
+    isArchived: boolean;
+    onOpenCreateDialog: () => void;
+    onSearchChange: (value: string) => void;
+    onArchivedChange: (value: boolean) => void;
+  };
+  dialogsProps: {
+    t: ReturnType<typeof useTranslation>["t"];
+    companyId: string;
+    isCreateDialogOpen: boolean;
+    userToEdit: UserRow | null;
+    userToDelete: UserRow | null;
+    isDeletePending: boolean;
+    onCloseCreateDialog: () => void;
+    onCreateSuccess: () => void;
+    onEditSuccess: () => void;
+    onCloseDeleteDialog: () => void;
+    onConfirmDelete: () => void;
+  };
 }
 
 export const useCompanyUsersTab = ({
@@ -202,32 +215,45 @@ export const useCompanyUsersTab = ({
 
   return {
     t,
-    isCreateDialogOpen,
-    userToEdit,
-    userToDelete,
-    isArchived,
-    search,
-    page,
-    limit,
-    users,
-    total,
-    hasUsers,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    userColumns,
-    handleSearchChange,
-    handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
-    handleUserRowClick,
-    deleteUserMutation,
-    setPage,
-    setLimit,
+    tableSectionProps: {
+      isLoading,
+      isError,
+      errorText: t("users.error"),
+      hasItems: hasUsers,
+      emptyText,
+      rows: users,
+      columns: userColumns,
+      onRowClick: handleUserRowClick,
+      pagination: {
+        page,
+        limit,
+        total,
+        onPageChange: setPage,
+        onLimitChange: setLimit,
+        labelRowsPerPage: t("users.table.rowsPerPage"),
+      },
+    },
+    toolbarProps: {
+      t,
+      search,
+      isSearchLoading: isFetching,
+      isArchived,
+      onOpenCreateDialog: handleOpenCreateDialog,
+      onSearchChange: handleSearchChange,
+      onArchivedChange: handleArchivedChange,
+    },
+    dialogsProps: {
+      t,
+      companyId,
+      isCreateDialogOpen,
+      userToEdit,
+      userToDelete,
+      isDeletePending: deleteUserMutation.isPending,
+      onCloseCreateDialog: handleCloseCreateDialog,
+      onCreateSuccess: handleCreateSuccess,
+      onEditSuccess: handleEditSuccess,
+      onCloseDeleteDialog: handleCloseDeleteDialog,
+      onConfirmDelete: handleConfirmDelete,
+    },
   };
 };

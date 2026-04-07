@@ -35,49 +35,62 @@ interface Params {
 
 interface CompanyControllersTab {
   t: ReturnType<typeof useTranslation>["t"];
-  isCreateDialogOpen: boolean;
-  isFiltersDialogOpen: boolean;
-  controllerToEdit: ControllerRow | null;
-  controllerToDelete: ControllerRow | null;
-  controllerToTransfer: ControllerRow | null;
-  isArchived: boolean;
-  search: string;
-  page: number;
-  limit: number;
-  controllers: ControllerRow[];
-  total: number;
-  hasControllers: boolean;
-  emptyText: string;
-  isLoading: boolean;
-  isError: boolean;
-  isFetching: boolean;
-  controllerColumns: Column<ControllerRow>[];
-  serialNumber: string;
-  phoneNumber: string;
-  simIMSI: string;
-  hasActiveFilters: boolean;
-  handleResetFilters: () => void;
-  handleSearchChange: (value: string) => void;
-  handleArchivedChange: (value: boolean) => void;
-  handleOpenCreateDialog: () => void;
-  handleCloseCreateDialog: () => void;
-  handleCreateSuccess: () => void;
-  handleEditSuccess: () => void;
-  handleOpenFiltersDialog: () => void;
-  handleCloseFiltersDialog: () => void;
-  handleApplyFilters: (filters: {
+  tableSectionProps: {
+    isLoading: boolean;
+    isError: boolean;
+    errorText: string;
+    hasItems: boolean;
+    emptyText: string;
+    rows: ControllerRow[];
+    columns: Column<ControllerRow>[];
+    onRowClick: (controller: ControllerRow) => void;
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      onPageChange: (value: number) => void;
+      onLimitChange: (value: number) => void;
+      labelRowsPerPage: string;
+    };
+  };
+  toolbarProps: {
+    t: ReturnType<typeof useTranslation>["t"];
+    search: string;
+    isSearchLoading: boolean;
+    isArchived: boolean;
+    hasActiveFilters: boolean;
+    onResetFilters: () => void;
+    onOpenFiltersDialog: () => void;
+    onOpenCreateDialog: () => void;
+    onSearchChange: (value: string) => void;
+    onArchivedChange: (value: boolean) => void;
+  };
+  dialogsProps: {
+    t: ReturnType<typeof useTranslation>["t"];
+    companyId: string;
+    isCreateDialogOpen: boolean;
+    isFiltersDialogOpen: boolean;
+    controllerToEdit: ControllerRow | null;
+    controllerToDelete: ControllerRow | null;
+    controllerToTransfer: ControllerRow | null;
     serialNumber: string;
     phoneNumber: string;
     simIMSI: string;
-  }) => void;
-  handleCloseDeleteDialog: () => void;
-  handleConfirmDelete: () => void;
-  handleCloseTransferDialog: () => void;
-  handleTransferSuccess: () => void;
-  handleControllerRowClick: (controller: ControllerRow) => void;
-  deleteControllerMutation: ReturnType<typeof useDeleteController>;
-  setPage: (value: number) => void;
-  setLimit: (value: number) => void;
+    isDeletePending: boolean;
+    onCloseCreateDialog: () => void;
+    onCreateSuccess: () => void;
+    onEditSuccess: () => void;
+    onCloseFiltersDialog: () => void;
+    onApplyFilters: (filters: {
+      serialNumber: string;
+      phoneNumber: string;
+      simIMSI: string;
+    }) => void;
+    onCloseTransferDialog: () => void;
+    onTransferSuccess: () => void;
+    onCloseDeleteDialog: () => void;
+    onConfirmDelete: () => void;
+  };
 }
 
 export const useCompanyControllersTab = ({
@@ -284,44 +297,57 @@ export const useCompanyControllersTab = ({
 
   return {
     t,
-    isCreateDialogOpen,
-    isFiltersDialogOpen,
-    controllerToEdit,
-    controllerToDelete,
-    controllerToTransfer,
-    isArchived,
-    search,
-    page,
-    limit,
-    controllers,
-    total,
-    hasControllers,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    controllerColumns,
-    serialNumber,
-    phoneNumber,
-    simIMSI,
-    hasActiveFilters,
-    handleResetFilters,
-    handleSearchChange,
-    handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleOpenFiltersDialog,
-    handleCloseFiltersDialog,
-    handleApplyFilters,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
-    handleCloseTransferDialog,
-    handleTransferSuccess,
-    handleControllerRowClick,
-    deleteControllerMutation,
-    setPage,
-    setLimit,
+    tableSectionProps: {
+      isLoading,
+      isError,
+      errorText: t("controllers.error"),
+      hasItems: hasControllers,
+      emptyText,
+      rows: controllers,
+      columns: controllerColumns,
+      onRowClick: handleControllerRowClick,
+      pagination: {
+        page,
+        limit,
+        total,
+        onPageChange: setPage,
+        onLimitChange: setLimit,
+        labelRowsPerPage: t("controllers.table.rowsPerPage"),
+      },
+    },
+    toolbarProps: {
+      t,
+      search,
+      isSearchLoading: isFetching,
+      isArchived,
+      hasActiveFilters,
+      onResetFilters: handleResetFilters,
+      onOpenFiltersDialog: handleOpenFiltersDialog,
+      onOpenCreateDialog: handleOpenCreateDialog,
+      onSearchChange: handleSearchChange,
+      onArchivedChange: handleArchivedChange,
+    },
+    dialogsProps: {
+      t,
+      companyId,
+      isCreateDialogOpen,
+      isFiltersDialogOpen,
+      controllerToEdit,
+      controllerToDelete,
+      controllerToTransfer,
+      serialNumber,
+      phoneNumber,
+      simIMSI,
+      isDeletePending: deleteControllerMutation.isPending,
+      onCloseCreateDialog: handleCloseCreateDialog,
+      onCreateSuccess: handleCreateSuccess,
+      onEditSuccess: handleEditSuccess,
+      onCloseFiltersDialog: handleCloseFiltersDialog,
+      onApplyFilters: handleApplyFilters,
+      onCloseTransferDialog: handleCloseTransferDialog,
+      onTransferSuccess: handleTransferSuccess,
+      onCloseDeleteDialog: handleCloseDeleteDialog,
+      onConfirmDelete: handleConfirmDelete,
+    },
   };
 };

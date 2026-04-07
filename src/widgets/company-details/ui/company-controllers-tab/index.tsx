@@ -12,46 +12,9 @@ export const CompanyControllersTab = ({
   isActive: boolean;
 }) => {
   const {
-    t,
-    isCreateDialogOpen,
-    isFiltersDialogOpen,
-    controllerToEdit,
-    controllerToDelete,
-    controllerToTransfer,
-    isArchived,
-    search,
-    page,
-    limit,
-    controllers,
-    total,
-    hasControllers,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    controllerColumns,
-    serialNumber,
-    phoneNumber,
-    simIMSI,
-    hasActiveFilters,
-    handleResetFilters,
-    handleSearchChange,
-    handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleOpenFiltersDialog,
-    handleCloseFiltersDialog,
-    handleApplyFilters,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
-    handleCloseTransferDialog,
-    handleTransferSuccess,
-    handleControllerRowClick,
-    deleteControllerMutation,
-    setPage,
-    setLimit,
+    tableSectionProps,
+    toolbarProps,
+    dialogsProps,
   } = useCompanyControllersTab({
     companyId,
     isActive,
@@ -60,61 +23,20 @@ export const CompanyControllersTab = ({
   return (
     <>
       <TableSection
-        isLoading={isLoading}
-        isError={isError}
-        errorText={t("controllers.error")}
-        hasItems={hasControllers}
-        emptyText={emptyText}
-        rows={controllers}
-        columns={controllerColumns}
+        isLoading={tableSectionProps.isLoading}
+        isError={tableSectionProps.isError}
+        errorText={tableSectionProps.errorText}
+        hasItems={tableSectionProps.hasItems}
+        emptyText={tableSectionProps.emptyText}
+        rows={tableSectionProps.rows}
+        columns={tableSectionProps.columns}
         getRowId={(controller) => controller.id}
-        onRowClick={handleControllerRowClick}
-        toolbar={
-          <CompanyControllersToolbar
-            t={t}
-            search={search}
-            isSearchLoading={isFetching}
-            isArchived={isArchived}
-            hasActiveFilters={hasActiveFilters}
-            onResetFilters={handleResetFilters}
-            onOpenFiltersDialog={handleOpenFiltersDialog}
-            onOpenCreateDialog={handleOpenCreateDialog}
-            onSearchChange={handleSearchChange}
-            onArchivedChange={handleArchivedChange}
-          />
-        }
-        pagination={{
-          page,
-          limit,
-          total,
-          onPageChange: setPage,
-          onLimitChange: setLimit,
-          labelRowsPerPage: t("controllers.table.rowsPerPage"),
-        }}
+        onRowClick={tableSectionProps.onRowClick}
+        toolbar={<CompanyControllersToolbar {...toolbarProps} />}
+        pagination={tableSectionProps.pagination}
       />
 
-      <CompanyControllersDialogs
-        t={t}
-        companyId={companyId}
-        isCreateDialogOpen={isCreateDialogOpen}
-        isFiltersDialogOpen={isFiltersDialogOpen}
-        controllerToEdit={controllerToEdit}
-        controllerToDelete={controllerToDelete}
-        controllerToTransfer={controllerToTransfer}
-        serialNumber={serialNumber}
-        phoneNumber={phoneNumber}
-        simIMSI={simIMSI}
-        deleteControllerMutationIsPending={deleteControllerMutation.isPending}
-        handleCloseCreateDialog={handleCloseCreateDialog}
-        handleCreateSuccess={handleCreateSuccess}
-        handleEditSuccess={handleEditSuccess}
-        handleCloseFiltersDialog={handleCloseFiltersDialog}
-        handleApplyFilters={handleApplyFilters}
-        handleCloseTransferDialog={handleCloseTransferDialog}
-        handleTransferSuccess={handleTransferSuccess}
-        handleCloseDeleteDialog={handleCloseDeleteDialog}
-        handleConfirmDelete={handleConfirmDelete}
-      />
+      <CompanyControllersDialogs {...dialogsProps} />
     </>
   );
 };

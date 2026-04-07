@@ -21,20 +21,20 @@ interface Props {
   serialNumber: string;
   phoneNumber: string;
   simIMSI: string;
-  deleteControllerMutationIsPending: boolean;
-  handleCloseCreateDialog: () => void;
-  handleCreateSuccess: () => void;
-  handleEditSuccess: () => void;
-  handleCloseFiltersDialog: () => void;
-  handleApplyFilters: (filters: {
+  isDeletePending: boolean;
+  onCloseCreateDialog: () => void;
+  onCreateSuccess: () => void;
+  onEditSuccess: () => void;
+  onCloseFiltersDialog: () => void;
+  onApplyFilters: (filters: {
     serialNumber: string;
     phoneNumber: string;
     simIMSI: string;
   }) => void;
-  handleCloseTransferDialog: () => void;
-  handleTransferSuccess: () => void;
-  handleCloseDeleteDialog: () => void;
-  handleConfirmDelete: () => void;
+  onCloseTransferDialog: () => void;
+  onTransferSuccess: () => void;
+  onCloseDeleteDialog: () => void;
+  onConfirmDelete: () => void;
 }
 
 export const CompanyControllersDialogs = ({
@@ -48,24 +48,24 @@ export const CompanyControllersDialogs = ({
   serialNumber,
   phoneNumber,
   simIMSI,
-  deleteControllerMutationIsPending,
-  handleCloseCreateDialog,
-  handleCreateSuccess,
-  handleEditSuccess,
-  handleCloseFiltersDialog,
-  handleApplyFilters,
-  handleCloseTransferDialog,
-  handleTransferSuccess,
-  handleCloseDeleteDialog,
-  handleConfirmDelete,
+  isDeletePending,
+  onCloseCreateDialog,
+  onCreateSuccess,
+  onEditSuccess,
+  onCloseFiltersDialog,
+  onApplyFilters,
+  onCloseTransferDialog,
+  onTransferSuccess,
+  onCloseDeleteDialog,
+  onConfirmDelete,
 }: Props) => (
   <>
     {isCreateDialogOpen && (
       <CreateControllerDialog
         controller={controllerToEdit}
         open={isCreateDialogOpen}
-        onClose={handleCloseCreateDialog}
-        onSuccess={controllerToEdit ? handleEditSuccess : handleCreateSuccess}
+        onClose={onCloseCreateDialog}
+        onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
         {...(!controllerToEdit ? { initialCompanyId: companyId } : {})}
       />
     )}
@@ -79,13 +79,13 @@ export const CompanyControllersDialogs = ({
           simIMSI,
           companyId: "",
         }}
-        onClose={handleCloseFiltersDialog}
+        onClose={onCloseFiltersDialog}
         onApply={({
           serialNumber: nextSerialNumber,
           phoneNumber: nextPhoneNumber,
           simIMSI: nextSimIMSI,
         }) =>
-          handleApplyFilters({
+          onApplyFilters({
             serialNumber: nextSerialNumber,
             phoneNumber: nextPhoneNumber,
             simIMSI: nextSimIMSI,
@@ -99,8 +99,8 @@ export const CompanyControllersDialogs = ({
       <TransferControllerDialog
         controller={controllerToTransfer}
         open={Boolean(controllerToTransfer)}
-        onClose={handleCloseTransferDialog}
-        onSuccess={handleTransferSuccess}
+        onClose={onCloseTransferDialog}
+        onSuccess={onTransferSuccess}
         initialCompanyId={companyId}
       />
     )}
@@ -111,9 +111,9 @@ export const CompanyControllersDialogs = ({
       description={t("controllers.deleteDialog.description")}
       cancelLabel={t("controllers.deleteDialog.cancel")}
       confirmLabel={t("controllers.deleteDialog.confirm")}
-      isLoading={deleteControllerMutationIsPending}
-      onClose={handleCloseDeleteDialog}
-      onConfirm={handleConfirmDelete}
+      isLoading={isDeletePending}
+      onClose={onCloseDeleteDialog}
+      onConfirm={onConfirmDelete}
     />
   </>
 );
