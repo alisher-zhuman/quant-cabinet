@@ -25,6 +25,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialCompanyId?: string;
 }
 
 export const CreateControllerDialog = ({
@@ -32,9 +33,10 @@ export const CreateControllerDialog = ({
   open,
   onClose,
   onSuccess,
+  initialCompanyId,
 }: Props) => {
   const { t } = useTranslation();
-  
+
   const isEditMode = Boolean(controller);
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
@@ -42,11 +44,12 @@ export const CreateControllerDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !isEditMode,
+    enabled: !isEditMode && !initialCompanyId,
   });
 
   const companyOptions = useMemo(
-    () => companies.map((company) => ({ value: company.id, label: company.name })),
+    () =>
+      companies.map((company) => ({ value: company.id, label: company.name })),
     [companies],
   );
 
@@ -64,6 +67,7 @@ export const CreateControllerDialog = ({
   const { control, isPending, isValid, onSubmit } = useControllerForm({
     controller,
     onSuccess,
+    initialCompanyId,
   });
 
   return (
@@ -93,17 +97,19 @@ export const CreateControllerDialog = ({
                   fullWidth
                 />
 
-                <FormSelectField
-                  name="companyId"
-                  control={control}
-                  label={t("controllers.createDialog.fields.company")}
-                  fullWidth
-                  disabled={isCompaniesLoading}
-                  options={companyOptions}
-                  emptyOptionLabel={t(
-                    "controllers.createDialog.fields.companyPlaceholder",
-                  )}
-                />
+                {!initialCompanyId && (
+                  <FormSelectField
+                    name="companyId"
+                    control={control}
+                    label={t("controllers.createDialog.fields.company")}
+                    fullWidth
+                    disabled={isCompaniesLoading}
+                    options={companyOptions}
+                    emptyOptionLabel={t(
+                      "controllers.createDialog.fields.companyPlaceholder",
+                    )}
+                  />
+                )}
 
                 <FormSelectField
                   name="type"

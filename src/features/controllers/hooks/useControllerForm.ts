@@ -18,13 +18,15 @@ import { useUpdateController } from "./useUpdateController";
 interface Params {
   controller?: ControllerRow | null | undefined;
   onSuccess?: (() => void) | undefined;
+  initialCompanyId?: string;
 }
 
 const getDefaultValues = (
   controller?: ControllerRow | null,
+  initialCompanyId?: string,
 ): ControllerFormValues => ({
   serialNumber: "",
-  companyId: "",
+  companyId: initialCompanyId ?? "",
   type: "single",
   simIMSI: controller?.simIMSI ?? "",
   phoneNumber: controller?.phoneNumber ?? "",
@@ -35,11 +37,15 @@ const getDefaultValues = (
   isArchived: controller?.isArchived ?? false,
 });
 
-export const useControllerForm = ({ controller, onSuccess }: Params = {}) => {
+export const useControllerForm = ({
+  controller,
+  onSuccess,
+  initialCompanyId,
+}: Params = {}) => {
   const { t } = useTranslation();
   const defaultValues = useMemo(
-    () => getDefaultValues(controller),
-    [controller],
+    () => getDefaultValues(controller, initialCompanyId),
+    [controller, initialCompanyId],
   );
   const isEditMode = Boolean(controller);
 
@@ -61,7 +67,7 @@ export const useControllerForm = ({ controller, onSuccess }: Params = {}) => {
   }, [defaultValues, reset]);
 
   const handleSuccess = () => {
-    reset(getDefaultValues());
+    reset(getDefaultValues(undefined, initialCompanyId));
     onSuccess?.();
   };
 

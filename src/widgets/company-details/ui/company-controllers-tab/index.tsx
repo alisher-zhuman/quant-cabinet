@@ -1,10 +1,10 @@
 import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 
 import {
   ControllerFiltersDialog,
@@ -127,23 +127,26 @@ export const CompanyControllersTab = ({
           archivedLabel={t("controllers.tabs.archived")}
           isSearchLoading={isControllersFetching}
           isArchived={isArchived}
-          actions={
-            <>
-              <IconButton
-                aria-label={t("controllers.actions.filters")}
-                color="primary"
-                onClick={handleOpenFiltersDialog}
-                sx={{ backgroundColor: "background.paper" }}
-              >
+          left={
+            <Button
+              variant="outlined"
+              startIcon={
                 <Badge
-                  color="error"
+                  color="primary"
+                  overlap="circular"
                   variant="dot"
                   invisible={!hasActiveFilters}
                 >
-                  <FilterAltRoundedIcon />
+                  <FilterListRoundedIcon />
                 </Badge>
-              </IconButton>
-
+              }
+              onClick={handleOpenFiltersDialog}
+            >
+              {t("controllers.actions.filters")}
+            </Button>
+          }
+          actions={
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
               <Button
                 variant="contained"
                 startIcon={<AddRoundedIcon />}
@@ -151,7 +154,7 @@ export const CompanyControllersTab = ({
               >
                 {t("controllers.actions.create")}
               </Button>
-            </>
+            </Box>
           }
           onSearchChange={handleSearchChange}
           onArchivedChange={handleArchivedChange}
@@ -180,14 +183,25 @@ export const CompanyControllersTab = ({
     {isFiltersDialogOpen && (
       <ControllerFiltersDialog
         open={isFiltersDialogOpen}
-        initialFilters={{
+        filters={{
           serialNumber,
           phoneNumber,
           simIMSI,
           companyId: "",
         }}
         onClose={handleCloseFiltersDialog}
-        onApply={handleApplyFilters}
+        onApply={({
+          serialNumber: nextSerialNumber,
+          phoneNumber: nextPhoneNumber,
+          simIMSI: nextSimIMSI,
+        }) =>
+          handleApplyFilters({
+            serialNumber: nextSerialNumber,
+            phoneNumber: nextPhoneNumber,
+            simIMSI: nextSimIMSI,
+          })
+        }
+        hideCompanyField
       />
     )}
 
@@ -197,6 +211,7 @@ export const CompanyControllersTab = ({
         open={Boolean(controllerToTransfer)}
         onClose={handleCloseTransferDialog}
         onSuccess={handleTransferSuccess}
+        initialCompanyId={companyId}
       />
     )}
 

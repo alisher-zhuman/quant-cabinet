@@ -38,6 +38,7 @@ interface Props {
   onCreateSuccess: () => void;
   onEditSuccess: () => void;
   onTransferSuccess: () => void;
+  initialCompanyId?: string;
 }
 
 export const ControllersDialogs = ({
@@ -58,6 +59,7 @@ export const ControllersDialogs = ({
   onCreateSuccess,
   onEditSuccess,
   onTransferSuccess,
+  initialCompanyId,
 }: Props) => (
   <>
     <ConfirmDialog
@@ -86,6 +88,7 @@ export const ControllersDialogs = ({
         open={isCreateDialogOpen}
         onClose={onCloseCreateDialog}
         onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
+        initialCompanyId={initialCompanyId}
       />
     )}
 

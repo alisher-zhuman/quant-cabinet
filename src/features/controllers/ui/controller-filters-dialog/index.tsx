@@ -20,6 +20,7 @@ interface Props {
   filters: ControllerFilters;
   onClose: () => void;
   onApply: (filters: ControllerFilters) => void;
+  hideCompanyField?: boolean;
 }
 
 export const ControllerFiltersDialog = ({
@@ -27,6 +28,7 @@ export const ControllerFiltersDialog = ({
   filters,
   onClose,
   onApply,
+  hideCompanyField = false,
 }: Props) => {
   const [values, setValues] = useState(() => filters);
 
@@ -37,7 +39,7 @@ export const ControllerFiltersDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: open,
+    enabled: open && !hideCompanyField,
   });
 
   const companyOptions = useMemo(
@@ -91,22 +93,26 @@ export const ControllerFiltersDialog = ({
             pt: 1,
           }}
         >
-          <TextField
-            select
-            value={values.companyId}
-            label={t("controllers.filters.fields.companyId")}
-            onChange={createChangeHandler("companyId")}
-            disabled={isCompaniesLoading}
-          >
-            <MenuItem value="">
-              <em>{t("controllers.createDialog.fields.companyPlaceholder")}</em>
-            </MenuItem>
-            {companyOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+          {!hideCompanyField && (
+            <TextField
+              select
+              value={values.companyId}
+              label={t("controllers.filters.fields.companyId")}
+              onChange={createChangeHandler("companyId")}
+              disabled={isCompaniesLoading}
+            >
+              <MenuItem value="">
+                <em>
+                  {t("controllers.createDialog.fields.companyPlaceholder")}
+                </em>
               </MenuItem>
-            ))}
-          </TextField>
+              {companyOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          )}
 
           <TextField
             value={values.serialNumber}

@@ -27,6 +27,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialCompanyId?: string;
 }
 
 export const TransferControllerDialog = ({
@@ -34,6 +35,7 @@ export const TransferControllerDialog = ({
   open,
   onClose,
   onSuccess,
+  initialCompanyId,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -58,16 +60,16 @@ export const TransferControllerDialog = ({
   } = useForm<TransferControllerFormValues>({
     resolver: zodResolver(transferControllerFormSchema(t)),
     defaultValues: {
-      companyId: "",
+      companyId: initialCompanyId ?? "",
     },
     mode: "onChange",
   });
 
   useEffect(() => {
     if (open) {
-      reset({ companyId: controller?.company?.id ?? "" });
+      reset({ companyId: initialCompanyId ?? controller?.company?.id ?? "" });
     }
-  }, [open, controller, reset]);
+  }, [open, controller, initialCompanyId, reset]);
 
   const transferMutation = useTransferController(onSuccess);
 

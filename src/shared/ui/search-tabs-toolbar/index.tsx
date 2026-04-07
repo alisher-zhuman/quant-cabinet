@@ -14,6 +14,8 @@ interface Props {
   isSearchLoading: boolean;
   isArchived: boolean;
   actions?: ReactNode;
+  left?: ReactNode;
+  hideSearch?: boolean;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
 }
@@ -26,6 +28,8 @@ export const SearchTabsToolbar = ({
   isSearchLoading,
   isArchived,
   actions,
+  left,
+  hideSearch = false,
   onSearchChange,
   onArchivedChange,
 }: Props) => (
@@ -38,14 +42,20 @@ export const SearchTabsToolbar = ({
       gap: 2,
     }}
   >
-    <SearchInput
-      value={search}
-      onChange={onSearchChange}
-      isLoading={isSearchLoading}
-      placeholder={searchPlaceholder}
-      fullWidth
-      sx={{ maxWidth: { xs: "100%", sm: 360 } }}
-    />
+    {left ? (
+      left
+    ) : (
+      !hideSearch && (
+      <SearchInput
+        value={search}
+        onChange={onSearchChange}
+        isLoading={isSearchLoading}
+        placeholder={searchPlaceholder}
+        fullWidth
+        sx={{ maxWidth: { xs: "100%", sm: 360 } }}
+      />
+      )
+    )}
 
     <Box
       sx={{
