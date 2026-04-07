@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import { createMeterColumns, useDeleteMeter } from "@features/meters";
+import { createMeterColumns } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
@@ -17,9 +17,9 @@ import {
   useSyncSearchParams,
 } from "@shared/hooks";
 
+import { useMeterDialogs } from "./useMeterDialogs";
+
 export const useMetersWidget = () => {
-  const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
-  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -61,13 +61,12 @@ export const useMetersWidget = () => {
     isArchived,
   });
 
-  const onCloseDeleteDialog = () => {
-    setMeterToDelete(null);
-  };
+  const { setMeterToDelete, deleteDialogProps } = useMeterDialogs();
 
-  const deleteMeterMutation = useDeleteMeter(onCloseDeleteDialog);
-
-  const columns = useMemo(() => createMeterColumns(t, setMeterToDelete), [t]);
+  const columns = useMemo(
+    () => createMeterColumns(t, setMeterToDelete),
+    [setMeterToDelete, t],
+  );
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
@@ -77,14 +76,6 @@ export const useMetersWidget = () => {
   const handleArchivedChange = (value: boolean) => {
     setIsArchived(value);
     setPage(0);
-  };
-
-  const handleConfirmDelete = () => {
-    if (!meterToDelete) {
-      return;
-    }
-
-    deleteMeterMutation.mutate({ id: meterToDelete.id });
   };
 
   const handleRowClick = useCallback(
@@ -100,26 +91,35 @@ export const useMetersWidget = () => {
 
   return {
     t,
-    meterToDelete,
-    isArchived,
-    search,
-    page,
-    limit,
-    meters,
-    total,
-    hasMeters,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    columns,
-    deleteMeterMutation,
-    handleSearchChange,
-    handleArchivedChange,
-    handleConfirmDelete,
-    handleRowClick,
-    onCloseDeleteDialog,
-    setPage,
-    setLimit,
+    tableSectionProps: {
+      isLoading,
+      isError,
+      errorText: t("meters.error"),
+      hasItems: hasMeters,
+      emptyText,
+      rows: meters,
+      columns,
+      onRowClick: handleRowClick,
+      pagination: {
+        page,
+        limit,
+        total,
+        onPageChange: setPage,
+        onLimitChange: setLimit,
+        labelRowsPerPage: t("meters.table.rowsPerPage"),
+      },
+    },
+    toolbarProps: {
+      t,
+      search,
+      isSearchLoading: isFetching,
+      isArchived,
+      onSearchChange: handleSearchChange,
+      onArchivedChange: handleArchivedChange,
+    },
+    deleteDialogProps: {
+      t,
+      ...deleteDialogProps,
+    },
   };
 };
