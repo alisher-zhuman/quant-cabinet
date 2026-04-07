@@ -64,7 +64,7 @@ export const CreateControllerDialog = ({
     [t],
   );
 
-  const { control, isPending, isValid, onSubmit } = useControllerForm({
+  const { control, isPending, isDirty, isValid, onSubmit } = useControllerForm({
     controller,
     onSuccess,
     ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
@@ -226,6 +226,7 @@ export const CreateControllerDialog = ({
                   : "controllers.createDialog.submitLoading",
               )}
               isSubmitting={isPending}
+              isDirty={isDirty}
               submitProps={{ disabled: !isValid }}
             />
           </FormFieldset>

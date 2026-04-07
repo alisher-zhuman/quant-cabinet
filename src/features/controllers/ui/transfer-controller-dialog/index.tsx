@@ -56,7 +56,7 @@ export const TransferControllerDialog = ({
     control,
     handleSubmit,
     reset,
-    formState: { isValid },
+    formState: { isDirty, isValid },
   } = useForm<TransferControllerFormValues>({
     resolver: zodResolver(transferControllerFormSchema(t)),
     defaultValues: {
@@ -112,6 +112,7 @@ export const TransferControllerDialog = ({
               submitLabel={t("controllers.transferDialog.submit")}
               submitLabelLoading={t("controllers.transferDialog.submitLoading")}
               isSubmitting={transferMutation.isPending}
+              isDirty={isDirty}
               submitProps={{ disabled: !isValid }}
             />
           </FormFieldset>

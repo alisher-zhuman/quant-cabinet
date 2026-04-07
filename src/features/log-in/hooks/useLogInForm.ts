@@ -27,7 +27,7 @@ export const useLogInForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { isValid },
+    formState: { isDirty, isValid },
   } = useForm<LogInFormValues>({
     resolver: zodResolver(createLogInFormSchema(t)),
     mode: "onChange",
@@ -59,6 +59,7 @@ export const useLogInForm = () => {
   return {
     canGoBack: Boolean(accessToken),
     control,
+    isDirty,
     isValid,
     isPending: mutation.isPending,
     onBack,

@@ -22,7 +22,7 @@ export const useForgotPasswordForm = () => {
   const {
     control,
     handleSubmit,
-    formState: { isValid },
+    formState: { isDirty, isValid },
   } = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(createForgotPasswordFormSchema(t)),
     mode: "onChange",
@@ -49,6 +49,7 @@ export const useForgotPasswordForm = () => {
 
   return {
     control,
+    isDirty,
     isValid,
     isPending: mutation.isPending,
     onBack,

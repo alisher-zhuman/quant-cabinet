@@ -19,7 +19,7 @@ import { useLogInForm } from "../../hooks/useLogInForm";
 export const LogInForm = () => {
   const { t } = useTranslation();
 
-  const { canGoBack, control, isValid, isPending, onBack, onSubmit } =
+  const { canGoBack, control, isDirty, isValid, isPending, onBack, onSubmit } =
     useLogInForm();
 
   return (
@@ -95,6 +95,7 @@ export const LogInForm = () => {
             submitLabelLoading={t("logIn.actions.submitLoading")}
             align="center"
             fullWidth
+            isDirty={isDirty}
             submitProps={{ size: "large", disabled: !isValid }}
           />
 

@@ -5,6 +5,8 @@ interface Props {
   submitLabel: string;
   submitLabelLoading?: string;
   isSubmitting?: boolean;
+  isDirty?: boolean;
+  disableSubmitIfPristine?: boolean;
   onCancel?: () => void;
   cancelLabel?: string;
   align?: "flex-start" | "center" | "flex-end" | "space-between";
@@ -17,6 +19,8 @@ export const FormActions = ({
   submitLabel,
   submitLabelLoading,
   isSubmitting = false,
+  isDirty,
+  disableSubmitIfPristine = true,
   onCancel,
   cancelLabel = "Отмена",
   align = "flex-end",
@@ -24,7 +28,10 @@ export const FormActions = ({
   submitProps,
   cancelProps,
 }: Props) => {
-  const submitDisabled = isSubmitting || Boolean(submitProps?.disabled);
+  const submitDisabled =
+    isSubmitting ||
+    Boolean(submitProps?.disabled) ||
+    (disableSubmitIfPristine && isDirty === false);
   const resolvedSubmitLabel =
     isSubmitting && submitLabelLoading ? submitLabelLoading : submitLabel;
 

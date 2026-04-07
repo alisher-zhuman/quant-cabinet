@@ -16,7 +16,7 @@ import { useForgotPasswordForm } from "../../hooks/useForgotPasswordForm";
 export const ForgotPasswordForm = () => {
   const { t } = useTranslation();
 
-  const { control, isValid, isPending, onBack, onSubmit } =
+  const { control, isDirty, isValid, isPending, onBack, onSubmit } =
     useForgotPasswordForm();
 
   return (
@@ -80,6 +80,7 @@ export const ForgotPasswordForm = () => {
             submitLabelLoading={t("forgotPassword.actions.submitLoading")}
             align="center"
             fullWidth
+            isDirty={isDirty}
             submitProps={{ size: "large", disabled: !isValid }}
           />
         </Box>

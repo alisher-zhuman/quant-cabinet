@@ -32,7 +32,7 @@ export const CreateCompanyDialog = ({
   const { t } = useTranslation();
   const isEditMode = Boolean(company);
 
-  const { control, isPending, isValid, onSubmit } = useCompanyForm({
+  const { control, isPending, isDirty, isValid, onSubmit } = useCompanyForm({
     company,
     onSuccess,
   });
@@ -105,6 +105,7 @@ export const CreateCompanyDialog = ({
                   : "companies.createDialog.submitLoading",
               )}
               isSubmitting={isPending}
+              isDirty={isDirty}
               submitProps={{ disabled: !isValid }}
             />
           </FormFieldset>

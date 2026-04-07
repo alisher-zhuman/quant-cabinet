@@ -53,7 +53,7 @@ export const useControllerForm = ({
     control,
     handleSubmit,
     reset,
-    formState: { isValid },
+    formState: { isDirty, isValid },
   } = useForm<ControllerFormValues>({
     resolver: zodResolver(
       isEditMode ? updateControllerFormSchema(t) : createControllerFormSchema(t),
@@ -106,6 +106,7 @@ export const useControllerForm = ({
   return {
     control,
     isPending,
+    isDirty,
     isValid,
     onSubmit,
   };

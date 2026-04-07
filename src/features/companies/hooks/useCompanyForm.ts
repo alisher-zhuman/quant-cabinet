@@ -32,7 +32,7 @@ export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
     control,
     handleSubmit,
     reset,
-    formState: { isValid },
+    formState: { isDirty, isValid },
   } = useForm<CompanyFormValues>({
     resolver: zodResolver(createCompanyFormSchema(t)),
     mode: "onChange",
@@ -73,6 +73,7 @@ export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
   return {
     control,
     isPending,
+    isDirty,
     isValid,
     onSubmit,
   };
