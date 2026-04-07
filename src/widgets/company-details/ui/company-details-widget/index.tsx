@@ -59,6 +59,7 @@ export const CompanyDetailsWidget = () => {
     phoneNumber,
     simIMSI,
     hasControllersActiveFilters,
+    handleResetControllersFilters,
     handleCopyKey,
     handleRefreshKey,
     handleTabChange,
@@ -337,6 +338,7 @@ export const CompanyDetailsWidget = () => {
           phoneNumber={phoneNumber}
           simIMSI={simIMSI}
           hasActiveFilters={hasControllersActiveFilters}
+          handleResetFilters={handleResetControllersFilters}
           handleSearchChange={handleSearchChange}
           handleArchivedChange={handleArchivedChange}
           handleOpenCreateDialog={handleOpenCreateControllerDialog}

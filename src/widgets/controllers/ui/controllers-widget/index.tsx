@@ -1,8 +1,10 @@
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
@@ -36,6 +38,7 @@ export const ControllersWidget = () => {
     isFetching,
     columns,
     hasActiveFilters,
+    handleResetFilters,
     deleteControllerMutation,
     handleSearchChange,
     handleArchivedChange,
@@ -86,22 +89,49 @@ export const ControllersWidget = () => {
               isArchived={isArchived}
               actions={
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-                  <Button
-                    variant="outlined"
-                    startIcon={
-                      <Badge
-                        color="primary"
-                        overlap="circular"
-                        variant="dot"
-                        invisible={!hasActiveFilters}
+                  <Box sx={{ position: "relative", display: "inline-flex" }}>
+                    <Button
+                      variant="outlined"
+                      startIcon={
+                        <Badge
+                          color="primary"
+                          overlap="circular"
+                          variant="dot"
+                          invisible={!hasActiveFilters}
+                        >
+                          <FilterListRoundedIcon />
+                        </Badge>
+                      }
+                      onClick={handleOpenFiltersDialog}
+                    >
+                      {t("controllers.actions.filters")}
+                    </Button>
+
+                    {hasActiveFilters && (
+                      <IconButton
+                        size="small"
+                        color="error"
+                        aria-label={t("controllers.filters.reset")}
+                        onClick={handleResetFilters}
+                        sx={{
+                          position: "absolute",
+                          top: -8,
+                          right: -8,
+                          width: 20,
+                          height: 20,
+                          backgroundColor: "background.paper",
+                          border: "1px solid",
+                          borderColor: "divider",
+                          boxShadow: 1,
+                          "&:hover": {
+                            backgroundColor: "background.paper",
+                          },
+                        }}
                       >
-                        <FilterListRoundedIcon />
-                      </Badge>
-                    }
-                    onClick={handleOpenFiltersDialog}
-                  >
-                    {t("controllers.actions.filters")}
-                  </Button>
+                        <CloseRoundedIcon sx={{ fontSize: 12 }} />
+                      </IconButton>
+                    )}
+                  </Box>
 
                   <Button
                     variant="contained"

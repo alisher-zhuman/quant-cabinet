@@ -186,6 +186,14 @@ export const useControllersWidget = () => {
     simIMSI.trim(),
   );
 
+  const handleResetFilters = () => {
+    setCompanyId("");
+    setSerialNumber("");
+    setPhoneNumber("");
+    setSimIMSI("");
+    setPage(0);
+  };
+
   const handleConfirmDelete = () => {
     if (!controllerToDelete) {
       return;
@@ -235,6 +243,7 @@ export const useControllersWidget = () => {
     isFetching,
     columns,
     hasActiveFilters,
+    handleResetFilters,
     deleteControllerMutation,
     handleSearchChange,
     handleArchivedChange,

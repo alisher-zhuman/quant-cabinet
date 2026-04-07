@@ -357,6 +357,13 @@ export const useCompanyDetailsWidget = () => {
     serialNumber.trim() || phoneNumber.trim() || simIMSI.trim(),
   );
 
+  const handleResetControllersFilters = () => {
+    setSerialNumber("");
+    setPhoneNumber("");
+    setSimIMSI("");
+    setPage(0);
+  };
+
   const handleSearchChange = (value: string) => {
     setSearch(value);
     setPage(0);
@@ -405,6 +412,7 @@ export const useCompanyDetailsWidget = () => {
     phoneNumber,
     simIMSI,
     hasControllersActiveFilters,
+    handleResetControllersFilters,
     handleCopyKey,
     handleRefreshKey,
     handleTabChange,
