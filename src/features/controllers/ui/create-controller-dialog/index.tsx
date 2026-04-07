@@ -1,24 +1,20 @@
 import { useMemo } from "react";
 
-import { Controller } from "react-hook-form";
-
 import { useTranslation } from "react-i18next";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 
 import { useCompaniesQuery } from "@entities/companies";
 import type { ControllerRow } from "@entities/controllers";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
-import { FormSelectField } from "@shared/ui/form-select-field";
-import { FormTextField } from "@shared/ui/form-text-field";
 
 import { useControllerForm } from "../../hooks/useControllerForm";
+import { ControllerMainFields } from "../controller-main-fields";
+import { ControllerTechnicalFields } from "../controller-technical-fields";
 
 interface Props {
   controller?: ControllerRow | null;
@@ -88,125 +84,21 @@ export const CreateControllerDialog = ({
       <DialogContent>
         <form onSubmit={onSubmit}>
           <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
-            {!isEditMode && (
-              <>
-                <FormTextField
-                  name="serialNumber"
-                  control={control}
-                  label={t("controllers.createDialog.fields.serialNumber")}
-                  fullWidth
-                />
-
-                {!initialCompanyId && (
-                  <FormSelectField
-                    name="companyId"
-                    control={control}
-                    label={t("controllers.createDialog.fields.company")}
-                    fullWidth
-                    disabled={isCompaniesLoading}
-                    options={companyOptions}
-                    emptyOptionLabel={t(
-                      "controllers.createDialog.fields.companyPlaceholder",
-                    )}
-                  />
-                )}
-
-                <FormSelectField
-                  name="type"
-                  control={control}
-                  label={t("controllers.createDialog.fields.type")}
-                  fullWidth
-                  options={typeOptions}
-                />
-              </>
-            )}
-
-            <FormTextField
-              name="simIMSI"
+            <ControllerMainFields
+              t={t}
               control={control}
-              label={t("controllers.createDialog.fields.simIMSI")}
-              fullWidth
+              isEditMode={isEditMode}
+              initialCompanyId={initialCompanyId}
+              isCompaniesLoading={isCompaniesLoading}
+              companyOptions={companyOptions}
+              typeOptions={typeOptions}
             />
 
-            <FormTextField
-              name="phoneNumber"
+            <ControllerTechnicalFields
+              t={t}
               control={control}
-              label={t("controllers.createDialog.fields.phoneNumber")}
-              fullWidth
+              isEditMode={isEditMode}
             />
-
-            <FormTextField
-              name="descriptions"
-              control={control}
-              label={t("controllers.createDialog.fields.descriptions")}
-              fullWidth
-            />
-
-            {isEditMode && (
-              <>
-                <FormTextField
-                  name="setInterval"
-                  control={control}
-                  label={t("controllers.editDialog.fields.setInterval")}
-                  type="number"
-                  slotProps={{
-                    htmlInput: {
-                      min: 1,
-                      max: 255,
-                    },
-                  }}
-                  fullWidth
-                />
-
-                <Controller
-                  name="correctTime"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      label={t("controllers.editDialog.fields.correctTime")}
-                      control={
-                        <Switch
-                          checked={field.value}
-                          onChange={(_, checked) => field.onChange(checked)}
-                        />
-                      }
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="correctInterval"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      label={t("controllers.editDialog.fields.correctInterval")}
-                      control={
-                        <Switch
-                          checked={field.value}
-                          onChange={(_, checked) => field.onChange(checked)}
-                        />
-                      }
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="isArchived"
-                  control={control}
-                  render={({ field }) => (
-                    <FormControlLabel
-                      label={t("controllers.editDialog.fields.isArchived")}
-                      control={
-                        <Switch
-                          checked={field.value}
-                          onChange={(_, checked) => field.onChange(checked)}
-                        />
-                      }
-                    />
-                  )}
-                />
-              </>
-            )}
 
             <FormActions
               onCancel={onClose}

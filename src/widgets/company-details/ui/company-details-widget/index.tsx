@@ -19,6 +19,7 @@ import { CompanyUsersTab } from "../company-users-tab";
 
 export const CompanyDetailsWidget = () => {
   const { t } = useTranslation();
+  
   const {
     companyId,
     company,

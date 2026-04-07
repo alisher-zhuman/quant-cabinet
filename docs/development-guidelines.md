@@ -135,6 +135,9 @@ widgets/<slice>/
 - Entity hooks should generally wrap fetching logic.
 - Feature hooks should generally wrap mutations, form setup, or scenario-specific state.
 - Widget hooks should generally orchestrate UI state, routing, search params, dialogs, and table interactions.
+- If logic computed in an upper hook is not used locally and is only passed down to one child, move that logic closer to the child that actually uses it.
+- Avoid giant hook return objects that mostly exist to feed props into a single nested component.
+- Prefer shell hooks at the page/widget level and local hooks at the tab/dialog/section level.
 
 ## UI Components
 
@@ -146,6 +149,7 @@ widgets/<slice>/
   - `controller-company-section`
 - Do not extract tiny components just to increase file count.
 - Reusable project-wide primitives belong in `shared/ui`; slice-specific UI stays inside its slice.
+- If a parent component only gathers values and forwards them to one child, reduce that prop chain by moving the relevant logic and state closer to the child.
 
 ## Entities
 
