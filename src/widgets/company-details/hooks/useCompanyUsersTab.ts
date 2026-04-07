@@ -1,31 +1,41 @@
 import { useCallback, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 
-import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import { createUserColumns, useDeleteUser } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
+import { ROUTES } from "@shared/constants";
+import {
+  useArchivedFilter,
+  useInitialSearchState,
+  usePagination,
+  useSearchState,
+  useSyncSearchParams,
+} from "@shared/hooks";
 import type { Column } from "@shared/types";
 
+import {
+  createCompanyDetailsSearchString,
+  parseCompanyDetailsSearchState,
+} from "../helpers";
+
 interface Params {
-  t: TFunction;
   companyId: string;
-  page: number;
-  limit: number;
-  search: string;
-  isArchived: boolean;
-  enabled: boolean;
-  backTo: string;
-  navigateToUser: (userId: string, backTo: string) => void;
-  setIsArchived: (value: boolean) => void;
-  setPage: (value: number) => void;
+  isActive: boolean;
 }
 
 interface CompanyUsersTab {
+  t: ReturnType<typeof useTranslation>["t"];
   isCreateDialogOpen: boolean;
   userToEdit: UserRow | null;
   userToDelete: UserRow | null;
+  isArchived: boolean;
+  search: string;
+  page: number;
+  limit: number;
   users: UserRow[];
   total: number;
   hasUsers: boolean;
@@ -34,6 +44,8 @@ interface CompanyUsersTab {
   isError: boolean;
   isFetching: boolean;
   userColumns: Column<UserRow>[];
+  handleSearchChange: (value: string) => void;
+  handleArchivedChange: (value: boolean) => void;
   handleOpenCreateDialog: () => void;
   handleCloseCreateDialog: () => void;
   handleCreateSuccess: () => void;
@@ -42,24 +54,53 @@ interface CompanyUsersTab {
   handleConfirmDelete: () => void;
   handleUserRowClick: (user: UserRow) => void;
   deleteUserMutation: ReturnType<typeof useDeleteUser>;
+  setPage: (value: number) => void;
+  setLimit: (value: number) => void;
 }
 
 export const useCompanyUsersTab = ({
-  t,
   companyId,
-  page,
-  limit,
-  search,
-  isArchived,
-  enabled,
-  backTo,
-  navigateToUser,
-  setIsArchived,
-  setPage,
+  isActive,
 }: Params): CompanyUsersTab => {
+  const initialSearchState = useInitialSearchState(
+    parseCompanyDetailsSearchState,
+  );
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
   const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { isArchived, setIsArchived } = useArchivedFilter({
+    initialIsArchived: initialSearchState.isArchived,
+  });
+
+  const { search, debouncedSearch, setSearch } = useSearchState({
+    initialSearch: initialSearchState.search,
+  });
+
+  const { page, limit, setPage, setLimit } = usePagination({
+    initialPage: initialSearchState.page,
+    initialLimit: initialSearchState.limit,
+    resetPage: 0,
+  });
+
+  useSyncSearchParams(
+    {
+      tab: "users",
+      page,
+      limit,
+      search,
+      isArchived,
+      serialNumber: "",
+      phoneNumber: "",
+      simIMSI: "",
+    },
+    createCompanyDetailsSearchString,
+    isActive,
+  );
 
   const deleteUserMutation = useDeleteUser();
 
@@ -74,10 +115,10 @@ export const useCompanyUsersTab = ({
   } = useUsersQuery({
     page,
     limit,
-    search,
+    search: debouncedSearch,
     isArchived,
     companyId,
-    enabled,
+    enabled: isActive && Boolean(companyId),
   });
 
   const handleDeleteUser = useCallback((user: UserRow) => {
@@ -91,9 +132,13 @@ export const useCompanyUsersTab = ({
 
   const handleUserRowClick = useCallback(
     (user: UserRow) => {
-      navigateToUser(user.id, backTo);
+      navigate(`/${ROUTES.USERS}/${user.id}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
     },
-    [backTo, navigateToUser],
+    [location.pathname, location.search, navigate],
   );
 
   const userColumns = useMemo(
@@ -103,6 +148,16 @@ export const useCompanyUsersTab = ({
       }),
     [t, handleDeleteUser, handleEditUser],
   );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(0);
+  };
+
+  const handleArchivedChange = (value: boolean) => {
+    setIsArchived(value);
+    setPage(0);
+  };
 
   const handleOpenCreateDialog = () => {
     setUserToEdit(null);
@@ -146,9 +201,14 @@ export const useCompanyUsersTab = ({
   };
 
   return {
+    t,
     isCreateDialogOpen,
     userToEdit,
     userToDelete,
+    isArchived,
+    search,
+    page,
+    limit,
     users,
     total,
     hasUsers,
@@ -157,6 +217,8 @@ export const useCompanyUsersTab = ({
     isError,
     isFetching,
     userColumns,
+    handleSearchChange,
+    handleArchivedChange,
     handleOpenCreateDialog,
     handleCloseCreateDialog,
     handleCreateSuccess,
@@ -165,5 +227,7 @@ export const useCompanyUsersTab = ({
     handleConfirmDelete,
     handleUserRowClick,
     deleteUserMutation,
+    setPage,
+    setLimit,
   };
 };

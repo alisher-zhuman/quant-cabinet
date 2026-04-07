@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router";
 export const useSyncSearchParams = <T>(
   state: T,
   createSearchString: (state: T) => string,
+  enabled = true,
 ) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -15,10 +16,14 @@ export const useSyncSearchParams = <T>(
   const currentSearchString = searchParams.toString();
 
   useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     if (currentSearchString === searchString) {
       return;
     }
 
     setSearchParams(new URLSearchParams(searchString), { replace: true });
-  }, [currentSearchString, searchString, setSearchParams]);
+  }, [currentSearchString, enabled, searchString, setSearchParams]);
 };

@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 
-import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 
 import {
   createControllerColumns,
@@ -12,31 +13,37 @@ import {
   useControllersQuery,
 } from "@entities/controllers";
 
+import { ROUTES } from "@shared/constants";
+import {
+  useArchivedFilter,
+  useInitialSearchState,
+  usePagination,
+  useSearchState,
+  useSyncSearchParams,
+} from "@shared/hooks";
 import type { Column } from "@shared/types";
 
+import {
+  createCompanyDetailsSearchString,
+  parseCompanyDetailsSearchState,
+} from "../helpers";
+
 interface Params {
-  t: TFunction;
   companyId: string;
-  page: number;
-  limit: number;
-  search: string;
-  isArchived: boolean;
-  enabled: boolean;
-  initialSerialNumber: string;
-  initialPhoneNumber: string;
-  initialSimIMSI: string;
-  backTo: string;
-  navigateToController: (controllerId: string, backTo: string) => void;
-  setIsArchived: (value: boolean) => void;
-  setPage: (value: number) => void;
+  isActive: boolean;
 }
 
 interface CompanyControllersTab {
+  t: ReturnType<typeof useTranslation>["t"];
   isCreateDialogOpen: boolean;
   isFiltersDialogOpen: boolean;
   controllerToEdit: ControllerRow | null;
   controllerToDelete: ControllerRow | null;
   controllerToTransfer: ControllerRow | null;
+  isArchived: boolean;
+  search: string;
+  page: number;
+  limit: number;
   controllers: ControllerRow[];
   total: number;
   hasControllers: boolean;
@@ -49,14 +56,13 @@ interface CompanyControllersTab {
   phoneNumber: string;
   simIMSI: string;
   hasActiveFilters: boolean;
+  handleResetFilters: () => void;
+  handleSearchChange: (value: string) => void;
+  handleArchivedChange: (value: boolean) => void;
   handleOpenCreateDialog: () => void;
   handleCloseCreateDialog: () => void;
   handleCreateSuccess: () => void;
   handleEditSuccess: () => void;
-  handleCloseDeleteDialog: () => void;
-  handleConfirmDelete: () => void;
-  handleControllerRowClick: (controller: ControllerRow) => void;
-  deleteControllerMutation: ReturnType<typeof useDeleteController>;
   handleOpenFiltersDialog: () => void;
   handleCloseFiltersDialog: () => void;
   handleApplyFilters: (filters: {
@@ -64,27 +70,23 @@ interface CompanyControllersTab {
     phoneNumber: string;
     simIMSI: string;
   }) => void;
+  handleCloseDeleteDialog: () => void;
+  handleConfirmDelete: () => void;
   handleCloseTransferDialog: () => void;
   handleTransferSuccess: () => void;
-  handleResetFilters: () => void;
+  handleControllerRowClick: (controller: ControllerRow) => void;
+  deleteControllerMutation: ReturnType<typeof useDeleteController>;
+  setPage: (value: number) => void;
+  setLimit: (value: number) => void;
 }
 
 export const useCompanyControllersTab = ({
-  t,
   companyId,
-  page,
-  limit,
-  search,
-  isArchived,
-  enabled,
-  initialSerialNumber,
-  initialPhoneNumber,
-  initialSimIMSI,
-  backTo,
-  navigateToController,
-  setIsArchived,
-  setPage,
+  isActive,
 }: Params): CompanyControllersTab => {
+  const initialSearchState = useInitialSearchState(
+    parseCompanyDetailsSearchState,
+  );
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [controllerToEdit, setControllerToEdit] =
@@ -93,9 +95,46 @@ export const useCompanyControllersTab = ({
     useState<ControllerRow | null>(null);
   const [controllerToTransfer, setControllerToTransfer] =
     useState<ControllerRow | null>(null);
-  const [serialNumber, setSerialNumber] = useState(initialSerialNumber);
-  const [phoneNumber, setPhoneNumber] = useState(initialPhoneNumber);
-  const [simIMSI, setSimIMSI] = useState(initialSimIMSI);
+  const [serialNumber, setSerialNumber] = useState(
+    initialSearchState.serialNumber,
+  );
+  const [phoneNumber, setPhoneNumber] = useState(
+    initialSearchState.phoneNumber,
+  );
+  const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { isArchived, setIsArchived } = useArchivedFilter({
+    initialIsArchived: initialSearchState.isArchived,
+  });
+
+  const { search, debouncedSearch, setSearch } = useSearchState({
+    initialSearch: initialSearchState.search,
+  });
+
+  const { page, limit, setPage, setLimit } = usePagination({
+    initialPage: initialSearchState.page,
+    initialLimit: initialSearchState.limit,
+    resetPage: 0,
+  });
+
+  useSyncSearchParams(
+    {
+      tab: "controllers",
+      page,
+      limit,
+      search,
+      isArchived,
+      serialNumber,
+      phoneNumber,
+      simIMSI,
+    },
+    createCompanyDetailsSearchString,
+    isActive,
+  );
 
   const handleCloseDeleteDialog = () => {
     setControllerToDelete(null);
@@ -115,12 +154,12 @@ export const useCompanyControllersTab = ({
     companyId,
     page,
     limit,
-    search,
+    search: debouncedSearch,
     isArchived,
     serialNumber,
     phoneNumber,
     simIMSI,
-    enabled,
+    enabled: isActive && Boolean(companyId),
   });
 
   const handleDeleteController = useCallback((controller: ControllerRow) => {
@@ -138,9 +177,13 @@ export const useCompanyControllersTab = ({
 
   const handleControllerRowClick = useCallback(
     (controller: ControllerRow) => {
-      navigateToController(controller.id, backTo);
+      navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
+        state: {
+          backTo: `${location.pathname}${location.search}`,
+        },
+      });
     },
-    [backTo, navigateToController],
+    [location.pathname, location.search, navigate],
   );
 
   const controllerColumns = useMemo(
@@ -154,6 +197,16 @@ export const useCompanyControllersTab = ({
       ),
     [t, handleDeleteController, handleEditController, handleTransferController],
   );
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value);
+    setPage(0);
+  };
+
+  const handleArchivedChange = (value: boolean) => {
+    setIsArchived(value);
+    setPage(0);
+  };
 
   const handleOpenCreateDialog = () => {
     setControllerToEdit(null);
@@ -230,11 +283,16 @@ export const useCompanyControllersTab = ({
   );
 
   return {
+    t,
     isCreateDialogOpen,
     isFiltersDialogOpen,
     controllerToEdit,
     controllerToDelete,
     controllerToTransfer,
+    isArchived,
+    search,
+    page,
+    limit,
     controllers,
     total,
     hasControllers,
@@ -247,19 +305,23 @@ export const useCompanyControllersTab = ({
     phoneNumber,
     simIMSI,
     hasActiveFilters,
+    handleResetFilters,
+    handleSearchChange,
+    handleArchivedChange,
     handleOpenCreateDialog,
     handleCloseCreateDialog,
     handleCreateSuccess,
     handleEditSuccess,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
-    handleControllerRowClick,
-    deleteControllerMutation,
     handleOpenFiltersDialog,
     handleCloseFiltersDialog,
     handleApplyFilters,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
     handleCloseTransferDialog,
     handleTransferSuccess,
-    handleResetFilters,
+    handleControllerRowClick,
+    deleteControllerMutation,
+    setPage,
+    setLimit,
   };
 };

@@ -1,141 +1,118 @@
-import type { TFunction } from "i18next";
-
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Button from "@mui/material/Button";
 
 import { CreateUserDialog } from "@features/users";
 
-import { type UserRow } from "@entities/users";
-
-import { type Column } from "@shared/types";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 import { TableSection } from "@shared/ui/table-section";
 
-interface Props {
-  companyId: string;
-  t: TFunction;
-  isCreateDialogOpen: boolean;
-  userToEdit: UserRow | null;
-  userToDelete: UserRow | null;
-  isArchived: boolean;
-  search: string;
-  page: number;
-  limit: number;
-  users: UserRow[];
-  total: number;
-  hasUsers: boolean;
-  emptyText: string;
-  isUsersLoading: boolean;
-  isUsersError: boolean;
-  isUsersFetching: boolean;
-  userColumns: Column<UserRow>[];
-  handleSearchChange: (value: string) => void;
-  handleArchivedChange: (value: boolean) => void;
-  handleOpenCreateDialog: () => void;
-  handleCloseCreateDialog: () => void;
-  handleCreateSuccess: () => void;
-  handleEditSuccess: () => void;
-  handleCloseDeleteDialog: () => void;
-  handleConfirmDelete: () => void;
-  handleUserRowClick: (user: UserRow) => void;
-  deleteUserMutationIsPending: boolean;
-  setPage: (newPage: number) => void;
-  setLimit: (newLimit: number) => void;
-}
+import { useCompanyUsersTab } from "../../hooks/useCompanyUsersTab";
 
 export const CompanyUsersTab = ({
   companyId,
-  t,
-  isCreateDialogOpen,
-  userToEdit,
-  userToDelete,
-  isArchived,
-  search,
-  page,
-  limit,
-  users,
-  total,
-  hasUsers,
-  emptyText,
-  isUsersLoading,
-  isUsersError,
-  isUsersFetching,
-  userColumns,
-  handleSearchChange,
-  handleArchivedChange,
-  handleOpenCreateDialog,
-  handleCloseCreateDialog,
-  handleCreateSuccess,
-  handleEditSuccess,
-  handleCloseDeleteDialog,
-  handleConfirmDelete,
-  handleUserRowClick,
-  deleteUserMutationIsPending,
-  setPage,
-  setLimit,
-}: Props) => (
-  <>
-    <TableSection
-      isLoading={isUsersLoading}
-      isError={isUsersError}
-      errorText={t("users.error")}
-      hasItems={hasUsers}
-      emptyText={emptyText}
-      rows={users}
-      columns={userColumns}
-      getRowId={(user) => user.id}
-      onRowClick={handleUserRowClick}
-      toolbar={
-        <SearchTabsToolbar
-          search={search}
-          searchPlaceholder={t("users.search.placeholder")}
-          activeLabel={t("users.tabs.active")}
-          archivedLabel={t("users.tabs.archived")}
-          isSearchLoading={isUsersFetching}
-          isArchived={isArchived}
-          actions={
-            <Button
-              variant="contained"
-              startIcon={<AddRoundedIcon />}
-              onClick={handleOpenCreateDialog}
-            >
-              {t("users.actions.create")}
-            </Button>
-          }
-          onSearchChange={handleSearchChange}
-          onArchivedChange={handleArchivedChange}
-        />
-      }
-      pagination={{
-        page,
-        limit,
-        total,
-        onPageChange: setPage,
-        onLimitChange: setLimit,
-        labelRowsPerPage: t("users.table.rowsPerPage"),
-      }}
-    />
+  isActive,
+}: {
+  companyId: string;
+  isActive: boolean;
+}) => {
+  const {
+    t,
+    isCreateDialogOpen,
+    userToEdit,
+    userToDelete,
+    isArchived,
+    search,
+    page,
+    limit,
+    users,
+    total,
+    hasUsers,
+    emptyText,
+    isLoading,
+    isError,
+    isFetching,
+    userColumns,
+    handleSearchChange,
+    handleArchivedChange,
+    handleOpenCreateDialog,
+    handleCloseCreateDialog,
+    handleCreateSuccess,
+    handleEditSuccess,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
+    handleUserRowClick,
+    deleteUserMutation,
+    setPage,
+    setLimit,
+  } = useCompanyUsersTab({
+    companyId,
+    isActive,
+  });
 
-    {isCreateDialogOpen && (
-      <CreateUserDialog
-        user={userToEdit}
-        open={isCreateDialogOpen}
-        onClose={handleCloseCreateDialog}
-        onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
-        {...(!userToEdit ? { companyId } : {})}
+  return (
+    <>
+      <TableSection
+        isLoading={isLoading}
+        isError={isError}
+        errorText={t("users.error")}
+        hasItems={hasUsers}
+        emptyText={emptyText}
+        rows={users}
+        columns={userColumns}
+        getRowId={(user) => user.id}
+        onRowClick={handleUserRowClick}
+        toolbar={
+          <SearchTabsToolbar
+            search={search}
+            searchPlaceholder={t("users.search.placeholder")}
+            activeLabel={t("users.tabs.active")}
+            archivedLabel={t("users.tabs.archived")}
+            isSearchLoading={isFetching}
+            isArchived={isArchived}
+            actions={
+              <Button
+                variant="contained"
+                startIcon={<AddRoundedIcon />}
+                onClick={handleOpenCreateDialog}
+              >
+                {t("users.actions.create")}
+              </Button>
+            }
+            onSearchChange={handleSearchChange}
+            onArchivedChange={handleArchivedChange}
+          />
+        }
+        pagination={{
+          page,
+          limit,
+          total,
+          onPageChange: setPage,
+          onLimitChange: setLimit,
+          labelRowsPerPage: t("users.table.rowsPerPage"),
+        }}
       />
-    )}
 
-    <ConfirmDialog
-      open={Boolean(userToDelete)}
-      title={t("users.deleteDialog.title")}
-      description={t("users.deleteDialog.description")}
-      cancelLabel={t("users.deleteDialog.cancel")}
-      confirmLabel={t("users.deleteDialog.confirm")}
-      isLoading={deleteUserMutationIsPending}
-      onClose={handleCloseDeleteDialog}
-      onConfirm={handleConfirmDelete}
-    />
-  </>
-);
+      {isCreateDialogOpen && (
+        <CreateUserDialog
+          user={userToEdit}
+          open={isCreateDialogOpen}
+          onClose={handleCloseCreateDialog}
+          onSuccess={userToEdit ? handleEditSuccess : handleCreateSuccess}
+          {...(!userToEdit ? { companyId } : {})}
+        />
+      )}
+
+      <ConfirmDialog
+        open={Boolean(userToDelete)}
+        title={t("users.deleteDialog.title")}
+        description={t("users.deleteDialog.description")}
+        cancelLabel={t("users.deleteDialog.cancel")}
+        confirmLabel={t("users.deleteDialog.confirm")}
+        isLoading={deleteUserMutation.isPending}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
+    </>
+  );
+};
