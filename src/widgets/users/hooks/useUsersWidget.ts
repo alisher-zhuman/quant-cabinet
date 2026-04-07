@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
@@ -8,7 +8,6 @@ import {
   createUsersSearchString,
   getUsersNameSearchParams,
   parseUsersSearchState,
-  useDeleteUser,
 } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
@@ -22,17 +21,12 @@ import {
   useSyncSearchParams,
 } from "@shared/hooks";
 
-export const useUsersWidget = () => {
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [userToEdit, setUserToEdit] = useState<UserRow | null>(null);
-  const [userToDelete, setUserToDelete] = useState<UserRow | null>(null);
+import { useUserDialogs } from "./useUserDialogs";
 
+export const useUsersWidget = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
   const { t } = useTranslation();
-
-  const deleteUserMutation = useDeleteUser();
 
   const initialSearchState = useInitialSearchState(parseUsersSearchState);
 
@@ -65,18 +59,7 @@ export const useUsersWidget = () => {
       lastName,
       isArchived,
     });
-
-  const handleDeleteUser = useCallback(
-    (user: UserRow) => {
-      setUserToDelete(user);
-    },
-    [],
-  );
-
-  const handleEditUser = useCallback((user: UserRow) => {
-    setUserToEdit(user);
-    setIsCreateDialogOpen(true);
-  }, []);
+  const dialogs = useUserDialogs(setIsArchived);
 
   const handleRowClick = useCallback(
     (user: UserRow) => {
@@ -90,8 +73,8 @@ export const useUsersWidget = () => {
   );
 
   const columns = useMemo(
-    () => createUserColumns(t, handleEditUser, handleDeleteUser),
-    [t, handleEditUser, handleDeleteUser],
+    () => createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser),
+    [dialogs.handleDeleteUser, dialogs.handleEditUser, t],
   );
 
   const handleSearchChange = (value: string) => {
@@ -104,75 +87,54 @@ export const useUsersWidget = () => {
     setPage(0);
   };
 
-  const handleOpenCreateDialog = () => {
-    setUserToEdit(null);
-    setIsCreateDialogOpen(true);
-  };
-
-  const handleCloseCreateDialog = () => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-  };
-
-  const handleCreateSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-    setIsArchived(false);
+  const handleCreateSuccess = () => {
+    dialogs.handleCreateSuccess();
     setPage(0);
-  }, [setIsArchived, setPage]);
-
-  const handleEditSuccess = useCallback(() => {
-    setIsCreateDialogOpen(false);
-    setUserToEdit(null);
-  }, []);
-
-  const handleCloseDeleteDialog = () => {
-    setUserToDelete(null);
-  };
-
-  const handleConfirmDelete = () => {
-    if (!userToDelete) {
-      return;
-    }
-
-    deleteUserMutation.mutate(
-      { userId: userToDelete.id },
-      {
-        onSuccess: () => {
-          setUserToDelete(null);
-        },
-      },
-    );
   };
 
   return {
     t,
-    isCreateDialogOpen,
-    userToEdit,
-    userToDelete,
-    isArchived,
-    search,
-    page,
-    limit,
-    users,
-    total,
-    hasUsers,
-    emptyText,
-    isLoading,
-    isError,
-    isFetching,
-    columns,
-    handleSearchChange,
-    handleArchivedChange,
-    handleOpenCreateDialog,
-    handleCloseCreateDialog,
-    handleCreateSuccess,
-    handleEditSuccess,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
-    handleRowClick,
-    deleteUserMutation,
-    setPage,
-    setLimit,
+    tableSectionProps: {
+      isLoading,
+      isError,
+      errorText: t("users.error"),
+      hasItems: hasUsers,
+      emptyText,
+      rows: users,
+      columns,
+      getRowId: (user: UserRow) => user.id,
+      onRowClick: handleRowClick,
+      pagination: {
+        page,
+        limit,
+        total,
+        onPageChange: setPage,
+        onLimitChange: setLimit,
+        labelRowsPerPage: t("users.table.rowsPerPage"),
+      },
+    },
+    toolbarProps: {
+      t,
+      search,
+      isSearchLoading: isFetching,
+      isArchived,
+      onOpenCreateDialog: dialogs.handleOpenCreateDialog,
+      onSearchChange: handleSearchChange,
+      onArchivedChange: handleArchivedChange,
+    },
+    dialogProps: {
+      isCreateDialogOpen: dialogs.isCreateDialogOpen,
+      userToEdit: dialogs.userToEdit,
+      onCloseCreateDialog: dialogs.handleCloseCreateDialog,
+      onCreateSuccess: handleCreateSuccess,
+      onEditSuccess: dialogs.handleEditSuccess,
+    },
+    deleteDialogProps: {
+      t,
+      userToDelete: dialogs.userToDelete,
+      isDeletePending: dialogs.deleteUserMutation.isPending,
+      onCloseDeleteDialog: dialogs.handleCloseDeleteDialog,
+      onConfirmDelete: dialogs.handleConfirmDelete,
+    },
   };
 };
