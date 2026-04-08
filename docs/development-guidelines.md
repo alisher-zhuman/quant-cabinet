@@ -110,6 +110,8 @@ widgets/<slice>/
 - Avoid vague names such as `utils.ts`, `common.ts`, `data.ts`, `stuff.ts`.
 - If a component grows large, split it by meaningful UI sections rather than by arbitrary line count.
 - If a file exists only to support one adjacent file and is tiny, keep it close; if the concern becomes reusable or starts growing, move it into its own folder.
+- Do not keep two separate React components in the same file. One component per file.
+- Separate unrelated blocks with whitespace and clear grouping so the main flow is easy to scan.
 
 ## Constants
 
@@ -138,6 +140,8 @@ widgets/<slice>/
 - If logic computed in an upper hook is not used locally and is only passed down to one child, move that logic closer to the child that actually uses it.
 - Avoid giant hook return objects that mostly exist to feed props into a single nested component.
 - Prefer shell hooks at the page/widget level and local hooks at the tab/dialog/section level.
+- Keep local `useState` declarations near the top of the hook when they do not depend on values computed below.
+- If a state initializer depends on derived values, params, or props prepared later, it may be declared after those prerequisites, but only for that reason.
 
 ## UI Components
 
@@ -150,6 +154,7 @@ widgets/<slice>/
 - Do not extract tiny components just to increase file count.
 - Reusable project-wide primitives belong in `shared/ui`; slice-specific UI stays inside its slice.
 - If a parent component only gathers values and forwards them to one child, reduce that prop chain by moving the relevant logic and state closer to the child.
+- If table columns are non-trivial, move them out of hooks/components into a dedicated `columns` file like the other list/table slices.
 
 ## Entities
 

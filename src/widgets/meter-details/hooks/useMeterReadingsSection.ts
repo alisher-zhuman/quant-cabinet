@@ -1,13 +1,13 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
 import type { MeterDetails } from "@entities/meters";
-import { type ReadingRow, useReadingsQuery } from "@entities/readings";
+import { useReadingsQuery } from "@entities/readings";
 
-import { formatDateTime } from "@shared/helpers";
 import { usePagination } from "@shared/hooks";
-import type { Column } from "@shared/types";
+
+import { createMeterReadingColumns } from "../columns";
 
 interface Params {
   meter: MeterDetails;
@@ -46,32 +46,6 @@ export const useMeterReadingsSection = ({ meter }: Params) => {
     ...(typeof port === "number" ? { port } : {}),
   });
 
-  const columns = useMemo<Column<ReadingRow>[]>(
-    () => [
-      {
-        id: "readingAt",
-        header: t("meters.readings.table.columns.readingAt"),
-        cell: (reading) => formatDateTime(reading.readingAt),
-      },
-      {
-        id: "value",
-        header: t("meters.readings.table.columns.value"),
-        cell: (reading) => reading.value || "-",
-      },
-      {
-        id: "port",
-        header: t("meters.readings.table.columns.port"),
-        cell: (reading) => String(reading.port),
-      },
-      {
-        id: "locationType",
-        header: t("meters.readings.table.columns.locationType"),
-        cell: (reading) => reading.locationType || "-",
-      },
-    ],
-    [t],
-  );
-
   const handleFromChange = (value: string) => {
     setFrom(value);
     setPage(0);
@@ -95,7 +69,7 @@ export const useMeterReadingsSection = ({ meter }: Params) => {
       hasItems: hasReadings,
       emptyText,
       rows: readings,
-      columns,
+      columns: createMeterReadingColumns(t),
       pagination: {
         page,
         limit,
