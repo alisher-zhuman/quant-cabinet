@@ -10,6 +10,7 @@ import {
 
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 import { MeterReadingsChartTooltip } from "../meter-readings-chart-tooltip";
@@ -125,10 +126,12 @@ export const MeterReadingsChart = ({
     <Paper
       elevation={0}
       sx={{
-        p: 2.5,
-        borderRadius: 3,
+        p: 2,
+        borderRadius: 3.5,
         border: "1px solid",
         borderColor: "divider",
+        background: (theme) =>
+          `linear-gradient(180deg, ${alpha(theme.palette.common.white, 0.78)} 0%, ${alpha(theme.palette.info.light, 0.10)} 100%)`,
       }}
     >
       <Stack spacing={2}>
@@ -149,18 +152,22 @@ export const MeterReadingsChart = ({
           <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
             <LineChart
               data={points}
-              margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
+              margin={{ top: 8, right: 8, left: -18, bottom: 8 }}
             >
-              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
+              <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.14} />
               <XAxis
                 dataKey="axisLabel"
                 tick={{ fontSize: 11 }}
                 minTickGap={28}
+                axisLine={false}
+                tickLine={false}
               />
               <YAxis
                 tick={{ fontSize: 11 }}
                 width={56}
                 domain={["auto", "auto"]}
+                axisLine={false}
+                tickLine={false}
               />
               <Tooltip
                 content={
@@ -170,10 +177,10 @@ export const MeterReadingsChart = ({
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="currentColor"
-                strokeWidth={2}
-                dot={{ r: 3 }}
-                activeDot={{ r: 5 }}
+                stroke="#0f766e"
+                strokeWidth={2.5}
+                dot={{ r: 2.5, strokeWidth: 0, fill: "#0f766e" }}
+                activeDot={{ r: 5, fill: "#0f766e", stroke: "#ccfbf1", strokeWidth: 3 }}
               />
             </LineChart>
           </ResponsiveContainer>

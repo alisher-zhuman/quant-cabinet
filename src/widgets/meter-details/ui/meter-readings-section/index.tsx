@@ -3,7 +3,9 @@ import type { ChangeEvent } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { alpha } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 import type { MeterDetails } from "@entities/meters";
 
@@ -22,9 +24,12 @@ export const MeterReadingsSection = ({ meter }: { meter: MeterDetails }) => {
       elevation={0}
       sx={{
         p: { xs: 2.5, sm: 3 },
-        borderRadius: 3,
+        borderRadius: 4,
         border: "1px solid",
         borderColor: "divider",
+        background: (theme) =>
+          `linear-gradient(180deg, ${alpha(theme.palette.background.paper, 0.98)} 0%, ${alpha(theme.palette.info.light, 0.07)} 100%)`,
+        boxShadow: (theme) => `0 18px 40px ${alpha(theme.palette.common.black, 0.05)}`,
       }}
     >
       <Stack spacing={2.5}>
@@ -46,8 +51,22 @@ export const MeterReadingsSection = ({ meter }: { meter: MeterDetails }) => {
           maxValue={chartProps.maxValue}
         />
 
+        <Box>
+          <Typography variant="subtitle1" fontWeight={700}>
+            {chartProps.t("meters.readings.title")}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+            {chartProps.t("meters.readings.subtitle")}
+          </Typography>
+        </Box>
+
         <Box
           sx={{
+            p: 2,
+            borderRadius: 3,
+            backgroundColor: (theme) => alpha(theme.palette.background.default, 0.9),
+            border: "1px solid",
+            borderColor: "divider",
             display: "grid",
             gridTemplateColumns: {
               xs: "1fr",
@@ -100,17 +119,27 @@ export const MeterReadingsSection = ({ meter }: { meter: MeterDetails }) => {
           />
         </Box>
 
-        <TableSection
-          isLoading={tableSectionProps.isLoading}
-          isError={tableSectionProps.isError}
-          errorText={tableSectionProps.errorText}
-          hasItems={tableSectionProps.hasItems}
-          emptyText={tableSectionProps.emptyText}
-          rows={tableSectionProps.rows}
-          columns={tableSectionProps.columns}
-          getRowId={(reading) => reading.id}
-          pagination={tableSectionProps.pagination}
-        />
+        <Box
+          sx={{
+            p: 1.5,
+            borderRadius: 3,
+            backgroundColor: (theme) => alpha(theme.palette.common.white, 0.5),
+            border: "1px solid",
+            borderColor: "divider",
+          }}
+        >
+          <TableSection
+            isLoading={tableSectionProps.isLoading}
+            isError={tableSectionProps.isError}
+            errorText={tableSectionProps.errorText}
+            hasItems={tableSectionProps.hasItems}
+            emptyText={tableSectionProps.emptyText}
+            rows={tableSectionProps.rows}
+            columns={tableSectionProps.columns}
+            getRowId={(reading) => reading.id}
+            pagination={tableSectionProps.pagination}
+          />
+        </Box>
       </Stack>
     </Paper>
   );
