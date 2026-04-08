@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
-import { SearchInput } from "@shared/ui/search-input";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -40,26 +39,9 @@ export const CompanyMetersToolbar = ({
     archivedLabel={t("meters.tabs.archived")}
     isSearchLoading={isSearchLoading}
     isArchived={isArchived}
-    left={
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: { xs: "stretch", sm: "center" },
-          flexDirection: { xs: "column", sm: "row" },
-          gap: 1.5,
-          width: { xs: "100%", sm: "auto" },
-        }}
-      >
-        <SearchInput
-          value={search}
-          onChange={onSearchChange}
-          isLoading={isSearchLoading}
-          placeholder={t("meters.search.placeholder")}
-          fullWidth
-          sx={{ maxWidth: { xs: "100%", sm: 360 } }}
-        />
-
-        <Box sx={{ position: "relative", display: "inline-flex" }}>
+    actions={
+      <Box sx={{ position: "relative", display: "inline-flex" }}>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
           <Button
             variant="outlined"
             startIcon={
@@ -76,32 +58,32 @@ export const CompanyMetersToolbar = ({
           >
             {t("meters.actions.filters")}
           </Button>
-
-          {hasActiveFilters && (
-            <IconButton
-              size="small"
-              color="error"
-              aria-label={t("meters.filters.reset")}
-              onClick={onResetFilters}
-              sx={{
-                position: "absolute",
-                top: -8,
-                right: -8,
-                width: 20,
-                height: 20,
-                backgroundColor: "background.paper",
-                border: "1px solid",
-                borderColor: "divider",
-                boxShadow: 1,
-                "&:hover": {
-                  backgroundColor: "background.paper",
-                },
-              }}
-            >
-              <CloseRoundedIcon sx={{ fontSize: 12 }} />
-            </IconButton>
-          )}
         </Box>
+
+        {hasActiveFilters && (
+          <IconButton
+            size="small"
+            color="error"
+            aria-label={t("meters.filters.reset")}
+            onClick={onResetFilters}
+            sx={{
+              position: "absolute",
+              top: -8,
+              right: -8,
+              width: 20,
+              height: 20,
+              backgroundColor: "background.paper",
+              border: "1px solid",
+              borderColor: "divider",
+              boxShadow: 1,
+              "&:hover": {
+                backgroundColor: "background.paper",
+              },
+            }}
+          >
+            <CloseRoundedIcon sx={{ fontSize: 12 }} />
+          </IconButton>
+        )}
       </Box>
     }
     onSearchChange={onSearchChange}
