@@ -10,21 +10,71 @@ interface Params {
   limit: number;
   search: string;
   isArchived: boolean;
+  companyId: string;
+  serialNumber: string;
+  locationType: string;
+  meterStatus: string;
+  accountNumber: string;
+  clientName: string;
+  address: string;
+  isValveLockedByManager: string;
 }
 
-export const useMetersQuery = ({ page, limit, search, isArchived }: Params) => {
+export const useMetersQuery = ({
+  page,
+  limit,
+  search,
+  isArchived,
+  companyId,
+  serialNumber,
+  locationType,
+  meterStatus,
+  accountNumber,
+  clientName,
+  address,
+  isValveLockedByManager,
+}: Params) => {
   const { t } = useTranslation();
 
   const normalizedSearch = search.trim();
+  const normalizedCompanyId = companyId.trim();
+  const normalizedSerialNumber = serialNumber.trim();
+  const normalizedLocationType = locationType.trim();
+  const normalizedMeterStatus = meterStatus.trim();
+  const normalizedAccountNumber = accountNumber.trim();
+  const normalizedClientName = clientName.trim();
+  const normalizedAddress = address.trim();
+  const normalizedValveLock = isValveLockedByManager.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({
-    queryKey: metersKeys.list(page, limit, normalizedSearch, isArchived),
+    queryKey: metersKeys.list(
+      page,
+      limit,
+      normalizedSearch,
+      isArchived,
+      normalizedCompanyId,
+      normalizedSerialNumber,
+      normalizedLocationType,
+      normalizedMeterStatus,
+      normalizedAccountNumber,
+      normalizedClientName,
+      normalizedAddress,
+      normalizedValveLock,
+    ),
     queryFn: () =>
       getMeters({
         page: page + 1,
         limit,
         search: normalizedSearch,
         isArchived,
+        companyId: normalizedCompanyId,
+        serialNumber: normalizedSerialNumber,
+        locationType: normalizedLocationType,
+        meterStatus: normalizedMeterStatus,
+        accountNumber: normalizedAccountNumber,
+        clientName: normalizedClientName,
+        address: normalizedAddress,
+        isValveLockedByManager: normalizedValveLock,
       }),
   });
 
@@ -32,7 +82,19 @@ export const useMetersQuery = ({ page, limit, search, isArchived }: Params) => {
   const total = data?.total ?? 0;
   const hasMeters = meters.length > 0;
 
-  const emptyText = normalizedSearch
+  const hasFilters = Boolean(
+    normalizedSearch ||
+      normalizedCompanyId ||
+      normalizedSerialNumber ||
+      normalizedLocationType ||
+      normalizedMeterStatus ||
+      normalizedAccountNumber ||
+      normalizedClientName ||
+      normalizedAddress ||
+      normalizedValveLock,
+  );
+
+  const emptyText = hasFilters
     ? t("meters.empty.search")
     : isArchived
       ? t("meters.empty.archived")

@@ -1,6 +1,33 @@
 export const metersKeys = {
   all: ["meters"] as const,
-  list: (page: number, limit: number, search: string, isArchived: boolean) =>
-    [...metersKeys.all, page, limit, search, isArchived] as const,
+  list: (
+    page: number,
+    limit: number,
+    search: string,
+    isArchived: boolean,
+    companyId: string,
+    serialNumber: string,
+    locationType: string,
+    meterStatus: string,
+    accountNumber: string,
+    clientName: string,
+    address: string,
+    isValveLockedByManager: string,
+  ) =>
+    [
+      ...metersKeys.all,
+      page,
+      limit,
+      search,
+      isArchived,
+      companyId,
+      serialNumber,
+      locationType,
+      meterStatus,
+      accountNumber,
+      clientName,
+      address,
+      isValveLockedByManager,
+    ] as const,
   details: (id: string) => [...metersKeys.all, "details", id] as const,
 };

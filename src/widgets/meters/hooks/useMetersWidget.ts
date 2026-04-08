@@ -8,43 +8,16 @@ import { createMeterColumns } from "@features/meters";
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
-import { createListSearchString, parseListSearchState } from "@shared/helpers";
-import {
-  useArchivedFilter,
-  useInitialSearchState,
-  usePagination,
-  useSearchState,
-  useSyncSearchParams,
-} from "@shared/hooks";
 
 import { useMeterDialogs } from "./useMeterDialogs";
+import { useMeterFiltersState } from "./useMeterFiltersState";
 
 export const useMetersWidget = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
   const { t } = useTranslation();
-
-  const initialSearchState = useInitialSearchState(parseListSearchState);
-
-  const { isArchived, setIsArchived } = useArchivedFilter({
-    initialIsArchived: initialSearchState.isArchived,
-  });
-
-  const { search, debouncedSearch, setSearch } = useSearchState({
-    initialSearch: initialSearchState.search,
-  });
-
-  const { page, limit, setPage, setLimit } = usePagination({
-    initialPage: initialSearchState.page,
-    initialLimit: initialSearchState.limit,
-    resetPage: 0,
-  });
-
-  useSyncSearchParams(
-    { page, limit, search, isArchived },
-    createListSearchString,
-  );
+  const filters = useMeterFiltersState();
 
   const {
     meters,
@@ -55,28 +28,26 @@ export const useMetersWidget = () => {
     isError,
     isFetching,
   } = useMetersQuery({
-    page,
-    limit,
-    search: debouncedSearch,
-    isArchived,
+    page: filters.page,
+    limit: filters.limit,
+    search: filters.debouncedSearch,
+    isArchived: filters.isArchived,
+    companyId: filters.companyId,
+    serialNumber: filters.serialNumber,
+    locationType: filters.locationType,
+    meterStatus: filters.meterStatus,
+    accountNumber: filters.accountNumber,
+    clientName: filters.clientName,
+    address: filters.address,
+    isValveLockedByManager: filters.isValveLockedByManager,
   });
 
-  const { setMeterToDelete, deleteDialogProps } = useMeterDialogs();
+  const dialogs = useMeterDialogs();
 
-  const columns = useMemo(
-    () => createMeterColumns(t, setMeterToDelete),
-    [setMeterToDelete, t],
-  );
-
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-    setPage(0);
-  };
-
-  const handleArchivedChange = (value: boolean) => {
-    setIsArchived(value);
-    setPage(0);
-  };
+  const columns = useMemo(() => createMeterColumns(t, dialogs.setMeterToDelete), [
+    dialogs.setMeterToDelete,
+    t,
+  ]);
 
   const handleRowClick = useCallback(
     (meter: MeterRow) => {
@@ -101,25 +72,44 @@ export const useMetersWidget = () => {
       columns,
       onRowClick: handleRowClick,
       pagination: {
-        page,
-        limit,
+        page: filters.page,
+        limit: filters.limit,
         total,
-        onPageChange: setPage,
-        onLimitChange: setLimit,
+        onPageChange: filters.setPage,
+        onLimitChange: filters.setLimit,
         labelRowsPerPage: t("meters.table.rowsPerPage"),
       },
     },
     toolbarProps: {
       t,
-      search,
+      search: filters.search,
       isSearchLoading: isFetching,
-      isArchived,
-      onSearchChange: handleSearchChange,
-      onArchivedChange: handleArchivedChange,
+      isArchived: filters.isArchived,
+      hasActiveFilters: filters.hasActiveFilters,
+      onResetFilters: filters.handleResetFilters,
+      onOpenFiltersDialog: dialogs.handleOpenFiltersDialog,
+      onSearchChange: filters.handleSearchChange,
+      onArchivedChange: filters.handleArchivedChange,
     },
-    deleteDialogProps: {
+    dialogsProps: {
       t,
-      ...deleteDialogProps,
+      meterToDelete: dialogs.deleteDialogProps.meterToDelete,
+      isDeletePending: dialogs.deleteDialogProps.isDeletePending,
+      isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
+      filters: {
+        companyId: filters.companyId,
+        serialNumber: filters.serialNumber,
+        locationType: filters.locationType,
+        meterStatus: filters.meterStatus,
+        accountNumber: filters.accountNumber,
+        clientName: filters.clientName,
+        address: filters.address,
+        isValveLockedByManager: filters.isValveLockedByManager,
+      },
+      onCloseDeleteDialog: dialogs.deleteDialogProps.onCloseDeleteDialog,
+      onConfirmDelete: dialogs.deleteDialogProps.onConfirmDelete,
+      onCloseFiltersDialog: dialogs.handleCloseFiltersDialog,
+      onApplyFilters: filters.handleApplyFilters,
     },
   };
 };

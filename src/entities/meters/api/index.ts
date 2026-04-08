@@ -1,7 +1,6 @@
 import { api } from "@shared/api";
 import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
-import type { ListQueryParams } from "@shared/types";
 
 import {
   DeleteMeterPayloadSchema,
@@ -11,6 +10,7 @@ import {
 import type {
   DeleteMeterPayload,
   MeterDetails,
+  MetersListQueryParams,
   MetersResponse,
 } from "../model/types";
 
@@ -19,14 +19,32 @@ export const getMeters = async ({
   limit = 10,
   search = "",
   isArchived = false,
-}: ListQueryParams = {}): Promise<MetersResponse> => {
+  companyId = "",
+  serialNumber = "",
+  locationType = "",
+  meterStatus = "",
+  accountNumber = "",
+  clientName = "",
+  address = "",
+  isValveLockedByManager = "",
+}: MetersListQueryParams = {}): Promise<MetersResponse> => {
+  const normalizedSerialNumber = serialNumber.trim() || search.trim();
+
   const response = await api.get(API_PATHS.METERS, {
     params: buildListQueryParams({
       page,
       limit,
-      search,
       isArchived,
-      searchParamName: "serialNumber",
+      extraParams: {
+        companyId,
+        serialNumber: normalizedSerialNumber,
+        locationType,
+        meterStatus,
+        accountNumber,
+        clientName,
+        address,
+        isValveLockedByManager,
+      },
     }),
   });
 

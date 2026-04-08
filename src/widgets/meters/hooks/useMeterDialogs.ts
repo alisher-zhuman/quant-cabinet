@@ -5,6 +5,7 @@ import { useDeleteMeter } from "@features/meters";
 import { type MeterRow } from "@entities/meters";
 
 export const useMeterDialogs = () => {
+  const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
 
   const onCloseDeleteDialog = () => {
@@ -23,11 +24,18 @@ export const useMeterDialogs = () => {
 
   return {
     setMeterToDelete,
+    isFiltersDialogOpen,
     deleteDialogProps: {
       meterToDelete,
       isDeletePending: deleteMeterMutation.isPending,
       onCloseDeleteDialog,
       onConfirmDelete: handleConfirmDelete,
+    },
+    handleOpenFiltersDialog: () => {
+      setIsFiltersDialogOpen(true);
+    },
+    handleCloseFiltersDialog: () => {
+      setIsFiltersDialogOpen(false);
     },
   };
 };

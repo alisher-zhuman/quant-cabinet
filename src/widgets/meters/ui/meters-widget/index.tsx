@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { TableSection } from "@shared/ui/table-section";
 
 import { useMetersWidget } from "../../hooks/useMetersWidget";
+import { MetersDialogs } from "../meters-dialogs";
 import { MetersToolbar } from "../meters-toolbar";
 
 export const MetersWidget = () => {
@@ -12,7 +12,7 @@ export const MetersWidget = () => {
     t,
     tableSectionProps,
     toolbarProps,
-    deleteDialogProps,
+    dialogsProps,
   } = useMetersWidget();
 
   return (
@@ -37,16 +37,7 @@ export const MetersWidget = () => {
         />
       </Box>
 
-      <ConfirmDialog
-        open={Boolean(deleteDialogProps.meterToDelete)}
-        title={t("meters.deleteDialog.title")}
-        description={t("meters.deleteDialog.description")}
-        cancelLabel={t("meters.deleteDialog.cancel")}
-        confirmLabel={t("meters.deleteDialog.confirm")}
-        isLoading={deleteDialogProps.isDeletePending}
-        onClose={deleteDialogProps.onCloseDeleteDialog}
-        onConfirm={deleteDialogProps.onConfirmDelete}
-      />
+      <MetersDialogs {...dialogsProps} />
     </>
   );
 };
