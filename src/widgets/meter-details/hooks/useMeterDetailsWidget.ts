@@ -1,6 +1,9 @@
-import { useLocation, useParams } from "react-router";
+import { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 import { useTranslation } from "react-i18next";
+
+import { useDeleteMeter } from "@features/meters";
 
 import { useMeterQuery } from "@entities/meters";
 
@@ -9,14 +12,21 @@ import { getBackTo } from "@shared/helpers";
 
 export const useMeterDetailsWidget = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { meterId = "" } = useParams<{ meterId: string }>();
 
   const location = useLocation() as { state: unknown };
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { meter, isLoading, isError } = useMeterQuery(meterId);
 
   const backTo = getBackTo(location.state, `/${ROUTES.METERS}`);
+
+  const deleteMeterMutation = useDeleteMeter(() => {
+    setIsDeleteDialogOpen(false);
+    navigate(backTo);
+  });
 
   const meterStatus = meter?.meterStatus
     ? t(`meters.details.statuses.${meter.meterStatus}`, {
@@ -66,6 +76,22 @@ export const useMeterDetailsWidget = () => {
     ? t("meters.details.values.yes")
     : t("meters.details.values.no");
 
+  const handleOpenDeleteDialog = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!meter?.id) {
+      return;
+    }
+
+    deleteMeterMutation.mutate({ id: meter.id });
+  };
+
   return {
     t,
     meterId,
@@ -84,5 +110,10 @@ export const useMeterDetailsWidget = () => {
     controllerArchivedStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    isDeleteDialogOpen,
+    isDeletePending: deleteMeterMutation.isPending,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
   };
 };

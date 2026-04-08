@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -8,6 +11,12 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import {
+  CreateControllerDialog,
+  TransferControllerDialog,
+} from "@features/controllers";
+
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
 
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
@@ -28,6 +37,19 @@ export const ControllerDetailsWidget = () => {
     companyStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    isEditDialogOpen,
+    isTransferDialogOpen,
+    isDeleteDialogOpen,
+    isDeletePending,
+    handleOpenEditDialog,
+    handleCloseEditDialog,
+    handleEditSuccess,
+    handleOpenTransferDialog,
+    handleCloseTransferDialog,
+    handleTransferSuccess,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
   } = useControllerDetailsWidget();
 
   if (isLoading) {
@@ -61,15 +83,52 @@ export const ControllerDetailsWidget = () => {
         maxWidth: "none",
       }}
     >
-      <Button
-        component={Link}
-        to={backTo}
-        variant="text"
-        startIcon={<ArrowBackRoundedIcon />}
-        sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: { xs: "stretch", sm: "center" },
+          gap: 1.5,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
       >
-        {t("controllers.details.back")}
-      </Button>
+        <Button
+          component={Link}
+          to={backTo}
+          variant="text"
+          startIcon={<ArrowBackRoundedIcon />}
+          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+        >
+          {t("controllers.details.back")}
+        </Button>
+
+        <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+          <Button
+            variant="outlined"
+            startIcon={<EditRoundedIcon />}
+            onClick={handleOpenEditDialog}
+          >
+            {t("controllers.actions.edit")}
+          </Button>
+
+          <Button
+            variant="outlined"
+            startIcon={<SwapHorizRoundedIcon />}
+            onClick={handleOpenTransferDialog}
+          >
+            {t("controllers.actions.transfer")}
+          </Button>
+
+          <Button
+            color="error"
+            variant="outlined"
+            startIcon={<DeleteOutlineRoundedIcon />}
+            onClick={handleOpenDeleteDialog}
+          >
+            {t("controllers.actions.delete")}
+          </Button>
+        </Box>
+      </Box>
 
       <Paper
         elevation={0}
@@ -117,6 +176,35 @@ export const ControllerDetailsWidget = () => {
           )}
         </Stack>
       </Paper>
+
+      {isEditDialogOpen && (
+        <CreateControllerDialog
+          controller={controller}
+          open={isEditDialogOpen}
+          onClose={handleCloseEditDialog}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+
+      {isTransferDialogOpen && (
+        <TransferControllerDialog
+          controller={controller}
+          open={isTransferDialogOpen}
+          onClose={handleCloseTransferDialog}
+          onSuccess={handleTransferSuccess}
+        />
+      )}
+
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        title={t("controllers.deleteDialog.title")}
+        description={t("controllers.deleteDialog.description")}
+        cancelLabel={t("controllers.deleteDialog.cancel")}
+        confirmLabel={t("controllers.deleteDialog.confirm")}
+        isLoading={isDeletePending}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
     </Box>
   );
 };

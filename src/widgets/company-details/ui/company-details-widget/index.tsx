@@ -3,12 +3,17 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
+import { CreateCompanyDialog } from "@features/companies";
+
 import { ROUTES } from "@shared/constants";
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
 import type { CompanyDetailsTab } from "../../types";
@@ -29,6 +34,15 @@ export const CompanyDetailsWidget = () => {
     handleRefreshKey,
     handleTabChange,
     isRefreshPending,
+    isEditDialogOpen,
+    isDeleteDialogOpen,
+    isDeletePending,
+    handleOpenEditDialog,
+    handleCloseEditDialog,
+    handleEditSuccess,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
   } = useCompanyDetailsWidget();
 
   return (
@@ -42,15 +56,44 @@ export const CompanyDetailsWidget = () => {
         maxWidth: "none",
       }}
     >
-      <Button
-        component={Link}
-        to={`/${ROUTES.COMPANIES}`}
-        variant="text"
-        startIcon={<ArrowBackRoundedIcon />}
-        sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: { xs: "stretch", sm: "center" },
+          gap: 1.5,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
       >
-        {t("companies.details.back")}
-      </Button>
+        <Button
+          component={Link}
+          to={`/${ROUTES.COMPANIES}`}
+          variant="text"
+          startIcon={<ArrowBackRoundedIcon />}
+          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+        >
+          {t("companies.details.back")}
+        </Button>
+
+        <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+          <Button
+            variant="outlined"
+            startIcon={<EditRoundedIcon />}
+            onClick={handleOpenEditDialog}
+          >
+            {t("companies.actions.edit")}
+          </Button>
+
+          <Button
+            color="error"
+            variant="outlined"
+            startIcon={<DeleteOutlineRoundedIcon />}
+            onClick={handleOpenDeleteDialog}
+          >
+            {t("companies.actions.delete")}
+          </Button>
+        </Box>
+      </Box>
 
       <CompanyInfoSection t={t} company={company} companyId={companyId ?? ""} />
 
@@ -85,6 +128,26 @@ export const CompanyDetailsWidget = () => {
           isActive={activeTab === "controllers"}
         />
       </Box>
+
+      {isEditDialogOpen && (
+        <CreateCompanyDialog
+          company={company}
+          open={isEditDialogOpen}
+          onClose={handleCloseEditDialog}
+          onSuccess={handleEditSuccess}
+        />
+      )}
+
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        title={t("companies.deleteDialog.title")}
+        description={t("companies.deleteDialog.description")}
+        cancelLabel={t("companies.deleteDialog.cancel")}
+        confirmLabel={t("companies.deleteDialog.confirm")}
+        isLoading={isDeletePending}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
     </Box>
   );
 };

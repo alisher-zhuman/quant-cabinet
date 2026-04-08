@@ -1,6 +1,9 @@
-import { useLocation, useParams } from "react-router";
+import { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
 
 import { useTranslation } from "react-i18next";
+
+import { useDeleteController } from "@features/controllers";
 
 import { useControllerQuery } from "@entities/controllers";
 
@@ -9,14 +12,24 @@ import { getBackTo } from "@shared/helpers";
 
 export const useControllerDetailsWidget = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { controllerId = "" } = useParams<{ controllerId: string }>();
  
   const location = useLocation() as { state: unknown };
- 
+
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   const { controller, isLoading, isError } = useControllerQuery(controllerId);
  
   const backTo = getBackTo(location.state, `/${ROUTES.CONTROLLERS}`);
+
+  const deleteControllerMutation = useDeleteController(() => {
+    setIsDeleteDialogOpen(false);
+    navigate(backTo);
+  });
 
   const controllerStatus = controller?.controllerStatus
     ? t(`controllers.statuses.${controller.controllerStatus}`)
@@ -42,6 +55,46 @@ export const useControllerDetailsWidget = () => {
     ? t("controllers.details.values.yes")
     : t("controllers.details.values.no");
 
+  const handleOpenEditDialog = () => {
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setIsEditDialogOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditDialogOpen(false);
+  };
+
+  const handleOpenTransferDialog = () => {
+    setIsTransferDialogOpen(true);
+  };
+
+  const handleCloseTransferDialog = () => {
+    setIsTransferDialogOpen(false);
+  };
+
+  const handleTransferSuccess = () => {
+    setIsTransferDialogOpen(false);
+  };
+
+  const handleOpenDeleteDialog = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!controller?.id) {
+      return;
+    }
+
+    deleteControllerMutation.mutate({ id: controller.id });
+  };
+
   return {
     t,
     controllerId,
@@ -55,5 +108,18 @@ export const useControllerDetailsWidget = () => {
     companyStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    isEditDialogOpen,
+    isTransferDialogOpen,
+    isDeleteDialogOpen,
+    isDeletePending: deleteControllerMutation.isPending,
+    handleOpenEditDialog,
+    handleCloseEditDialog,
+    handleEditSuccess,
+    handleOpenTransferDialog,
+    handleCloseTransferDialog,
+    handleTransferSuccess,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
   };
 };

@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -8,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
 
 import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
@@ -33,6 +35,11 @@ export const MeterDetailsWidget = () => {
     controllerArchivedStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    isDeleteDialogOpen,
+    isDeletePending,
+    handleOpenDeleteDialog,
+    handleCloseDeleteDialog,
+    handleConfirmDelete,
   } = useMeterDetailsWidget();
 
   if (isLoading) {
@@ -62,15 +69,35 @@ export const MeterDetailsWidget = () => {
         maxWidth: "none",
       }}
     >
-      <Button
-        component={Link}
-        to={backTo}
-        variant="text"
-        startIcon={<ArrowBackRoundedIcon />}
-        sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: { xs: "stretch", sm: "center" },
+          gap: 1.5,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
       >
-        {t("meters.details.back")}
-      </Button>
+        <Button
+          component={Link}
+          to={backTo}
+          variant="text"
+          startIcon={<ArrowBackRoundedIcon />}
+          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+        >
+          {t("meters.details.back")}
+        </Button>
+
+        <Button
+          color="error"
+          variant="outlined"
+          startIcon={<DeleteOutlineRoundedIcon />}
+          onClick={handleOpenDeleteDialog}
+          sx={{ width: "fit-content", alignSelf: { xs: "flex-start", sm: "auto" } }}
+        >
+          {t("meters.actions.delete")}
+        </Button>
+      </Box>
 
       <Paper
         elevation={0}
@@ -123,6 +150,17 @@ export const MeterDetailsWidget = () => {
           )}
         </Stack>
       </Paper>
+
+      <ConfirmDialog
+        open={isDeleteDialogOpen}
+        title={t("meters.deleteDialog.title")}
+        description={t("meters.deleteDialog.description")}
+        cancelLabel={t("meters.deleteDialog.cancel")}
+        confirmLabel={t("meters.deleteDialog.confirm")}
+        isLoading={isDeletePending}
+        onClose={handleCloseDeleteDialog}
+        onConfirm={handleConfirmDelete}
+      />
     </Box>
   );
 };
