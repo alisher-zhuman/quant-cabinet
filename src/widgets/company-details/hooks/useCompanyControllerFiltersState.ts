@@ -21,6 +21,7 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
   );
+  
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [serialNumber, setSerialNumber] = useState(
     initialSearchState.serialNumber,

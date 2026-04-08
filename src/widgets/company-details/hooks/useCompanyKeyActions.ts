@@ -24,6 +24,7 @@ export const useCompanyKeyActions = ({
   t,
 }: Params): CompanyKeyActions => {
   const companyId = company?.id;
+
   const refreshCompanyTokenMutation = useRefreshCompanyToken(companyId);
 
   const companyKey = company?.key?.key ?? "";

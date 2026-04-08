@@ -21,6 +21,7 @@ import { useCompanyDialogs } from "./useCompanyDialogs";
 
 export const useCompaniesWidget = () => {
   const navigate = useNavigate();
+  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseListSearchState);

@@ -16,9 +16,12 @@ import { useControllerFiltersState } from "./useControllerFiltersState";
 
 export const useControllersWidget = () => {
   const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const filters = useControllerFiltersState();
+  
   const dialogs = useControllerDialogs(filters.handleArchivedChange);
 
   const {

@@ -11,14 +11,15 @@ import { ROUTES } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 
 export const useUserDetailsWidget = () => {
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation() as { state: unknown };
 
   const { userId } = useParams();
-
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { user, isLoading, isError } = useUserQuery(userId);
 

@@ -26,6 +26,7 @@ const getDefaultValues = (
 
 export const useCompanyForm = ({ company, onSuccess }: Params = {}) => {
   const { t } = useTranslation();
+  
   const defaultValues = useMemo(() => getDefaultValues(company), [company]);
 
   const {

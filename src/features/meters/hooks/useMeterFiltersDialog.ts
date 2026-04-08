@@ -30,6 +30,7 @@ export const useMeterFiltersDialog = ({
   onApply,
 }: Params) => {
   const [values, setValues] = useState(() => filters);
+  
   const pendingFiltersRef = useRef<MeterFilters | null>(null);
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({

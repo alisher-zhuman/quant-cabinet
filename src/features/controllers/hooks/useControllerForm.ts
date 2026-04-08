@@ -43,10 +43,12 @@ export const useControllerForm = ({
   initialCompanyId,
 }: Params = {}) => {
   const { t } = useTranslation();
+
   const defaultValues = useMemo(
     () => getDefaultValues(controller, initialCompanyId),
     [controller, initialCompanyId],
   );
+  
   const isEditMode = Boolean(controller);
 
   const {

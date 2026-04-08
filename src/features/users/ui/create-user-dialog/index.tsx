@@ -34,6 +34,7 @@ export const CreateUserDialog = ({
   onSuccess,
 }: Props) => {
   const { t } = useTranslation();
+
   const isEditMode = Boolean(user);
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
@@ -69,7 +70,9 @@ export const CreateUserDialog = ({
     companyId,
     onSuccess,
   });
+
   const selectedRole = useWatch({ control, name: "role" });
+  
   const shouldShowCompanyField = selectedRole !== "admin" && !companyId;
 
   useEffect(() => {

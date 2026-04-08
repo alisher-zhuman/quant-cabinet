@@ -27,6 +27,7 @@ const ControllerFiltersDialogContent = ({
   hideCompanyField = false,
 }: Props) => {
   const { t } = useTranslation();
+  
   const {
     values,
     companyOptions,

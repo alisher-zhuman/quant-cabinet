@@ -29,8 +29,6 @@ export class ErrorBoundary extends Component<Props, State> {
           }
         : { error },
     );
-
-    // Integration point: send render error data to Sentry or another monitoring service.
   }
 
   override render() {

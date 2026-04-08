@@ -13,12 +13,16 @@ import type { CompanyDetailsTab } from "../types";
 import { useCompanyKeyActions } from "./useCompanyKeyActions";
 
 export const useCompanyDetailsWidget = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { companyId } = useParams();
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
+  const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
+
+  const { companyId } = useParams();
 
   const [activeTab, setActiveTab] = useState<CompanyDetailsTab>(() => {
     const tab = searchParams.get("tab");

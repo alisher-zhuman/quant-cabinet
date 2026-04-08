@@ -30,6 +30,7 @@ export const CreateCompanyDialog = ({
   onSuccess,
 }: Props) => {
   const { t } = useTranslation();
+  
   const isEditMode = Boolean(company);
 
   const { control, isPending, isDirty, isValid, onSubmit } = useCompanyForm({

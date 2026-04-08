@@ -26,6 +26,7 @@ import { useUserDialogs } from "./useUserDialogs";
 export const useUsersWidget = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseUsersSearchState);

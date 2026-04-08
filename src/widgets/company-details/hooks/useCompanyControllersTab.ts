@@ -86,6 +86,7 @@ export const useCompanyControllersTab = ({
   isActive,
 }: Params): CompanyControllersTab => {
   const { t } = useTranslation();
+  
   const navigate = useNavigate();
   const location = useLocation();
 

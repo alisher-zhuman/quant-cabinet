@@ -81,6 +81,7 @@ export const useCompanyUsersTab = ({
   );
 
   const { t } = useTranslation();
+  
   const navigate = useNavigate();
   const location = useLocation();
 

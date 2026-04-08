@@ -27,6 +27,7 @@ export const useControllerFiltersDialog = ({
   onApply,
 }: Params) => {
   const [values, setValues] = useState(() => filters);
+  
   const pendingFiltersRef = useRef<ControllerFilters | null>(null);
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({

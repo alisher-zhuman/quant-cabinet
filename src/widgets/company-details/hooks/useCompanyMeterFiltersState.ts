@@ -21,6 +21,7 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
   );
+  
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [locationType, setLocationType] = useState(
     initialSearchState.locationType,

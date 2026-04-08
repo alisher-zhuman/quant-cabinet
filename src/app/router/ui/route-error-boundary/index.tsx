@@ -6,6 +6,7 @@ import { getRouteError } from "../../helpers/getRouteError";
 
 export const RouteErrorBoundary = () => {
   const routeError = useRouteError();
+  
   const { error, componentStack } = getRouteError(routeError);
 
   return (

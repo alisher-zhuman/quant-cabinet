@@ -11,19 +11,20 @@ import { ROUTES } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 
 export const useControllerDetailsWidget = () => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-
-  const { controllerId = "" } = useParams<{ controllerId: string }>();
- 
-  const location = useLocation() as { state: unknown };
-
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isTransferDialogOpen, setIsTransferDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
+  const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const { controllerId = "" } = useParams<{ controllerId: string }>();
+
+  const location = useLocation() as { state: unknown };
+
   const { controller, isLoading, isError } = useControllerQuery(controllerId);
- 
+
   const backTo = getBackTo(location.state, `/${ROUTES.CONTROLLERS}`);
 
   const deleteControllerMutation = useDeleteController(() => {

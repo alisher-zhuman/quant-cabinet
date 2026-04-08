@@ -80,12 +80,14 @@ export const useCompanyMetersTab = ({
   companyId,
   isActive,
 }: Params): CompanyMetersTab => {
+  const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
+
   const { t } = useTranslation();
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const filtersState = useCompanyMeterFiltersState({ isActive });
-  const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
 
   const handleCloseDeleteDialog = () => {
     setMeterToDelete(null);

@@ -11,13 +11,15 @@ import { ROUTES } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 
 export const useMeterDetailsWidget = () => {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   const { t } = useTranslation();
+
   const navigate = useNavigate();
 
   const { meterId = "" } = useParams<{ meterId: string }>();
 
   const location = useLocation() as { state: unknown };
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const { meter, isLoading, isError } = useMeterQuery(meterId);
 
