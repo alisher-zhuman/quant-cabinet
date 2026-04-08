@@ -41,6 +41,19 @@ export const THEME = createTheme({
         body: {
           backgroundColor: COLORS.neutral.white,
         },
+        'a[href], button, [role="button"], summary, input[type="button"], input[type="submit"], input[type="reset"]':
+          {
+            cursor: "pointer",
+          },
+      },
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          '&:not(.Mui-disabled)': {
+            cursor: "pointer",
+          },
+        },
       },
     },
     MuiFormControlLabel: {
