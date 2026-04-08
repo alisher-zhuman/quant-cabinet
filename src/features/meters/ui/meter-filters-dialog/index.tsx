@@ -18,7 +18,7 @@ interface Props {
   onApply: (filters: MeterFilters) => void;
 }
 
-export const MeterFiltersDialog = ({
+const MeterFiltersDialogContent = ({
   open,
   filters,
   onClose,
@@ -29,12 +29,14 @@ export const MeterFiltersDialog = ({
     values,
     companyOptions,
     isCompaniesLoading,
+    hasActiveFilters,
     handleChange,
     handleReset,
     handleApply,
   } = useMeterFiltersDialog({
     open,
     filters,
+    onClose,
     onApply,
   });
 
@@ -62,6 +64,7 @@ export const MeterFiltersDialog = ({
           />
 
           <MeterFilterActions
+            hasActiveFilters={hasActiveFilters}
             onReset={handleReset}
             onClose={onClose}
             onApply={handleApply}
@@ -70,4 +73,10 @@ export const MeterFiltersDialog = ({
       </DialogContent>
     </Dialog>
   );
+};
+
+export const MeterFiltersDialog = (props: Props) => {
+  const dialogKey = JSON.stringify(props.filters);
+
+  return <MeterFiltersDialogContent key={dialogKey} {...props} />;
 };

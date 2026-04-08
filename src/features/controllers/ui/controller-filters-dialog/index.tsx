@@ -19,7 +19,7 @@ interface Props {
   hideCompanyField?: boolean;
 }
 
-export const ControllerFiltersDialog = ({
+const ControllerFiltersDialogContent = ({
   open,
   filters,
   onClose,
@@ -31,6 +31,7 @@ export const ControllerFiltersDialog = ({
     values,
     companyOptions,
     isCompaniesLoading,
+    hasActiveFilters,
     handleChange,
     handleReset,
     handleApply,
@@ -38,6 +39,7 @@ export const ControllerFiltersDialog = ({
     open,
     filters,
     hideCompanyField,
+    onClose,
     onApply,
   });
 
@@ -66,6 +68,7 @@ export const ControllerFiltersDialog = ({
           />
 
           <ControllerFilterActions
+            hasActiveFilters={hasActiveFilters}
             onReset={handleReset}
             onClose={onClose}
             onApply={handleApply}
@@ -74,4 +77,13 @@ export const ControllerFiltersDialog = ({
       </DialogContent>
     </Dialog>
   );
+};
+
+export const ControllerFiltersDialog = (props: Props) => {
+  const dialogKey = JSON.stringify({
+    filters: props.filters,
+    hideCompanyField: props.hideCompanyField ?? false,
+  });
+
+  return <ControllerFiltersDialogContent key={dialogKey} {...props} />;
 };

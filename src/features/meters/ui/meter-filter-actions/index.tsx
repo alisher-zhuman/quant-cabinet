@@ -4,12 +4,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 interface Props {
+  hasActiveFilters: boolean;
   onReset: () => void;
   onClose: () => void;
   onApply: () => void;
 }
 
-export const MeterFilterActions = ({ onReset, onClose, onApply }: Props) => {
+export const MeterFilterActions = ({
+  hasActiveFilters,
+  onReset,
+  onClose,
+  onApply,
+}: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -22,9 +28,11 @@ export const MeterFilterActions = ({ onReset, onClose, onApply }: Props) => {
         pt: 1,
       }}
     >
-      <Button variant="text" onClick={onReset}>
-        {t("meters.filters.reset")}
-      </Button>
+      {hasActiveFilters && (
+        <Button variant="text" onClick={onReset}>
+          {t("meters.filters.reset")}
+        </Button>
+      )}
 
       <Button variant="text" onClick={onClose}>
         {t("meters.filters.cancel")}

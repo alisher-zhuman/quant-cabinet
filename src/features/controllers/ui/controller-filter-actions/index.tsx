@@ -4,12 +4,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 interface Props {
+  hasActiveFilters: boolean;
   onReset: () => void;
   onClose: () => void;
   onApply: () => void;
 }
 
 export const ControllerFilterActions = ({
+  hasActiveFilters,
   onReset,
   onClose,
   onApply,
@@ -26,9 +28,11 @@ export const ControllerFilterActions = ({
         pt: 1,
       }}
     >
-      <Button variant="text" onClick={onReset}>
-        {t("controllers.filters.reset")}
-      </Button>
+      {hasActiveFilters && (
+        <Button variant="text" onClick={onReset}>
+          {t("controllers.filters.reset")}
+        </Button>
+      )}
 
       <Button variant="text" onClick={onClose}>
         {t("controllers.filters.cancel")}
