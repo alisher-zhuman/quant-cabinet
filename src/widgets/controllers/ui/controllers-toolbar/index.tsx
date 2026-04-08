@@ -2,7 +2,9 @@ import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
+import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,9 +17,12 @@ interface Props {
   search: string;
   isSearchLoading: boolean;
   isArchived: boolean;
+  isTemplateDownloadPending: boolean;
   hasActiveFilters: boolean;
+  onDownloadTemplate: () => void;
   onResetFilters: () => void;
   onOpenFiltersDialog: () => void;
+  onOpenBulkUploadDialog: () => void;
   onOpenCreateDialog: () => void;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
@@ -28,9 +33,12 @@ export const ControllersToolbar = ({
   search,
   isSearchLoading,
   isArchived,
+  isTemplateDownloadPending,
   hasActiveFilters,
+  onDownloadTemplate,
   onResetFilters,
   onOpenFiltersDialog,
+  onOpenBulkUploadDialog,
   onOpenCreateDialog,
   onSearchChange,
   onArchivedChange,
@@ -87,6 +95,23 @@ export const ControllersToolbar = ({
             </IconButton>
           )}
         </Box>
+
+        <Button
+          variant="outlined"
+          startIcon={<DownloadRoundedIcon />}
+          onClick={onDownloadTemplate}
+          disabled={isTemplateDownloadPending}
+        >
+          {t("controllers.bulkUpload.template.action")}
+        </Button>
+
+        <Button
+          variant="outlined"
+          startIcon={<UploadFileRoundedIcon />}
+          onClick={onOpenBulkUploadDialog}
+        >
+          {t("controllers.bulkUpload.import.action")}
+        </Button>
 
         <Button
           variant="contained"

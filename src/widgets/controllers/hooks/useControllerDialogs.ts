@@ -1,11 +1,17 @@
 import { useState } from "react";
 
-import { useDeleteController } from "@features/controllers";
+import {
+  useDeleteController,
+  useDownloadControllersTemplate,
+} from "@features/controllers";
 
 import type { ControllerRow } from "@entities/controllers";
 
-export const useControllerDialogs = (setIsArchived: (value: boolean) => void) => {
+export const useControllerDialogs = (
+  setIsArchived: (value: boolean) => void,
+) => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isBulkUploadDialogOpen, setIsBulkUploadDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [controllerToEdit, setControllerToEdit] =
     useState<ControllerRow | null>(null);
@@ -13,6 +19,8 @@ export const useControllerDialogs = (setIsArchived: (value: boolean) => void) =>
     useState<ControllerRow | null>(null);
   const [controllerToDelete, setControllerToDelete] =
     useState<ControllerRow | null>(null);
+
+  const downloadTemplateMutation = useDownloadControllersTemplate();
 
   const handleCloseDeleteDialog = () => {
     setControllerToDelete(null);
@@ -38,9 +46,17 @@ export const useControllerDialogs = (setIsArchived: (value: boolean) => void) =>
     setIsCreateDialogOpen(true);
   };
 
+  const handleOpenBulkUploadDialog = () => {
+    setIsBulkUploadDialogOpen(true);
+  };
+
   const handleCloseCreateDialog = () => {
     setIsCreateDialogOpen(false);
     setControllerToEdit(null);
+  };
+
+  const handleCloseBulkUploadDialog = () => {
+    setIsBulkUploadDialogOpen(false);
   };
 
   const handleCloseTransferDialog = () => {
@@ -74,24 +90,37 @@ export const useControllerDialogs = (setIsArchived: (value: boolean) => void) =>
     setControllerToTransfer(null);
   };
 
+  const handleBulkUploadSuccess = () => {
+    setIsBulkUploadDialogOpen(false);
+    setIsArchived(false);
+  };
+
   return {
+    isBulkUploadDialogOpen,
     isCreateDialogOpen,
     isFiltersDialogOpen,
     controllerToEdit,
     controllerToTransfer,
     controllerToDelete,
     deleteControllerMutation,
+    isTemplateDownloadPending: downloadTemplateMutation.isPending,
+    handleDownloadTemplate: () => {
+      downloadTemplateMutation.mutate();
+    },
     handleEditController,
     handleTransferController,
     handleOpenFiltersDialog,
     handleOpenCreateDialog,
+    handleOpenBulkUploadDialog,
     handleCloseCreateDialog,
+    handleCloseBulkUploadDialog,
     handleCloseTransferDialog,
     handleCloseFiltersDialog,
     handleConfirmDelete,
     handleCreateSuccess,
     handleEditSuccess,
     handleTransferSuccess,
+    handleBulkUploadSuccess,
     handleCloseDeleteDialog,
     setControllerToDelete,
   };

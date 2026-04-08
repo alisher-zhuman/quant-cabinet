@@ -11,6 +11,7 @@ import {
   UpdateControllerPayloadSchema,
 } from "../model/schemas";
 import type {
+  BulkImportControllersPayload,
   ControllerRow,
   ControllersListQueryParams,
   ControllersResponse,
@@ -87,4 +88,28 @@ export const transferController = async (
   const validPayload = TransferControllerPayloadSchema.parse(payload);
 
   await api.patch(API_PATHS.CONTROLLERS, validPayload);
+};
+
+export const downloadControllersTemplate = async (): Promise<Blob> => {
+  const response = await api.get(API_PATHS.BULK_UPLOAD_TEMPLATE, {
+    responseType: "blob",
+  });
+
+  return response.data as Blob;
+};
+
+export const importControllers = async ({
+  file,
+  companyId,
+}: BulkImportControllersPayload): Promise<void> => {
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append("companyId", companyId);
+
+  await api.post(API_PATHS.BULK_UPLOAD_IMPORT, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };

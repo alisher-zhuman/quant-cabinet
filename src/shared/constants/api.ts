@@ -10,6 +10,8 @@ export const API_PATHS = {
   CONTROLLERS: "/controllers",
   CONTROLLERS_UPDATE: "/controllers/update",
   GET_CONTROLLER: (id: string) => `/controllers/${id}`,
+  BULK_UPLOAD_TEMPLATE: "/bulk-upload/template",
+  BULK_UPLOAD_IMPORT: "/bulk-upload/import",
   METERS: "/meters",
   GET_METER: (id: string) => `/meters/${id}`,
   GET_READINGS: (meterId: string) => `/readings/${meterId}`,

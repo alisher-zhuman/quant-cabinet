@@ -47,6 +47,16 @@ export const transferControllerFormSchema = (t: (key: string) => string) =>
     companyId: z.string().trim().min(1, t("validation.requiredCompany")),
   });
 
+export const controllerBulkUploadFormSchema = (t: (key: string) => string) =>
+  z.object({
+    companyId: z.string().trim().min(1, t("controllers.bulkUpload.import.validation.required")),
+    file: z
+      .union([z.instanceof(File), z.null()])
+      .refine((value) => value instanceof File, {
+        message: t("controllers.bulkUpload.import.validation.required"),
+      }),
+  });
+
 export const TransferControllerPayloadSchema = z.object({
   controllerId: z.string(),
   companyId: z.string().trim().min(1),

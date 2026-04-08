@@ -261,6 +261,41 @@
       "transfer": "Передать другой компании",
       "filters": "Фильтры"
     },
+    "bulkUpload": {
+      "template": {
+        "action": "Скачать шаблон",
+        "toast": {
+          "loading": "Скачивание шаблона...",
+          "success": "Шаблон скачан",
+          "error": "Не удалось скачать шаблон"
+        }
+      },
+      "import": {
+        "action": "Загрузить Excel",
+        "title": "Загрузка оборудования",
+        "fields": {
+          "company": "Компания",
+          "companyPlaceholder": "Выберите компанию",
+          "file": "Excel файл",
+          "filePlaceholder": "Файл не выбран",
+          "fileHelper": "Поддерживаются .xlsx и .xls"
+        },
+        "actions": {
+          "chooseFile": "Выбрать файл",
+          "cancel": "Отмена",
+          "submit": "Загрузить",
+          "submitLoading": "Загрузка..."
+        },
+        "validation": {
+          "required": "Поле обязательно"
+        },
+        "toast": {
+          "loading": "Загрузка оборудования...",
+          "success": "Оборудование загружено",
+          "error": "Не удалось загрузить оборудование"
+        }
+      }
+    },
     "search": {
       "placeholder": "Поиск по названию компании"
     },

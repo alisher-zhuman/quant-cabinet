@@ -40,3 +40,13 @@ export interface ControllersListQueryParams extends ListQueryParams {
   phoneNumber?: string;
   simIMSI?: string;
 }
+
+export interface BulkImportControllersPayload {
+  file: File;
+  companyId: string;
+}
+
+export interface ControllerBulkUploadFormValues {
+  companyId: string;
+  file: File | null;
+}
