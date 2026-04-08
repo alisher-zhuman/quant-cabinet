@@ -36,7 +36,7 @@ export const useControllersQuery = ({
   const normalizedPhoneNumber = phoneNumber.trim();
   const normalizedSimIMSI = simIMSI.trim();
 
-  const { data, isLoading, isError, isFetching, error } = useQuery({
+  const { data, isLoading, isError, isFetching } = useQuery({
     queryKey: controllersKeys.list(
       page,
       limit,
@@ -60,8 +60,6 @@ export const useControllersQuery = ({
       }),
     enabled,
   });
-
-  console.log(error);
 
   const controllers: ControllerRow[] = data?.data ?? [];
   const total = data?.total ?? 0;
