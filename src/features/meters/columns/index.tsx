@@ -17,6 +17,9 @@ import { MeterStatusBadge } from "../ui/meter-status-badge";
 export const createMeterColumns = (
   t: TFunction,
   onDelete: (meter: MeterRow) => void,
+  options?: {
+    showCompanyColumn?: boolean;
+  },
 ): Column<MeterRow>[] => [
   {
     id: "serialNumber",
@@ -33,11 +36,15 @@ export const createMeterColumns = (
     header: t("meters.table.columns.accountNumber"),
     cell: (meter) => meter.accountNumber || "-",
   },
-  {
-    id: "company",
-    header: t("meters.table.columns.company"),
-    cell: (meter) => meter.company?.name || "-",
-  },
+  ...(options?.showCompanyColumn === false
+    ? []
+    : [
+        {
+          id: "company",
+          header: t("meters.table.columns.company"),
+          cell: (meter: MeterRow) => meter.company?.name || "-",
+        },
+      ]),
   {
     id: "lastValue",
     header: t("meters.table.columns.lastValue"),

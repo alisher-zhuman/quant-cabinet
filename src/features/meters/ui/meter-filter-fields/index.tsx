@@ -8,6 +8,7 @@ import type { MeterFilters } from "../../types";
 
 interface Props {
   values: MeterFilters;
+  hideCompanyField?: boolean;
   isCompaniesLoading: boolean;
   companyOptions: Array<{
     value: string;
@@ -18,6 +19,7 @@ interface Props {
 
 export const MeterFilterFields = ({
   values,
+  hideCompanyField = false,
   isCompaniesLoading,
   companyOptions,
   onChange,
@@ -32,22 +34,24 @@ export const MeterFilterFields = ({
 
   return (
     <>
-      <TextField
-        select
-        value={values.companyId}
-        label={t("meters.filters.fields.companyId")}
-        onChange={createChangeHandler("companyId")}
-        disabled={isCompaniesLoading}
-      >
-        <MenuItem value="">
-          <em>{t("meters.filters.values.all")}</em>
-        </MenuItem>
-        {companyOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
+      {!hideCompanyField && (
+        <TextField
+          select
+          value={values.companyId}
+          label={t("meters.filters.fields.companyId")}
+          onChange={createChangeHandler("companyId")}
+          disabled={isCompaniesLoading}
+        >
+          <MenuItem value="">
+            <em>{t("meters.filters.values.all")}</em>
           </MenuItem>
-        ))}
-      </TextField>
+          {companyOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      )}
 
       <TextField
         select

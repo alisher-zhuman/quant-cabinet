@@ -2,6 +2,7 @@ import {
   createControllersSearchString,
   parseControllersSearchState,
 } from "@features/controllers";
+import { createMetersSearchString, parseMetersSearchState } from "@features/meters";
 
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 
@@ -19,6 +20,7 @@ export const parseCompanyDetailsSearchState = (
   return {
     ...parseListSearchState(params),
     ...parseControllersSearchState(params),
+    ...parseMetersSearchState(params),
     tab: COMPANY_DETAILS_TABS.includes(tab as CompanyDetailsTab)
       ? (tab as CompanyDetailsTab)
       : DEFAULT_COMPANY_DETAILS_TAB,
@@ -36,10 +38,17 @@ export const createCompanyDetailsSearchString = ({
       companyId: "",
     }),
   );
+  const metersParams = new URLSearchParams(
+    createMetersSearchString({
+      ...listState,
+      companyId: "",
+    }),
+  );
 
   const mergedParams = new URLSearchParams();
   usersParams.forEach((value, key) => mergedParams.set(key, value));
   controllersParams.forEach((value, key) => mergedParams.set(key, value));
+  metersParams.forEach((value, key) => mergedParams.set(key, value));
 
   if (tab !== DEFAULT_COMPANY_DETAILS_TAB) {
     mergedParams.set("tab", tab);

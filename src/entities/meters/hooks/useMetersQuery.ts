@@ -17,6 +17,7 @@ interface Params {
   clientName: string;
   address: string;
   isValveLockedByManager: string;
+  enabled?: boolean;
 }
 
 export const useMetersQuery = ({
@@ -31,6 +32,7 @@ export const useMetersQuery = ({
   clientName,
   address,
   isValveLockedByManager,
+  enabled = true,
 }: Params) => {
   const { t } = useTranslation();
 
@@ -44,6 +46,7 @@ export const useMetersQuery = ({
   const normalizedValveLock = isValveLockedByManager.trim();
 
   const { data, isLoading, isError, isFetching } = useQuery({
+    enabled,
     queryKey: metersKeys.list(
       page,
       limit,

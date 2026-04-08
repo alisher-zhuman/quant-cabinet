@@ -23,7 +23,15 @@ export const useCompanyDetailsWidget = () => {
   const [activeTab, setActiveTab] = useState<CompanyDetailsTab>(() => {
     const tab = searchParams.get("tab");
 
-    return tab === "controllers" ? "controllers" : "users";
+    if (tab === "controllers") {
+      return "controllers";
+    }
+
+    if (tab === "meters") {
+      return "meters";
+    }
+
+    return "users";
   });
 
   const { company } = useCompanyQuery(companyId);

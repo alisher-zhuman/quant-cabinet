@@ -20,6 +20,7 @@ import type { CompanyDetailsTab } from "../../types";
 import { CompanyControllersTab } from "../company-controllers-tab";
 import { CompanyInfoSection } from "../company-info-section";
 import { CompanyKeySection } from "../company-key-section";
+import { CompanyMetersTab } from "../company-meters-tab";
 import { CompanyUsersTab } from "../company-users-tab";
 
 export const CompanyDetailsWidget = () => {
@@ -116,6 +117,7 @@ export const CompanyDetailsWidget = () => {
       >
         <Tab value="users" label={t("users.title")} />
         <Tab value="controllers" label={t("controllers.title")} />
+        <Tab value="meters" label={t("meters.title")} />
       </Tabs>
 
       <Box sx={{ display: activeTab === "users" ? "block" : "none" }}>
@@ -126,6 +128,13 @@ export const CompanyDetailsWidget = () => {
         <CompanyControllersTab
           companyId={companyId ?? ""}
           isActive={activeTab === "controllers"}
+        />
+      </Box>
+
+      <Box sx={{ display: activeTab === "meters" ? "block" : "none" }}>
+        <CompanyMetersTab
+          companyId={companyId ?? ""}
+          isActive={activeTab === "meters"}
         />
       </Box>
 

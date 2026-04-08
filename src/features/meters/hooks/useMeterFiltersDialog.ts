@@ -7,6 +7,7 @@ import type { MeterFilters } from "../types";
 interface Params {
   open: boolean;
   filters: MeterFilters;
+  hideCompanyField?: boolean;
   onClose: () => void;
   onApply: (filters: MeterFilters) => void;
 }
@@ -24,6 +25,7 @@ const EMPTY_FILTERS: MeterFilters = {
 export const useMeterFiltersDialog = ({
   open,
   filters,
+  hideCompanyField = false,
   onClose,
   onApply,
 }: Params) => {
@@ -35,7 +37,7 @@ export const useMeterFiltersDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: open,
+    enabled: open && !hideCompanyField,
   });
 
   const companyOptions = useMemo(
@@ -85,9 +87,16 @@ export const useMeterFiltersDialog = ({
   }, [filters, onClose, open]);
 
   const handleReset = () => {
-    setValues(EMPTY_FILTERS);
-    pendingFiltersRef.current = EMPTY_FILTERS;
-    onApply(EMPTY_FILTERS);
+    const nextFilters = hideCompanyField
+      ? {
+          ...EMPTY_FILTERS,
+          companyId: filters.companyId,
+        }
+      : EMPTY_FILTERS;
+
+    setValues(nextFilters);
+    pendingFiltersRef.current = nextFilters;
+    onApply(nextFilters);
   };
 
   const handleApply = () => {
@@ -96,7 +105,7 @@ export const useMeterFiltersDialog = ({
   };
 
   const hasActiveFilters = Boolean(
-    filters.companyId.trim() ||
+    (!hideCompanyField && filters.companyId.trim()) ||
       filters.locationType.trim() ||
       filters.meterStatus.trim() ||
       filters.accountNumber.trim() ||
@@ -108,6 +117,7 @@ export const useMeterFiltersDialog = ({
   return {
     values,
     companyOptions,
+    hideCompanyField,
     isCompaniesLoading,
     hasActiveFilters,
     handleChange,

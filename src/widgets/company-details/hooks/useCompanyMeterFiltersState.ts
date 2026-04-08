@@ -17,18 +17,23 @@ interface Params {
   isActive: boolean;
 }
 
-export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
+export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
   const initialSearchState = useInitialSearchState(
     parseCompanyDetailsSearchState,
   );
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
-  const [serialNumber, setSerialNumber] = useState(
-    initialSearchState.serialNumber,
+  const [locationType, setLocationType] = useState(
+    initialSearchState.locationType,
   );
-  const [phoneNumber, setPhoneNumber] = useState(
-    initialSearchState.phoneNumber,
+  const [meterStatus, setMeterStatus] = useState(initialSearchState.meterStatus);
+  const [accountNumber, setAccountNumber] = useState(
+    initialSearchState.accountNumber,
   );
-  const [simIMSI, setSimIMSI] = useState(initialSearchState.simIMSI);
+  const [clientName, setClientName] = useState(initialSearchState.clientName);
+  const [address, setAddress] = useState(initialSearchState.address);
+  const [isValveLockedByManager, setIsValveLockedByManager] = useState(
+    initialSearchState.isValveLockedByManager,
+  );
 
   const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: initialSearchState.isArchived,
@@ -46,20 +51,20 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
 
   useSyncSearchParams(
     {
-      tab: "controllers",
+      tab: "meters",
       page,
       limit,
       search,
       isArchived,
-      serialNumber,
-      phoneNumber,
-      simIMSI,
-      locationType: "",
-      meterStatus: "",
-      accountNumber: "",
-      clientName: "",
-      address: "",
-      isValveLockedByManager: "",
+      serialNumber: "",
+      phoneNumber: "",
+      simIMSI: "",
+      locationType,
+      meterStatus,
+      accountNumber,
+      clientName,
+      address,
+      isValveLockedByManager,
     },
     createCompanyDetailsSearchString,
     isActive,
@@ -84,30 +89,47 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
   };
 
   const handleApplyFilters = ({
-    serialNumber: nextSerialNumber,
-    phoneNumber: nextPhoneNumber,
-    simIMSI: nextSimIMSI,
+    locationType: nextLocationType,
+    meterStatus: nextMeterStatus,
+    accountNumber: nextAccountNumber,
+    clientName: nextClientName,
+    address: nextAddress,
+    isValveLockedByManager: nextIsValveLockedByManager,
   }: {
-    serialNumber: string;
-    phoneNumber: string;
-    simIMSI: string;
+    locationType: string;
+    meterStatus: string;
+    accountNumber: string;
+    clientName: string;
+    address: string;
+    isValveLockedByManager: string;
   }) => {
-    setSerialNumber(nextSerialNumber);
-    setPhoneNumber(nextPhoneNumber);
-    setSimIMSI(nextSimIMSI);
+    setLocationType(nextLocationType);
+    setMeterStatus(nextMeterStatus);
+    setAccountNumber(nextAccountNumber);
+    setClientName(nextClientName);
+    setAddress(nextAddress);
+    setIsValveLockedByManager(nextIsValveLockedByManager);
     setPage(0);
     setIsFiltersDialogOpen(false);
   };
 
   const handleResetFilters = () => {
-    setSerialNumber("");
-    setPhoneNumber("");
-    setSimIMSI("");
+    setLocationType("");
+    setMeterStatus("");
+    setAccountNumber("");
+    setClientName("");
+    setAddress("");
+    setIsValveLockedByManager("");
     setPage(0);
   };
 
   const hasActiveFilters = Boolean(
-    serialNumber.trim() || phoneNumber.trim() || simIMSI.trim(),
+    locationType.trim() ||
+      meterStatus.trim() ||
+      accountNumber.trim() ||
+      clientName.trim() ||
+      address.trim() ||
+      isValveLockedByManager.trim(),
   );
 
   return {
@@ -117,9 +139,12 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
     debouncedSearch,
     page,
     limit,
-    serialNumber,
-    phoneNumber,
-    simIMSI,
+    locationType,
+    meterStatus,
+    accountNumber,
+    clientName,
+    address,
+    isValveLockedByManager,
     hasActiveFilters,
     handleSearchChange,
     handleArchivedChange,
@@ -127,7 +152,6 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
     handleCloseFiltersDialog,
     handleApplyFilters,
     handleResetFilters,
-    setIsArchived,
     setPage,
     setLimit,
   };

@@ -16,6 +16,7 @@ interface Props {
   filters: MeterFilters;
   onClose: () => void;
   onApply: (filters: MeterFilters) => void;
+  hideCompanyField?: boolean;
 }
 
 const MeterFiltersDialogContent = ({
@@ -23,6 +24,7 @@ const MeterFiltersDialogContent = ({
   filters,
   onClose,
   onApply,
+  hideCompanyField = false,
 }: Props) => {
   const { t } = useTranslation();
   const {
@@ -36,6 +38,7 @@ const MeterFiltersDialogContent = ({
   } = useMeterFiltersDialog({
     open,
     filters,
+    hideCompanyField,
     onClose,
     onApply,
   });
@@ -58,6 +61,7 @@ const MeterFiltersDialogContent = ({
         >
           <MeterFilterFields
             values={values}
+            hideCompanyField={hideCompanyField}
             isCompaniesLoading={isCompaniesLoading}
             companyOptions={companyOptions}
             onChange={handleChange}
@@ -76,7 +80,10 @@ const MeterFiltersDialogContent = ({
 };
 
 export const MeterFiltersDialog = (props: Props) => {
-  const dialogKey = JSON.stringify(props.filters);
+  const dialogKey = JSON.stringify({
+    filters: props.filters,
+    hideCompanyField: props.hideCompanyField ?? false,
+  });
 
   return <MeterFiltersDialogContent key={dialogKey} {...props} />;
 };
