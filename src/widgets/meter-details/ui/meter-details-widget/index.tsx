@@ -15,6 +15,7 @@ import { Loader } from "@shared/ui/loader";
 import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
 import { MeterControllerSection } from "../meter-controller-section";
 import { MeterInfoSection } from "../meter-info-section";
+import { MeterReadingsSection } from "../meter-readings-section";
 
 export const MeterDetailsWidget = () => {
   const {
@@ -150,6 +151,8 @@ export const MeterDetailsWidget = () => {
           )}
         </Stack>
       </Paper>
+
+      <MeterReadingsSection meter={meter} />
 
       <ConfirmDialog
         open={isDeleteDialogOpen}
