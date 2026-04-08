@@ -3,9 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import {
-  createControllerColumns,
-} from "@features/controllers";
+import { createControllerColumns } from "@features/controllers";
 
 import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
@@ -21,7 +19,7 @@ export const useControllersWidget = () => {
   const location = useLocation();
 
   const filters = useControllerFiltersState();
-  
+
   const dialogs = useControllerDialogs(filters.handleArchivedChange);
 
   const {
@@ -51,7 +49,12 @@ export const useControllersWidget = () => {
         dialogs.handleTransferController,
         dialogs.setControllerToDelete,
       ),
-    [dialogs.handleEditController, dialogs.handleTransferController, dialogs.setControllerToDelete, t],
+    [
+      dialogs.handleEditController,
+      dialogs.handleTransferController,
+      dialogs.setControllerToDelete,
+      t,
+    ],
   );
 
   const handleRowClick = (controller: ControllerRow) => {
