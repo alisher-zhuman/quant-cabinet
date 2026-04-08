@@ -5,9 +5,11 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import { alpha } from "@mui/material/styles";
 
 import { CreateUserDialog } from "@features/users";
 
@@ -58,6 +60,8 @@ export const UserDetailsWidget = () => {
         p: 2,
         width: "100%",
         maxWidth: "none",
+        background:
+          "radial-gradient(circle at top left, rgba(14, 165, 233, 0.09), transparent 28%), radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 24%)",
       }}
     >
       <Box
@@ -103,12 +107,40 @@ export const UserDetailsWidget = () => {
         elevation={0}
         sx={{
           p: { xs: 2.5, sm: 3 },
-          borderRadius: 3,
+          borderRadius: 4,
           border: "1px solid",
           borderColor: "divider",
+          background: (theme) =>
+            `linear-gradient(180deg, ${alpha(theme.palette.background.paper, 0.98)} 0%, ${alpha(theme.palette.info.light, 0.06)} 100%)`,
+          boxShadow: (theme) => `0 18px 40px ${alpha(theme.palette.common.black, 0.05)}`,
         }}
       >
         <Stack spacing={3}>
+          <Stack
+            direction="row"
+            spacing={1}
+            useFlexGap
+            flexWrap="wrap"
+            sx={{ justifyContent: { sm: "flex-end" } }}
+          >
+            <Chip
+              size="small"
+              label={`${t("users.details.fields.role")}: ${user ? t(`profile.roles.${user.role}`) : "-"}`}
+              sx={{
+                borderRadius: 999,
+                backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.10),
+              }}
+            />
+            <Chip
+              size="small"
+              label={`${t("users.details.fields.isArchived")}: ${userStatus}`}
+              sx={{
+                borderRadius: 999,
+                backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.14),
+              }}
+            />
+          </Stack>
+
           <UserInfoSection
             t={t}
             user={user}

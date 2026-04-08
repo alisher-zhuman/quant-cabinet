@@ -7,6 +7,7 @@ import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import { alpha } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 
@@ -55,6 +56,8 @@ export const CompanyDetailsWidget = () => {
         padding: 2,
         width: "100%",
         maxWidth: "none",
+        background:
+          "radial-gradient(circle at top left, rgba(16, 185, 129, 0.10), transparent 28%), radial-gradient(circle at top right, rgba(14, 165, 233, 0.08), transparent 24%)",
       }}
     >
       <Box
@@ -114,6 +117,16 @@ export const CompanyDetailsWidget = () => {
         }
         variant="scrollable"
         allowScrollButtonsMobile
+        sx={{
+          px: 1,
+          py: 0.5,
+          borderRadius: 3,
+          backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.9),
+          border: "1px solid",
+          borderColor: "divider",
+          width: "fit-content",
+          maxWidth: "100%",
+        }}
       >
         <Tab value="users" label={t("users.title")} />
         <Tab value="controllers" label={t("controllers.title")} />

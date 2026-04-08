@@ -2,6 +2,7 @@ import type { TFunction } from "i18next";
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 import type { ControllerRow } from "@entities/controllers";
@@ -27,6 +28,11 @@ export const ControllerCompanySection = ({
 
     <Box
       sx={{
+        p: 2,
+        borderRadius: 3,
+        backgroundColor: (theme) => alpha(theme.palette.info.light, 0.08),
+        border: "1px solid",
+        borderColor: "divider",
         display: "grid",
         gridTemplateColumns: {
           xs: "1fr",
