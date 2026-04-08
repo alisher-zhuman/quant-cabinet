@@ -10,7 +10,6 @@ export const parseMetersSearchState = (
 ): MetersSearchState => ({
   ...parseListSearchState(params),
   companyId: params.get("companyId")?.trim() ?? "",
-  serialNumber: params.get("serialNumber")?.trim() ?? "",
   locationType: params.get("locationType")?.trim() ?? "",
   meterStatus: params.get("meterStatus")?.trim() ?? "",
   accountNumber: params.get("accountNumber")?.trim() ?? "",
@@ -21,7 +20,6 @@ export const parseMetersSearchState = (
 
 export const createMetersSearchString = ({
   companyId,
-  serialNumber,
   locationType,
   meterStatus,
   accountNumber,
@@ -34,10 +32,6 @@ export const createMetersSearchString = ({
 
   if (companyId.trim()) {
     params.set("companyId", companyId.trim());
-  }
-
-  if (serialNumber.trim()) {
-    params.set("serialNumber", serialNumber.trim());
   }
 
   if (locationType.trim()) {

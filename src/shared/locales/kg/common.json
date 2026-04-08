@@ -404,7 +404,6 @@
       "apply": "Колдонуу",
       "fields": {
         "companyId": "Компания",
-        "serialNumber": "Сериялык номер",
         "locationType": "Локациянын түрү",
         "meterStatus": "Эсептегичтин статусу",
         "accountNumber": "Жеке эсеп",

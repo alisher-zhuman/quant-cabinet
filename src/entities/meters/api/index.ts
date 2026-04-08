@@ -20,7 +20,6 @@ export const getMeters = async ({
   search = "",
   isArchived = false,
   companyId = "",
-  serialNumber = "",
   locationType = "",
   meterStatus = "",
   accountNumber = "",
@@ -28,16 +27,15 @@ export const getMeters = async ({
   address = "",
   isValveLockedByManager = "",
 }: MetersListQueryParams = {}): Promise<MetersResponse> => {
-  const normalizedSerialNumber = serialNumber.trim() || search.trim();
-
   const response = await api.get(API_PATHS.METERS, {
     params: buildListQueryParams({
       page,
       limit,
+      search,
       isArchived,
+      searchParamName: "serialNumber",
       extraParams: {
         companyId,
-        serialNumber: normalizedSerialNumber,
         locationType,
         meterStatus,
         accountNumber,

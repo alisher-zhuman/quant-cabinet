@@ -31,9 +31,6 @@ export const useMeterFiltersState = () => {
   });
 
   const [companyId, setCompanyId] = useState(initialSearchState.companyId);
-  const [serialNumber, setSerialNumber] = useState(
-    initialSearchState.serialNumber,
-  );
   const [locationType, setLocationType] = useState(
     initialSearchState.locationType,
   );
@@ -54,7 +51,6 @@ export const useMeterFiltersState = () => {
       search,
       isArchived,
       companyId,
-      serialNumber,
       locationType,
       meterStatus,
       accountNumber,
@@ -77,7 +73,6 @@ export const useMeterFiltersState = () => {
 
   const handleApplyFilters = (filters: {
     companyId: string;
-    serialNumber: string;
     locationType: string;
     meterStatus: string;
     accountNumber: string;
@@ -86,7 +81,6 @@ export const useMeterFiltersState = () => {
     isValveLockedByManager: string;
   }) => {
     setCompanyId(filters.companyId);
-    setSerialNumber(filters.serialNumber);
     setLocationType(filters.locationType);
     setMeterStatus(filters.meterStatus);
     setAccountNumber(filters.accountNumber);
@@ -98,7 +92,6 @@ export const useMeterFiltersState = () => {
 
   const handleResetFilters = () => {
     setCompanyId("");
-    setSerialNumber("");
     setLocationType("");
     setMeterStatus("");
     setAccountNumber("");
@@ -110,7 +103,6 @@ export const useMeterFiltersState = () => {
 
   const hasActiveFilters = Boolean(
     companyId.trim() ||
-      serialNumber.trim() ||
       locationType.trim() ||
       meterStatus.trim() ||
       accountNumber.trim() ||
@@ -126,7 +118,6 @@ export const useMeterFiltersState = () => {
     page,
     limit,
     companyId,
-    serialNumber,
     locationType,
     meterStatus,
     accountNumber,

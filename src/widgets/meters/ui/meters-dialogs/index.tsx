@@ -11,7 +11,6 @@ interface Props {
   isFiltersDialogOpen: boolean;
   filters: {
     companyId: string;
-    serialNumber: string;
     locationType: string;
     meterStatus: string;
     accountNumber: string;
@@ -24,7 +23,6 @@ interface Props {
   onCloseFiltersDialog: () => void;
   onApplyFilters: (filters: {
     companyId: string;
-    serialNumber: string;
     locationType: string;
     meterStatus: string;
     accountNumber: string;

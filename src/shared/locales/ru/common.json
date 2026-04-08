@@ -441,7 +441,6 @@
       "apply": "Применить",
       "fields": {
         "companyId": "Компания",
-        "serialNumber": "Серийный номер",
         "locationType": "Тип локации",
         "meterStatus": "Статус счетчика",
         "accountNumber": "Лицевой счет",

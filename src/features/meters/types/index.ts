@@ -2,7 +2,6 @@ export type MeterStatusTone = "success" | "warning" | "error" | "neutral";
 
 export interface MeterFilters {
   companyId: string;
-  serialNumber: string;
   locationType: string;
   meterStatus: string;
   accountNumber: string;
@@ -17,7 +16,6 @@ export interface MetersSearchState {
   search: string;
   isArchived: boolean;
   companyId: string;
-  serialNumber: string;
   locationType: string;
   meterStatus: string;
   accountNumber: string;

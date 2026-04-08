@@ -50,12 +50,6 @@ export const MeterFilterFields = ({
       </TextField>
 
       <TextField
-        value={values.serialNumber}
-        label={t("meters.filters.fields.serialNumber")}
-        onChange={createChangeHandler("serialNumber")}
-      />
-
-      <TextField
         select
         value={values.locationType}
         label={t("meters.filters.fields.locationType")}

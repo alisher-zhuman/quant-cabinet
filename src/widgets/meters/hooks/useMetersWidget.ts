@@ -33,7 +33,6 @@ export const useMetersWidget = () => {
     search: filters.debouncedSearch,
     isArchived: filters.isArchived,
     companyId: filters.companyId,
-    serialNumber: filters.serialNumber,
     locationType: filters.locationType,
     meterStatus: filters.meterStatus,
     accountNumber: filters.accountNumber,
@@ -43,6 +42,19 @@ export const useMetersWidget = () => {
   });
 
   const dialogs = useMeterDialogs();
+
+  const handleApplyFilters = (nextFilters: {
+    companyId: string;
+    locationType: string;
+    meterStatus: string;
+    accountNumber: string;
+    clientName: string;
+    address: string;
+    isValveLockedByManager: string;
+  }) => {
+    filters.handleApplyFilters(nextFilters);
+    dialogs.handleCloseFiltersDialog();
+  };
 
   const columns = useMemo(() => createMeterColumns(t, dialogs.setMeterToDelete), [
     dialogs.setMeterToDelete,
@@ -98,7 +110,6 @@ export const useMetersWidget = () => {
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       filters: {
         companyId: filters.companyId,
-        serialNumber: filters.serialNumber,
         locationType: filters.locationType,
         meterStatus: filters.meterStatus,
         accountNumber: filters.accountNumber,
@@ -109,7 +120,7 @@ export const useMetersWidget = () => {
       onCloseDeleteDialog: dialogs.deleteDialogProps.onCloseDeleteDialog,
       onConfirmDelete: dialogs.deleteDialogProps.onConfirmDelete,
       onCloseFiltersDialog: dialogs.handleCloseFiltersDialog,
-      onApplyFilters: filters.handleApplyFilters,
+      onApplyFilters: handleApplyFilters,
     },
   };
 };

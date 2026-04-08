@@ -12,7 +12,6 @@ interface Params {
 
 const EMPTY_FILTERS: MeterFilters = {
   companyId: "",
-  serialNumber: "",
   locationType: "",
   meterStatus: "",
   accountNumber: "",
