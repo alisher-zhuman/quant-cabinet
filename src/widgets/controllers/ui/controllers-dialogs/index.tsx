@@ -1,7 +1,6 @@
 import { type TFunction } from "i18next";
 
 import {
-  ControllerBulkUploadDialog,
   ControllerFiltersDialog,
   CreateControllerDialog,
   TransferControllerDialog,
@@ -17,7 +16,6 @@ interface Props {
   controllerToEdit: ControllerRow | null;
   controllerToTransfer: ControllerRow | null;
   isCreateDialogOpen: boolean;
-  isBulkUploadDialogOpen: boolean;
   isFiltersDialogOpen: boolean;
   isDeletePending: boolean;
   filters: {
@@ -36,10 +34,8 @@ interface Props {
     simIMSI: string;
   }) => void;
   onCloseCreateDialog: () => void;
-  onCloseBulkUploadDialog: () => void;
   onCloseTransferDialog: () => void;
   onCreateSuccess: () => void;
-  onBulkUploadSuccess: () => void;
   onEditSuccess: () => void;
   onTransferSuccess: () => void;
   initialCompanyId?: string;
@@ -51,7 +47,6 @@ export const ControllersDialogs = ({
   controllerToEdit,
   controllerToTransfer,
   isCreateDialogOpen,
-  isBulkUploadDialogOpen,
   isFiltersDialogOpen,
   isDeletePending,
   filters,
@@ -60,10 +55,8 @@ export const ControllersDialogs = ({
   onCloseFiltersDialog,
   onApplyFilters,
   onCloseCreateDialog,
-  onCloseBulkUploadDialog,
   onCloseTransferDialog,
   onCreateSuccess,
-  onBulkUploadSuccess,
   onEditSuccess,
   onTransferSuccess,
   initialCompanyId,
@@ -96,14 +89,6 @@ export const ControllersDialogs = ({
         onClose={onCloseCreateDialog}
         onSuccess={controllerToEdit ? onEditSuccess : onCreateSuccess}
         {...(initialCompanyId !== undefined ? { initialCompanyId } : {})}
-      />
-    )}
-
-    {isBulkUploadDialogOpen && (
-      <ControllerBulkUploadDialog
-        open={isBulkUploadDialogOpen}
-        onClose={onCloseBulkUploadDialog}
-        onSuccess={onBulkUploadSuccess}
       />
     )}
 

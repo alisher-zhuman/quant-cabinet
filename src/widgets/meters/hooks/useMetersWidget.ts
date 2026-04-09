@@ -98,7 +98,10 @@ export const useMetersWidget = () => {
       search: filters.search,
       isSearchLoading: isFetching,
       isArchived: filters.isArchived,
+      isTemplateDownloadPending: dialogs.isTemplateDownloadPending,
       hasActiveFilters: filters.hasActiveFilters,
+      onDownloadTemplate: dialogs.handleDownloadTemplate,
+      onOpenBulkUploadDialog: dialogs.handleOpenBulkUploadDialog,
       onResetFilters: filters.handleResetFilters,
       onOpenFiltersDialog: dialogs.handleOpenFiltersDialog,
       onSearchChange: filters.handleSearchChange,
@@ -108,6 +111,7 @@ export const useMetersWidget = () => {
       t,
       meterToDelete: dialogs.deleteDialogProps.meterToDelete,
       isDeletePending: dialogs.deleteDialogProps.isDeletePending,
+      isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       filters: {
         companyId: filters.companyId,
@@ -120,7 +124,9 @@ export const useMetersWidget = () => {
       },
       onCloseDeleteDialog: dialogs.deleteDialogProps.onCloseDeleteDialog,
       onConfirmDelete: dialogs.deleteDialogProps.onConfirmDelete,
+      onCloseBulkUploadDialog: dialogs.handleCloseBulkUploadDialog,
       onCloseFiltersDialog: dialogs.handleCloseFiltersDialog,
+      onBulkUploadSuccess: dialogs.handleBulkUploadSuccess,
       onApplyFilters: handleApplyFilters,
     },
   };

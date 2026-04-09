@@ -1,7 +1,9 @@
 import type { TFunction } from "i18next";
 
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
+import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -14,7 +16,10 @@ interface Props {
   search: string;
   isSearchLoading: boolean;
   isArchived: boolean;
+  isTemplateDownloadPending: boolean;
   hasActiveFilters: boolean;
+  onDownloadTemplate: () => void;
+  onOpenBulkUploadDialog: () => void;
   onResetFilters: () => void;
   onOpenFiltersDialog: () => void;
   onSearchChange: (value: string) => void;
@@ -26,7 +31,10 @@ export const MetersToolbar = ({
   search,
   isSearchLoading,
   isArchived,
+  isTemplateDownloadPending,
   hasActiveFilters,
+  onDownloadTemplate,
+  onOpenBulkUploadDialog,
   onResetFilters,
   onOpenFiltersDialog,
   onSearchChange,
@@ -40,48 +48,67 @@ export const MetersToolbar = ({
     isSearchLoading={isSearchLoading}
     isArchived={isArchived}
     actions={
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+        <Box sx={{ position: "relative", display: "inline-flex" }}>
+          <Button
+            variant="outlined"
+            startIcon={
+              <Badge
+                color="primary"
+                overlap="circular"
+                variant="dot"
+                invisible={!hasActiveFilters}
+              >
+                <FilterListRoundedIcon />
+              </Badge>
+            }
+            onClick={onOpenFiltersDialog}
+          >
+            {t("meters.actions.filters")}
+          </Button>
+
+          {hasActiveFilters && (
+            <IconButton
+              size="small"
+              color="error"
+              aria-label={t("meters.filters.reset")}
+              onClick={onResetFilters}
+              sx={{
+                position: "absolute",
+                top: -8,
+                right: -8,
+                width: 20,
+                height: 20,
+                backgroundColor: "background.paper",
+                border: "1px solid",
+                borderColor: "divider",
+                boxShadow: 1,
+                "&:hover": {
+                  backgroundColor: "background.paper",
+                },
+              }}
+            >
+              <CloseRoundedIcon sx={{ fontSize: 12 }} />
+            </IconButton>
+          )}
+        </Box>
+
         <Button
           variant="outlined"
-          startIcon={
-            <Badge
-              color="primary"
-              overlap="circular"
-              variant="dot"
-              invisible={!hasActiveFilters}
-            >
-              <FilterListRoundedIcon />
-            </Badge>
-          }
-          onClick={onOpenFiltersDialog}
+          startIcon={<DownloadRoundedIcon />}
+          onClick={onDownloadTemplate}
+          disabled={isTemplateDownloadPending}
         >
-          {t("meters.actions.filters")}
+          {t("controllers.bulkUpload.template.action")}
         </Button>
 
-        {hasActiveFilters && (
-          <IconButton
-            size="small"
-            color="error"
-            aria-label={t("meters.filters.reset")}
-            onClick={onResetFilters}
-            sx={{
-              position: "absolute",
-              top: -8,
-              right: -8,
-              width: 20,
-              height: 20,
-              backgroundColor: "background.paper",
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow: 1,
-              "&:hover": {
-                backgroundColor: "background.paper",
-              },
-            }}
-          >
-            <CloseRoundedIcon sx={{ fontSize: 12 }} />
-          </IconButton>
-        )}
+        <Button
+          variant="outlined"
+          startIcon={<UploadFileRoundedIcon />}
+          onClick={onOpenBulkUploadDialog}
+        >
+          {t("controllers.bulkUpload.import.action")}
+        </Button>
       </Box>
     }
     onSearchChange={onSearchChange}

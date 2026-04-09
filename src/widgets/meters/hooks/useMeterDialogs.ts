@@ -1,12 +1,16 @@
 import { useState } from "react";
 
+import { useDownloadControllersTemplate } from "@features/controllers";
 import { useDeleteMeter } from "@features/meters";
 
 import { type MeterRow } from "@entities/meters";
 
 export const useMeterDialogs = () => {
+  const [isBulkUploadDialogOpen, setIsBulkUploadDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
+
+  const downloadTemplateMutation = useDownloadControllersTemplate();
 
   const onCloseDeleteDialog = () => {
     setMeterToDelete(null);
@@ -24,12 +28,26 @@ export const useMeterDialogs = () => {
 
   return {
     setMeterToDelete,
+    isBulkUploadDialogOpen,
     isFiltersDialogOpen,
+    isTemplateDownloadPending: downloadTemplateMutation.isPending,
     deleteDialogProps: {
       meterToDelete,
       isDeletePending: deleteMeterMutation.isPending,
       onCloseDeleteDialog,
       onConfirmDelete: handleConfirmDelete,
+    },
+    handleDownloadTemplate: () => {
+      downloadTemplateMutation.mutate();
+    },
+    handleOpenBulkUploadDialog: () => {
+      setIsBulkUploadDialogOpen(true);
+    },
+    handleCloseBulkUploadDialog: () => {
+      setIsBulkUploadDialogOpen(false);
+    },
+    handleBulkUploadSuccess: () => {
+      setIsBulkUploadDialogOpen(false);
     },
     handleOpenFiltersDialog: () => {
       setIsFiltersDialogOpen(true);
