@@ -2,7 +2,6 @@ import { Link } from "react-router";
 
 import { useTranslation } from "react-i18next";
 
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
@@ -19,7 +18,7 @@ import { useLogInForm } from "../../hooks/useLogInForm";
 export const LogInForm = () => {
   const { t } = useTranslation();
 
-  const { canGoBack, control, isDirty, isValid, isPending, onBack, onSubmit } =
+  const { control, isDirty, isValid, isPending, onSubmit } =
     useLogInForm();
 
   return (
@@ -32,18 +31,6 @@ export const LogInForm = () => {
       px={2}
       bgcolor="background.default"
     >
-      {canGoBack && (
-        <Button
-          type="button"
-          variant="text"
-          onClick={onBack}
-          startIcon={<ArrowBackRoundedIcon />}
-          sx={{ position: "absolute", top: 16, left: 16 }}
-        >
-          {t("logIn.actions.back")}
-        </Button>
-      )}
-
       <LangSwitcher sx={{ position: "absolute", top: 16, right: 16 }} />
 
       <Paper
