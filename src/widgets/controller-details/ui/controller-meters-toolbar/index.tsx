@@ -93,7 +93,7 @@ export const ControllerMetersToolbar = ({
           startIcon={<AddRoundedIcon />}
           onClick={onOpenCreateDialog}
         >
-          {t("meters.actions.add")}
+          {t("meters.actions.create")}
         </Button>
       </Box>
     }

@@ -67,7 +67,7 @@ export const CompanyMetersToolbar = ({
             startIcon={<AddRoundedIcon />}
             onClick={onOpenCreateDialog}
           >
-            {t("meters.actions.add")}
+            {t("meters.actions.create")}
           </Button>
         </Box>
 
