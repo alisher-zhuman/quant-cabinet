@@ -109,6 +109,7 @@ export const useCompanyMetersTab = ({
     search: filtersState.debouncedSearch,
     isArchived: filtersState.isArchived,
     companyId,
+    controllerId: "",
     locationType: filtersState.locationType,
     meterStatus: filtersState.meterStatus,
     accountNumber: filtersState.accountNumber,

@@ -369,7 +369,8 @@
       "back": "Назад",
       "sections": {
         "controller": "Контроллер",
-        "company": "Компания"
+        "company": "Компания",
+        "meters": "Счетчики"
       },
       "fields": {
         "id": "ID",

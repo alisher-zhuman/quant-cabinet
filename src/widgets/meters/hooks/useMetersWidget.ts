@@ -34,6 +34,7 @@ export const useMetersWidget = () => {
     search: filters.debouncedSearch,
     isArchived: filters.isArchived,
     companyId: filters.companyId,
+    controllerId: "",
     locationType: filters.locationType,
     meterStatus: filters.meterStatus,
     accountNumber: filters.accountNumber,

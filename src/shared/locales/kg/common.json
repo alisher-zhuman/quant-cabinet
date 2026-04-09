@@ -364,6 +364,44 @@
       "submit": "Өткөрүп берүү",
       "submitLoading": "Өткөрүлүүдө..."
     },
+    "details": {
+      "title": "Контроллер жөнүндө маалымат",
+      "back": "Артка",
+      "sections": {
+        "controller": "Контроллер",
+        "company": "Компания",
+        "meters": "Эсептегичтер"
+      },
+      "fields": {
+        "id": "ID",
+        "serialNumber": "Сериялык номер",
+        "batteryStatus": "Батареянын кубаты",
+        "signalStatus": "Сигнал деңгээли",
+        "controllerStatus": "Статус",
+        "controllerType": "Түрү",
+        "simIMSI": "IMSI",
+        "phoneNumber": "Телефон номери",
+        "descriptions": "Сүрөттөмө",
+        "correctTime": "Убакытты тууралоо",
+        "correctInterval": "Интервалды тууралоо",
+        "setInterval": "Сурам интервалы (саат)",
+        "createdAt": "Түзүлгөн күнү",
+        "updatedAt": "Жаңыртылган күнү",
+        "isArchived": "Архивде",
+        "companyId": "Компаниянын ID'си",
+        "companyName": "Компаниянын аталышы",
+        "companyAddress": "Компаниянын дареги",
+        "companyStatus": "Компаниянын статусу",
+        "companyCreatedAt": "Компания түзүлгөн күнү",
+        "companyUpdatedAt": "Компания жаңыртылган күнү"
+      },
+      "values": {
+        "yes": "Ооба",
+        "no": "Жок",
+        "active": "Активдүү",
+        "archived": "Архивде"
+      }
+    },
     "toast": {
       "create": {
         "loading": "Контроллер түзүлүүдө...",

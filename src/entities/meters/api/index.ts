@@ -20,6 +20,7 @@ export const getMeters = async ({
   search = "",
   isArchived = false,
   companyId = "",
+  controllerId = "",
   locationType = "",
   meterStatus = "",
   accountNumber = "",
@@ -36,6 +37,7 @@ export const getMeters = async ({
       searchParamName: "serialNumber",
       extraParams: {
         companyId,
+        controllerId,
         locationType,
         meterStatus,
         accountNumber,

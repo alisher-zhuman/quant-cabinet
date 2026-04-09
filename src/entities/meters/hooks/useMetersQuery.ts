@@ -11,6 +11,7 @@ interface Params {
   search: string;
   isArchived: boolean;
   companyId: string;
+  controllerId: string;
   locationType: string;
   meterStatus: string;
   accountNumber: string;
@@ -26,6 +27,7 @@ export const useMetersQuery = ({
   search,
   isArchived,
   companyId,
+  controllerId,
   locationType,
   meterStatus,
   accountNumber,
@@ -38,6 +40,7 @@ export const useMetersQuery = ({
 
   const normalizedSearch = search.trim();
   const normalizedCompanyId = companyId.trim();
+  const normalizedControllerId = controllerId.trim();
   const normalizedLocationType = locationType.trim();
   const normalizedMeterStatus = meterStatus.trim();
   const normalizedAccountNumber = accountNumber.trim();
@@ -53,6 +56,7 @@ export const useMetersQuery = ({
       normalizedSearch,
       isArchived,
       normalizedCompanyId,
+      normalizedControllerId,
       normalizedLocationType,
       normalizedMeterStatus,
       normalizedAccountNumber,
@@ -67,6 +71,7 @@ export const useMetersQuery = ({
         search: normalizedSearch,
         isArchived,
         companyId: normalizedCompanyId,
+        controllerId: normalizedControllerId,
         locationType: normalizedLocationType,
         meterStatus: normalizedMeterStatus,
         accountNumber: normalizedAccountNumber,
@@ -83,6 +88,7 @@ export const useMetersQuery = ({
   const hasFilters = Boolean(
     normalizedSearch ||
       normalizedCompanyId ||
+      normalizedControllerId ||
       normalizedLocationType ||
       normalizedMeterStatus ||
       normalizedAccountNumber ||

@@ -18,6 +18,7 @@ export interface MetersListQueryParams {
   search?: string;
   isArchived?: boolean;
   companyId?: string;
+  controllerId?: string;
   locationType?: string;
   meterStatus?: string;
   accountNumber?: string;

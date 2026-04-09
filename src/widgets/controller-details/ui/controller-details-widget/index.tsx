@@ -24,6 +24,7 @@ import { Loader } from "@shared/ui/loader";
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
 import { ControllerCompanySection } from "../controller-company-section";
 import { ControllerInfoSection } from "../controller-info-section";
+import { ControllerMetersSection } from "../controller-meters-section";
 
 export const ControllerDetailsWidget = () => {
   const {
@@ -208,6 +209,8 @@ export const ControllerDetailsWidget = () => {
           )}
         </Stack>
       </Paper>
+
+      <ControllerMetersSection controllerId={controllerId} />
 
       {isEditDialogOpen && (
         <CreateControllerDialog
