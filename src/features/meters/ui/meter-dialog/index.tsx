@@ -48,11 +48,13 @@ export const MeterDialog = ({
     enabled: !initialCompanyId,
   });
 
-  const companyOptions = useMemo(
-    () =>
-      companies.map((company) => ({ value: company.id, label: company.name })),
-    [companies],
-  );
+  const companyOptions = useMemo(() => {
+    const opts = companies.map((company) => ({ value: company.id, label: company.name }));
+    if (meter?.company && !opts.some((o) => o.value === meter.company!.id)) {
+      opts.push({ value: meter.company.id, label: meter.company.name });
+    }
+    return opts;
+  }, [companies, meter]);
 
   const { control, isPending, isDirty, isValid, isEditMode, onSubmit, setValue } =
     useMeterDialogForm({
@@ -110,14 +112,16 @@ export const MeterDialog = ({
     enabled: Boolean(initialCompanyId ?? selectedCompanyId),
   });
 
-  const controllerOptions = useMemo(
-    () =>
-      controllers.map((controller) => ({
-        value: controller.id,
-        label: controller.serialNumber,
-      })),
-    [controllers],
-  );
+  const controllerOptions = useMemo(() => {
+    const opts = controllers.map((controller) => ({
+      value: controller.id,
+      label: controller.serialNumber,
+    }));
+    if (meter?.controller && !opts.some((o) => o.value === meter.controller!.id)) {
+      opts.push({ value: meter.controller.id, label: meter.controller.serialNumber });
+    }
+    return opts;
+  }, [controllers, meter]);
 
   const locationTypeOptions = useMemo(
     () => [
