@@ -79,7 +79,10 @@ export const MeterDetailsSchema = z.looseObject({
     (value) => (value === null ? "" : value),
     z.string(),
   ),
-  clientName: z.preprocess((value) => (value === null ? "" : value), z.string()),
+  clientName: z.preprocess(
+    (value) => (value === null ? "" : value),
+    z.string(),
+  ),
   address: z.preprocess((value) => (value === null ? "" : value), z.string()),
   descriptions: z.preprocess(
     (value) => (value === null ? "" : value),
@@ -89,7 +92,6 @@ export const MeterDetailsSchema = z.looseObject({
   createdAt: z.string(),
   updatedAt: z.string(),
   isArchived: z.boolean(),
-  company: MeterCompanySchema,
   controller: MeterControllerSchema,
 });
 
@@ -119,7 +121,10 @@ export const createMeterFormSchema = (t: (key: string) => string) =>
       .refine((value) => Number(value) <= 8, {
         message: t("validation.maxPort"),
       }),
-    accountNumber: z.string().trim().min(1, t("validation.requiredAccountNumber")),
+    accountNumber: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredAccountNumber")),
     clientName: z.string().trim().min(1, t("validation.requiredClientName")),
     address: z.string().trim().min(1, t("validation.requiredAddress")),
     descriptions: z.string().trim(),
@@ -149,7 +154,10 @@ export const updateMeterFormSchema = (t: (key: string) => string) =>
       .refine((value) => Number(value) <= 8, {
         message: t("validation.maxPort"),
       }),
-    accountNumber: z.string().trim().min(1, t("validation.requiredAccountNumber")),
+    accountNumber: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredAccountNumber")),
     clientName: z.string().trim().min(1, t("validation.requiredClientName")),
     address: z.string().trim().min(1, t("validation.requiredAddress")),
     descriptions: z.string().trim(),
@@ -169,7 +177,6 @@ export const CreateMeterPayloadSchema = z.object({
   address: z.string().trim().min(1),
   descriptions: z.string().trim(),
 });
-
 
 export const UpdateMeterPayloadSchema = z.object({
   meterId: z.string().trim().min(1),
