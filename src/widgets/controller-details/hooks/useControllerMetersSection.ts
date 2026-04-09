@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { createMeterColumns, useDeleteMeter } from "@features/meters";
 
+import { useControllerQuery } from "@entities/controllers";
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
@@ -18,6 +19,8 @@ import type { Column } from "@shared/types";
 export const useControllerMetersSection = (controllerId: string) => {
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
+  const [meterToEdit, setMeterToEdit] = useState<MeterRow | null>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [locationType, setLocationType] = useState("");
   const [meterStatus, setMeterStatus] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
@@ -68,11 +71,22 @@ export const useControllerMetersSection = (controllerId: string) => {
     enabled: Boolean(controllerId),
   });
 
+  const { controller } = useControllerQuery(controllerId);
+
   const handleCloseDeleteDialog = () => {
     setMeterToDelete(null);
   };
 
   const deleteMeterMutation = useDeleteMeter(handleCloseDeleteDialog);
+
+  const handleOpenCreateDialog = () => setIsCreateDialogOpen(true);
+  const handleCloseCreateDialog = () => setIsCreateDialogOpen(false);
+
+  const handleOpenEditDialog = (meter: MeterRow) => setMeterToEdit(meter);
+  const handleCloseEditDialog = () => setMeterToEdit(null);
+
+  const handleEditSuccess = () => setMeterToEdit(null);
+  const handleCreateSuccess = () => setIsCreateDialogOpen(false);
 
   const handleConfirmDelete = () => {
     if (!meterToDelete) {
@@ -95,7 +109,7 @@ export const useControllerMetersSection = (controllerId: string) => {
 
   const meterColumns = useMemo<Column<MeterRow>[]>(
     () =>
-      createMeterColumns(t, setMeterToDelete, () => {}, {
+      createMeterColumns(t, setMeterToDelete, handleOpenEditDialog, {
         showCompanyColumn: false,
       }),
     [t],
@@ -187,14 +201,18 @@ export const useControllerMetersSection = (controllerId: string) => {
       },
       onSearchChange: handleSearchChange,
       onArchivedChange: handleArchivedChange,
+      onOpenCreateDialog: handleOpenCreateDialog,
     },
     dialogsProps: {
       t,
       meterToDelete,
+      meterToEdit,
+      isCreateDialogOpen,
       isDeletePending: deleteMeterMutation.isPending,
       isFiltersDialogOpen,
       filters: {
-        companyId: "",
+        companyId: controller?.company?.id ?? "",
+        controllerId,
         locationType,
         meterStatus,
         accountNumber,
@@ -208,6 +226,10 @@ export const useControllerMetersSection = (controllerId: string) => {
         setIsFiltersDialogOpen(false);
       },
       onApplyFilters: handleApplyFilters,
+      onCloseCreateDialog: handleCloseCreateDialog,
+      onCloseEditDialog: handleCloseEditDialog,
+      onEditSuccess: handleEditSuccess,
+      onCreateSuccess: handleCreateSuccess,
     },
   };
 };

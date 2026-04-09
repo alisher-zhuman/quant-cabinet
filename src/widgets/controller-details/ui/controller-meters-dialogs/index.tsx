@@ -1,6 +1,6 @@
 import type { TFunction } from "i18next";
 
-import { MeterFiltersDialog } from "@features/meters";
+import { MeterDialog, MeterFiltersDialog } from "@features/meters";
 
 import { type MeterRow } from "@entities/meters";
 
@@ -9,10 +9,13 @@ import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 interface Props {
   t: TFunction;
   meterToDelete: MeterRow | null;
+  meterToEdit: MeterRow | null;
+  isCreateDialogOpen: boolean;
   isDeletePending: boolean;
   isFiltersDialogOpen: boolean;
   filters: {
     companyId: string;
+    controllerId: string;
     locationType: string;
     meterStatus: string;
     accountNumber: string;
@@ -31,11 +34,17 @@ interface Props {
     address: string;
     isValveLockedByManager: string;
   }) => void;
+  onCloseCreateDialog: () => void;
+  onCloseEditDialog: () => void;
+  onEditSuccess: () => void;
+  onCreateSuccess: () => void;
 }
 
 export const ControllerMetersDialogs = ({
   t,
   meterToDelete,
+  meterToEdit,
+  isCreateDialogOpen,
   isDeletePending,
   isFiltersDialogOpen,
   filters,
@@ -43,6 +52,10 @@ export const ControllerMetersDialogs = ({
   onConfirmDelete,
   onCloseFiltersDialog,
   onApplyFilters,
+  onCloseCreateDialog,
+  onCloseEditDialog,
+  onEditSuccess,
+  onCreateSuccess,
 }: Props) => (
   <>
     <ConfirmDialog
@@ -79,6 +92,17 @@ export const ControllerMetersDialogs = ({
           })
         }
         hideCompanyField
+      />
+    )}
+
+    {(isCreateDialogOpen || Boolean(meterToEdit)) && (
+      <MeterDialog
+        open={isCreateDialogOpen || Boolean(meterToEdit)}
+        meter={meterToEdit}
+        initialCompanyId={filters.companyId}
+        initialControllerId={filters.controllerId}
+        onClose={meterToEdit ? onCloseEditDialog : onCloseCreateDialog}
+        onSuccess={meterToEdit ? onEditSuccess : onCreateSuccess}
       />
     )}
   </>
