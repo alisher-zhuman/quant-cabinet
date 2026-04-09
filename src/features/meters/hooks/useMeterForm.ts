@@ -11,14 +11,11 @@ import {
 } from "@entities/meters";
 
 import { useCreateMeter } from "./useCreateMeter";
-import { useUpdateMeter } from "./useUpdateMeter";
 
 interface Params {
   onSuccess?: () => void;
   initialCompanyId?: string;
   initialControllerId?: string;
-  meterId?: string;
-  initialValues?: Partial<MeterFormValues>;
 }
 
 const getDefaultValues = (
@@ -41,14 +38,12 @@ export const useMeterForm = ({
   onSuccess,
   initialCompanyId,
   initialControllerId,
-  meterId,
-  initialValues,
 }: Params = {}) => {
   const { t } = useTranslation();
 
   const defaultValues = useMemo(
-    () => getDefaultValues(initialCompanyId, initialControllerId, initialValues),
-    [initialCompanyId, initialControllerId, initialValues],
+    () => getDefaultValues(initialCompanyId, initialControllerId),
+    [initialCompanyId, initialControllerId],
   );
 
   const {
@@ -72,42 +67,23 @@ export const useMeterForm = ({
     onSuccess?.();
   });
 
-  const updateMutation = useUpdateMeter(() => {
-    onSuccess?.();
-  });
-
   const onSubmit = handleSubmit((values) => {
-    if (meterId) {
-      updateMutation.mutate({
-        meterId,
-        serialNumber: values["serialNumber"],
-        controllerId: values["controllerId"],
-        companyId: values["companyId"],
-        locationType: values["locationType"],
-        port: Number(values["port"]),
-        accountNumber: values["accountNumber"],
-        clientName: values["clientName"],
-        address: values["address"],
-        descriptions: values["descriptions"],
-      });
-    } else {
-      createMutation.mutate({
-        serialNumber: values["serialNumber"],
-        controllerId: values["controllerId"],
-        companyId: values["companyId"],
-        locationType: values["locationType"],
-        port: Number(values["port"]),
-        accountNumber: values["accountNumber"],
-        clientName: values["clientName"],
-        address: values["address"],
-        descriptions: values["descriptions"],
-      });
-    }
+    createMutation.mutate({
+      serialNumber: values["serialNumber"],
+      controllerId: values["controllerId"],
+      companyId: values["companyId"],
+      locationType: values["locationType"],
+      port: Number(values["port"]),
+      accountNumber: values["accountNumber"],
+      clientName: values["clientName"],
+      address: values["address"],
+      descriptions: values["descriptions"],
+    });
   });
 
   return {
     control,
-    isPending: createMutation.isPending || updateMutation.isPending,
+    isPending: createMutation.isPending,
     isDirty,
     isValid,
     onSubmit,

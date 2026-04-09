@@ -1,4 +1,4 @@
-export { createMeter, deleteMeter, getMeter, getMeters, updateMeter } from "./api";
+export { createMeter, deleteMeter, getMeter, getMeters } from "./api";
 export { useMeterQuery } from "./hooks/useMeterQuery";
 export { useMetersQuery } from "./hooks/useMetersQuery";
 export { metersKeys } from "./model/keys";

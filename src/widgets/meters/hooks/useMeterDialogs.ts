@@ -7,11 +7,9 @@ import { type MeterRow } from "@entities/meters";
 
 export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isBulkUploadDialogOpen, setIsBulkUploadDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
-  const [meterToEdit, setMeterToEdit] = useState<MeterRow | null>(null);
 
   const downloadTemplateMutation = useDownloadControllersTemplate();
 
@@ -31,9 +29,7 @@ export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
 
   return {
     isCreateDialogOpen,
-    isEditDialogOpen,
     setMeterToDelete,
-    setMeterToEdit,
     isBulkUploadDialogOpen,
     isFiltersDialogOpen,
     isTemplateDownloadPending: downloadTemplateMutation.isPending,
@@ -42,12 +38,6 @@ export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
       isDeletePending: deleteMeterMutation.isPending,
       onCloseDeleteDialog,
       onConfirmDelete: handleConfirmDelete,
-    },
-    editDialogProps: {
-      meterToEdit,
-      onCloseEditDialog: () => {
-        setMeterToEdit(null);
-      },
     },
     handleDownloadTemplate: () => {
       downloadTemplateMutation.mutate();
@@ -60,18 +50,6 @@ export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
     },
     handleCreateSuccess: () => {
       setIsCreateDialogOpen(false);
-      setIsArchived(false);
-    },
-    handleOpenEditDialog: (meter: MeterRow) => {
-      setMeterToEdit(meter);
-    },
-    handleCloseEditDialog: () => {
-      setIsEditDialogOpen(false);
-      setMeterToEdit(null);
-    },
-    handleEditSuccess: () => {
-      setIsEditDialogOpen(false);
-      setMeterToEdit(null);
       setIsArchived(false);
     },
     handleOpenBulkUploadDialog: () => {

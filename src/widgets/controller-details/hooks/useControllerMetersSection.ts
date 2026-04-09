@@ -95,7 +95,7 @@ export const useControllerMetersSection = (controllerId: string) => {
 
   const meterColumns = useMemo<Column<MeterRow>[]>(
     () =>
-      createMeterColumns(t, setMeterToDelete, () => {}, {
+      createMeterColumns(t, setMeterToDelete, {
         showCompanyColumn: false,
       }),
     [t],

@@ -17,7 +17,6 @@ import { MeterStatusBadge } from "../ui/meter-status-badge";
 export const createMeterColumns = (
   t: TFunction,
   onDelete: (meter: MeterRow) => void,
-  onEdit: (meter: MeterRow) => void,
   options?: {
     showCompanyColumn?: boolean;
   },
@@ -83,10 +82,8 @@ export const createMeterColumns = (
     cell: (meter) => (
       <MeterActions
         deleteLabel={t("meters.actions.delete")}
-        editLabel={t("meters.actions.edit")}
         meter={meter}
         onDelete={onDelete}
-        onEdit={onEdit}
       />
     ),
   },

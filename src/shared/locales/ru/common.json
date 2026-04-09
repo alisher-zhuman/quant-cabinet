@@ -514,7 +514,10 @@
         "accountNumber": "Лицевой счет",
         "clientName": "ФИО",
         "address": "Адрес",
-        "descriptions": "Описание"
+        "descriptions": "Описание",
+        "pendingCommand": "Ожидающая команда",
+        "isValveLockedByManager": "Клапан заблокирован менеджером",
+        "isArchived": "В архиве"
       },
       "controllerRestriction": {
         "single": "Для этого контроллера уже есть активный счетчик.",

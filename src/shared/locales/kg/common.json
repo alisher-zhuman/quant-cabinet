@@ -514,7 +514,10 @@
         "accountNumber": "Жеке эсеп",
         "clientName": "ФИО",
         "address": "Дарек",
-        "descriptions": "Сүрөттөмө"
+        "descriptions": "Сүрөттөмө",
+        "pendingCommand": "Күтүүдөгү буйрук",
+        "isValveLockedByManager": "Клапан менеджер тарабынан бөгөттөлгөн",
+        "isArchived": "Архивде"
       },
       "controllerRestriction": {
         "single": "Бул контроллер үчүн активдүү эсептегич бар.",
