@@ -47,11 +47,6 @@ export const createMeterColumns = (
         },
       ]),
   {
-    id: "lastValue",
-    header: t("meters.table.columns.lastValue"),
-    cell: (meter) => meter.lastValue || "-",
-  },
-  {
     id: "readings",
     header: t("meters.table.columns.readings"),
     cell: (meter) => meter.readings,

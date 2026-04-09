@@ -57,8 +57,8 @@ export const EditMeterDialog = ({
       ...(meter
         ? {
             initialValues: {
-              companyId: (meter as Record<string, unknown>).companyId as string,
-              controllerId: (meter as Record<string, unknown>).controllerId as string,
+              companyId: (meter as Record<string, unknown>)['companyId'] as string,
+              controllerId: (meter as Record<string, unknown>)['controllerId'] as string,
               serialNumber: meter.serialNumber,
               locationType: meter.locationType as "indoor" | "well" | "cabinet",
               port: String(meter.port),
@@ -108,11 +108,11 @@ export const EditMeterDialog = ({
       return;
     }
 
-    setValue("companyId", (meter as Record<string, unknown>).companyId as string, {
+    setValue("companyId", (meter as Record<string, unknown>)['companyId'] as string, {
       shouldDirty: false,
       shouldValidate: true,
     });
-    setValue("controllerId", (meter as Record<string, unknown>).controllerId as string, {
+    setValue("controllerId", (meter as Record<string, unknown>)['controllerId'] as string, {
       shouldDirty: false,
       shouldValidate: true,
     });
