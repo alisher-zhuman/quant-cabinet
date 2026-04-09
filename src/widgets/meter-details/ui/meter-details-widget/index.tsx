@@ -20,6 +20,7 @@ import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
 
 import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
+import { MeterCompanySection } from "../meter-company-section";
 import { MeterControllerSection } from "../meter-controller-section";
 import { MeterInfoSection } from "../meter-info-section";
 import { MeterReadingsSection } from "../meter-readings-section";
@@ -43,6 +44,7 @@ export const MeterDetailsWidget = () => {
     controllerArchivedStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    companyStatus,
     isDeleteDialogOpen,
     isEditDialogOpen,
     isDeletePending,
@@ -218,7 +220,6 @@ export const MeterDetailsWidget = () => {
           {meter.controller && (
             <>
               <Divider />
-
               <MeterControllerSection
                 t={t}
                 controller={meter.controller}
@@ -228,6 +229,17 @@ export const MeterDetailsWidget = () => {
                 correctTimeLabel={correctTimeLabel}
                 correctIntervalLabel={correctIntervalLabel}
               />
+
+              {meter.company && (
+                <>
+                  <Divider />
+                  <MeterCompanySection
+                    t={t}
+                    company={meter.company}
+                    companyStatus={companyStatus}
+                  />
+                </>
+              )}
             </>
           )}
         </Stack>

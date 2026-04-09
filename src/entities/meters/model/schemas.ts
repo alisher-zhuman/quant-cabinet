@@ -3,9 +3,12 @@ import { z } from "zod";
 import { createListResponseSchema } from "@shared/schemas";
 
 const MeterCompanySchema = z
-  .object({
+  .looseObject({
     id: z.string(),
     name: z.string(),
+    address: z.string().optional(),
+    createdAt: z.string().optional(),
+    isArchived: z.boolean().optional(),
   })
   .nullable();
 
@@ -92,6 +95,7 @@ export const MeterDetailsSchema = z.looseObject({
   createdAt: z.string(),
   updatedAt: z.string(),
   isArchived: z.boolean(),
+  company: MeterCompanySchema,
   controller: MeterControllerSchema,
 });
 

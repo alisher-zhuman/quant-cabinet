@@ -59,6 +59,10 @@ export const useMeterDetailsWidget = () => {
     ? t("meters.details.values.yes")
     : t("meters.details.values.no");
 
+  const companyStatus = meter?.company?.isArchived
+    ? t("meters.details.values.archived")
+    : t("meters.details.values.active");
+
   const controllerStatus = meter?.controller?.controllerStatus
     ? t(`controllers.statuses.${meter.controller.controllerStatus}`)
     : "-";
@@ -125,6 +129,7 @@ export const useMeterDetailsWidget = () => {
     controllerArchivedStatus,
     correctTimeLabel,
     correctIntervalLabel,
+    companyStatus,
     isDeleteDialogOpen,
     isEditDialogOpen,
     isDeletePending: deleteMeterMutation.isPending,
