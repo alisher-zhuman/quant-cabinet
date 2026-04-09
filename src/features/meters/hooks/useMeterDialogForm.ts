@@ -27,8 +27,8 @@ const getDefaultValues = (
   initialControllerId?: string,
 ): MeterEditFormValues => ({
   serialNumber: meter?.serialNumber ?? "",
-  controllerId: (meter as Record<string, unknown>)?.["controllerId"] as string ?? initialControllerId ?? "",
-  companyId: (meter as Record<string, unknown>)?.["companyId"] as string ?? initialCompanyId ?? "",
+  controllerId: meter?.controller?.id ?? initialControllerId ?? "",
+  companyId: meter?.company?.id ?? initialCompanyId ?? "",
   locationType: (meter?.locationType ?? "indoor") as "indoor" | "well" | "cabinet",
   port: String(meter?.port ?? "1"),
   accountNumber: meter?.accountNumber ?? "",

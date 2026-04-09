@@ -80,6 +80,7 @@ export const MeterDetailsSchema = z.looseObject({
   createdAt: z.string(),
   updatedAt: z.string(),
   isArchived: z.boolean(),
+  company: MeterCompanySchema,
   controller: MeterControllerSchema,
 });
 
