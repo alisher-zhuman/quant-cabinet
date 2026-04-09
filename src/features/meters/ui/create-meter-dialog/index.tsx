@@ -4,10 +4,11 @@ import { useWatch } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import Typography from "@mui/material/Typography";
 
 import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
@@ -57,7 +58,7 @@ export const CreateMeterDialog = ({
 
   const selectedCompanyId = useWatch({ control, name: "companyId" });
   const watchedControllerId = useWatch({ control, name: "controllerId" });
-  
+
   const selectedControllerId = watchedControllerId ?? initialControllerId;
 
   const { controller: selectedController } = useControllerQuery(selectedControllerId);
@@ -149,27 +150,39 @@ export const CreateMeterDialog = ({
               controllerHelperText={controllerRestrictionMessage}
             />
 
-            {controllerRestrictionMessage && initialControllerId && (
-              <Typography color="error" sx={{ mt: 2 }}>
+            {controllerRestrictionMessage && (
+              <Alert severity="error" variant="filled" sx={{ mt: 2 }}>
                 {controllerRestrictionMessage}
-              </Typography>
+              </Alert>
             )}
 
-            <MeterMainFields
-              t={t}
-              control={control}
-              locationTypeOptions={locationTypeOptions}
-            />
+            {!controllerRestrictionMessage && (
+              <MeterMainFields
+                t={t}
+                control={control}
+                locationTypeOptions={locationTypeOptions}
+              />
+            )}
 
-            <FormActions
-              onCancel={onClose}
-              cancelLabel={t("meters.createDialog.cancel")}
-              submitLabel={t("meters.createDialog.submit")}
-              submitLabelLoading={t("meters.createDialog.submitLoading")}
-              isSubmitting={isPending}
-              isDirty={isDirty}
-              submitProps={{ disabled: !isValid || Boolean(controllerRestrictionMessage) }}
-            />
+            {controllerRestrictionMessage ? (
+              <Button
+                variant="outlined"
+                fullWidth
+                onClick={onClose}
+              >
+                {t("meters.createDialog.cancel")}
+              </Button>
+            ) : (
+              <FormActions
+                onCancel={onClose}
+                cancelLabel={t("meters.createDialog.cancel")}
+                submitLabel={t("meters.createDialog.submit")}
+                submitLabelLoading={t("meters.createDialog.submitLoading")}
+                isSubmitting={isPending}
+                isDirty={isDirty}
+                submitProps={{ disabled: !isValid }}
+              />
+            )}
           </FormFieldset>
         </form>
       </DialogContent>
