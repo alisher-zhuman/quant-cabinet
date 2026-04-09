@@ -32,7 +32,11 @@ export const ForgotPasswordPayloadSchema = z.object({
   email: z.string().trim().min(1).pipe(z.email()),
 });
 
-export const LogInResponseSchema = z.object({
+export const LogInResponseSchema = z.looseObject({
   accessToken: z.string().min(1),
   role: UserRoleSchema,
+  company: z
+    .looseObject({ id: z.string() })
+    .nullable()
+    .optional(),
 });

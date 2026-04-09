@@ -5,9 +5,10 @@ import type { AuthState } from "../types";
 
 export const AUTH_STORAGE_KEY = "quant-cabinet-auth";
 
-const INITIAL_AUTH_STATE: Pick<AuthState, "role" | "accessToken"> = {
+const INITIAL_AUTH_STATE: Pick<AuthState, "role" | "accessToken" | "companyId"> = {
   role: null,
   accessToken: null,
+  companyId: null,
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -16,7 +17,11 @@ export const useAuthStore = create<AuthState>()(
       ...INITIAL_AUTH_STATE,
 
       setAuth: (session) => {
-        set({ role: session.role, accessToken: session.accessToken });
+        set({
+          role: session.role,
+          accessToken: session.accessToken,
+          companyId: session.company?.id ?? null,
+        });
       },
 
       logOut: () => {
@@ -28,6 +33,7 @@ export const useAuthStore = create<AuthState>()(
       partialize: (state) => ({
         role: state.role,
         accessToken: state.accessToken,
+        companyId: state.companyId,
       }),
     },
   ),
