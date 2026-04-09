@@ -6,12 +6,14 @@ import {
   MeterFiltersDialog,
 } from "@features/meters";
 
+import type { MeterRow } from "@entities/meters";
+
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 
 interface Props {
   t: TFunction;
   meterToDelete: { id: string } | null;
-  meterToEdit: { id: string } | null;
+  meterToEdit: MeterRow | null;
   isDeletePending: boolean;
   isCreateDialogOpen: boolean;
   isBulkUploadDialogOpen: boolean;
@@ -80,7 +82,7 @@ export const MetersDialogs = ({
     {(isCreateDialogOpen || Boolean(meterToEdit)) && (
       <MeterDialog
         open={isCreateDialogOpen || Boolean(meterToEdit)}
-        meterId={meterToEdit?.id ?? null}
+        meter={meterToEdit}
         onClose={meterToEdit ? onCloseEditDialog : onCloseCreateDialog}
         onSuccess={meterToEdit ? onEditSuccess : onCreateSuccess}
       />

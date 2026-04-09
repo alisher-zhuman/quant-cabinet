@@ -5,17 +5,14 @@ import { useWatch } from "react-hook-form";
 import type { Control } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
-import type { MeterFormValues } from "@entities/meters";
-import { useMeterQuery } from "@entities/meters";
+import type { MeterFormValues, MeterRow } from "@entities/meters";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
@@ -25,7 +22,7 @@ import { MeterContextFields } from "../meter-context-fields";
 import { MeterMainFields } from "../meter-main-fields";
 
 interface Props {
-  meterId?: string | null;
+  meter?: MeterRow | null;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
@@ -34,7 +31,7 @@ interface Props {
 }
 
 export const MeterDialog = ({
-  meterId,
+  meter,
   open,
   onClose,
   onSuccess,
@@ -50,8 +47,6 @@ export const MeterDialog = ({
     isArchived: false,
     enabled: !initialCompanyId,
   });
-
-  const { meter, isLoading: isMeterLoading } = useMeterQuery(meterId ?? "");
 
   const companyOptions = useMemo(
     () =>
@@ -165,13 +160,8 @@ export const MeterDialog = ({
       </DialogTitle>
 
       <DialogContent>
-        {isMeterLoading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <form onSubmit={onSubmit}>
-            <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
+        <form onSubmit={onSubmit}>
+          <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
             <MeterContextFields
               t={t}
               control={control as unknown as Control<MeterFormValues>}
@@ -215,7 +205,6 @@ export const MeterDialog = ({
             )}
           </FormFieldset>
         </form>
-        )}
       </DialogContent>
     </Dialog>
   );

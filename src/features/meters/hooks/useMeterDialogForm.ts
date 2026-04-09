@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
 import {
-  type MeterDetails,
   type MeterEditFormValues,
+  type MeterRow,
   updateMeterFormSchema,
 } from "@entities/meters";
 
@@ -15,14 +15,14 @@ import { useCreateMeter } from "./useCreateMeter";
 import { useUpdateMeter } from "./useUpdateMeter";
 
 interface Params {
-  meter?: MeterDetails | null | undefined;
+  meter?: MeterRow | null | undefined;
   onSuccess?: () => void;
   initialCompanyId?: string;
   initialControllerId?: string;
 }
 
 const getDefaultValues = (
-  meter?: MeterDetails | null  ,
+  meter?: MeterRow | null  ,
   initialCompanyId?: string,
   initialControllerId?: string,
 ): MeterEditFormValues => ({
