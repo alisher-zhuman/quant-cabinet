@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
 
 import { useCompaniesQuery } from "@entities/companies";
-import { useControllersQuery } from "@entities/controllers";
+import { useControllerQuery, useControllersQuery } from "@entities/controllers";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
@@ -55,6 +56,33 @@ export const CreateMeterDialog = ({
   });
 
   const selectedCompanyId = useWatch({ control, name: "companyId" });
+  const watchedControllerId = useWatch({ control, name: "controllerId" });
+  
+  const selectedControllerId = watchedControllerId ?? initialControllerId;
+
+  const { controller: selectedController } = useControllerQuery(selectedControllerId);
+
+  const activeControllerMeters = useMemo(
+    () =>
+      selectedController?.meters?.filter((meter) => !meter.isArchived) ?? [],
+    [selectedController?.meters],
+  );
+
+  const controllerRestrictionMessage = useMemo(() => {
+    if (!selectedController) {
+      return undefined;
+    }
+
+    if (selectedController.controllerType === "single" && activeControllerMeters.length >= 1) {
+      return t("meters.createDialog.controllerRestriction.single");
+    }
+
+    if (selectedController.controllerType === "multiple" && activeControllerMeters.length >= 8) {
+      return t("meters.createDialog.controllerRestriction.multiple");
+    }
+
+    return undefined;
+  }, [selectedController, activeControllerMeters.length, t]);
 
   const { controllers, isLoading: isControllersLoading } = useControllersQuery({
     page: 0,
@@ -118,7 +146,14 @@ export const CreateMeterDialog = ({
               isControllersLoading={isControllersLoading}
               companyOptions={companyOptions}
               controllerOptions={controllerOptions}
+              controllerHelperText={controllerRestrictionMessage}
             />
+
+            {controllerRestrictionMessage && initialControllerId && (
+              <Typography color="error" sx={{ mt: 2 }}>
+                {controllerRestrictionMessage}
+              </Typography>
+            )}
 
             <MeterMainFields
               t={t}
@@ -133,7 +168,7 @@ export const CreateMeterDialog = ({
               submitLabelLoading={t("meters.createDialog.submitLoading")}
               isSubmitting={isPending}
               isDirty={isDirty}
-              submitProps={{ disabled: !isValid }}
+              submitProps={{ disabled: !isValid || Boolean(controllerRestrictionMessage) }}
             />
           </FormFieldset>
         </form>

@@ -19,6 +19,7 @@ interface Props {
   isControllersLoading: boolean;
   companyOptions: Option[];
   controllerOptions: Option[];
+  controllerHelperText: string | undefined;
 }
 
 export const MeterContextFields = ({
@@ -30,6 +31,7 @@ export const MeterContextFields = ({
   isControllersLoading,
   companyOptions,
   controllerOptions,
+  controllerHelperText,
 }: Props) => (
   <>
     {!initialCompanyId && (
@@ -53,6 +55,7 @@ export const MeterContextFields = ({
         disabled={isControllersLoading || (!initialCompanyId && !controllerOptions.length)}
         options={controllerOptions}
         emptyOptionLabel={t("meters.createDialog.fields.controllerPlaceholder")}
+        helperText={controllerHelperText}
       />
     )}
   </>
