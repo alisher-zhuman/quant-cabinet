@@ -12,6 +12,7 @@ import { getBackTo } from "@shared/helpers";
 
 export const useMeterDetailsWidget = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   const { t } = useTranslation();
 
@@ -86,6 +87,18 @@ export const useMeterDetailsWidget = () => {
     setIsDeleteDialogOpen(false);
   };
 
+  const handleOpenEditDialog = () => {
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setIsEditDialogOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditDialogOpen(false);
+  };
+
   const handleConfirmDelete = () => {
     if (!meter?.id) {
       return;
@@ -113,9 +126,13 @@ export const useMeterDetailsWidget = () => {
     correctTimeLabel,
     correctIntervalLabel,
     isDeleteDialogOpen,
+    isEditDialogOpen,
     isDeletePending: deleteMeterMutation.isPending,
     handleOpenDeleteDialog,
     handleCloseDeleteDialog,
     handleConfirmDelete,
+    handleOpenEditDialog,
+    handleCloseEditDialog,
+    handleEditSuccess,
   };
 };

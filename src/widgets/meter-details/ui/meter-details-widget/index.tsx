@@ -2,6 +2,7 @@ import { Link } from "react-router";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -10,6 +11,10 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
+
+import { MeterDialog } from "@features/meters";
+
+import type { MeterRow } from "@entities/meters";
 
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
@@ -39,10 +44,14 @@ export const MeterDetailsWidget = () => {
     correctTimeLabel,
     correctIntervalLabel,
     isDeleteDialogOpen,
+    isEditDialogOpen,
     isDeletePending,
     handleOpenDeleteDialog,
     handleCloseDeleteDialog,
     handleConfirmDelete,
+    handleOpenEditDialog,
+    handleCloseEditDialog,
+    handleEditSuccess,
   } = useMeterDetailsWidget();
 
   if (isLoading) {
@@ -93,15 +102,24 @@ export const MeterDetailsWidget = () => {
           {t("meters.details.back")}
         </Button>
 
-        <Button
-          color="error"
-          variant="outlined"
-          startIcon={<DeleteOutlineRoundedIcon />}
-          onClick={handleOpenDeleteDialog}
-          sx={{ width: "fit-content", alignSelf: { xs: "flex-start", sm: "auto" } }}
-        >
-          {t("meters.actions.delete")}
-        </Button>
+        <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
+          <Button
+            variant="outlined"
+            startIcon={<EditRoundedIcon />}
+            onClick={handleOpenEditDialog}
+          >
+            {t("meters.actions.edit")}
+          </Button>
+
+          <Button
+            color="error"
+            variant="outlined"
+            startIcon={<DeleteOutlineRoundedIcon />}
+            onClick={handleOpenDeleteDialog}
+          >
+            {t("meters.actions.delete")}
+          </Button>
+        </Stack>
       </Box>
 
       <Paper
@@ -227,6 +245,15 @@ export const MeterDetailsWidget = () => {
         onClose={handleCloseDeleteDialog}
         onConfirm={handleConfirmDelete}
       />
+
+      {isEditDialogOpen && (
+        <MeterDialog
+          open={isEditDialogOpen}
+          meter={meter as unknown as MeterRow}
+          onClose={handleCloseEditDialog}
+          onSuccess={handleEditSuccess}
+        />
+      )}
     </Box>
   );
 };
