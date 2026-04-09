@@ -4,7 +4,6 @@ import { useWatch } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
 
-import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
@@ -46,22 +45,25 @@ export const CreateMeterDialog = ({
   });
 
   const companyOptions = useMemo(
-    () => companies.map((company) => ({ value: company.id, label: company.name })),
+    () =>
+      companies.map((company) => ({ value: company.id, label: company.name })),
     [companies],
   );
 
-  const { control, isPending, isDirty, isValid, onSubmit, setValue } = useMeterForm({
-    onSuccess,
-    ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
-    ...(initialControllerId !== undefined ? { initialControllerId } : {}),
-  });
+  const { control, isPending, isDirty, isValid, onSubmit, setValue } =
+    useMeterForm({
+      onSuccess,
+      ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
+      ...(initialControllerId !== undefined ? { initialControllerId } : {}),
+    });
 
   const selectedCompanyId = useWatch({ control, name: "companyId" });
   const watchedControllerId = useWatch({ control, name: "controllerId" });
 
   const selectedControllerId = watchedControllerId ?? initialControllerId;
 
-  const { controller: selectedController } = useControllerQuery(selectedControllerId);
+  const { controller: selectedController } =
+    useControllerQuery(selectedControllerId);
 
   const activeControllerMeters = useMemo(
     () =>
@@ -74,11 +76,17 @@ export const CreateMeterDialog = ({
       return undefined;
     }
 
-    if (selectedController.controllerType === "single" && activeControllerMeters.length >= 1) {
+    if (
+      selectedController.controllerType === "single" &&
+      activeControllerMeters.length >= 1
+    ) {
       return t("meters.createDialog.controllerRestriction.single");
     }
 
-    if (selectedController.controllerType === "multiple" && activeControllerMeters.length >= 8) {
+    if (
+      selectedController.controllerType === "multiple" &&
+      activeControllerMeters.length >= 8
+    ) {
       return t("meters.createDialog.controllerRestriction.multiple");
     }
 
@@ -150,12 +158,6 @@ export const CreateMeterDialog = ({
               controllerHelperText={controllerRestrictionMessage}
             />
 
-            {controllerRestrictionMessage && (
-              <Alert severity="error" variant="filled" sx={{ mt: 2 }}>
-                {controllerRestrictionMessage}
-              </Alert>
-            )}
-
             {!controllerRestrictionMessage && (
               <MeterMainFields
                 t={t}
@@ -166,9 +168,9 @@ export const CreateMeterDialog = ({
 
             {controllerRestrictionMessage ? (
               <Button
-                variant="outlined"
-                fullWidth
+                size="small"
                 onClick={onClose}
+                sx={{ alignSelf: "flex-end" }}
               >
                 {t("meters.createDialog.cancel")}
               </Button>
