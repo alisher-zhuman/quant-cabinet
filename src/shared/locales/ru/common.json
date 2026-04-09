@@ -443,6 +443,7 @@
     "title": "Счетчики",
     "error": "Не удалось загрузить счетчики",
     "actions": {
+      "create": "Добавить",
       "delete": "Удалить счетчик",
       "filters": "Фильтр"
     },
@@ -459,11 +460,35 @@
       "search": "По вашему запросу ничего не найдено"
     },
     "toast": {
+      "create": {
+        "loading": "Создание счетчика...",
+        "success": "Счетчик создан",
+        "error": "Не удалось создать счетчик"
+      },
       "delete": {
         "loading": "Удаление счетчика...",
         "success": "Счетчик удален",
         "error": "Не удалось удалить счетчик"
       }
+    },
+    "createDialog": {
+      "title": "Добавить счетчик",
+      "fields": {
+        "company": "Компания",
+        "companyPlaceholder": "Выберите компанию",
+        "controller": "Контроллер",
+        "controllerPlaceholder": "Выберите контроллер",
+        "serialNumber": "Серийный номер",
+        "locationType": "Тип локации",
+        "port": "Порт",
+        "accountNumber": "Лицевой счет",
+        "clientName": "ФИО",
+        "address": "Адрес",
+        "descriptions": "Описание"
+      },
+      "cancel": "Отмена",
+      "submit": "Создать",
+      "submitLoading": "Создание..."
     },
     "deleteDialog": {
       "title": "Удалить счетчик?",
@@ -650,6 +675,10 @@
     "requiredLastName": "Фамилия обязательна",
     "requiredPhoneNumber": "Номер телефона обязателен",
     "requiredSerialNumber": "Серийный номер обязателен",
+    "requiredController": "Контроллер обязателен",
+    "requiredPort": "Порт обязателен",
+    "requiredAccountNumber": "Лицевой счет обязателен",
+    "requiredClientName": "ФИО обязательно",
     "requiredSimIMSI": "Номер симкарты обязателен",
     "requiredSetInterval": "Интервал обязателен",
     "requiredDescriptions": "Описание обязательно",
@@ -658,7 +687,10 @@
     "minCompanyName": "Название компании должно содержать минимум 3 символа",
     "requiredAddress": "Адрес обязателен",
     "invalidEmail": "Введите корректный email",
+    "invalidPort": "Порт должен быть целым числом",
     "invalidSetInterval": "Интервал должен быть целым числом",
+    "minPort": "Минимальный порт: 1",
+    "maxPort": "Максимальный порт: 8",
     "minSetInterval": "Минимальный интервал: 1 час",
     "maxSetInterval": "Максимальный интервал: 255 часов",
     "requiredPassword": "Пароль обязателен"

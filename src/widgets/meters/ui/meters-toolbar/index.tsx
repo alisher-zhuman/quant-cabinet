@@ -1,5 +1,6 @@
 import type { TFunction } from "i18next";
 
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
@@ -18,6 +19,7 @@ interface Props {
   isArchived: boolean;
   isTemplateDownloadPending: boolean;
   hasActiveFilters: boolean;
+  onOpenCreateDialog: () => void;
   onDownloadTemplate: () => void;
   onOpenBulkUploadDialog: () => void;
   onResetFilters: () => void;
@@ -33,6 +35,7 @@ export const MetersToolbar = ({
   isArchived,
   isTemplateDownloadPending,
   hasActiveFilters,
+  onOpenCreateDialog,
   onDownloadTemplate,
   onOpenBulkUploadDialog,
   onResetFilters,
@@ -92,6 +95,14 @@ export const MetersToolbar = ({
             </IconButton>
           )}
         </Box>
+
+        <Button
+          variant="contained"
+          startIcon={<AddRoundedIcon />}
+          onClick={onOpenCreateDialog}
+        >
+          {t("meters.actions.create")}
+        </Button>
 
         <Button
           variant="outlined"

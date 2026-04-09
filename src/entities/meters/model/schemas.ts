@@ -85,6 +85,48 @@ export const MeterDetailsSchema = z.looseObject({
 
 export const MetersResponseSchema = createListResponseSchema(MeterRowSchema);
 
+export const MeterLocationTypeSchema = z.enum(["indoor", "well", "cabinet"]);
+
+export const createMeterFormSchema = (t: (key: string) => string) =>
+  z.object({
+    serialNumber: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredSerialNumber")),
+    controllerId: z.string().trim().min(1, t("validation.requiredController")),
+    companyId: z.string().trim().min(1, t("validation.requiredCompany")),
+    locationType: MeterLocationTypeSchema,
+    port: z
+      .string()
+      .trim()
+      .min(1, t("validation.requiredPort"))
+      .refine((value) => /^\d+$/.test(value), {
+        message: t("validation.invalidPort"),
+      })
+      .refine((value) => Number(value) >= 1, {
+        message: t("validation.minPort"),
+      })
+      .refine((value) => Number(value) <= 8, {
+        message: t("validation.maxPort"),
+      }),
+    accountNumber: z.string().trim().min(1, t("validation.requiredAccountNumber")),
+    clientName: z.string().trim().min(1, t("validation.requiredClientName")),
+    address: z.string().trim().min(1, t("validation.requiredAddress")),
+    descriptions: z.string().trim(),
+  });
+
+export const CreateMeterPayloadSchema = z.object({
+  serialNumber: z.string().trim().min(1),
+  controllerId: z.string().trim().min(1),
+  companyId: z.string().trim().min(1),
+  locationType: MeterLocationTypeSchema,
+  port: z.number().int().min(1).max(8),
+  accountNumber: z.string().trim().min(1),
+  clientName: z.string().trim().min(1),
+  address: z.string().trim().min(1),
+  descriptions: z.string().trim(),
+});
+
 export const DeleteMeterPayloadSchema = z.object({
   id: z.string(),
 });

@@ -43,7 +43,7 @@ export const useMetersWidget = () => {
     isValveLockedByManager: filters.isValveLockedByManager,
   });
 
-  const dialogs = useMeterDialogs();
+  const dialogs = useMeterDialogs(filters.handleArchivedChange);
 
   const handleApplyFilters = (nextFilters: {
     companyId: string;
@@ -101,6 +101,7 @@ export const useMetersWidget = () => {
       isArchived: filters.isArchived,
       isTemplateDownloadPending: dialogs.isTemplateDownloadPending,
       hasActiveFilters: filters.hasActiveFilters,
+      onOpenCreateDialog: dialogs.handleOpenCreateDialog,
       onDownloadTemplate: dialogs.handleDownloadTemplate,
       onOpenBulkUploadDialog: dialogs.handleOpenBulkUploadDialog,
       onResetFilters: filters.handleResetFilters,
@@ -112,6 +113,7 @@ export const useMetersWidget = () => {
       t,
       meterToDelete: dialogs.deleteDialogProps.meterToDelete,
       isDeletePending: dialogs.deleteDialogProps.isDeletePending,
+      isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       filters: {
@@ -125,8 +127,10 @@ export const useMetersWidget = () => {
       },
       onCloseDeleteDialog: dialogs.deleteDialogProps.onCloseDeleteDialog,
       onConfirmDelete: dialogs.deleteDialogProps.onConfirmDelete,
+      onCloseCreateDialog: dialogs.handleCloseCreateDialog,
       onCloseBulkUploadDialog: dialogs.handleCloseBulkUploadDialog,
       onCloseFiltersDialog: dialogs.handleCloseFiltersDialog,
+      onCreateSuccess: dialogs.handleCreateSuccess,
       onBulkUploadSuccess: dialogs.handleBulkUploadSuccess,
       onApplyFilters: handleApplyFilters,
     },

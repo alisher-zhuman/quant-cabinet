@@ -443,6 +443,7 @@
     "title": "Эсептегичтер",
     "error": "Эсептегичтерди жүктөө мүмкүн болгон жок",
     "actions": {
+      "create": "Кошуу",
       "delete": "Эсептегичти өчүрүү",
       "filters": "Фильтр"
     },
@@ -459,11 +460,35 @@
       "search": "Сиздин сурооңуз боюнча эч нерсе табылган жок"
     },
     "toast": {
+      "create": {
+        "loading": "Эсептегич түзүлүүдө...",
+        "success": "Эсептегич түзүлдү",
+        "error": "Эсептегичти түзүү мүмкүн болгон жок"
+      },
       "delete": {
         "loading": "Эсептегич өчүрүлүүдө...",
         "success": "Эсептегич өчүрүлдү",
         "error": "Эсептегичти өчүрүү мүмкүн болгон жок"
       }
+    },
+    "createDialog": {
+      "title": "Эсептегич кошуу",
+      "fields": {
+        "company": "Компания",
+        "companyPlaceholder": "Компанияны тандаңыз",
+        "controller": "Контроллер",
+        "controllerPlaceholder": "Контроллерди тандаңыз",
+        "serialNumber": "Сериялык номер",
+        "locationType": "Локациянын түрү",
+        "port": "Порт",
+        "accountNumber": "Жеке эсеп",
+        "clientName": "ФИО",
+        "address": "Дарек",
+        "descriptions": "Сүрөттөмө"
+      },
+      "cancel": "Жокко чыгаруу",
+      "submit": "Түзүү",
+      "submitLoading": "Түзүлүүдө..."
     },
     "deleteDialog": {
       "title": "Эсептегичти өчүрөсүзбү?",
@@ -650,6 +675,10 @@
     "requiredLastName": "Фамилиясы милдеттүү",
     "requiredPhoneNumber": "Телефон номери милдеттүү",
     "requiredSerialNumber": "Сериялык номер милдеттүү",
+    "requiredController": "Контроллер милдеттүү",
+    "requiredPort": "Порт милдеттүү",
+    "requiredAccountNumber": "Жеке эсеп милдеттүү",
+    "requiredClientName": "ФИО милдеттүү",
     "requiredSimIMSI": "SIM картанын номери милдеттүү",
     "requiredSetInterval": "Интервал милдеттүү",
     "requiredDescriptions": "Сүрөттөмө милдеттүү",
@@ -658,7 +687,10 @@
     "minCompanyName": "Компаниянын аталышы жок дегенде 3 символдон турушу керек",
     "requiredAddress": "Дарек милдеттүү",
     "invalidEmail": "Туура email киргизиңиз",
+    "invalidPort": "Порт бүтүн сан болушу керек",
     "invalidSetInterval": "Интервал бүтүн сан болушу керек",
+    "minPort": "Минималдуу порт: 1",
+    "maxPort": "Максималдуу порт: 8",
     "minSetInterval": "Минималдуу интервал: 1 саат",
     "maxSetInterval": "Максималдуу интервал: 255 саат",
     "requiredPassword": "Сырсөз милдеттүү"

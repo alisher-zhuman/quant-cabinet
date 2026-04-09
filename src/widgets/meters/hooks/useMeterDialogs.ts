@@ -5,7 +5,8 @@ import { useDeleteMeter } from "@features/meters";
 
 import { type MeterRow } from "@entities/meters";
 
-export const useMeterDialogs = () => {
+export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isBulkUploadDialogOpen, setIsBulkUploadDialogOpen] = useState(false);
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
@@ -27,6 +28,7 @@ export const useMeterDialogs = () => {
   };
 
   return {
+    isCreateDialogOpen,
     setMeterToDelete,
     isBulkUploadDialogOpen,
     isFiltersDialogOpen,
@@ -40,6 +42,16 @@ export const useMeterDialogs = () => {
     handleDownloadTemplate: () => {
       downloadTemplateMutation.mutate();
     },
+    handleOpenCreateDialog: () => {
+      setIsCreateDialogOpen(true);
+    },
+    handleCloseCreateDialog: () => {
+      setIsCreateDialogOpen(false);
+    },
+    handleCreateSuccess: () => {
+      setIsCreateDialogOpen(false);
+      setIsArchived(false);
+    },
     handleOpenBulkUploadDialog: () => {
       setIsBulkUploadDialogOpen(true);
     },
@@ -48,6 +60,7 @@ export const useMeterDialogs = () => {
     },
     handleBulkUploadSuccess: () => {
       setIsBulkUploadDialogOpen(false);
+      setIsArchived(false);
     },
     handleOpenFiltersDialog: () => {
       setIsFiltersDialogOpen(true);

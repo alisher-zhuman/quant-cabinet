@@ -1,7 +1,10 @@
 import type { TFunction } from "i18next";
 
 import { ControllerBulkUploadDialog } from "@features/controllers";
-import { MeterFiltersDialog } from "@features/meters";
+import {
+  CreateMeterDialog,
+  MeterFiltersDialog,
+} from "@features/meters";
 
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 
@@ -9,6 +12,7 @@ interface Props {
   t: TFunction;
   meterToDelete: { id: string } | null;
   isDeletePending: boolean;
+  isCreateDialogOpen: boolean;
   isBulkUploadDialogOpen: boolean;
   isFiltersDialogOpen: boolean;
   filters: {
@@ -22,8 +26,10 @@ interface Props {
   };
   onCloseDeleteDialog: () => void;
   onConfirmDelete: () => void;
+  onCloseCreateDialog: () => void;
   onCloseBulkUploadDialog: () => void;
   onCloseFiltersDialog: () => void;
+  onCreateSuccess: () => void;
   onBulkUploadSuccess: () => void;
   onApplyFilters: (filters: {
     companyId: string;
@@ -40,13 +46,16 @@ export const MetersDialogs = ({
   t,
   meterToDelete,
   isDeletePending,
+  isCreateDialogOpen,
   isBulkUploadDialogOpen,
   isFiltersDialogOpen,
   filters,
   onCloseDeleteDialog,
   onConfirmDelete,
+  onCloseCreateDialog,
   onCloseBulkUploadDialog,
   onCloseFiltersDialog,
+  onCreateSuccess,
   onBulkUploadSuccess,
   onApplyFilters,
 }: Props) => (
@@ -61,6 +70,14 @@ export const MetersDialogs = ({
       onClose={onCloseDeleteDialog}
       onConfirm={onConfirmDelete}
     />
+
+    {isCreateDialogOpen && (
+      <CreateMeterDialog
+        open={isCreateDialogOpen}
+        onClose={onCloseCreateDialog}
+        onSuccess={onCreateSuccess}
+      />
+    )}
 
     {isBulkUploadDialogOpen && (
       <ControllerBulkUploadDialog

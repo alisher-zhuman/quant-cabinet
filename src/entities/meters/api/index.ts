@@ -3,16 +3,24 @@ import { API_PATHS } from "@shared/constants";
 import { buildListQueryParams } from "@shared/helpers";
 
 import {
+  CreateMeterPayloadSchema,
   DeleteMeterPayloadSchema,
   MeterDetailsSchema,
   MetersResponseSchema,
 } from "../model/schemas";
 import type {
+  CreateMeterPayload,
   DeleteMeterPayload,
   MeterDetails,
   MetersListQueryParams,
   MetersResponse,
 } from "../model/types";
+
+export const createMeter = async (payload: CreateMeterPayload): Promise<void> => {
+  const validPayload = CreateMeterPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.METERS, validPayload);
+};
 
 export const getMeters = async ({
   page = 1,
