@@ -1,5 +1,6 @@
 import type { TFunction } from "i18next";
 
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Badge from "@mui/material/Badge";
@@ -19,6 +20,7 @@ interface Props {
   onOpenFiltersDialog: () => void;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
+  onOpenCreateDialog: () => void;
 }
 
 export const CompanyMetersToolbar = ({
@@ -31,6 +33,7 @@ export const CompanyMetersToolbar = ({
   onOpenFiltersDialog,
   onSearchChange,
   onArchivedChange,
+  onOpenCreateDialog,
 }: Props) => (
   <SearchTabsToolbar
     search={search}
@@ -57,6 +60,14 @@ export const CompanyMetersToolbar = ({
             onClick={onOpenFiltersDialog}
           >
             {t("meters.actions.filters")}
+          </Button>
+
+          <Button
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={onOpenCreateDialog}
+          >
+            {t("meters.actions.add")}
           </Button>
         </Box>
 

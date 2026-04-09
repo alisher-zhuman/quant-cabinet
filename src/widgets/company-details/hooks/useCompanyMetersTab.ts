@@ -47,10 +47,13 @@ interface CompanyMetersTab {
     onOpenFiltersDialog: () => void;
     onSearchChange: (value: string) => void;
     onArchivedChange: (value: boolean) => void;
+    onOpenCreateDialog: () => void;
   };
   dialogsProps: {
     t: ReturnType<typeof useTranslation>["t"];
     meterToDelete: MeterRow | null;
+    meterToEdit: MeterRow | null;
+    isCreateDialogOpen: boolean;
     isDeletePending: boolean;
     isFiltersDialogOpen: boolean;
     filters: {
@@ -73,6 +76,10 @@ interface CompanyMetersTab {
       address: string;
       isValveLockedByManager: string;
     }) => void;
+    onCloseCreateDialog: () => void;
+    onCloseEditDialog: () => void;
+    onEditSuccess: () => void;
+    onCreateSuccess: () => void;
   };
 }
 
@@ -81,6 +88,8 @@ export const useCompanyMetersTab = ({
   isActive,
 }: Params): CompanyMetersTab => {
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
+  const [meterToEdit, setMeterToEdit] = useState<MeterRow | null>(null);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
   const { t } = useTranslation();
 
@@ -94,6 +103,15 @@ export const useCompanyMetersTab = ({
   };
 
   const deleteMeterMutation = useDeleteMeter(handleCloseDeleteDialog);
+
+  const handleOpenCreateDialog = () => setIsCreateDialogOpen(true);
+  const handleCloseCreateDialog = () => setIsCreateDialogOpen(false);
+
+  const handleOpenEditDialog = (meter: MeterRow) => setMeterToEdit(meter);
+  const handleCloseEditDialog = () => setMeterToEdit(null);
+
+  const handleEditSuccess = () => setMeterToEdit(null);
+  const handleCreateSuccess = () => setIsCreateDialogOpen(false);
 
   const {
     meters,
@@ -132,7 +150,7 @@ export const useCompanyMetersTab = ({
 
   const meterColumns = useMemo(
     () =>
-      createMeterColumns(t, setMeterToDelete, () => {}, {
+      createMeterColumns(t, setMeterToDelete, handleOpenEditDialog, {
         showCompanyColumn: false,
       }),
     [t],
@@ -176,10 +194,13 @@ export const useCompanyMetersTab = ({
       onOpenFiltersDialog: filtersState.handleOpenFiltersDialog,
       onSearchChange: filtersState.handleSearchChange,
       onArchivedChange: filtersState.handleArchivedChange,
+      onOpenCreateDialog: handleOpenCreateDialog,
     },
     dialogsProps: {
       t,
       meterToDelete,
+      meterToEdit,
+      isCreateDialogOpen,
       isDeletePending: deleteMeterMutation.isPending,
       isFiltersDialogOpen: filtersState.isFiltersDialogOpen,
       filters: {
@@ -195,6 +216,10 @@ export const useCompanyMetersTab = ({
       onConfirmDelete: handleConfirmDelete,
       onCloseFiltersDialog: filtersState.handleCloseFiltersDialog,
       onApplyFilters: filtersState.handleApplyFilters,
+      onCloseCreateDialog: handleCloseCreateDialog,
+      onCloseEditDialog: handleCloseEditDialog,
+      onEditSuccess: handleEditSuccess,
+      onCreateSuccess: handleCreateSuccess,
     },
   };
 };
