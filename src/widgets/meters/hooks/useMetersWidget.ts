@@ -58,8 +58,9 @@ export const useMetersWidget = () => {
     dialogs.handleCloseFiltersDialog();
   };
 
-  const columns = useMemo(() => createMeterColumns(t, dialogs.setMeterToDelete), [
+  const columns = useMemo(() => createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog), [
     dialogs.setMeterToDelete,
+    dialogs.handleOpenEditDialog,
     t,
   ]);
 
@@ -112,6 +113,7 @@ export const useMetersWidget = () => {
     dialogsProps: {
       t,
       meterToDelete: dialogs.deleteDialogProps.meterToDelete,
+      meterToEdit: dialogs.editDialogProps.meterToEdit,
       isDeletePending: dialogs.deleteDialogProps.isDeletePending,
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
@@ -127,10 +129,12 @@ export const useMetersWidget = () => {
       },
       onCloseDeleteDialog: dialogs.deleteDialogProps.onCloseDeleteDialog,
       onConfirmDelete: dialogs.deleteDialogProps.onConfirmDelete,
+      onCloseEditDialog: dialogs.editDialogProps.onCloseEditDialog,
       onCloseCreateDialog: dialogs.handleCloseCreateDialog,
       onCloseBulkUploadDialog: dialogs.handleCloseBulkUploadDialog,
       onCloseFiltersDialog: dialogs.handleCloseFiltersDialog,
       onCreateSuccess: dialogs.handleCreateSuccess,
+      onEditSuccess: dialogs.handleEditSuccess,
       onBulkUploadSuccess: dialogs.handleBulkUploadSuccess,
       onApplyFilters: handleApplyFilters,
     },

@@ -6,17 +6,22 @@ import type {
   DeleteMeterPayloadSchema,
   MeterDetailsSchema,
   MeterLocationTypeSchema,
+  MeterPendingCommandSchema,
   MeterRowSchema,
   MetersResponseSchema,
+  updateMeterFormSchema,
+  UpdateMeterPayloadSchema,
 } from "./schemas";
 
 export type MeterRow = ZodInfer<typeof MeterRowSchema>;
 export type MeterDetails = ZodInfer<typeof MeterDetailsSchema>;
 export type MetersResponse = ZodInfer<typeof MetersResponseSchema>;
 export type MeterFormValues = ZodInfer<ReturnType<typeof createMeterFormSchema>>;
+export type MeterEditFormValues = ZodInfer<ReturnType<typeof updateMeterFormSchema>>;
 export type CreateMeterPayload = ZodInfer<typeof CreateMeterPayloadSchema>;
-
+export type UpdateMeterPayload = ZodInfer<typeof UpdateMeterPayloadSchema>;
 export type MeterLocationType = ZodInfer<typeof MeterLocationTypeSchema>;
+export type MeterPendingCommand = ZodInfer<typeof MeterPendingCommandSchema>;
 export type DeleteMeterPayload = ZodInfer<typeof DeleteMeterPayloadSchema>;
 
 export interface MetersListQueryParams {

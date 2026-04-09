@@ -132,7 +132,7 @@ export const useCompanyMetersTab = ({
 
   const meterColumns = useMemo(
     () =>
-      createMeterColumns(t, setMeterToDelete, {
+      createMeterColumns(t, setMeterToDelete, () => {}, {
         showCompanyColumn: false,
       }),
     [t],

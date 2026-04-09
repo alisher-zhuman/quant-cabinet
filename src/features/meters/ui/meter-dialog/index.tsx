@@ -2,24 +2,30 @@ import { useEffect, useMemo } from "react";
 
 import { useWatch } from "react-hook-form";
 
+import type { Control } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
+import type { MeterFormValues } from "@entities/meters";
+import { useMeterQuery } from "@entities/meters";
 
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 
-import { useMeterForm } from "../../hooks/useMeterForm";
+import { useMeterDialogForm } from "../../hooks/useMeterDialogForm";
 import { MeterContextFields } from "../meter-context-fields";
 import { MeterMainFields } from "../meter-main-fields";
 
 interface Props {
+  meterId?: string | null;
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
@@ -27,7 +33,8 @@ interface Props {
   initialControllerId?: string;
 }
 
-export const CreateMeterDialog = ({
+export const MeterDialog = ({
+  meterId,
   open,
   onClose,
   onSuccess,
@@ -44,14 +51,17 @@ export const CreateMeterDialog = ({
     enabled: !initialCompanyId,
   });
 
+  const { meter, isLoading: isMeterLoading } = useMeterQuery(meterId ?? "");
+
   const companyOptions = useMemo(
     () =>
       companies.map((company) => ({ value: company.id, label: company.name })),
     [companies],
   );
 
-  const { control, isPending, isDirty, isValid, onSubmit, setValue } =
-    useMeterForm({
+  const { control, isPending, isDirty, isValid, isEditMode, onSubmit, setValue } =
+    useMeterDialogForm({
+      meter,
       onSuccess,
       ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
       ...(initialControllerId !== undefined ? { initialControllerId } : {}),
@@ -67,8 +77,8 @@ export const CreateMeterDialog = ({
 
   const activeControllerMeters = useMemo(
     () =>
-      selectedController?.meters?.filter((meter) => !meter.isArchived) ?? [],
-    [selectedController?.meters],
+      selectedController?.meters?.filter((m) => !m.isArchived && m.id !== meter?.id) ?? [],
+    [selectedController?.meters, meter?.id],
   );
 
   const controllerRestrictionMessage = useMemo(() => {
@@ -123,8 +133,17 @@ export const CreateMeterDialog = ({
     [t],
   );
 
+  const pendingCommandOptions = useMemo(
+    () => [
+      { value: "none", label: t("meters.details.pendingCommand.none") },
+      { value: "open", label: t("meters.details.pendingCommand.open") },
+      { value: "close", label: t("meters.details.pendingCommand.close") },
+    ],
+    [t],
+  );
+
   useEffect(() => {
-    if (initialCompanyId || initialControllerId) {
+    if (initialCompanyId || initialControllerId || isEditMode) {
       return;
     }
 
@@ -132,7 +151,7 @@ export const CreateMeterDialog = ({
       shouldDirty: false,
       shouldValidate: true,
     });
-  }, [initialCompanyId, initialControllerId, selectedCompanyId, setValue]);
+  }, [initialCompanyId, initialControllerId, selectedCompanyId, setValue, isEditMode]);
 
   return (
     <Dialog
@@ -141,14 +160,21 @@ export const CreateMeterDialog = ({
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{t("meters.createDialog.title")}</DialogTitle>
+      <DialogTitle>
+        {t(isEditMode ? "meters.editDialog.title" : "meters.createDialog.title")}
+      </DialogTitle>
 
       <DialogContent>
-        <form onSubmit={onSubmit}>
-          <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
+        {isMeterLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <form onSubmit={onSubmit}>
+            <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
             <MeterContextFields
               t={t}
-              control={control}
+              control={control as unknown as Control<MeterFormValues>}
               initialCompanyId={initialCompanyId}
               initialControllerId={initialControllerId}
               isCompaniesLoading={isCompaniesLoading}
@@ -163,6 +189,8 @@ export const CreateMeterDialog = ({
                 t={t}
                 control={control}
                 locationTypeOptions={locationTypeOptions}
+                isEditMode={isEditMode}
+                pendingCommandOptions={pendingCommandOptions}
               />
             )}
 
@@ -172,14 +200,14 @@ export const CreateMeterDialog = ({
                 onClick={onClose}
                 sx={{ alignSelf: "flex-end" }}
               >
-                {t("meters.createDialog.cancel")}
+                {t(isEditMode ? "meters.editDialog.cancel" : "meters.createDialog.cancel")}
               </Button>
             ) : (
               <FormActions
                 onCancel={onClose}
-                cancelLabel={t("meters.createDialog.cancel")}
-                submitLabel={t("meters.createDialog.submit")}
-                submitLabelLoading={t("meters.createDialog.submitLoading")}
+                cancelLabel={t(isEditMode ? "meters.editDialog.cancel" : "meters.createDialog.cancel")}
+                submitLabel={t(isEditMode ? "meters.editDialog.submit" : "meters.createDialog.submit")}
+                submitLabelLoading={t(isEditMode ? "meters.editDialog.submitLoading" : "meters.createDialog.submitLoading")}
                 isSubmitting={isPending}
                 isDirty={isDirty}
                 submitProps={{ disabled: !isValid }}
@@ -187,6 +215,7 @@ export const CreateMeterDialog = ({
             )}
           </FormFieldset>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   );
