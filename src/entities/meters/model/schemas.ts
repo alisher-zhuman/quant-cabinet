@@ -127,6 +127,22 @@ export const CreateMeterPayloadSchema = z.object({
   descriptions: z.string().trim(),
 });
 
+export const UpdateMeterPayloadSchema = z.object({
+  meterId: z.string().trim().min(1),
+  serialNumber: z.string().trim().min(1),
+  controllerId: z.string().trim().min(1),
+  companyId: z.string().trim().min(1),
+  locationType: MeterLocationTypeSchema,
+  port: z.number().int().min(1).max(8),
+  accountNumber: z.string().trim().min(1),
+  clientName: z.string().trim().min(1),
+  address: z.string().trim().min(1),
+  descriptions: z.string().trim(),
+  pendingCommand: z.string().optional(),
+  isValveLockedByManager: z.boolean().optional(),
+  isArchived: z.boolean().optional(),
+});
+
 export const DeleteMeterPayloadSchema = z.object({
   id: z.string(),
 });

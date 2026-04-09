@@ -13,6 +13,7 @@ export const API_PATHS = {
   BULK_UPLOAD_TEMPLATE: "/bulk-upload/template",
   BULK_UPLOAD_IMPORT: "/bulk-upload/import",
   METERS: "/meters",
+  METERS_UPDATE: "/meters/update",
   GET_METER: (id: string) => `/meters/${id}`,
   GET_READINGS: (meterId: string) => `/readings/${meterId}`,
 };

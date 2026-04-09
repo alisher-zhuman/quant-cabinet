@@ -7,6 +7,7 @@ import {
   DeleteMeterPayloadSchema,
   MeterDetailsSchema,
   MetersResponseSchema,
+  UpdateMeterPayloadSchema,
 } from "../model/schemas";
 import type {
   CreateMeterPayload,
@@ -14,12 +15,19 @@ import type {
   MeterDetails,
   MetersListQueryParams,
   MetersResponse,
+  UpdateMeterPayload,
 } from "../model/types";
 
 export const createMeter = async (payload: CreateMeterPayload): Promise<void> => {
   const validPayload = CreateMeterPayloadSchema.parse(payload);
 
   await api.post(API_PATHS.METERS, validPayload);
+};
+
+export const updateMeter = async (payload: UpdateMeterPayload): Promise<void> => {
+  const validPayload = UpdateMeterPayloadSchema.parse(payload);
+
+  await api.post(API_PATHS.METERS_UPDATE, validPayload);
 };
 
 export const getMeters = async ({
