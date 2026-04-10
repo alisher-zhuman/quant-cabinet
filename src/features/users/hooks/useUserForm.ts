@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 import type { UserFormValues, UserRow } from "@entities/users";
 import { createUserFormSchema, updateUserFormSchema } from "@entities/users";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useCreateUser } from "./useCreateUser";
 import { useUpdateUser } from "./useUpdateUser";
-import { useAuthStore } from "@shared/stores";
 
 interface Params {
   user?: UserRow | null | undefined;

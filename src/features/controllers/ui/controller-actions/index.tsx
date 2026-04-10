@@ -17,7 +17,7 @@ interface Props {
   onEdit: (controller: ControllerRow) => void;
   onTransfer: (controller: ControllerRow) => void;
   onDelete: (controller: ControllerRow) => void;
-  role?: string | null;
+  role?: string | null | undefined;
 }
 
 export const ControllerActions = ({

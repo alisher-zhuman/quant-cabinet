@@ -20,6 +20,7 @@ interface Props {
   locationType: string;
   archivedStatus: string;
   valveLockStatus: string;
+  role?: string | null;
 }
 
 export const MeterInfoSection = ({

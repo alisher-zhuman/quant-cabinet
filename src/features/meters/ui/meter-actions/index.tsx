@@ -14,7 +14,7 @@ interface Props {
   meter: MeterRow;
   onDelete: (meter: MeterRow) => void;
   onEdit: (meter: MeterRow) => void;
-  role?: string | null;
+  role?: string | null | undefined;
 }
 
 export const MeterActions = ({
@@ -23,6 +23,7 @@ export const MeterActions = ({
   onDelete,
   onEdit,
   role,
+  meter,
 }: Props) => {
   const handleDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();

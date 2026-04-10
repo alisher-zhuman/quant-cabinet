@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import Box from "@mui/material/Box";
 
 import { COLORS } from "@shared/constants";
+import { useAuthStore } from "@shared/stores";
 
 import { NAVBAR_LINKS } from "../../constants";
 
@@ -16,6 +17,8 @@ export const Navbar = () => {
     if (!role) return false;
     return (link.allowedRoles as unknown as string[]).includes(role);
   });
+
+  return (
     <Box
       component="nav"
       sx={{

@@ -11,10 +11,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useCompaniesQuery } from "@entities/companies";
 import type { UserRow } from "@entities/users";
 
+import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
-
-import { useAuthStore } from "@shared/stores";
 
 import { useUserForm } from "../../hooks/useUserForm";
 import { UserCompanyFields } from "../user-company-fields";
@@ -51,7 +50,7 @@ export const CreateUserDialog = ({
     () => companies.map((company) => ({ value: company.id, label: company.name })),
     [companies],
   );
-
+  const roleOptions = useMemo(
     () => {
       const options = [
         { value: "admin", label: t("profile.roles.admin") },

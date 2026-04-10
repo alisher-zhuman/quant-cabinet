@@ -14,7 +14,8 @@ import type { Column } from "@shared/types";
 
 import { getStatusColor, getTypeStyles } from "../helpers";
 import { ControllerActions } from "../ui/controller-actions";
-
+export const createControllerColumns = (
+  t: TFunction,
   onEdit: (controller: ControllerRow) => void,
   onTransfer: (controller: ControllerRow) => void,
   onDelete: (controller: ControllerRow) => void,

@@ -14,7 +14,7 @@ interface Props {
   onEdit: (user: UserRow) => void;
   onDelete: (user: UserRow) => void;
   user: UserRow;
-  currentRole?: string | null;
+  currentRole?: string | null | undefined;
 }
 
 export const UserActions = ({

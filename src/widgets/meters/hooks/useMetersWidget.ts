@@ -8,7 +8,6 @@ import { createMeterColumns } from "@features/meters";
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
-
 import { useAuthStore } from "@shared/stores";
 
 import { useMeterDialogs } from "./useMeterDialogs";
