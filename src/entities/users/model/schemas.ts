@@ -109,43 +109,23 @@ export const updateUserFormSchema = (
       }
     });
 
-export const CreateUserPayloadSchema = z
-  .object({
-    email: z.string().trim().pipe(z.email()),
-    firstName: z.string().trim().min(1),
-    lastName: z.string().trim().min(1),
-    role: UserRoleSchema,
-    phoneNumber: z.string().trim().min(1),
-    descriptions: z.string().trim().min(1),
-    company: z.string().trim().optional(),
-  })
-  .superRefine((values, context) => {
-    if (values.role !== "admin" && !values.company) {
-      context.addIssue({
-        code: "custom",
-        message: "Company is required",
-        path: ["company"],
-      });
-    }
-  });
+export const CreateUserPayloadSchema = z.object({
+  email: z.string().trim().pipe(z.email()),
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1),
+  role: UserRoleSchema,
+  phoneNumber: z.string().trim().min(1),
+  descriptions: z.string().trim().min(1),
+  company: z.string().trim().optional(),
+});
 
-export const UpdateUserPayloadSchema = z
-  .object({
-    userId: z.string(),
-    firstName: z.string().trim().min(1),
-    lastName: z.string().trim().min(1),
-    role: UserRoleSchema,
-    phoneNumber: z.string().trim().min(1),
-    descriptions: z.string().trim().min(1),
-    company: z.string().trim(),
-    isArchived: z.boolean(),
-  })
-  .superRefine((values, context) => {
-    if (values.role !== "admin" && !values.company) {
-      context.addIssue({
-        code: "custom",
-        message: "Company is required",
-        path: ["company"],
-      });
-    }
-  });
+export const UpdateUserPayloadSchema = z.object({
+  userId: z.string(),
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1),
+  role: UserRoleSchema,
+  phoneNumber: z.string().trim().min(1),
+  descriptions: z.string().trim().min(1),
+  company: z.string().trim().optional(),
+  isArchived: z.boolean(),
+});

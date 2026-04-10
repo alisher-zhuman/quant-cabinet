@@ -12,6 +12,8 @@ import {
   updateControllerFormSchema,
 } from "@entities/controllers";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useCreateController } from "./useCreateController";
 import { useUpdateController } from "./useUpdateController";
 
@@ -25,9 +27,9 @@ const getDefaultValues = (
   controller?: ControllerRow | null,
   initialCompanyId?: string,
 ): ControllerFormValues => ({
-  serialNumber: "",
-  companyId: initialCompanyId ?? "",
-  type: "single",
+  serialNumber: controller?.serialNumber ?? "",
+  companyId: controller?.company?.id ?? initialCompanyId ?? "",
+  type: controller?.controllerType === "multiple" ? "multiple" : "single",
   simIMSI: controller?.simIMSI ?? "",
   phoneNumber: controller?.phoneNumber ?? "",
   descriptions: controller?.descriptions ?? "",
@@ -44,6 +46,8 @@ export const useControllerForm = ({
 }: Params = {}) => {
   const { t } = useTranslation();
 
+  const currentRole = useAuthStore((state) => state.role);
+
   const defaultValues = useMemo(
     () => getDefaultValues(controller, initialCompanyId),
     [controller, initialCompanyId],
@@ -58,7 +62,9 @@ export const useControllerForm = ({
     formState: { isDirty, isValid },
   } = useForm<ControllerFormValues>({
     resolver: zodResolver(
-      isEditMode ? updateControllerFormSchema(t) : createControllerFormSchema(t),
+      isEditMode
+        ? updateControllerFormSchema(t, currentRole)
+        : createControllerFormSchema(t, currentRole),
     ),
     mode: "onChange",
     defaultValues,

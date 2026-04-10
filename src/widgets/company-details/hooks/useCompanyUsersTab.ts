@@ -15,6 +15,7 @@ import {
   useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
 import {
@@ -125,6 +126,8 @@ export const useCompanyUsersTab = ({
     setPage,
   });
 
+  const role = useAuthStore((state) => state.role);
+
   const {
     users,
     total,
@@ -138,7 +141,7 @@ export const useCompanyUsersTab = ({
     limit,
     search: debouncedSearch,
     isArchived,
-    companyId,
+    companyId: role === "admin" ? companyId : undefined,
     enabled: isActive && Boolean(companyId),
   });
 

@@ -19,6 +19,7 @@ interface Props {
   isCompaniesLoading: boolean;
   companyOptions: Option[];
   typeOptions: Option[];
+  currentRole?: string | null;
 }
 
 export const ControllerMainFields = ({
@@ -29,6 +30,7 @@ export const ControllerMainFields = ({
   isCompaniesLoading,
   companyOptions,
   typeOptions,
+  currentRole,
 }: Props) => {
   if (isEditMode) {
     return null;
@@ -43,7 +45,7 @@ export const ControllerMainFields = ({
         fullWidth
       />
 
-      {!initialCompanyId && (
+      {!initialCompanyId && currentRole !== "manager" && (
         <FormSelectField
           name="companyId"
           control={control}

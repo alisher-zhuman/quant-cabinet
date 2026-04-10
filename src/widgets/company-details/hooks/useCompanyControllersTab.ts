@@ -11,6 +11,7 @@ import {
 } from "@entities/controllers";
 
 import { ROUTES } from "@shared/constants";
+import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
 import { useCompanyControllerDialogs } from "./useCompanyControllerDialogs";
@@ -90,6 +91,8 @@ export const useCompanyControllersTab = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const role = useAuthStore((state) => state.role);
+
   const filtersState = useCompanyControllerFiltersState({ isActive });
   const dialogs = useCompanyControllerDialogs({
     setIsArchived: filtersState.setIsArchived,
@@ -105,7 +108,7 @@ export const useCompanyControllersTab = ({
     isError,
     isFetching,
   } = useControllersQuery({
-    companyId,
+    companyId: role === "admin" ? companyId : undefined,
     page: filtersState.page,
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,

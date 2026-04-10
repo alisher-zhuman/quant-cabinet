@@ -10,7 +10,7 @@ interface Params {
   limit: number;
   search: string;
   isArchived: boolean;
-  companyId: string;
+  companyId?: string | undefined;
   controllerId: string;
   locationType: string;
   meterStatus: string;
@@ -26,14 +26,14 @@ export const useMetersQuery = ({
   limit,
   search,
   isArchived,
-  companyId,
-  controllerId,
-  locationType,
-  meterStatus,
-  accountNumber,
-  clientName,
-  address,
-  isValveLockedByManager,
+  companyId = "",
+  controllerId = "",
+  locationType = "",
+  meterStatus = "",
+  accountNumber = "",
+  clientName = "",
+  address = "",
+  isValveLockedByManager = "",
   enabled = true,
 }: Params) => {
   const { t } = useTranslation();

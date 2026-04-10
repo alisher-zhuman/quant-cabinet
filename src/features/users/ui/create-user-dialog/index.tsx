@@ -44,6 +44,7 @@ export const CreateUserDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
+    enabled: currentRole !== "manager",
   });
 
   const companyOptions = useMemo(

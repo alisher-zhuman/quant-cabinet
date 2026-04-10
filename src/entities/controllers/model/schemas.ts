@@ -106,70 +106,96 @@ export const DeleteControllerPayloadSchema = z.object({
 
 export const ControllerTypeSchema = z.enum(["single", "multiple"]);
 
-export const createControllerFormSchema = (t: (key: string) => string) =>
-  z.object({
-    serialNumber: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredSerialNumber")),
-    companyId: z.string().trim().min(1, t("validation.requiredCompany")),
-    type: ControllerTypeSchema,
-    simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
-    phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-    descriptions: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredDescriptions")),
-    correctTime: z.boolean(),
-    correctInterval: z.boolean(),
-    setInterval: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredSetInterval"))
-      .refine((value) => /^\d+$/.test(value), {
-        message: t("validation.invalidSetInterval"),
-      })
-      .refine((value) => Number(value) >= 1, {
-        message: t("validation.minSetInterval"),
-      })
-      .refine((value) => Number(value) <= 255, {
-        message: t("validation.maxSetInterval"),
-      }),
-    isArchived: z.boolean(),
-  });
+export const createControllerFormSchema = (
+  t: (key: string) => string,
+  currentRole?: string | null,
+) =>
+  z
+    .object({
+      serialNumber: z
+        .string()
+        .trim()
+        .min(1, t("validation.requiredSerialNumber")),
+      companyId: z.string().trim(),
+      type: ControllerTypeSchema,
+      simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
+      phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
+      descriptions: z
+        .string()
+        .trim()
+        .min(1, t("validation.requiredDescriptions")),
+      correctTime: z.boolean(),
+      correctInterval: z.boolean(),
+      setInterval: z
+        .string()
+        .trim()
+        .min(1, t("validation.requiredSetInterval"))
+        .refine((value) => /^\d+$/.test(value), {
+          message: t("validation.invalidSetInterval"),
+        })
+        .refine((value) => Number(value) >= 1, {
+          message: t("validation.minSetInterval"),
+        })
+        .refine((value) => Number(value) <= 255, {
+          message: t("validation.maxSetInterval"),
+        }),
+      isArchived: z.boolean(),
+    })
+    .superRefine((values, context) => {
+      if (!values.companyId && currentRole !== "manager") {
+        context.addIssue({
+          code: "custom",
+          message: t("validation.requiredCompany"),
+          path: ["companyId"],
+        });
+      }
+    });
 
-export const updateControllerFormSchema = (t: (key: string) => string) =>
-  z.object({
-    serialNumber: z.string().trim(),
-    companyId: z.string().trim(),
-    type: ControllerTypeSchema,
-    simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
-    phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-    descriptions: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredDescriptions")),
-    correctTime: z.boolean(),
-    correctInterval: z.boolean(),
-    setInterval: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredSetInterval"))
-      .refine((value) => /^\d+$/.test(value), {
-        message: t("validation.invalidSetInterval"),
-      })
-      .refine((value) => Number(value) >= 1, {
-        message: t("validation.minSetInterval"),
-      })
-      .refine((value) => Number(value) <= 255, {
-        message: t("validation.maxSetInterval"),
-      }),
-    isArchived: z.boolean(),
-  });
+export const updateControllerFormSchema = (
+  t: (key: string) => string,
+  currentRole?: string | null,
+) =>
+  z
+    .object({
+      serialNumber: z.string().trim(),
+      companyId: z.string().trim(),
+      type: ControllerTypeSchema,
+      simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
+      phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
+      descriptions: z
+        .string()
+        .trim()
+        .min(1, t("validation.requiredDescriptions")),
+      correctTime: z.boolean(),
+      correctInterval: z.boolean(),
+      setInterval: z
+        .string()
+        .trim()
+        .min(1, t("validation.requiredSetInterval"))
+        .refine((value) => /^\d+$/.test(value), {
+          message: t("validation.invalidSetInterval"),
+        })
+        .refine((value) => Number(value) >= 1, {
+          message: t("validation.minSetInterval"),
+        })
+        .refine((value) => Number(value) <= 255, {
+          message: t("validation.maxSetInterval"),
+        }),
+      isArchived: z.boolean(),
+    })
+    .superRefine((values, context) => {
+      if (!values.companyId && currentRole !== "manager") {
+        context.addIssue({
+          code: "custom",
+          message: t("validation.requiredCompany"),
+          path: ["companyId"],
+        });
+      }
+    });
 
 export const CreateControllerPayloadSchema = z.object({
   serialNumber: z.string().trim().min(1),
-  companyId: z.string().trim().min(1),
+  companyId: z.string().trim().optional(),
   type: ControllerTypeSchema,
   simIMSI: z.string().trim().min(1),
   phoneNumber: z.string().trim().min(1),

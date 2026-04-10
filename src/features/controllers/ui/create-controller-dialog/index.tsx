@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useCompaniesQuery } from "@entities/companies";
 import type { ControllerRow } from "@entities/controllers";
 
+import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 
@@ -32,6 +33,7 @@ export const CreateControllerDialog = ({
   initialCompanyId,
 }: Props) => {
   const { t } = useTranslation();
+  const currentRole = useAuthStore((state) => state.role);
 
   const isEditMode = Boolean(controller);
 
@@ -40,7 +42,7 @@ export const CreateControllerDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !isEditMode && !initialCompanyId,
+    enabled: !isEditMode && !initialCompanyId && currentRole !== "manager",
   });
 
   const companyOptions = useMemo(
@@ -92,6 +94,7 @@ export const CreateControllerDialog = ({
               isCompaniesLoading={isCompaniesLoading}
               companyOptions={companyOptions}
               typeOptions={typeOptions}
+              currentRole={currentRole}
             />
 
             <ControllerTechnicalFields

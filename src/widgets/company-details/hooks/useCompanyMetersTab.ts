@@ -8,6 +8,7 @@ import { createMeterColumns, useDeleteMeter } from "@features/meters";
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
+import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
 import { useCompanyMeterFiltersState } from "./useCompanyMeterFiltersState";
@@ -96,6 +97,8 @@ export const useCompanyMetersTab = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const role = useAuthStore((state) => state.role);
+
   const filtersState = useCompanyMeterFiltersState({ isActive });
 
   const handleCloseDeleteDialog = () => {
@@ -126,7 +129,7 @@ export const useCompanyMetersTab = ({
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,
     isArchived: filtersState.isArchived,
-    companyId,
+    companyId: role === "admin" ? companyId : undefined,
     controllerId: "",
     locationType: filtersState.locationType,
     meterStatus: filtersState.meterStatus,

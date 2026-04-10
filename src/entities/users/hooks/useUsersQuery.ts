@@ -12,7 +12,7 @@ interface Params {
   firstName?: string;
   lastName?: string;
   isArchived: boolean;
-  companyId?: string;
+  companyId?: string | undefined;
   enabled?: boolean;
 }
 

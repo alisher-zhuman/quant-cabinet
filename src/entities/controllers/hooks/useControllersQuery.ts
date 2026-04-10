@@ -10,8 +10,8 @@ interface Params {
   limit: number;
   search: string;
   isArchived: boolean;
-  companyId: string;
-  serialNumber: string;
+  companyId?: string | undefined;
+  serialNumber?: string;
   phoneNumber: string;
   simIMSI: string;
   enabled?: boolean;
@@ -22,10 +22,10 @@ export const useControllersQuery = ({
   limit,
   search,
   isArchived,
-  companyId,
-  serialNumber,
-  phoneNumber,
-  simIMSI,
+  companyId = "",
+  serialNumber = "",
+  phoneNumber = "",
+  simIMSI = "",
   enabled = true,
 }: Params) => {
   const { t } = useTranslation();
