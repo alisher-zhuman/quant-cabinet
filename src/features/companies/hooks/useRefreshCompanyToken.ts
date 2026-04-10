@@ -10,7 +10,10 @@ export const useRefreshCompanyToken = (companyId?: string) => {
 
   return useToastMutation({
     mutationFn: refreshCompanyToken,
-    invalidateKeys: companyId ? [companiesKeys.detail(companyId)] : [],
+    invalidateKeys: [
+      ...(companyId ? [companiesKeys.detail(companyId)] : []),
+      companiesKeys.myCompany(),
+    ],
     pendingMessage: t("companies.toast.refresh.loading"),
     successMessage: t("companies.toast.refresh.success"),
     errorMessage: (error: unknown) =>

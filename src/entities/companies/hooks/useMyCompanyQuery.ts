@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getMyCompany } from "../api";
+import { companiesKeys } from "../model/keys";
 
 export const useMyCompanyQuery = () => {
   const query = useQuery({
-    queryKey: ["my-company"],
+    queryKey: companiesKeys.myCompany(),
     queryFn: getMyCompany,
   });
 
