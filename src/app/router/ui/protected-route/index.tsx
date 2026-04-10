@@ -6,6 +6,8 @@ import { ROUTES } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { AuthState } from "@shared/types";
 
+import { getHomeRoute } from "../../helpers/getHomeRoute";
+
 interface Props {
   children: ReactNode;
   allowedRoles: Array<NonNullable<AuthState["role"]>>;
@@ -20,7 +22,7 @@ export const ProtectedRoute = ({ children, allowedRoles }: Props) => {
   }
 
   if (allowedRoles?.length && (!role || !allowedRoles.includes(role))) {
-    return <Navigate to={`/${ROUTES.LOG_IN}`} replace />;
+    return <Navigate to={getHomeRoute(role)} replace />;
   }
 
   return <>{children}</>;

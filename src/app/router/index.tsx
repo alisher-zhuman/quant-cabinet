@@ -1,10 +1,11 @@
 import { lazy } from "react";
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter } from "react-router";
 
 import { Layout } from "@widgets/layout";
 
 import { ROUTES } from "@shared/constants";
 
+import { HomeRedirect } from "./ui/home-redirect";
 import { ProtectedRoute } from "./ui/protected-route";
 import { RouteErrorBoundary } from "./ui/route-error-boundary";
 import { WithSuspense } from "./ui/with-suspense";
@@ -89,7 +90,7 @@ export const ROUTER = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to={ROUTES.COMPANIES} replace />,
+            element: <HomeRedirect />,
           },
           {
             path: ROUTES.COMPANIES,
