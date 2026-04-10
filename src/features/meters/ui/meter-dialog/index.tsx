@@ -26,8 +26,8 @@ interface Props {
   open: boolean;
   onClose: () => void;
   onSuccess: () => void;
-  initialCompanyId?: string;
-  initialControllerId?: string;
+  initialCompanyId?: string | undefined;
+  initialControllerId?: string | undefined;
 }
 
 export const MeterDialog = ({

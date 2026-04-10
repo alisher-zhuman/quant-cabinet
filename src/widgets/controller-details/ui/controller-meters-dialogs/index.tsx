@@ -99,8 +99,8 @@ export const ControllerMetersDialogs = ({
       <MeterDialog
         open={isCreateDialogOpen || Boolean(meterToEdit)}
         meter={meterToEdit}
-        initialCompanyId={filters.companyId}
-        initialControllerId={filters.controllerId}
+        initialCompanyId={meterToEdit ? undefined : filters.companyId}
+        initialControllerId={meterToEdit ? undefined : filters.controllerId}
         onClose={meterToEdit ? onCloseEditDialog : onCloseCreateDialog}
         onSuccess={meterToEdit ? onEditSuccess : onCreateSuccess}
       />
