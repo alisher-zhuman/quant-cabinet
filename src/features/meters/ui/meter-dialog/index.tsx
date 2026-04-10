@@ -14,6 +14,7 @@ import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
 import type { MeterFormValues, MeterRow } from "@entities/meters";
 
+import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 
@@ -40,12 +41,14 @@ export const MeterDialog = ({
 }: Props) => {
   const { t } = useTranslation();
 
+  const role = useAuthStore((state) => state.role);
+
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !initialCompanyId,
+    enabled: !initialCompanyId && role === "admin",
   });
 
   const companyOptions = useMemo(() => {
@@ -171,6 +174,7 @@ export const MeterDialog = ({
               control={control as unknown as Control<MeterFormValues>}
               initialCompanyId={initialCompanyId}
               initialControllerId={initialControllerId}
+              currentRole={role}
               isCompaniesLoading={isCompaniesLoading}
               isControllersLoading={isControllersLoading}
               companyOptions={companyOptions}

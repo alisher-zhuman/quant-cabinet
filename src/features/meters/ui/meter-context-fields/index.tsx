@@ -3,6 +3,7 @@ import type { Control } from "react-hook-form";
 
 import type { MeterFormValues } from "@entities/meters";
 
+import type { AuthState } from "@shared/types";
 import { FormSelectField } from "@shared/ui/form-select-field";
 
 interface Option {
@@ -15,6 +16,7 @@ interface Props {
   control: Control<MeterFormValues>;
   initialCompanyId?: string | undefined;
   initialControllerId?: string | undefined;
+  currentRole: AuthState["role"];
   isCompaniesLoading: boolean;
   isControllersLoading: boolean;
   companyOptions: Option[];
@@ -27,6 +29,7 @@ export const MeterContextFields = ({
   control,
   initialCompanyId,
   initialControllerId,
+  currentRole,
   isCompaniesLoading,
   isControllersLoading,
   companyOptions,
@@ -34,7 +37,7 @@ export const MeterContextFields = ({
   controllerHelperText,
 }: Props) => (
   <>
-    {!initialCompanyId && (
+    {!initialCompanyId && currentRole === "admin" && (
       <FormSelectField
         name="companyId"
         control={control}

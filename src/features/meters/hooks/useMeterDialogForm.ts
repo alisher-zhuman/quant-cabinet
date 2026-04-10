@@ -11,6 +11,8 @@ import {
   updateMeterFormSchema,
 } from "@entities/meters";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useCreateMeter } from "./useCreateMeter";
 import { useUpdateMeter } from "./useUpdateMeter";
 
@@ -55,6 +57,8 @@ export const useMeterDialogForm = ({
     [meter, initialCompanyId, initialControllerId],
   );
 
+  const role = useAuthStore((state) => state.role);
+
   const {
     control,
     handleSubmit,
@@ -63,7 +67,7 @@ export const useMeterDialogForm = ({
     watch,
     formState: { isDirty, isValid },
   } = useForm<MeterEditFormValues>({
-    resolver: zodResolver(updateMeterFormSchema(t)),
+    resolver: zodResolver(updateMeterFormSchema(t, role)),
     mode: "onChange",
     defaultValues,
   });
@@ -84,7 +88,7 @@ export const useMeterDialogForm = ({
     ? updateMutation.isPending
     : createMutation.isPending;
 
-  const onSubmit = handleSubmit((values) => {
+  const onSubmit = handleSubmit((values: MeterEditFormValues) => {
     if (isEditMode && meter) {
       updateMutation.mutate({
         meterId: meter.id,

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createListResponseSchema } from "@shared/schemas";
+import type { AuthState } from "@shared/types";
 
 const MeterCompanySchema = z
   .looseObject({
@@ -103,14 +104,20 @@ export const MetersResponseSchema = createListResponseSchema(MeterRowSchema);
 
 export const MeterLocationTypeSchema = z.enum(["indoor", "well", "cabinet"]);
 
-export const createMeterFormSchema = (t: (key: string) => string) =>
+export const createMeterFormSchema = (
+  t: (key: string) => string,
+  currentRole?: AuthState["role"],
+) =>
   z.object({
     serialNumber: z
       .string()
       .trim()
       .min(1, t("validation.requiredSerialNumber")),
     controllerId: z.string().trim().min(1, t("validation.requiredController")),
-    companyId: z.string().trim().min(1, t("validation.requiredCompany")),
+    companyId:
+      currentRole === "manager"
+        ? z.string().optional()
+        : z.string().trim().min(1, t("validation.requiredCompany")),
     locationType: MeterLocationTypeSchema,
     port: z
       .string()
@@ -136,14 +143,20 @@ export const createMeterFormSchema = (t: (key: string) => string) =>
 
 export const MeterPendingCommandSchema = z.enum(["none", "open", "close"]);
 
-export const updateMeterFormSchema = (t: (key: string) => string) =>
+export const updateMeterFormSchema = (
+  t: (key: string) => string,
+  currentRole?: AuthState["role"],
+) =>
   z.object({
     serialNumber: z
       .string()
       .trim()
       .min(1, t("validation.requiredSerialNumber")),
     controllerId: z.string().trim().min(1, t("validation.requiredController")),
-    companyId: z.string().trim().min(1, t("validation.requiredCompany")),
+    companyId:
+      currentRole === "manager"
+        ? z.string().optional()
+        : z.string().trim().min(1, t("validation.requiredCompany")),
     locationType: MeterLocationTypeSchema,
     port: z
       .string()
@@ -173,7 +186,7 @@ export const updateMeterFormSchema = (t: (key: string) => string) =>
 export const CreateMeterPayloadSchema = z.object({
   serialNumber: z.string().trim().min(1),
   controllerId: z.string().trim().min(1),
-  companyId: z.string().trim().min(1),
+  companyId: z.string().trim().optional(),
   locationType: MeterLocationTypeSchema,
   port: z.number().int().min(1).max(8),
   accountNumber: z.string().trim().min(1),
@@ -186,7 +199,7 @@ export const UpdateMeterPayloadSchema = z.object({
   meterId: z.string().trim().min(1),
   serialNumber: z.string().trim().min(1),
   controllerId: z.string().trim().min(1),
-  companyId: z.string().trim().min(1),
+  companyId: z.string().trim().optional(),
   locationType: MeterLocationTypeSchema,
   port: z.number().int().min(1).max(8),
   accountNumber: z.string().trim().min(1),
