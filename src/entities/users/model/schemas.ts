@@ -37,7 +37,10 @@ export const DeleteUserPayloadSchema = z.object({
   userId: z.string(),
 });
 
-export const createUserFormSchema = (t: (key: string) => string) =>
+export const createUserFormSchema = (
+  t: (key: string) => string,
+  currentRole?: string | null,
+) =>
   z
     .object({
       email: z
@@ -57,7 +60,11 @@ export const createUserFormSchema = (t: (key: string) => string) =>
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (values.role !== "admin" && !values.company) {
+      if (
+        values.role !== "admin" &&
+        !values.company &&
+        currentRole !== "manager"
+      ) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),
@@ -66,7 +73,10 @@ export const createUserFormSchema = (t: (key: string) => string) =>
       }
     });
 
-export const updateUserFormSchema = (t: (key: string) => string) =>
+export const updateUserFormSchema = (
+  t: (key: string) => string,
+  currentRole?: string | null,
+) =>
   z
     .object({
       email: z
@@ -86,7 +96,11 @@ export const updateUserFormSchema = (t: (key: string) => string) =>
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (values.role !== "admin" && !values.company) {
+      if (
+        values.role !== "admin" &&
+        !values.company &&
+        currentRole !== "manager"
+      ) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),

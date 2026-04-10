@@ -14,6 +14,7 @@ interface Props {
   onEdit: (user: UserRow) => void;
   onDelete: (user: UserRow) => void;
   user: UserRow;
+  currentRole?: string | null;
 }
 
 export const UserActions = ({
@@ -22,6 +23,7 @@ export const UserActions = ({
   onEdit,
   onDelete,
   user,
+  currentRole,
 }: Props) => {
   const handleEditClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -33,27 +35,33 @@ export const UserActions = ({
     onDelete(user);
   };
 
+  const isForbidden = currentRole === "manager" && user.role === "admin";
+
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 0.5 }}>
-      <Tooltip title={editLabel}>
-        <IconButton
-          aria-label={editLabel}
-          color="primary"
-          onClick={handleEditClick}
-        >
-          <EditRoundedIcon />
-        </IconButton>
-      </Tooltip>
+      {!isForbidden && (
+        <>
+          <Tooltip title={editLabel}>
+            <IconButton
+              aria-label={editLabel}
+              color="primary"
+              onClick={handleEditClick}
+            >
+              <EditRoundedIcon />
+            </IconButton>
+          </Tooltip>
 
-      <Tooltip title={deleteLabel}>
-        <IconButton
-          aria-label={deleteLabel}
-          color="error"
-          onClick={handleDeleteClick}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Tooltip>
+          <Tooltip title={deleteLabel}>
+            <IconButton
+              aria-label={deleteLabel}
+              color="error"
+              onClick={handleDeleteClick}
+            >
+              <DeleteOutlineRoundedIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
     </Box>
   );
 };

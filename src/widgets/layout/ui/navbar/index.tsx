@@ -10,8 +10,12 @@ import { NAVBAR_LINKS } from "../../constants";
 
 export const Navbar = () => {
   const { t } = useTranslation();
+  const role = useAuthStore((state) => state.role);
 
-  return (
+  const filteredLinks = NAVBAR_LINKS.filter((link) => {
+    if (!role) return false;
+    return (link.allowedRoles as unknown as string[]).includes(role);
+  });
     <Box
       component="nav"
       sx={{
@@ -33,7 +37,7 @@ export const Navbar = () => {
         },
       }}
     >
-      {NAVBAR_LINKS.map(({ to, label }) => (
+      {filteredLinks.map(({ to, label }) => (
         <Box
           component={NavLink}
           key={to}

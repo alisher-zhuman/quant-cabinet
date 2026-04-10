@@ -32,6 +32,7 @@ interface Props {
   onOpenFiltersDialog: () => void;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
+  currentRole?: string | null;
 }
 
 export const MetersToolbar = ({
@@ -48,6 +49,7 @@ export const MetersToolbar = ({
   onOpenFiltersDialog,
   onSearchChange,
   onArchivedChange,
+  currentRole,
 }: Props) => {
   const [importAnchorEl, setImportAnchorEl] = useState<HTMLElement | null>(
     null,
@@ -127,42 +129,44 @@ export const MetersToolbar = ({
             )}
           </Box>
 
-          <Button
-            variant="contained"
-            startIcon={<AddRoundedIcon />}
-            onClick={onOpenCreateDialog}
-          >
-            {t("meters.actions.create")}
-          </Button>
+          {currentRole !== "user" && (
+            <>
+              <Button
+                variant="contained"
+                startIcon={<AddRoundedIcon />}
+                onClick={onOpenCreateDialog}
+              >
+                {t("meters.actions.create")}
+              </Button>
 
-          <>
-            <Button
-              variant="outlined"
-              endIcon={<ArrowDropDownRoundedIcon />}
-              onClick={handleOpenImportMenu}
-              disabled={isTemplateDownloadPending}
-            >
-              {t("meters.actions.import")}
-            </Button>
-
-            <Menu
-              anchorEl={importAnchorEl}
-              open={isImportMenuOpen}
-              onClose={handleCloseImportMenu}
-            >
-              <MenuItem
-                onClick={handleDownloadTemplate}
+              <Button
+                variant="outlined"
+                endIcon={<ArrowDropDownRoundedIcon />}
+                onClick={handleOpenImportMenu}
                 disabled={isTemplateDownloadPending}
               >
-                <DownloadRoundedIcon sx={{ mr: 1 }} />
-                {t("controllers.bulkUpload.template.action")}
-              </MenuItem>
-              <MenuItem onClick={handleOpenBulkUploadDialog}>
-                <UploadFileRoundedIcon sx={{ mr: 1 }} />
-                {t("controllers.bulkUpload.import.action")}
-              </MenuItem>
-            </Menu>
-          </>
+                {t("meters.actions.import")}
+              </Button>
+
+              <Menu
+                anchorEl={importAnchorEl}
+                open={isImportMenuOpen}
+                onClose={handleCloseImportMenu}
+              >
+                <MenuItem
+                  onClick={handleDownloadTemplate}
+                  disabled={isTemplateDownloadPending}
+                >
+                  <DownloadRoundedIcon sx={{ mr: 1 }} />
+                  {t("controllers.bulkUpload.template.action")}
+                </MenuItem>
+                <MenuItem onClick={handleOpenBulkUploadDialog}>
+                  <UploadFileRoundedIcon sx={{ mr: 1 }} />
+                  {t("controllers.bulkUpload.import.action")}
+                </MenuItem>
+              </Menu>
+            </>
+          )}
         </Box>
       }
       onSearchChange={onSearchChange}

@@ -76,3 +76,10 @@ export const refreshCompanyToken = async (
 
   await api.post(API_PATHS.COMPANIES_TOKEN_REFRESH, validPayload);
 };
+
+export const getMyCompany = async (): Promise<CompanyDetails> => {
+  const response = await api.get(API_PATHS.GET_MY_COMPANY);
+
+  return CompanyDetailsSchema.parse(response.data);
+};
+

@@ -10,6 +10,7 @@ import { createUserFormSchema, updateUserFormSchema } from "@entities/users";
 
 import { useCreateUser } from "./useCreateUser";
 import { useUpdateUser } from "./useUpdateUser";
+import { useAuthStore } from "@shared/stores";
 
 interface Params {
   user?: UserRow | null | undefined;
@@ -33,6 +34,8 @@ const getDefaultValues = (
 
 export const useUserForm = ({ user, companyId, onSuccess }: Params = {}) => {
   const { t } = useTranslation();
+
+  const currentRole = useAuthStore((state) => state.role);
   
   const isEditMode = Boolean(user);
 
@@ -48,7 +51,11 @@ export const useUserForm = ({ user, companyId, onSuccess }: Params = {}) => {
     setValue,
     formState: { isDirty, isValid },
   } = useForm<UserFormValues>({
-    resolver: zodResolver(isEditMode ? updateUserFormSchema(t) : createUserFormSchema(t)),
+    resolver: zodResolver(
+      isEditMode
+        ? updateUserFormSchema(t, currentRole)
+        : createUserFormSchema(t, currentRole),
+    ),
     mode: "onChange",
     defaultValues,
   });

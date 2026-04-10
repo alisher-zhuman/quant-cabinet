@@ -9,12 +9,16 @@ import { type MeterRow, useMetersQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useMeterDialogs } from "./useMeterDialogs";
 import { useMeterFiltersState } from "./useMeterFiltersState";
 
 export const useMetersWidget = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const role = useAuthStore((state) => state.role);
 
   const { t } = useTranslation();
   
@@ -58,11 +62,13 @@ export const useMetersWidget = () => {
     dialogs.handleCloseFiltersDialog();
   };
 
-  const columns = useMemo(() => createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog), [
-    dialogs.setMeterToDelete,
-    dialogs.handleOpenEditDialog,
-    t,
-  ]);
+  const columns = useMemo(
+    () =>
+      createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, {
+        currentRole: role,
+      }),
+    [dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, role, t],
+  );
 
   const handleRowClick = useCallback(
     (meter: MeterRow) => {
@@ -97,6 +103,7 @@ export const useMetersWidget = () => {
     },
     toolbarProps: {
       t,
+      currentRole: role,
       search: filters.search,
       isSearchLoading: isFetching,
       isArchived: filters.isArchived,

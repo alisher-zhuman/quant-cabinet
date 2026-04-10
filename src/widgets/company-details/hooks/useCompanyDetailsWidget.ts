@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next";
 
 import { useDeleteCompany } from "@features/companies";
 
-import { useCompanyQuery } from "@entities/companies";
+import { useCompanyQuery, useMyCompanyQuery } from "@entities/companies";
 
-import { ROUTES } from "@shared/constants";
 
-import type { CompanyDetailsTab } from "../types";
-import { useCompanyKeyActions } from "./useCompanyKeyActions";
-
-export const useCompanyDetailsWidget = () => {
+export const useCompanyDetailsWidget = ({
+  isManagerView = false,
+}: {
+  isManagerView?: boolean;
+} = {}) => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
@@ -38,7 +38,12 @@ export const useCompanyDetailsWidget = () => {
     return "users";
   });
 
-  const { company } = useCompanyQuery(companyId);
+  const queryParamsCompany = useCompanyQuery(isManagerView ? undefined : companyId);
+  const myCompany = useMyCompanyQuery();
+
+  const { company } = isManagerView ? myCompany : queryParamsCompany;
+
+  const currentCompanyId = isManagerView ? company?.id : companyId;
 
   const companyKeyActions = useCompanyKeyActions({ company, t });
   const deleteCompanyMutation = useDeleteCompany(() => {
@@ -76,7 +81,7 @@ export const useCompanyDetailsWidget = () => {
 
   return {
     t,
-    companyId,
+    companyId: currentCompanyId,
     company,
     companyKey: companyKeyActions.companyKey,
     activeTab,

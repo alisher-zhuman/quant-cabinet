@@ -9,6 +9,8 @@ import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
 import { ROUTES } from "@shared/constants";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useControllerDialogs } from "./useControllerDialogs";
 import { useControllerFiltersState } from "./useControllerFiltersState";
 
@@ -17,6 +19,8 @@ export const useControllersWidget = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const role = useAuthStore((state) => state.role);
 
   const filters = useControllerFiltersState();
 
@@ -48,11 +52,13 @@ export const useControllersWidget = () => {
         dialogs.handleEditController,
         dialogs.handleTransferController,
         dialogs.setControllerToDelete,
+        { currentRole: role },
       ),
     [
       dialogs.handleEditController,
       dialogs.handleTransferController,
       dialogs.setControllerToDelete,
+      role,
       t,
     ],
   );
@@ -89,6 +95,7 @@ export const useControllersWidget = () => {
     },
     toolbarProps: {
       t,
+      currentRole: role,
       search: filters.search,
       isSearchLoading: isFetching,
       isArchived: filters.isArchived,

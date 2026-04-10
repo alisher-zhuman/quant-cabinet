@@ -5,4 +5,5 @@ export const ROUTES = {
   COMPANIES: "companies",
   CONTROLLERS: "controllers",
   METERS: "meters",
+  MY_COMPANY: "my-company",
 };

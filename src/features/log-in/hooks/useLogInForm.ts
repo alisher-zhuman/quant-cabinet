@@ -42,7 +42,14 @@ export const useLogInForm = () => {
     pendingMessage: t("logIn.toast.loading"),
     onSuccess: (session) => {
       setAuth(session);
-      navigate(`/${ROUTES.COMPANIES}`, { replace: true });
+
+      if (session.role === "admin") {
+        navigate(`/${ROUTES.COMPANIES}`, { replace: true });
+      } else if (session.role === "manager") {
+        navigate(`/${ROUTES.MY_COMPANY}`, { replace: true });
+      } else {
+        navigate(`/${ROUTES.CONTROLLERS}`, { replace: true });
+      }
     },
     successMessage: t("logIn.toast.success"),
     errorMessage: (error) => getApiErrorMessage(error, t("logIn.toast.error")),

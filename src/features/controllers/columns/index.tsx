@@ -15,12 +15,10 @@ import type { Column } from "@shared/types";
 import { getStatusColor, getTypeStyles } from "../helpers";
 import { ControllerActions } from "../ui/controller-actions";
 
-export const createControllerColumns = (
-  t: TFunction,
   onEdit: (controller: ControllerRow) => void,
   onTransfer: (controller: ControllerRow) => void,
   onDelete: (controller: ControllerRow) => void,
-  options: { showCompanyColumn?: boolean } = {},
+  options: { showCompanyColumn?: boolean; currentRole?: string | null } = {},
 ): Column<ControllerRow>[] => [
   {
     id: "serialNumber",
@@ -107,6 +105,7 @@ export const createControllerColumns = (
         onEdit={onEdit}
         onTransfer={onTransfer}
         onDelete={onDelete}
+        role={options.currentRole}
       />
     ),
   },

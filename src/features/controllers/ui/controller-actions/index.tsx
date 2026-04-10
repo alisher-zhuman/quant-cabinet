@@ -17,6 +17,7 @@ interface Props {
   onEdit: (controller: ControllerRow) => void;
   onTransfer: (controller: ControllerRow) => void;
   onDelete: (controller: ControllerRow) => void;
+  role?: string | null;
 }
 
 export const ControllerActions = ({
@@ -27,6 +28,7 @@ export const ControllerActions = ({
   onEdit,
   onTransfer,
   onDelete,
+  role,
 }: Props) => {
   const handleActionClick =
     (callback: (controller: ControllerRow) => void) =>
@@ -37,35 +39,42 @@ export const ControllerActions = ({
 
   return (
     <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
-      <Tooltip title={editLabel}>
-        <IconButton
-          aria-label={editLabel}
-          color="primary"
-          onClick={handleActionClick(onEdit)}
-        >
-          <EditRoundedIcon />
-        </IconButton>
-      </Tooltip>
+      {role !== "user" && (
+        <Tooltip title={editLabel}>
+          <IconButton
+            aria-label={editLabel}
+            color="primary"
+            onClick={handleActionClick(onEdit)}
+          >
+            <EditRoundedIcon />
+          </IconButton>
+        </Tooltip>
+      )}
 
-      <Tooltip title={transferLabel}>
-        <IconButton
-          aria-label={transferLabel}
-          color="secondary"
-          onClick={handleActionClick(onTransfer)}
-        >
-          <SwapHorizRoundedIcon />
-        </IconButton>
-      </Tooltip>
+      {role === "admin" && (
+        <Tooltip title={transferLabel}>
+          <IconButton
+            aria-label={transferLabel}
+            color="secondary"
+            onClick={handleActionClick(onTransfer)}
+          >
+            <SwapHorizRoundedIcon />
+          </IconButton>
+        </Tooltip>
+      )}
 
-      <Tooltip title={deleteLabel}>
-        <IconButton
-          aria-label={deleteLabel}
-          color="error"
-          onClick={handleActionClick(onDelete)}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Tooltip>
+      {role !== "user" && (
+        <Tooltip title={deleteLabel}>
+          <IconButton
+            aria-label={deleteLabel}
+            color="error"
+            onClick={handleActionClick(onDelete)}
+          >
+            <DeleteOutlineRoundedIcon />
+          </IconButton>
+        </Tooltip>
+      )}
     </Box>
+
   );
 };

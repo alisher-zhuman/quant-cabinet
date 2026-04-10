@@ -14,14 +14,15 @@ interface Props {
   meter: MeterRow;
   onDelete: (meter: MeterRow) => void;
   onEdit: (meter: MeterRow) => void;
+  role?: string | null;
 }
 
 export const MeterActions = ({
   deleteLabel,
   editLabel,
-  meter,
   onDelete,
   onEdit,
+  role,
 }: Props) => {
   const handleDeleteClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -35,21 +36,25 @@ export const MeterActions = ({
 
   return (
     <Stack direction="row" spacing={1}>
-      <Tooltip title={editLabel}>
-        <IconButton aria-label={editLabel} color="primary" onClick={handleEditClick}>
-          <EditRoundedIcon />
-        </IconButton>
-      </Tooltip>
+      {role !== "user" && (
+        <>
+          <Tooltip title={editLabel}>
+            <IconButton aria-label={editLabel} color="primary" onClick={handleEditClick}>
+              <EditRoundedIcon />
+            </IconButton>
+          </Tooltip>
 
-      <Tooltip title={deleteLabel}>
-        <IconButton
-          aria-label={deleteLabel}
-          color="error"
-          onClick={handleDeleteClick}
-        >
-          <DeleteOutlineRoundedIcon />
-        </IconButton>
-      </Tooltip>
+          <Tooltip title={deleteLabel}>
+            <IconButton
+              aria-label={deleteLabel}
+              color="error"
+              onClick={handleDeleteClick}
+            >
+              <DeleteOutlineRoundedIcon />
+            </IconButton>
+          </Tooltip>
+        </>
+      )}
     </Stack>
   );
 };

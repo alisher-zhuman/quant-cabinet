@@ -24,7 +24,11 @@ import { CompanyKeySection } from "../company-key-section";
 import { CompanyMetersTab } from "../company-meters-tab";
 import { CompanyUsersTab } from "../company-users-tab";
 
-export const CompanyDetailsWidget = () => {
+export const CompanyDetailsWidget = ({
+  isManagerView = false,
+}: {
+  isManagerView?: boolean;
+}) => {
   const { t } = useTranslation();
   
   const {
@@ -45,7 +49,7 @@ export const CompanyDetailsWidget = () => {
     handleOpenDeleteDialog,
     handleCloseDeleteDialog,
     handleConfirmDelete,
-  } = useCompanyDetailsWidget();
+  } = useCompanyDetailsWidget({ isManagerView });
 
   return (
     <Box
@@ -69,34 +73,38 @@ export const CompanyDetailsWidget = () => {
           flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        <Button
-          component={Link}
-          to={`/${ROUTES.COMPANIES}`}
-          variant="text"
-          startIcon={<ArrowBackRoundedIcon />}
-          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
-        >
-          {t("companies.details.back")}
-        </Button>
-
-        <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+        {!isManagerView && (
           <Button
-            variant="outlined"
-            startIcon={<EditRoundedIcon />}
-            onClick={handleOpenEditDialog}
+            component={Link}
+            to={`/${ROUTES.COMPANIES}`}
+            variant="text"
+            startIcon={<ArrowBackRoundedIcon />}
+            sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
           >
-            {t("companies.actions.edit")}
+            {t("companies.details.back")}
           </Button>
+        )}
 
-          <Button
-            color="error"
-            variant="outlined"
-            startIcon={<DeleteOutlineRoundedIcon />}
-            onClick={handleOpenDeleteDialog}
-          >
-            {t("companies.actions.delete")}
-          </Button>
-        </Box>
+        {!isManagerView && (
+          <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+            <Button
+              variant="outlined"
+              startIcon={<EditRoundedIcon />}
+              onClick={handleOpenEditDialog}
+            >
+              {t("companies.actions.edit")}
+            </Button>
+
+            <Button
+              color="error"
+              variant="outlined"
+              startIcon={<DeleteOutlineRoundedIcon />}
+              onClick={handleOpenDeleteDialog}
+            >
+              {t("companies.actions.delete")}
+            </Button>
+          </Box>
+        )}
       </Box>
 
       <CompanyInfoSection t={t} company={company} companyId={companyId ?? ""} />

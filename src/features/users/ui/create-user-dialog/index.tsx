@@ -14,6 +14,8 @@ import type { UserRow } from "@entities/users";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 
+import { useAuthStore } from "@shared/stores";
+
 import { useUserForm } from "../../hooks/useUserForm";
 import { UserCompanyFields } from "../user-company-fields";
 import { UserMainFields } from "../user-main-fields";
@@ -34,6 +36,7 @@ export const CreateUserDialog = ({
   onSuccess,
 }: Props) => {
   const { t } = useTranslation();
+  const currentRole = useAuthStore((state) => state.role);
 
   const isEditMode = Boolean(user);
 
@@ -49,20 +52,20 @@ export const CreateUserDialog = ({
     [companies],
   );
 
-  const roleOptions = useMemo(
-    () =>
-      isEditMode
-        ? [
-            { value: "admin", label: t("profile.roles.admin") },
-            { value: "manager", label: t("profile.roles.manager") },
-            { value: "user", label: t("profile.roles.user") },
-          ]
-        : [
-            { value: "admin", label: t("profile.roles.admin") },
-            { value: "user", label: t("profile.roles.user") },
-            { value: "manager", label: t("profile.roles.manager") },
-          ],
-    [isEditMode, t],
+    () => {
+      const options = [
+        { value: "admin", label: t("profile.roles.admin") },
+        { value: "manager", label: t("profile.roles.manager") },
+        { value: "user", label: t("profile.roles.user") },
+      ];
+
+      if (currentRole === "manager") {
+        return options.filter((opt) => opt.value !== "admin");
+      }
+
+      return options;
+    },
+    [currentRole, t],
   );
 
   const { control, isPending, isDirty, isValid, onSubmit, setValue } = useUserForm({
@@ -72,8 +75,9 @@ export const CreateUserDialog = ({
   });
 
   const selectedRole = useWatch({ control, name: "role" });
-  
-  const shouldShowCompanyField = selectedRole !== "admin" && !companyId;
+
+  const shouldShowCompanyField =
+    selectedRole !== "admin" && !companyId && currentRole !== "manager";
 
   useEffect(() => {
     if (!shouldShowCompanyField) {

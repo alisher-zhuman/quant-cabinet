@@ -20,12 +20,15 @@ import {
   useSearchState,
   useSyncSearchParams,
 } from "@shared/hooks";
+import { useAuthStore } from "@shared/stores";
 
 import { useUserDialogs } from "./useUserDialogs";
 
 export const useUsersWidget = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const role = useAuthStore((state) => state.role);
   
   const { t } = useTranslation();
 
@@ -74,8 +77,11 @@ export const useUsersWidget = () => {
   );
 
   const columns = useMemo(
-    () => createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser),
-    [dialogs.handleDeleteUser, dialogs.handleEditUser, t],
+    () =>
+      createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser, {
+        currentRole: role,
+      }),
+    [dialogs.handleDeleteUser, dialogs.handleEditUser, role, t],
   );
 
   const handleSearchChange = (value: string) => {

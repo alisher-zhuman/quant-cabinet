@@ -20,6 +20,7 @@ export const createMeterColumns = (
   onEdit: (meter: MeterRow) => void,
   options?: {
     showCompanyColumn?: boolean;
+    currentRole?: string | null;
   },
 ): Column<MeterRow>[] => [
   {
@@ -87,6 +88,7 @@ export const createMeterColumns = (
         meter={meter}
         onDelete={onDelete}
         onEdit={onEdit}
+        role={options?.currentRole}
       />
     ),
   },

@@ -16,4 +16,5 @@ export const API_PATHS = {
   METERS_UPDATE: "/meters/update",
   GET_METER: (id: string) => `/meters/${id}`,
   GET_READINGS: (meterId: string) => `/readings/${meterId}`,
+  GET_MY_COMPANY: "/companies/api-key",
 };

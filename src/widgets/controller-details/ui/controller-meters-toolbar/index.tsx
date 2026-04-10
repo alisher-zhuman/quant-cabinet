@@ -21,6 +21,7 @@ interface Props {
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
   onOpenCreateDialog: () => void;
+  currentRole?: string | null;
 }
 
 export const ControllerMetersToolbar = ({
@@ -34,6 +35,7 @@ export const ControllerMetersToolbar = ({
   onSearchChange,
   onArchivedChange,
   onOpenCreateDialog,
+  currentRole,
 }: Props) => (
   <SearchTabsToolbar
     search={search}
@@ -88,13 +90,15 @@ export const ControllerMetersToolbar = ({
           )}
         </Box>
 
-        <Button
-          variant="contained"
-          startIcon={<AddRoundedIcon />}
-          onClick={onOpenCreateDialog}
-        >
-          {t("meters.actions.create")}
-        </Button>
+        {currentRole !== "user" && (
+          <Button
+            variant="contained"
+            startIcon={<AddRoundedIcon />}
+            onClick={onOpenCreateDialog}
+          >
+            {t("meters.actions.create")}
+          </Button>
+        )}
       </Box>
     }
     onSearchChange={onSearchChange}

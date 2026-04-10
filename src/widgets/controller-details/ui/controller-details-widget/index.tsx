@@ -53,6 +53,7 @@ export const ControllerDetailsWidget = () => {
     handleOpenDeleteDialog,
     handleCloseDeleteDialog,
     handleConfirmDelete,
+    role,
   } = useControllerDetailsWidget();
 
   if (isLoading) {
@@ -108,30 +109,36 @@ export const ControllerDetailsWidget = () => {
         </Button>
 
         <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
-          <Button
-            variant="outlined"
-            startIcon={<EditRoundedIcon />}
-            onClick={handleOpenEditDialog}
-          >
-            {t("controllers.actions.edit")}
-          </Button>
+          {role !== "user" && (
+            <Button
+              variant="outlined"
+              startIcon={<EditRoundedIcon />}
+              onClick={handleOpenEditDialog}
+            >
+              {t("controllers.actions.edit")}
+            </Button>
+          )}
 
-          <Button
-            variant="outlined"
-            startIcon={<SwapHorizRoundedIcon />}
-            onClick={handleOpenTransferDialog}
-          >
-            {t("controllers.actions.transfer")}
-          </Button>
+          {role === "admin" && (
+            <Button
+              variant="outlined"
+              startIcon={<SwapHorizRoundedIcon />}
+              onClick={handleOpenTransferDialog}
+            >
+              {t("controllers.actions.transfer")}
+            </Button>
+          )}
 
-          <Button
-            color="error"
-            variant="outlined"
-            startIcon={<DeleteOutlineRoundedIcon />}
-            onClick={handleOpenDeleteDialog}
-          >
-            {t("controllers.actions.delete")}
-          </Button>
+          {role !== "user" && (
+            <Button
+              color="error"
+              variant="outlined"
+              startIcon={<DeleteOutlineRoundedIcon />}
+              onClick={handleOpenDeleteDialog}
+            >
+              {t("controllers.actions.delete")}
+            </Button>
+          )}
         </Box>
       </Box>
 

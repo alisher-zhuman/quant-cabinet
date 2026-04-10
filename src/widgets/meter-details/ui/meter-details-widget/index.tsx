@@ -54,6 +54,7 @@ export const MeterDetailsWidget = () => {
     handleOpenEditDialog,
     handleCloseEditDialog,
     handleEditSuccess,
+    role,
   } = useMeterDetailsWidget();
 
   if (isLoading) {
@@ -104,24 +105,26 @@ export const MeterDetailsWidget = () => {
           {t("meters.details.back")}
         </Button>
 
-        <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
-          <Button
-            variant="outlined"
-            startIcon={<EditRoundedIcon />}
-            onClick={handleOpenEditDialog}
-          >
-            {t("meters.actions.edit")}
-          </Button>
+        {role !== "user" && (
+          <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
+            <Button
+              variant="outlined"
+              startIcon={<EditRoundedIcon />}
+              onClick={handleOpenEditDialog}
+            >
+              {t("meters.actions.edit")}
+            </Button>
 
-          <Button
-            color="error"
-            variant="outlined"
-            startIcon={<DeleteOutlineRoundedIcon />}
-            onClick={handleOpenDeleteDialog}
-          >
-            {t("meters.actions.delete")}
-          </Button>
-        </Stack>
+            <Button
+              color="error"
+              variant="outlined"
+              startIcon={<DeleteOutlineRoundedIcon />}
+              onClick={handleOpenDeleteDialog}
+            >
+              {t("meters.actions.delete")}
+            </Button>
+          </Stack>
+        )}
       </Box>
 
       <Paper
@@ -214,6 +217,7 @@ export const MeterDetailsWidget = () => {
               locationType={locationType}
               archivedStatus={archivedStatus}
               valveLockStatus={valveLockStatus}
+              role={role}
             />
           </Stack>
 

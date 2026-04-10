@@ -14,6 +14,7 @@ import {
   usePagination,
   useSearchState,
 } from "@shared/hooks";
+import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
 export const useControllerMetersSection = (controllerId: string) => {
@@ -32,6 +33,8 @@ export const useControllerMetersSection = (controllerId: string) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const role = useAuthStore((state) => state.role);
 
   const { isArchived, setIsArchived } = useArchivedFilter({
     initialIsArchived: false,
@@ -111,8 +114,9 @@ export const useControllerMetersSection = (controllerId: string) => {
     () =>
       createMeterColumns(t, setMeterToDelete, handleOpenEditDialog, {
         showCompanyColumn: false,
+        currentRole: role,
       }),
-    [t],
+    [role, t],
   );
 
   const handleSearchChange = (value: string) => {
@@ -191,6 +195,7 @@ export const useControllerMetersSection = (controllerId: string) => {
     },
     toolbarProps: {
       t,
+      currentRole: role,
       search,
       isSearchLoading: isFetching,
       isArchived,

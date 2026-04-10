@@ -11,7 +11,7 @@ export const Header = () => {
   const accessToken = useAuthStore((state) => state.accessToken);
   const role = useAuthStore((state) => state.role);
 
-  const canShowPrivateHeader = Boolean(accessToken && role === "admin");
+  const canShowPrivateHeader = Boolean(accessToken && role);
 
   return (
     <header

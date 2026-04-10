@@ -9,6 +9,7 @@ import { useControllerQuery } from "@entities/controllers";
 
 import { ROUTES } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
+import { useAuthStore } from "@shared/stores";
 
 export const useControllerDetailsWidget = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -22,6 +23,8 @@ export const useControllerDetailsWidget = () => {
   const { controllerId = "" } = useParams<{ controllerId: string }>();
 
   const location = useLocation() as { state: unknown };
+
+  const role = useAuthStore((state) => state.role);
 
   const { controller, isLoading, isError } = useControllerQuery(controllerId);
 
@@ -103,6 +106,7 @@ export const useControllerDetailsWidget = () => {
     backTo,
     isLoading,
     isError,
+    role,
     controllerStatus,
     controllerType,
     archivedStatus,

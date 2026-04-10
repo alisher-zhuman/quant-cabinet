@@ -9,6 +9,7 @@ import { useMeterQuery } from "@entities/meters";
 
 import { ROUTES } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
+import { useAuthStore } from "@shared/stores";
 
 export const useMeterDetailsWidget = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -21,6 +22,8 @@ export const useMeterDetailsWidget = () => {
   const { meterId = "" } = useParams<{ meterId: string }>();
 
   const location = useLocation() as { state: unknown };
+
+  const role = useAuthStore((state) => state.role);
 
   const { meter, isLoading, isError } = useMeterQuery(meterId);
 
@@ -118,6 +121,7 @@ export const useMeterDetailsWidget = () => {
     backTo,
     isLoading,
     isError,
+    role,
     meterStatus,
     valveStatus,
     pendingCommand,

@@ -24,6 +24,9 @@ const Users = lazy(() =>
 const UserDetails = lazy(() =>
   import("@pages/user-details").then((m) => ({ default: m.UserDetails })),
 );
+const MyCompany = lazy(() =>
+  import("@pages/my-company").then((m) => ({ default: m.MyCompany })),
+);
 const Companies = lazy(() =>
   import("@pages/companies").then((m) => ({ default: m.Companies })),
 );
@@ -78,7 +81,7 @@ export const ROUTER = createBrowserRouter([
       {
         path: "/",
         element: (
-          <ProtectedRoute allowedRoles={["admin"]}>
+          <ProtectedRoute allowedRoles={["admin", "manager", "user"]}>
             <Layout />
           </ProtectedRoute>
         ),
@@ -91,33 +94,51 @@ export const ROUTER = createBrowserRouter([
           {
             path: ROUTES.COMPANIES,
             element: (
-              <WithSuspense>
-                <Companies />
-              </WithSuspense>
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <WithSuspense>
+                  <Companies />
+                </WithSuspense>
+              </ProtectedRoute>
             ),
           },
           {
             path: `${ROUTES.COMPANIES}/:companyId`,
             element: (
-              <WithSuspense>
-                <CompanyDetails />
-              </WithSuspense>
+              <ProtectedRoute allowedRoles={["admin"]}>
+                <WithSuspense>
+                  <CompanyDetails />
+                </WithSuspense>
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: ROUTES.MY_COMPANY,
+            element: (
+              <ProtectedRoute allowedRoles={["manager"]}>
+                <WithSuspense>
+                  <MyCompany />
+                </WithSuspense>
+              </ProtectedRoute>
             ),
           },
           {
             path: ROUTES.USERS,
             element: (
-              <WithSuspense>
-                <Users />
-              </WithSuspense>
+              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+                <WithSuspense>
+                  <Users />
+                </WithSuspense>
+              </ProtectedRoute>
             ),
           },
           {
             path: `${ROUTES.USERS}/:userId`,
             element: (
-              <WithSuspense>
-                <UserDetails />
-              </WithSuspense>
+              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+                <WithSuspense>
+                  <UserDetails />
+                </WithSuspense>
+              </ProtectedRoute>
             ),
           },
           {

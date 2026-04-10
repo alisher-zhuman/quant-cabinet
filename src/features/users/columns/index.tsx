@@ -12,7 +12,7 @@ export const createUserColumns = (
   t: TFunction,
   onEdit: (user: UserRow) => void,
   onDelete: (user: UserRow) => void,
-  options: { showCompanyColumn?: boolean } = {},
+  options: { showCompanyColumn?: boolean; currentRole?: string | null } = {},
 ): Column<UserRow>[] => [
   {
     id: "email",
@@ -57,6 +57,7 @@ export const createUserColumns = (
         onEdit={onEdit}
         onDelete={onDelete}
         user={user}
+        currentRole={options.currentRole}
       />
     ),
   },
