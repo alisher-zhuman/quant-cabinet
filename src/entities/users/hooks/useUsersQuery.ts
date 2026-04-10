@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { getUsers } from "../api";
+import { getUsersNameSearchParams } from "../model/helpers";
 import { usersKeys } from "../model/keys";
 import type { UserRow } from "../model/types";
 
@@ -20,8 +21,8 @@ export const useUsersQuery = ({
   page,
   limit,
   search = "",
-  firstName = "",
-  lastName = "",
+  firstName: initialFirstName = "",
+  lastName: initialLastName = "",
   isArchived,
   companyId = "",
   enabled = true,
@@ -29,8 +30,16 @@ export const useUsersQuery = ({
   const { t } = useTranslation();
 
   const normalizedSearch = search.trim();
-  const normalizedFirstName = firstName.trim();
-  const normalizedLastName = lastName.trim();
+
+  // If search is provided but firstName/lastName are not, derive them
+  const nameParams =
+    !initialFirstName && !initialLastName && normalizedSearch
+      ? getUsersNameSearchParams(normalizedSearch)
+      : { firstName: initialFirstName, lastName: initialLastName };
+
+  const normalizedFirstName = nameParams.firstName.trim();
+  const normalizedLastName = nameParams.lastName.trim();
+
   const hasSearch = Boolean(
     companyId ? normalizedSearch : normalizedFirstName || normalizedLastName,
   );

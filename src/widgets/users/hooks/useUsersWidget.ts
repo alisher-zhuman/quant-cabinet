@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import {
   createUserColumns,
   createUsersSearchString,
-  getUsersNameSearchParams,
   parseUsersSearchState,
 } from "@features/users";
 
@@ -53,14 +52,12 @@ export const useUsersWidget = () => {
     createUsersSearchString,
   );
 
-  const { firstName, lastName } = getUsersNameSearchParams(debouncedSearch);
 
   const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
     useUsersQuery({
       page,
       limit,
-      firstName,
-      lastName,
+      search: debouncedSearch,
       isArchived,
     });
   const dialogs = useUserDialogs(setIsArchived);

@@ -1,3 +1,5 @@
+import { getUsersNameSearchParams } from "@entities/users";
+
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import type { ListSearchState } from "@shared/types";
 
@@ -6,25 +8,6 @@ export const buildUsersSearchValue = (
   lastName: string,
 ): string => [firstName.trim(), lastName.trim()].filter(Boolean).join(" ");
 
-export const getUsersNameSearchParams = (search: string) => {
-  const parts = search
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-
-  if (parts.length === 0) {
-    return { firstName: "", lastName: "" };
-  }
-
-  if (parts.length === 1) {
-    return { firstName: parts[0] ?? "", lastName: "" };
-  }
-
-  return {
-    firstName: parts[0] ?? "",
-    lastName: parts.slice(1).join(" "),
-  };
-};
 
 export const parseUsersSearchState = (
   params: URLSearchParams,
