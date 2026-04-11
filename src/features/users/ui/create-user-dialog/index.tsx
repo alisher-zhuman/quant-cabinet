@@ -36,14 +36,8 @@ export const CreateUserDialog = ({
 }: Props) => {
   const { t } = useTranslation();
   const currentRole = useAuthStore((state) => state.role);
-  const authCompanyId = useAuthStore((state) => state.companyId);
 
   const isEditMode = Boolean(user);
-
-  const effectiveCompanyId = useMemo(
-    () => companyId || (currentRole === "manager" ? (authCompanyId ?? undefined) : undefined),
-    [companyId, currentRole, authCompanyId],
-  );
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
@@ -76,23 +70,23 @@ export const CreateUserDialog = ({
 
   const { control, isPending, isDirty, isValid, onSubmit, setValue } = useUserForm({
     user,
-    companyId: effectiveCompanyId,
+    companyId,
     onSuccess,
   });
 
   const selectedRole = useWatch({ control, name: "role" });
 
   const shouldShowCompanyField =
-    selectedRole !== "admin" && !effectiveCompanyId && currentRole !== "manager";
+    selectedRole !== "admin" && !companyId && currentRole !== "manager";
 
   useEffect(() => {
-    if (!shouldShowCompanyField && effectiveCompanyId) {
-      setValue("company", effectiveCompanyId, {
+    if (!shouldShowCompanyField) {
+      setValue("company", companyId ?? "", {
         shouldDirty: true,
         shouldValidate: true,
       });
     }
-  }, [effectiveCompanyId, setValue, shouldShowCompanyField]);
+  }, [companyId, setValue, shouldShowCompanyField]);
 
   return (
     <Dialog
