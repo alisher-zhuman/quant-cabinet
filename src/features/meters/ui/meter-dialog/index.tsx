@@ -42,13 +42,19 @@ export const MeterDialog = ({
   const { t } = useTranslation();
 
   const role = useAuthStore((state) => state.role);
+  const authCompanyId = useAuthStore((state) => state.companyId);
+
+  const effectiveCompanyId = useMemo(
+    () => initialCompanyId || (role === "manager" ? (authCompanyId ?? undefined) : undefined),
+    [initialCompanyId, role, authCompanyId],
+  );
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !initialCompanyId && role === "admin",
+    enabled: !effectiveCompanyId && role === "admin",
   });
 
   const companyOptions = useMemo(() => {
@@ -63,8 +69,8 @@ export const MeterDialog = ({
     useMeterDialogForm({
       meter,
       onSuccess,
-      ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
-      ...(initialControllerId !== undefined ? { initialControllerId } : {}),
+      ...(effectiveCompanyId !== undefined ? { initialCompanyId: effectiveCompanyId } : {}),
+      ...(initialControllerId !== undefined ? { initialControllerId: initialControllerId } : {}),
     });
 
   const selectedCompanyId = useWatch({ control, name: "companyId" });

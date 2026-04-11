@@ -34,15 +34,21 @@ export const CreateControllerDialog = ({
 }: Props) => {
   const { t } = useTranslation();
   const currentRole = useAuthStore((state) => state.role);
+  const authCompanyId = useAuthStore((state) => state.companyId);
 
   const isEditMode = Boolean(controller);
+
+  const effectiveCompanyId = useMemo(
+    () => initialCompanyId || (currentRole === "manager" ? (authCompanyId ?? undefined) : undefined),
+    [initialCompanyId, currentRole, authCompanyId],
+  );
 
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !isEditMode && !initialCompanyId && currentRole !== "manager",
+    enabled: !isEditMode && !effectiveCompanyId && currentRole !== "admin",
   });
 
   const companyOptions = useMemo(
@@ -65,7 +71,7 @@ export const CreateControllerDialog = ({
   const { control, isPending, isDirty, isValid, onSubmit } = useControllerForm({
     controller,
     onSuccess,
-    ...(initialCompanyId !== undefined ? { initialCompanyId } : {}),
+    ...(effectiveCompanyId !== undefined ? { initialCompanyId: effectiveCompanyId } : {}),
   });
 
   return (
