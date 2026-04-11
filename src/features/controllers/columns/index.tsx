@@ -93,21 +93,25 @@ export const createControllerColumns = (
     header: t("controllers.table.columns.createdAt"),
     cell: (controller) => formatDate(controller.createdAt),
   },
-  {
-    id: "actions",
-    header: t("controllers.table.columns.actions"),
-    align: "right",
-    cell: (controller) => (
-      <ControllerActions
-        controller={controller}
-        editLabel={t("controllers.actions.edit")}
-        transferLabel={t("controllers.actions.transfer")}
-        deleteLabel={t("controllers.actions.delete")}
-        onEdit={onEdit}
-        onTransfer={onTransfer}
-        onDelete={onDelete}
-        role={options.currentRole}
-      />
-    ),
-  },
+  ...(options.currentRole !== "user"
+    ? [
+        {
+          id: "actions",
+          header: t("controllers.table.columns.actions"),
+          align: "right",
+          cell: (controller: ControllerRow) => (
+            <ControllerActions
+              controller={controller}
+              editLabel={t("controllers.actions.edit")}
+              transferLabel={t("controllers.actions.transfer")}
+              deleteLabel={t("controllers.actions.delete")}
+              onEdit={onEdit}
+              onTransfer={onTransfer}
+              onDelete={onDelete}
+              role={options.currentRole}
+            />
+          ),
+        } as Column<ControllerRow>,
+      ]
+    : []),
 ];

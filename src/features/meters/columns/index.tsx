@@ -77,19 +77,23 @@ export const createMeterColumns = (
     header: t("meters.table.columns.createdAt"),
     cell: (meter) => formatDate(meter.createdAt),
   },
-  {
-    id: "actions",
-    header: t("meters.table.columns.actions"),
-    align: "right",
-    cell: (meter) => (
-      <MeterActions
-        deleteLabel={t("meters.actions.delete")}
-        editLabel={t("meters.actions.edit")}
-        meter={meter}
-        onDelete={onDelete}
-        onEdit={onEdit}
-        role={options?.currentRole}
-      />
-    ),
-  },
+  ...(options?.currentRole !== "user"
+    ? [
+        {
+          id: "actions",
+          header: t("meters.table.columns.actions"),
+          align: "right",
+          cell: (meter: MeterRow) => (
+            <MeterActions
+              deleteLabel={t("meters.actions.delete")}
+              editLabel={t("meters.actions.edit")}
+              meter={meter}
+              onDelete={onDelete}
+              onEdit={onEdit}
+              role={options?.currentRole}
+            />
+          ),
+        } as Column<MeterRow>,
+      ]
+    : []),
 ];

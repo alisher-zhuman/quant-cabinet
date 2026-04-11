@@ -49,19 +49,23 @@ export const createUserColumns = (
     header: t("users.table.columns.createdAt"),
     cell: (user) => formatDate(user.createdAt),
   },
-  {
-    id: "actions",
-    header: t("users.table.columns.actions"),
-    align: "right",
-    cell: (user) => (
-      <UserActions
-        editLabel={t("users.actions.edit")}
-        deleteLabel={t("users.actions.delete")}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        user={user}
-        currentRole={options.currentRole}
-      />
-    ),
-  },
+  ...(options.currentRole !== "user"
+    ? [
+        {
+          id: "actions",
+          header: t("users.table.columns.actions"),
+          align: "right",
+          cell: (user: UserRow) => (
+            <UserActions
+              editLabel={t("users.actions.edit")}
+              deleteLabel={t("users.actions.delete")}
+              onEdit={onEdit}
+              onDelete={onDelete}
+              user={user}
+              currentRole={options.currentRole}
+            />
+          ),
+        } as Column<UserRow>,
+      ]
+    : []),
 ];
