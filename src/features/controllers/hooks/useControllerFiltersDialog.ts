@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useCompaniesQuery } from "@entities/companies";
 
@@ -28,8 +28,6 @@ export const useControllerFiltersDialog = ({
 }: Params) => {
   const [values, setValues] = useState(() => filters);
   
-  const pendingFiltersRef = useRef<ControllerFilters | null>(null);
-
   const { companies, isLoading: isCompaniesLoading } = useCompaniesQuery({
     page: 0,
     limit: 1000,
@@ -55,41 +53,21 @@ export const useControllerFiltersDialog = ({
   };
 
   useEffect(() => {
-    if (!open) {
-      pendingFiltersRef.current = null;
+    if (open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setValues(filters);
     }
-  }, [open]);
-
-  useEffect(() => {
-    const pendingFilters = pendingFiltersRef.current;
-
-    if (!open || !pendingFilters) {
-      return;
-    }
-
-    const isApplied =
-      filters.companyId === pendingFilters.companyId &&
-      filters.serialNumber === pendingFilters.serialNumber &&
-      filters.phoneNumber === pendingFilters.phoneNumber &&
-      filters.simIMSI === pendingFilters.simIMSI;
-
-    if (!isApplied) {
-      return;
-    }
-
-    pendingFiltersRef.current = null;
-    onClose();
-  }, [filters, onClose, open]);
+  }, [filters, open]);
 
   const handleReset = () => {
     setValues(EMPTY_FILTERS);
-    pendingFiltersRef.current = EMPTY_FILTERS;
     onApply(EMPTY_FILTERS);
+    onClose();
   };
 
   const handleApply = () => {
-    pendingFiltersRef.current = values;
     onApply(values);
+    onClose();
   };
 
   const hasActiveFilters = Boolean(

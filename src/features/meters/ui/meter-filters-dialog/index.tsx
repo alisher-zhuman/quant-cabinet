@@ -10,10 +10,5 @@ interface Props {
 }
 
 export const MeterFiltersDialog = (props: Props) => {
-  const dialogKey = JSON.stringify({
-    filters: props.filters,
-    hideCompanyField: props.hideCompanyField ?? false,
-  });
-
-  return <MeterFiltersDialogContent key={dialogKey} {...props} />;
+  return <MeterFiltersDialogContent {...props} />;
 };

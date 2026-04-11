@@ -10,10 +10,5 @@ interface Props {
 }
 
 export const ControllerFiltersDialog = (props: Props) => {
-  const dialogKey = JSON.stringify({
-    filters: props.filters,
-    hideCompanyField: props.hideCompanyField ?? false,
-  });
-
-  return <ControllerFiltersDialogContent key={dialogKey} {...props} />;
+  return <ControllerFiltersDialogContent {...props} />;
 };
