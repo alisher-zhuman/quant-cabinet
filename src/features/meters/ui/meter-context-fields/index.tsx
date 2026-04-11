@@ -55,7 +55,10 @@ export const MeterContextFields = ({
         control={control}
         label={t("meters.createDialog.fields.controller")}
         fullWidth
-        disabled={isControllersLoading || (!initialCompanyId && !controllerOptions.length)}
+        disabled={
+          isControllersLoading ||
+          (currentRole === "admin" && !initialCompanyId && !controllerOptions.length)
+        }
         options={controllerOptions}
         emptyOptionLabel={t("meters.createDialog.fields.controllerPlaceholder")}
         helperText={controllerHelperText}

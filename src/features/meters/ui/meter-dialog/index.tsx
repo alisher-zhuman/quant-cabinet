@@ -108,11 +108,11 @@ export const MeterDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    companyId: initialCompanyId ?? selectedCompanyId ?? "",
+    companyId: initialCompanyId ?? (role === "admin" ? selectedCompanyId : undefined),
     serialNumber: "",
     phoneNumber: "",
     simIMSI: "",
-    enabled: Boolean(initialCompanyId ?? selectedCompanyId),
+    enabled: role === "manager" || Boolean(initialCompanyId ?? selectedCompanyId),
   });
 
   const controllerOptions = useMemo(() => {
