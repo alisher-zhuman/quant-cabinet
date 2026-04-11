@@ -51,7 +51,7 @@ export const useControllersWidget = () => {
         dialogs.handleEditController,
         dialogs.handleTransferController,
         dialogs.setControllerToDelete,
-        { currentRole: role },
+        { currentRole: role, showCompanyColumn: role === "admin" },
       ),
     [
       dialogs.handleEditController,
@@ -113,6 +113,7 @@ export const useControllersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       isDeletePending: dialogs.deleteControllerMutation.isPending,
+      hideCompanyField: role !== "admin",
       filters: {
         companyId: filters.companyId,
         serialNumber: filters.serialNumber,

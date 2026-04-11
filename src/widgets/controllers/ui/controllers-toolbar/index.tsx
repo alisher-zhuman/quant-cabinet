@@ -37,6 +37,54 @@ export const ControllersToolbar = ({
   onArchivedChange,
   currentRole,
 }: Props) => {
+  const isAdmin = currentRole === "admin";
+
+  const filtersButton = (
+    <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <Button
+        variant="outlined"
+        startIcon={
+          <Badge
+            color="primary"
+            overlap="circular"
+            variant="dot"
+            invisible={!hasActiveFilters}
+          >
+            <FilterListRoundedIcon />
+          </Badge>
+        }
+        onClick={onOpenFiltersDialog}
+      >
+        {t("controllers.actions.filters")}
+      </Button>
+
+      {hasActiveFilters && (
+        <IconButton
+          size="small"
+          color="error"
+          aria-label={t("controllers.filters.reset")}
+          onClick={onResetFilters}
+          sx={{
+            position: "absolute",
+            top: -8,
+            right: -8,
+            width: 20,
+            height: 20,
+            backgroundColor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
+            boxShadow: 1,
+            "&:hover": {
+              backgroundColor: "background.paper",
+            },
+          }}
+        >
+          <CloseRoundedIcon sx={{ fontSize: 12 }} />
+        </IconButton>
+      )}
+    </Box>
+  );
+
   return (
     <SearchTabsToolbar
       search={search}
@@ -45,51 +93,11 @@ export const ControllersToolbar = ({
       archivedLabel={t("controllers.tabs.archived")}
       isSearchLoading={isSearchLoading}
       isArchived={isArchived}
+      hideSearch={!isAdmin}
+      left={!isAdmin ? filtersButton : undefined}
       actions={
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-          <Box sx={{ position: "relative", display: "inline-flex" }}>
-            <Button
-              variant="outlined"
-              startIcon={
-                <Badge
-                  color="primary"
-                  overlap="circular"
-                  variant="dot"
-                  invisible={!hasActiveFilters}
-                >
-                  <FilterListRoundedIcon />
-                </Badge>
-              }
-              onClick={onOpenFiltersDialog}
-            >
-              {t("controllers.actions.filters")}
-            </Button>
-
-            {hasActiveFilters && (
-              <IconButton
-                size="small"
-                color="error"
-                aria-label={t("controllers.filters.reset")}
-                onClick={onResetFilters}
-                sx={{
-                  position: "absolute",
-                  top: -8,
-                  right: -8,
-                  width: 20,
-                  height: 20,
-                  backgroundColor: "background.paper",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  boxShadow: 1,
-                  "&:hover": {
-                    backgroundColor: "background.paper",
-                  },
-                }}
-              >
-                <CloseRoundedIcon sx={{ fontSize: 12 }} />
-              </IconButton>
-            )}
-          </Box>
+          {isAdmin && filtersButton}
 
           {currentRole !== "user" && (
             <Button

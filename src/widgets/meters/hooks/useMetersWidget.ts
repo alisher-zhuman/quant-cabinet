@@ -65,6 +65,7 @@ export const useMetersWidget = () => {
     () =>
       createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, {
         currentRole: role,
+        showCompanyColumn: role === "admin",
       }),
     [dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, role, t],
   );
@@ -124,6 +125,7 @@ export const useMetersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
+      hideCompanyField: role !== "admin",
       filters: {
         companyId: filters.companyId,
         locationType: filters.locationType,

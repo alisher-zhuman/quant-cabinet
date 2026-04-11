@@ -77,6 +77,7 @@ export const useUsersWidget = () => {
     () =>
       createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser, {
         currentRole: role,
+        showCompanyColumn: role === "admin",
       }),
     [dialogs.handleDeleteUser, dialogs.handleEditUser, role, t],
   );

@@ -45,6 +45,7 @@ interface Props {
     address: string;
     isValveLockedByManager: string;
   }) => void;
+  hideCompanyField?: boolean;
 }
 
 export const MetersDialogs = ({
@@ -66,6 +67,7 @@ export const MetersDialogs = ({
   onEditSuccess,
   onBulkUploadSuccess,
   onApplyFilters,
+  hideCompanyField = false,
 }: Props) => (
   <>
     <ConfirmDialog
@@ -102,6 +104,7 @@ export const MetersDialogs = ({
         filters={filters}
         onClose={onCloseFiltersDialog}
         onApply={onApplyFilters}
+        hideCompanyField={hideCompanyField}
       />
     )}
   </>

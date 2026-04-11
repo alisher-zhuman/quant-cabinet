@@ -39,6 +39,7 @@ interface Props {
   onEditSuccess: () => void;
   onTransferSuccess: () => void;
   initialCompanyId?: string;
+  hideCompanyField?: boolean;
 }
 
 export const ControllersDialogs = ({
@@ -60,6 +61,7 @@ export const ControllersDialogs = ({
   onEditSuccess,
   onTransferSuccess,
   initialCompanyId,
+  hideCompanyField = false,
 }: Props) => (
   <>
     <ConfirmDialog
@@ -79,6 +81,7 @@ export const ControllersDialogs = ({
         filters={filters}
         onClose={onCloseFiltersDialog}
         onApply={onApplyFilters}
+        hideCompanyField={hideCompanyField}
       />
     )}
 
