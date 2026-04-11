@@ -68,7 +68,7 @@ export const useMeterDialogForm = ({
     formState: { isDirty, isValid },
   } = useForm<MeterEditFormValues>({
     resolver: zodResolver(updateMeterFormSchema(t, role)),
-    mode: "onChange",
+    mode: "onTouched",
     defaultValues,
   });
 
