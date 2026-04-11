@@ -103,7 +103,7 @@ export const useControllerForm = ({
 
     createMutation.mutate({
       serialNumber: values["serialNumber"],
-      companyId: values["companyId"],
+      ...(values["companyId"] ? { companyId: values["companyId"] } : {}),
       type: values["type"],
       simIMSI: values["simIMSI"],
       phoneNumber: values["phoneNumber"],

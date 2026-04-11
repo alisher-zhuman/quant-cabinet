@@ -111,7 +111,7 @@ export const useMeterDialogForm = ({
     createMutation.mutate({
       serialNumber: values.serialNumber,
       controllerId: values.controllerId,
-      companyId: values.companyId,
+      ...(values.companyId ? { companyId: values.companyId } : {}),
       locationType: values.locationType,
       port: Number(values.port),
       accountNumber: values.accountNumber,
