@@ -215,6 +215,9 @@ widgets/<slice>/
 - Do not self-import a slice through its own barrel.
 - If an import consists solely of types, utilize `import type { ... } from "..."`.
 - For mixed imports, declare types inline: `import { type X, y } from "..."`.
+- **Exception for Lazy Loading**: When using `React.lazy()`, prefer **Deep Imports** (direct file paths) for UI components instead of barrel exports. This prevents the bundler from pulling in the entire feature's code into the main bundle and ensures efficient chunk splitting.
+  - *Correct*: `const Dialog = lazy(() => import("@features/slice/ui/dialog/index.tsx"))`
+  - *Incorrect*: `const Dialog = lazy(() => import("@features/slice"))`
 
 ## Features and UI
 
@@ -240,6 +243,18 @@ widgets/<slice>/
 - Implement API calls as entity-level functions.
 - Display backend errors via a shared global helper that consistently extracts the message.
 - Pending or success messages for mutations should be defined on the frontend using i18n variables.
+
+## Performance Patterns
+
+### Lazy Loading
+- All **Pages** must be loaded using `React.lazy()` in the router to ensure thin initial bundles.
+- Heavy **Widgets** or **Dialogs** (e.g., charts, complex forms) should also be lazy-loaded within their parent components.
+- Always provide a meaningful UI fallback (e.g., `Skeleton` or `Loader`) via `Suspense`.
+
+### Prefetching
+- Use `queryClient.prefetchQuery` to improve perceived responsiveness.
+- Common trigger: `onMouseEnter` on list items (rows) to prefetch detail data before a click occurs.
+- Prefetching logic should be isolated in hooks (e.g., `useMeterPrefetch`).
 
 ## When in Doubt
 

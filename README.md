@@ -12,6 +12,14 @@ The project is built using a modern React stack:
 - **Linting & Typing**: ESLint with strict Feature-Sliced Design (FSD) rules enforced.
 - **Internationalization (i18n)**: i18next & react-i18next.
 
+## Performance & Optimization
+
+The project implements several strategies to ensure a fast and responsive user experience:
+- **Bundle Splitting**: Uses Vite's `manualChunks` to separate heavy dependencies (MUI, Recharts, React core) into distinct chunks, enabling parallel loading and better caching.
+- **Lazy Loading**: Pages and heavy components (like charts or complex dialogs) are loaded on demand using `React.lazy` and `Suspense`.
+- **Prefetching**: Implements predictive data prefetching using TanStack Query. For example, detail data for a meter is prefetched when a user hovers over its row in the list.
+- **Asset Optimization**: Uses modern image formats (WebP) and optimized SVG icons.
+
 ## Environment Variables
 
 The project uses a `.env` file to store environment-specific configurations.
