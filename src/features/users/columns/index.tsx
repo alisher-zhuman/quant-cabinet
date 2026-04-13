@@ -34,6 +34,7 @@ export const createUserColumns = (
           id: "company",
           header: t("users.table.columns.company"),
           cell: (user: UserRow) => user.company?.name || "-",
+          hiddenOnMobile: true,
         } as Column<UserRow>,
       ]
     : []),
@@ -49,6 +50,7 @@ export const createUserColumns = (
     id: "createdAt",
     header: t("users.table.columns.createdAt"),
     cell: (user) => formatDate(user.createdAt),
+    hiddenOnMobile: true,
   },
   ...(!isUser(options.currentRole)
     ? [

@@ -21,11 +21,13 @@ export const createCompanyColumns = (
     id: "address",
     header: t("companies.table.columns.address"),
     cell: (company) => company.address || "-",
+    hiddenOnMobile: true,
   },
   {
     id: "createdAt",
     header: t("companies.table.columns.createdAt"),
     cell: (company) => formatDate(company.createdAt),
+    hiddenOnMobile: true,
   },
   {
     id: "actions",

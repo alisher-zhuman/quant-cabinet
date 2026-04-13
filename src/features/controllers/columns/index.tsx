@@ -33,6 +33,7 @@ export const createControllerColumns = (
           id: "company",
           header: t("controllers.table.columns.company"),
           cell: (controller: ControllerRow) => controller.company?.name || "-",
+          hiddenOnMobile: true,
         } as Column<ControllerRow>,
       ]
     : []),
@@ -93,6 +94,7 @@ export const createControllerColumns = (
     id: "createdAt",
     header: t("controllers.table.columns.createdAt"),
     cell: (controller) => formatDate(controller.createdAt),
+    hiddenOnMobile: true,
   },
   ...(!isUser(options.currentRole)
     ? [

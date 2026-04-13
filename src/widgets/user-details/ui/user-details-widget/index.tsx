@@ -4,7 +4,6 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
@@ -15,6 +14,7 @@ import { CreateUserDialog } from "@features/users";
 
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 
 import { useUserDetailsWidget } from "../../hooks/useUserDetailsWidget";
 import { UserCompanySection } from "../user-company-section";
@@ -73,33 +73,30 @@ export const UserDetailsWidget = () => {
           flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        <Button
+        <ResponsiveButton
           component={Link}
           to={backTo}
           variant="text"
-          startIcon={<ArrowBackRoundedIcon />}
+          icon={<ArrowBackRoundedIcon />}
+          label={t("users.details.back")}
           sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
-        >
-          {t("users.details.back")}
-        </Button>
+        />
 
         <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
-          <Button
+          <ResponsiveButton
             variant="outlined"
-            startIcon={<EditRoundedIcon />}
+            icon={<EditRoundedIcon />}
+            label={t("users.actions.edit")}
             onClick={handleOpenEditDialog}
-          >
-            {t("users.actions.edit")}
-          </Button>
+          />
 
-          <Button
+          <ResponsiveButton
             color="error"
             variant="outlined"
-            startIcon={<DeleteOutlineRoundedIcon />}
+            icon={<DeleteOutlineRoundedIcon />}
+            label={t("users.actions.delete")}
             onClick={handleOpenDeleteDialog}
-          >
-            {t("users.actions.delete")}
-          </Button>
+          />
         </Box>
       </Box>
 

@@ -2,11 +2,11 @@ import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 
 import { isAdmin, isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
 import { FiltersButton } from "@shared/ui/filters-button";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -63,13 +63,12 @@ export const ControllersToolbar = ({
           {isAdminRole && filtersButton}
 
           {!isUser(currentRole) && (
-            <Button
+            <ResponsiveButton
               variant="contained"
-              startIcon={<AddRoundedIcon />}
+              icon={<AddRoundedIcon />}
+              label={t("controllers.actions.create")}
               onClick={onOpenCreateDialog}
-            >
-              {t("controllers.actions.create")}
-            </Button>
+            />
           )}
         </Box>
       }

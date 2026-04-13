@@ -21,6 +21,7 @@ import {
 import { isAdmin, isUser } from "@shared/helpers";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
 import { ControllerCompanySection } from "../controller-company-section";
@@ -99,46 +100,42 @@ export const ControllerDetailsWidget = () => {
           flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        <Button
+        <ResponsiveButton
           component={Link}
           to={backTo}
           variant="text"
-          startIcon={<ArrowBackRoundedIcon />}
+          icon={<ArrowBackRoundedIcon />}
+          label={t("controllers.details.back")}
           sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
-        >
-          {t("controllers.details.back")}
-        </Button>
+        />
 
         <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
           {!isUser(role) && (
-            <Button
+            <ResponsiveButton
               variant="outlined"
-              startIcon={<EditRoundedIcon />}
+              icon={<EditRoundedIcon />}
+              label={t("controllers.actions.edit")}
               onClick={handleOpenEditDialog}
-            >
-              {t("controllers.actions.edit")}
-            </Button>
+            />
           )}
 
           {isAdmin(role) && (
-            <Button
+            <ResponsiveButton
               variant="outlined"
-              startIcon={<SwapHorizRoundedIcon />}
+              icon={<SwapHorizRoundedIcon />}
+              label={t("controllers.actions.transfer")}
               onClick={handleOpenTransferDialog}
-            >
-              {t("controllers.actions.transfer")}
-            </Button>
+            />
           )}
 
           {!isUser(role) && (
-            <Button
+            <ResponsiveButton
               color="error"
               variant="outlined"
-              startIcon={<DeleteOutlineRoundedIcon />}
+              icon={<DeleteOutlineRoundedIcon />}
+              label={t("controllers.actions.delete")}
               onClick={handleOpenDeleteDialog}
-            >
-              {t("controllers.actions.delete")}
-            </Button>
+            />
           )}
         </Box>
       </Box>

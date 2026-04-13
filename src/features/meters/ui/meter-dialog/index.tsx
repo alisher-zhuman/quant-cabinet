@@ -9,6 +9,8 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
@@ -158,10 +160,14 @@ export const MeterDialog = ({
     });
   }, [initialCompanyId, initialControllerId, selectedCompanyId, setValue, isEditMode]);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Dialog
       open={open}
       onClose={isPending ? undefined : onClose}
+      fullScreen={isMobile}
       fullWidth
       maxWidth="sm"
     >

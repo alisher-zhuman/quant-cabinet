@@ -7,4 +7,5 @@ export interface Column<T> {
   header: ReactNode;
   cell: (row: T) => ReactNode;
   align?: TableCellProps["align"];
+  hiddenOnMobile?: boolean;
 }

@@ -8,13 +8,13 @@ import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
 import { FiltersButton } from "@shared/ui/filters-button";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -94,22 +94,21 @@ export const MetersToolbar = ({
 
           {!isUser(currentRole) && (
             <>
-              <Button
+              <ResponsiveButton
                 variant="contained"
-                startIcon={<AddRoundedIcon />}
+                icon={<AddRoundedIcon />}
+                label={t("meters.actions.create")}
                 onClick={onOpenCreateDialog}
-              >
-                {t("meters.actions.create")}
-              </Button>
+              />
 
-              <Button
+              <ResponsiveButton
                 variant="outlined"
+                icon={importAnchorEl ? <ArrowDropDownRoundedIcon /> : <UploadFileRoundedIcon />}
                 endIcon={<ArrowDropDownRoundedIcon />}
+                label={t("meters.actions.import")}
                 onClick={handleOpenImportMenu}
                 disabled={isTemplateDownloadPending}
-              >
-                {t("meters.actions.import")}
-              </Button>
+              />
 
               <Menu
                 anchorEl={importAnchorEl}

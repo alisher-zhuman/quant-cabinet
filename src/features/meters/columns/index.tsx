@@ -38,6 +38,7 @@ export const createMeterColumns = (
     id: "accountNumber",
     header: t("meters.table.columns.accountNumber"),
     cell: (meter) => meter.accountNumber || "-",
+    hiddenOnMobile: true,
   },
   ...(options?.showCompanyColumn === false
     ? []
@@ -46,12 +47,14 @@ export const createMeterColumns = (
           id: "company",
           header: t("meters.table.columns.company"),
           cell: (meter: MeterRow) => meter.company?.name || "-",
+          hiddenOnMobile: true,
         },
       ]),
   {
     id: "readings",
     header: t("meters.table.columns.readings"),
     cell: (meter) => meter.readings,
+    hiddenOnMobile: true,
   },
   {
     id: "batteryStatus",
@@ -77,6 +80,7 @@ export const createMeterColumns = (
     id: "createdAt",
     header: t("meters.table.columns.createdAt"),
     cell: (meter) => formatDate(meter.createdAt),
+    hiddenOnMobile: true,
   },
   ...(!isUser(options?.currentRole)
     ? [

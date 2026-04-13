@@ -6,7 +6,6 @@ import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { alpha } from "@mui/material/styles";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -15,6 +14,7 @@ import { CreateCompanyDialog } from "@features/companies";
 
 import { ROUTE_PATHS } from "@shared/constants";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
 import type { CompanyDetailsTab } from "../../types";
@@ -74,35 +74,32 @@ export const CompanyDetailsWidget = ({
         }}
       >
         {!isManagerView && (
-          <Button
+          <ResponsiveButton
             component={Link}
             to={ROUTE_PATHS.COMPANIES}
             variant="text"
-            startIcon={<ArrowBackRoundedIcon />}
+            icon={<ArrowBackRoundedIcon />}
+            label={t("companies.details.back")}
             sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
-          >
-            {t("companies.details.back")}
-          </Button>
+          />
         )}
 
         {!isManagerView && (
           <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
-            <Button
+            <ResponsiveButton
               variant="outlined"
-              startIcon={<EditRoundedIcon />}
+              icon={<EditRoundedIcon />}
+              label={t("companies.actions.edit")}
               onClick={handleOpenEditDialog}
-            >
-              {t("companies.actions.edit")}
-            </Button>
+            />
 
-            <Button
+            <ResponsiveButton
               color="error"
               variant="outlined"
-              startIcon={<DeleteOutlineRoundedIcon />}
+              icon={<DeleteOutlineRoundedIcon />}
+              label={t("companies.actions.delete")}
               onClick={handleOpenDeleteDialog}
-            >
-              {t("companies.actions.delete")}
-            </Button>
+            />
           </Box>
         )}
       </Box>

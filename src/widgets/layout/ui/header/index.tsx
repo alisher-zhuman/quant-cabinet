@@ -1,5 +1,7 @@
 import { Link } from "react-router";
 
+import Box from "@mui/material/Box";
+
 import { COLORS, ROUTE_PATHS } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
@@ -38,7 +40,11 @@ export const Header = () => {
         Quant Cabinet
       </Link>
 
-      {canShowPrivateHeader && <Navbar />}
+      {canShowPrivateHeader && (
+        <Box sx={{ display: { xs: "none", md: "block" } }}>
+          <Navbar />
+        </Box>
+      )}
 
       <div
         style={{

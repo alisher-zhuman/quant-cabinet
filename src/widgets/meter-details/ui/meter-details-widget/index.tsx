@@ -19,6 +19,7 @@ import type { MeterRow } from "@entities/meters";
 import { isUser } from "@shared/helpers";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 
 import { useMeterDetailsWidget } from "../../hooks/useMeterDetailsWidget";
 import { MeterCompanySection } from "../meter-company-section";
@@ -96,34 +97,31 @@ export const MeterDetailsWidget = () => {
           flexDirection: { xs: "column", sm: "row" },
         }}
       >
-        <Button
+        <ResponsiveButton
           component={Link}
           to={backTo}
           variant="text"
-          startIcon={<ArrowBackRoundedIcon />}
+          icon={<ArrowBackRoundedIcon />}
+          label={t("meters.details.back")}
           sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
-        >
-          {t("meters.details.back")}
-        </Button>
+        />
 
         {!isUser(role) && (
           <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
-            <Button
+            <ResponsiveButton
               variant="outlined"
-              startIcon={<EditRoundedIcon />}
+              icon={<EditRoundedIcon />}
+              label={t("meters.actions.edit")}
               onClick={handleOpenEditDialog}
-            >
-              {t("meters.actions.edit")}
-            </Button>
+            />
 
-            <Button
+            <ResponsiveButton
               color="error"
               variant="outlined"
-              startIcon={<DeleteOutlineRoundedIcon />}
+              icon={<DeleteOutlineRoundedIcon />}
+              label={t("meters.actions.delete")}
               onClick={handleOpenDeleteDialog}
-            >
-              {t("meters.actions.delete")}
-            </Button>
+            />
           </Stack>
         )}
       </Box>

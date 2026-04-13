@@ -2,9 +2,9 @@ import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 
 import { FiltersButton } from "@shared/ui/filters-button";
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -49,13 +49,12 @@ export const CompanyMetersToolbar = ({
           onResetFilters={onResetFilters}
         />
 
-        <Button
+        <ResponsiveButton
           variant="contained"
-          startIcon={<AddRoundedIcon />}
+          icon={<AddRoundedIcon />}
+          label={t("meters.actions.create")}
           onClick={onOpenCreateDialog}
-        >
-          {t("meters.actions.create")}
-        </Button>
+        />
       </Box>
     }
     onSearchChange={onSearchChange}
