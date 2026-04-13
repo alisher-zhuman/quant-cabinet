@@ -40,7 +40,7 @@ export const CompanyMetersToolbar = ({
     isSearchLoading={isSearchLoading}
     isArchived={isArchived}
     actions={
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+      <Box sx={{ display: "flex", flexWrap: "nowrap", gap: 1 }}>
         <FiltersButton
           label={t("meters.actions.filters")}
           resetLabel={t("meters.filters.reset")}

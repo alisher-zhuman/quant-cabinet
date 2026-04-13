@@ -59,7 +59,7 @@ export const ControllersToolbar = ({
       hideSearch={!isAdminRole}
       left={!isAdminRole ? filtersButton : undefined}
       actions={
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+        <Box sx={{ display: "flex", flexWrap: "nowrap", gap: 1 }}>
           {isAdminRole && filtersButton}
 
           {!isUser(currentRole) && (

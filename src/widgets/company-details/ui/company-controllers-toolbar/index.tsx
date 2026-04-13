@@ -49,7 +49,7 @@ export const CompanyControllersToolbar = ({
       />
     }
     actions={
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+      <Box sx={{ display: "flex", flexWrap: "nowrap", gap: 1 }}>
         <ResponsiveButton
           variant="contained"
           icon={<AddRoundedIcon />}
