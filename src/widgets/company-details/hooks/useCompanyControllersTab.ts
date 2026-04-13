@@ -10,7 +10,7 @@ import {
   useControllersQuery,
 } from "@entities/controllers";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getControllerDetailsRoute } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
@@ -108,7 +108,7 @@ export const useCompanyControllersTab = ({
     isError,
     isFetching,
   } = useControllersQuery({
-    companyId: role === "admin" ? companyId : undefined,
+    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
     page: filtersState.page,
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,
@@ -121,7 +121,7 @@ export const useCompanyControllersTab = ({
 
   const handleControllerRowClick = useCallback(
     (controller: ControllerRow) => {
-      navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
+      navigate(getControllerDetailsRoute(controller.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

@@ -9,6 +9,8 @@ import Tooltip from "@mui/material/Tooltip";
 
 import type { ControllerRow } from "@entities/controllers";
 
+import { AUTH_ROLES } from "@shared/constants";
+
 interface Props {
   controller: ControllerRow;
   editLabel: string;
@@ -39,7 +41,7 @@ export const ControllerActions = ({
 
   return (
     <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
-      {role !== "user" && (
+      {role !== AUTH_ROLES.USER && (
         <Tooltip title={editLabel}>
           <IconButton
             aria-label={editLabel}
@@ -51,7 +53,7 @@ export const ControllerActions = ({
         </Tooltip>
       )}
 
-      {role === "admin" && (
+      {role === AUTH_ROLES.ADMIN && (
         <Tooltip title={transferLabel}>
           <IconButton
             aria-label={transferLabel}
@@ -63,7 +65,7 @@ export const ControllerActions = ({
         </Tooltip>
       )}
 
-      {role !== "user" && (
+      {role !== AUTH_ROLES.USER && (
         <Tooltip title={deleteLabel}>
           <IconButton
             aria-label={deleteLabel}

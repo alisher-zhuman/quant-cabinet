@@ -11,7 +11,7 @@ import {
   type LogInFormValues,
 } from "@entities/auth";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, ROUTE_PATHS } from "@shared/constants";
 import { getApiErrorMessage } from "@shared/helpers";
 import { useToastMutation } from "@shared/hooks";
 import { useAuthStore } from "@shared/stores";
@@ -43,12 +43,12 @@ export const useLogInForm = () => {
     onSuccess: (session) => {
       setAuth(session);
 
-      if (session.role === "admin") {
-        navigate(`/${ROUTES.COMPANIES}`, { replace: true });
-      } else if (session.role === "manager") {
-        navigate(`/${ROUTES.MY_COMPANY}`, { replace: true });
+      if (session.role === AUTH_ROLES.ADMIN) {
+        navigate(ROUTE_PATHS.COMPANIES, { replace: true });
+      } else if (session.role === AUTH_ROLES.MANAGER) {
+        navigate(ROUTE_PATHS.MY_COMPANY, { replace: true });
       } else {
-        navigate(`/${ROUTES.CONTROLLERS}`, { replace: true });
+        navigate(ROUTE_PATHS.CONTROLLERS, { replace: true });
       }
     },
     successMessage: t("logIn.toast.success"),

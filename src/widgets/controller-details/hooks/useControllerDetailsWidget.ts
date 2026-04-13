@@ -7,7 +7,7 @@ import { useDeleteController } from "@features/controllers";
 
 import { useControllerQuery } from "@entities/controllers";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 
@@ -28,7 +28,7 @@ export const useControllerDetailsWidget = () => {
 
   const { controller, isLoading, isError } = useControllerQuery(controllerId);
 
-  const backTo = getBackTo(location.state, `/${ROUTES.CONTROLLERS}`);
+  const backTo = getBackTo(location.state, ROUTE_PATHS.CONTROLLERS);
 
   const deleteControllerMutation = useDeleteController(() => {
     setIsDeleteDialogOpen(false);

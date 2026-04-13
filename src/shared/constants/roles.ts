@@ -1,0 +1,18 @@
+export const AUTH_ROLES = {
+  ADMIN: "admin",
+  MANAGER: "manager",
+  USER: "user",
+} as const;
+
+export const USER_ROLE_VALUES = [
+  AUTH_ROLES.USER,
+  AUTH_ROLES.ADMIN,
+  AUTH_ROLES.MANAGER,
+] as const;
+
+export const ROLE_GROUPS = {
+  ALL: [AUTH_ROLES.ADMIN, AUTH_ROLES.MANAGER, AUTH_ROLES.USER],
+  ADMIN_ONLY: [AUTH_ROLES.ADMIN],
+  MANAGER_ONLY: [AUTH_ROLES.MANAGER],
+  ADMIN_AND_MANAGER: [AUTH_ROLES.ADMIN, AUTH_ROLES.MANAGER],
+} as const;

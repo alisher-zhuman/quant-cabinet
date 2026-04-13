@@ -7,7 +7,7 @@ import { useDeleteMeter } from "@features/meters";
 
 import { useMeterQuery } from "@entities/meters";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 
@@ -27,7 +27,7 @@ export const useMeterDetailsWidget = () => {
 
   const { meter, isLoading, isError } = useMeterQuery(meterId);
 
-  const backTo = getBackTo(location.state, `/${ROUTES.METERS}`);
+  const backTo = getBackTo(location.state, ROUTE_PATHS.METERS);
 
   const deleteMeterMutation = useDeleteMeter(() => {
     setIsDeleteDialogOpen(false);

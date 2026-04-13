@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { createListResponseSchema, UserRoleSchema } from "@shared/schemas";
 
 const UserCompanySchema = z
@@ -61,9 +62,9 @@ export const createUserFormSchema = (
     })
     .superRefine((values, context) => {
       if (
-        values.role !== "admin" &&
+        values.role !== AUTH_ROLES.ADMIN &&
         !values.company &&
-        currentRole !== "manager"
+        currentRole !== AUTH_ROLES.MANAGER
       ) {
         context.addIssue({
           code: "custom",
@@ -97,9 +98,9 @@ export const updateUserFormSchema = (
     })
     .superRefine((values, context) => {
       if (
-        values.role !== "admin" &&
+        values.role !== AUTH_ROLES.ADMIN &&
         !values.company &&
-        currentRole !== "manager"
+        currentRole !== AUTH_ROLES.MANAGER
       ) {
         context.addIssue({
           code: "custom",

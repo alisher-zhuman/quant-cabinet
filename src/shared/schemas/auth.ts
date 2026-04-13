@@ -1,3 +1,5 @@
 import { z } from "zod";
 
-export const UserRoleSchema = z.enum(["user", "admin", "manager"]);
+import { USER_ROLE_VALUES } from "@shared/constants";
+
+export const UserRoleSchema = z.enum(USER_ROLE_VALUES);

@@ -7,7 +7,7 @@ import { createCompanyColumns } from "@features/companies";
 
 import { type CompanyRow, useCompaniesQuery } from "@entities/companies";
 
-import { ROUTES } from "@shared/constants";
+import { getCompanyDetailsRoute } from "@shared/constants";
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 import {
   useArchivedFilter,
@@ -83,7 +83,7 @@ export const useCompaniesWidget = () => {
 
   const handleRowClick = useCallback(
     (company: CompanyRow) => {
-      navigate(`/${ROUTES.COMPANIES}/${company.id}`);
+      navigate(getCompanyDetailsRoute(company.id));
     },
     [navigate],
   );

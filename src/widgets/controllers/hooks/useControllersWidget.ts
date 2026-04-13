@@ -7,7 +7,7 @@ import { createControllerColumns } from "@features/controllers";
 
 import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getControllerDetailsRoute } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 
 import { useControllerDialogs } from "./useControllerDialogs";
@@ -51,7 +51,7 @@ export const useControllersWidget = () => {
         dialogs.handleEditController,
         dialogs.handleTransferController,
         dialogs.setControllerToDelete,
-        { currentRole: role, showCompanyColumn: role === "admin" },
+        { currentRole: role, showCompanyColumn: role === AUTH_ROLES.ADMIN },
       ),
     [
       dialogs.handleEditController,
@@ -63,7 +63,7 @@ export const useControllersWidget = () => {
   );
 
   const handleRowClick = (controller: ControllerRow) => {
-    navigate(`/${ROUTES.CONTROLLERS}/${controller.id}`, {
+    navigate(getControllerDetailsRoute(controller.id), {
       state: {
         backTo: `${location.pathname}${location.search}`,
       },
@@ -113,7 +113,7 @@ export const useControllersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       isDeletePending: dialogs.deleteControllerMutation.isPending,
-      hideCompanyField: role !== "admin",
+      hideCompanyField: role !== AUTH_ROLES.ADMIN,
       filters: {
         companyId: filters.companyId,
         serialNumber: filters.serialNumber,

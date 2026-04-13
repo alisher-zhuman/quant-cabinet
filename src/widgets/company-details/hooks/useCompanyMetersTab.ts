@@ -7,7 +7,7 @@ import { createMeterColumns, useDeleteMeter } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getMeterDetailsRoute } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
@@ -129,7 +129,7 @@ export const useCompanyMetersTab = ({
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,
     isArchived: filtersState.isArchived,
-    companyId: role === "admin" ? companyId : undefined,
+    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
     controllerId: "",
     locationType: filtersState.locationType,
     meterStatus: filtersState.meterStatus,
@@ -142,7 +142,7 @@ export const useCompanyMetersTab = ({
 
   const handleMeterRowClick = useCallback(
     (meter: MeterRow) => {
-      navigate(`/${ROUTES.METERS}/${meter.id}`, {
+      navigate(getMeterDetailsRoute(meter.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

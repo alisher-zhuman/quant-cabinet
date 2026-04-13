@@ -16,6 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -129,7 +130,7 @@ export const MetersToolbar = ({
             )}
           </Box>
 
-          {currentRole !== "user" && (
+          {currentRole !== AUTH_ROLES.USER && (
             <>
               <Button
                 variant="contained"

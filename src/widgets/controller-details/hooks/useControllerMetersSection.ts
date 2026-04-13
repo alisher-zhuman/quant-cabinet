@@ -8,7 +8,7 @@ import { createMeterColumns } from "@features/meters";
 import { useControllerQuery } from "@entities/controllers";
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
-import { ROUTES } from "@shared/constants";
+import { getMeterDetailsRoute } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
@@ -58,7 +58,7 @@ export const useControllerMetersSection = (controllerId: string) => {
 
   const handleMeterRowClick = useCallback(
     (meter: MeterRow) => {
-      navigate(`/${ROUTES.METERS}/${meter.id}`, {
+      navigate(getMeterDetailsRoute(meter.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

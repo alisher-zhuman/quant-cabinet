@@ -7,7 +7,7 @@ import { useDeleteUser } from "@features/users";
 
 import { useUserQuery } from "@entities/users";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, ROUTE_PATHS } from "@shared/constants";
 import { getBackTo } from "@shared/helpers";
 
 export const useUserDetailsWidget = () => {
@@ -23,7 +23,7 @@ export const useUserDetailsWidget = () => {
 
   const { user, isLoading, isError } = useUserQuery(userId);
 
-  const backTo = getBackTo(location.state, `/${ROUTES.USERS}`);
+  const backTo = getBackTo(location.state, ROUTE_PATHS.USERS);
 
   const deleteUserMutation = useDeleteUser();
 
@@ -36,7 +36,9 @@ export const useUserDetailsWidget = () => {
     : t("users.details.values.active");
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
-  const canShowCompanyDetails = Boolean(user?.company && user.role !== "admin");
+  const canShowCompanyDetails = Boolean(
+    user?.company && user.role !== AUTH_ROLES.ADMIN,
+  );
 
   const handleOpenEditDialog = () => {
     setIsEditDialogOpen(true);

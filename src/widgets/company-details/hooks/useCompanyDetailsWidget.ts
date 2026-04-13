@@ -7,7 +7,7 @@ import { useDeleteCompany } from "@features/companies";
 
 import { useCompanyQuery, useMyCompanyQuery } from "@entities/companies";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 
 import type { CompanyDetailsTab } from "../types";
 import { useCompanyKeyActions } from "./useCompanyKeyActions";
@@ -53,7 +53,7 @@ export const useCompanyDetailsWidget = ({
   const companyKeyActions = useCompanyKeyActions({ company, t });
   const deleteCompanyMutation = useDeleteCompany(() => {
     setIsDeleteDialogOpen(false);
-    navigate(`/${ROUTES.COMPANIES}`);
+    navigate(ROUTE_PATHS.COMPANIES);
   });
 
   const handleOpenEditDialog = () => {

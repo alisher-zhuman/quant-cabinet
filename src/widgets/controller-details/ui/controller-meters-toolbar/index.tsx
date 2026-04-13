@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -90,7 +91,7 @@ export const ControllerMetersToolbar = ({
           )}
         </Box>
 
-        {currentRole !== "user" && (
+        {currentRole !== AUTH_ROLES.USER && (
           <Button
             variant="contained"
             startIcon={<AddRoundedIcon />}

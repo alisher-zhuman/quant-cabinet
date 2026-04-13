@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { COLORS, ROUTES } from "@shared/constants";
+import { COLORS, ROUTE_PATHS } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import { LangSwitcher } from "@shared/ui/lang-switcher";
 
@@ -25,7 +25,7 @@ export const Header = () => {
       }}
     >
       <Link
-        to={`/${ROUTES.COMPANIES}`}
+        to={ROUTE_PATHS.COMPANIES}
         style={{
           textDecoration: "none",
           color: COLORS.neutral[900],

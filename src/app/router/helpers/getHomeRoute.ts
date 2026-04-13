@@ -1,15 +1,15 @@
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, ROUTE_PATHS } from "@shared/constants";
 import type { AuthState } from "@shared/types";
 
 export const getHomeRoute = (role: AuthState["role"]) => {
   switch (role) {
-    case "admin":
-      return `/${ROUTES.COMPANIES}`;
-    case "manager":
-      return `/${ROUTES.MY_COMPANY}`;
-    case "user":
-      return `/${ROUTES.CONTROLLERS}`;
+    case AUTH_ROLES.ADMIN:
+      return ROUTE_PATHS.COMPANIES;
+    case AUTH_ROLES.MANAGER:
+      return ROUTE_PATHS.MY_COMPANY;
+    case AUTH_ROLES.USER:
+      return ROUTE_PATHS.CONTROLLERS;
     default:
-      return `/${ROUTES.LOG_IN}`;
+      return ROUTE_PATHS.LOG_IN;
   }
 };

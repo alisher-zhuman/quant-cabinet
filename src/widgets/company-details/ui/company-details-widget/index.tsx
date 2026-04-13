@@ -13,7 +13,7 @@ import Tabs from "@mui/material/Tabs";
 
 import { CreateCompanyDialog } from "@features/companies";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 
 import { useCompanyDetailsWidget } from "../../hooks/useCompanyDetailsWidget";
@@ -76,7 +76,7 @@ export const CompanyDetailsWidget = ({
         {!isManagerView && (
           <Button
             component={Link}
-            to={`/${ROUTES.COMPANIES}`}
+            to={ROUTE_PATHS.COMPANIES}
             variant="text"
             startIcon={<ArrowBackRoundedIcon />}
             sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}

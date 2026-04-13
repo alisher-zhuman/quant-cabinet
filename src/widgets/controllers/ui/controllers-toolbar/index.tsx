@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -37,7 +38,7 @@ export const ControllersToolbar = ({
   onArchivedChange,
   currentRole,
 }: Props) => {
-  const isAdmin = currentRole === "admin";
+  const isAdmin = currentRole === AUTH_ROLES.ADMIN;
 
   const filtersButton = (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -99,7 +100,7 @@ export const ControllersToolbar = ({
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
           {isAdmin && filtersButton}
 
-          {currentRole !== "user" && (
+          {currentRole !== AUTH_ROLES.USER && (
             <Button
               variant="contained"
               startIcon={<AddRoundedIcon />}

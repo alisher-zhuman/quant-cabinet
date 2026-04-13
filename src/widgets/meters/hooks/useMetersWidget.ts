@@ -7,7 +7,7 @@ import { createMeterColumns } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getMeterDetailsRoute } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 
 import { useMeterDialogs } from "./useMeterDialogs";
@@ -65,14 +65,14 @@ export const useMetersWidget = () => {
     () =>
       createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, {
         currentRole: role,
-        showCompanyColumn: role === "admin",
+        showCompanyColumn: role === AUTH_ROLES.ADMIN,
       }),
     [dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, role, t],
   );
 
   const handleRowClick = useCallback(
     (meter: MeterRow) => {
-      navigate(`/${ROUTES.METERS}/${meter.id}`, {
+      navigate(getMeterDetailsRoute(meter.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },
@@ -125,7 +125,7 @@ export const useMetersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
-      hideCompanyField: role !== "admin",
+      hideCompanyField: role !== AUTH_ROLES.ADMIN,
       filters: {
         companyId: filters.companyId,
         locationType: filters.locationType,

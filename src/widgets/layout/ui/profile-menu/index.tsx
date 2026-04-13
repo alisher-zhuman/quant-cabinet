@@ -17,7 +17,7 @@ import Typography from "@mui/material/Typography";
 
 import { RoleBadge } from "@features/users";
 
-import { COLORS, ROUTES } from "@shared/constants";
+import { COLORS, ROUTE_PATHS } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 
 export const ProfileMenu = () => {
@@ -42,13 +42,13 @@ export const ProfileMenu = () => {
 
   const onOpenForgotPassword = () => {
     onCloseMenu();
-    navigate(`/${ROUTES.FORGOT_PASSWORD}`);
+    navigate(ROUTE_PATHS.FORGOT_PASSWORD);
   };
 
   const onLogout = () => {
     onCloseMenu();
     logOut();
-    navigate(`/${ROUTES.LOG_IN}`, { replace: true });
+    navigate(ROUTE_PATHS.LOG_IN, { replace: true });
   };
 
   return (

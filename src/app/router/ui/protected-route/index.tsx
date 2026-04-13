@@ -2,7 +2,7 @@ import { Navigate } from "react-router";
 
 import type { ReactNode } from "react";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { AuthState } from "@shared/types";
 
@@ -10,7 +10,7 @@ import { getHomeRoute } from "../../helpers/getHomeRoute";
 
 interface Props {
   children: ReactNode;
-  allowedRoles: Array<NonNullable<AuthState["role"]>>;
+  allowedRoles: ReadonlyArray<NonNullable<AuthState["role"]>>;
 }
 
 export const ProtectedRoute = ({ children, allowedRoles }: Props) => {
@@ -18,7 +18,7 @@ export const ProtectedRoute = ({ children, allowedRoles }: Props) => {
   const role = useAuthStore((state) => state.role);
 
   if (!accessToken) {
-    return <Navigate to={`/${ROUTES.LOG_IN}`} replace />;
+    return <Navigate to={ROUTE_PATHS.LOG_IN} replace />;
   }
 
   if (allowedRoles?.length && (!role || !allowedRoles.includes(role))) {

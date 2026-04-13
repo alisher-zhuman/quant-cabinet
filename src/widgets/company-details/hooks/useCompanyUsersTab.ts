@@ -7,7 +7,7 @@ import { createUserColumns } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getUserDetailsRoute } from "@shared/constants";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -141,13 +141,13 @@ export const useCompanyUsersTab = ({
     limit,
     search: debouncedSearch,
     isArchived,
-    companyId: role === "admin" ? companyId : undefined,
+    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
     enabled: isActive && Boolean(companyId),
   });
 
   const handleUserRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${user.id}`, {
+      navigate(getUserDetailsRoute(user.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { createListResponseSchema } from "@shared/schemas";
 
 const ControllerCompanySchema = z
@@ -142,7 +143,7 @@ export const createControllerFormSchema = (
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (!values.companyId && currentRole !== "manager") {
+      if (!values.companyId && currentRole !== AUTH_ROLES.MANAGER) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),
@@ -184,7 +185,7 @@ export const updateControllerFormSchema = (
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (!values.companyId && currentRole !== "manager") {
+      if (!values.companyId && currentRole !== AUTH_ROLES.MANAGER) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),

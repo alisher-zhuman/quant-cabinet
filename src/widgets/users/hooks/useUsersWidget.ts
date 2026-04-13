@@ -11,7 +11,7 @@ import {
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
-import { ROUTES } from "@shared/constants";
+import { AUTH_ROLES, getUserDetailsRoute } from "@shared/constants";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -64,7 +64,7 @@ export const useUsersWidget = () => {
 
   const handleRowClick = useCallback(
     (user: UserRow) => {
-      navigate(`/${ROUTES.USERS}/${user.id}`, {
+      navigate(getUserDetailsRoute(user.id), {
         state: {
           backTo: `${location.pathname}${location.search}`,
         },
@@ -77,7 +77,7 @@ export const useUsersWidget = () => {
     () =>
       createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser, {
         currentRole: role,
-        showCompanyColumn: role === "admin",
+        showCompanyColumn: role === AUTH_ROLES.ADMIN,
       }),
     [dialogs.handleDeleteUser, dialogs.handleEditUser, role, t],
   );

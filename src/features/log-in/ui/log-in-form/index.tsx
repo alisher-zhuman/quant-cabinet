@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
-import { ROUTES } from "@shared/constants";
+import { ROUTE_PATHS } from "@shared/constants";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 import { FormTextField } from "@shared/ui/form-text-field";
@@ -89,7 +89,7 @@ export const LogInForm = () => {
           <Button
             variant="text"
             component={Link}
-            to={`/${ROUTES.FORGOT_PASSWORD}`}
+            to={ROUTE_PATHS.FORGOT_PASSWORD}
             sx={{ mt: 1, width: "fit-content", margin: "auto" }}
           >
             {t("logIn.actions.forgotPassword")}

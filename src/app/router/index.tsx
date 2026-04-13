@@ -3,7 +3,12 @@ import { createBrowserRouter } from "react-router";
 
 import { Layout } from "@widgets/layout";
 
-import { ROUTES } from "@shared/constants";
+import {
+  ROLE_GROUPS,
+  ROUTE_PATHS,
+  ROUTE_PATTERNS,
+  ROUTES,
+} from "@shared/constants";
 
 import { HomeRedirect } from "./ui/home-redirect";
 import { ProtectedRoute } from "./ui/protected-route";
@@ -56,7 +61,7 @@ export const ROUTER = createBrowserRouter([
     errorElement: <RouteErrorBoundary />,
     children: [
       {
-        path: `/${ROUTES.LOG_IN}`,
+        path: ROUTE_PATHS.LOG_IN,
         element: (
           <WithSuspense>
             <LogIn />
@@ -64,7 +69,7 @@ export const ROUTER = createBrowserRouter([
         ),
       },
       {
-        path: `/${ROUTES.FORGOT_PASSWORD}`,
+        path: ROUTE_PATHS.FORGOT_PASSWORD,
         element: (
           <WithSuspense>
             <ForgotPassword />
@@ -82,7 +87,7 @@ export const ROUTER = createBrowserRouter([
       {
         path: "/",
         element: (
-          <ProtectedRoute allowedRoles={["admin", "manager", "user"]}>
+          <ProtectedRoute allowedRoles={ROLE_GROUPS.ALL}>
             <Layout />
           </ProtectedRoute>
         ),
@@ -95,7 +100,7 @@ export const ROUTER = createBrowserRouter([
           {
             path: ROUTES.COMPANIES,
             element: (
-              <ProtectedRoute allowedRoles={["admin"]}>
+              <ProtectedRoute allowedRoles={ROLE_GROUPS.ADMIN_ONLY}>
                 <WithSuspense>
                   <Companies />
                 </WithSuspense>
@@ -103,9 +108,9 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.COMPANIES}/:companyId`,
+            path: ROUTE_PATTERNS.COMPANY_DETAILS,
             element: (
-              <ProtectedRoute allowedRoles={["admin"]}>
+              <ProtectedRoute allowedRoles={ROLE_GROUPS.ADMIN_ONLY}>
                 <WithSuspense>
                   <CompanyDetails />
                 </WithSuspense>
@@ -115,7 +120,7 @@ export const ROUTER = createBrowserRouter([
           {
             path: ROUTES.MY_COMPANY,
             element: (
-              <ProtectedRoute allowedRoles={["manager"]}>
+              <ProtectedRoute allowedRoles={ROLE_GROUPS.MANAGER_ONLY}>
                 <WithSuspense>
                   <MyCompany />
                 </WithSuspense>
@@ -125,7 +130,7 @@ export const ROUTER = createBrowserRouter([
           {
             path: ROUTES.USERS,
             element: (
-              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+              <ProtectedRoute allowedRoles={ROLE_GROUPS.ADMIN_AND_MANAGER}>
                 <WithSuspense>
                   <Users />
                 </WithSuspense>
@@ -133,9 +138,9 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.USERS}/:userId`,
+            path: ROUTE_PATTERNS.USER_DETAILS,
             element: (
-              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+              <ProtectedRoute allowedRoles={ROLE_GROUPS.ADMIN_AND_MANAGER}>
                 <WithSuspense>
                   <UserDetails />
                 </WithSuspense>
@@ -151,7 +156,7 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.CONTROLLERS}/:controllerId`,
+            path: ROUTE_PATTERNS.CONTROLLER_DETAILS,
             element: (
               <WithSuspense>
                 <ControllerDetails />
@@ -167,7 +172,7 @@ export const ROUTER = createBrowserRouter([
             ),
           },
           {
-            path: `${ROUTES.METERS}/:meterId`,
+            path: ROUTE_PATTERNS.METER_DETAILS,
             element: (
               <WithSuspense>
                 <MeterDetails />
