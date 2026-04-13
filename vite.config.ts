@@ -15,4 +15,20 @@ export default defineConfig({
       "@shared": fileURLToPath(new URL("./src/shared", import.meta.url)),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ["react", "react-dom", "react-router"],
+          ui: ["@mui/material", "@emotion/react", "@emotion/styled"],
+          icons: ["@mui/icons-material"],
+          network: ["axios", "@tanstack/react-query"],
+          forms: ["react-hook-form", "zod", "@hookform/resolvers"],
+          charts: ["recharts"],
+          i18n: ["i18next", "react-i18next", "i18next-browser-languagedetector"],
+          utils: ["zustand", "react-hot-toast"],
+        },
+      },
+    },
+  },
 });
