@@ -1,13 +1,10 @@
 import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
-import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 
+import { FiltersButton } from "@shared/ui/filters-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -43,58 +40,22 @@ export const CompanyMetersToolbar = ({
     isSearchLoading={isSearchLoading}
     isArchived={isArchived}
     actions={
-      <Box sx={{ position: "relative", display: "inline-flex" }}>
-        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-          <Button
-            variant="outlined"
-            startIcon={
-              <Badge
-                color="primary"
-                overlap="circular"
-                variant="dot"
-                invisible={!hasActiveFilters}
-              >
-                <FilterListRoundedIcon />
-              </Badge>
-            }
-            onClick={onOpenFiltersDialog}
-          >
-            {t("meters.actions.filters")}
-          </Button>
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+        <FiltersButton
+          label={t("meters.actions.filters")}
+          resetLabel={t("meters.filters.reset")}
+          hasActiveFilters={hasActiveFilters}
+          onOpenFilters={onOpenFiltersDialog}
+          onResetFilters={onResetFilters}
+        />
 
-          <Button
-            variant="contained"
-            startIcon={<AddRoundedIcon />}
-            onClick={onOpenCreateDialog}
-          >
-            {t("meters.actions.create")}
-          </Button>
-        </Box>
-
-        {hasActiveFilters && (
-          <IconButton
-            size="small"
-            color="error"
-            aria-label={t("meters.filters.reset")}
-            onClick={onResetFilters}
-            sx={{
-              position: "absolute",
-              top: -8,
-              right: -8,
-              width: 20,
-              height: 20,
-              backgroundColor: "background.paper",
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow: 1,
-              "&:hover": {
-                backgroundColor: "background.paper",
-              },
-            }}
-          >
-            <CloseRoundedIcon sx={{ fontSize: 12 }} />
-          </IconButton>
-        )}
+        <Button
+          variant="contained"
+          startIcon={<AddRoundedIcon />}
+          onClick={onOpenCreateDialog}
+        >
+          {t("meters.actions.create")}
+        </Button>
       </Box>
     }
     onSearchChange={onSearchChange}

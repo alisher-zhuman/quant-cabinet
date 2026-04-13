@@ -1,15 +1,12 @@
 import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
-import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 
 import { isAdmin, isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
+import { FiltersButton } from "@shared/ui/filters-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -42,49 +39,13 @@ export const ControllersToolbar = ({
   const isAdminRole = isAdmin(currentRole);
 
   const filtersButton = (
-    <Box sx={{ position: "relative", display: "inline-flex" }}>
-      <Button
-        variant="outlined"
-        startIcon={
-          <Badge
-            color="primary"
-            overlap="circular"
-            variant="dot"
-            invisible={!hasActiveFilters}
-          >
-            <FilterListRoundedIcon />
-          </Badge>
-        }
-        onClick={onOpenFiltersDialog}
-      >
-        {t("controllers.actions.filters")}
-      </Button>
-
-      {hasActiveFilters && (
-        <IconButton
-          size="small"
-          color="error"
-          aria-label={t("controllers.filters.reset")}
-          onClick={onResetFilters}
-          sx={{
-            position: "absolute",
-            top: -8,
-            right: -8,
-            width: 20,
-            height: 20,
-            backgroundColor: "background.paper",
-            border: "1px solid",
-            borderColor: "divider",
-            boxShadow: 1,
-            "&:hover": {
-              backgroundColor: "background.paper",
-            },
-          }}
-        >
-          <CloseRoundedIcon sx={{ fontSize: 12 }} />
-        </IconButton>
-      )}
-    </Box>
+    <FiltersButton
+      label={t("controllers.actions.filters")}
+      resetLabel={t("controllers.filters.reset")}
+      hasActiveFilters={hasActiveFilters}
+      onOpenFilters={onOpenFiltersDialog}
+      onResetFilters={onResetFilters}
+    />
   );
 
   return (

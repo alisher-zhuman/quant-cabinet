@@ -5,19 +5,16 @@ import type { MouseEvent } from "react";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
-import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 import { isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
+import { FiltersButton } from "@shared/ui/filters-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -87,49 +84,13 @@ export const MetersToolbar = ({
       isArchived={isArchived}
       actions={
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-          <Box sx={{ position: "relative", display: "inline-flex" }}>
-            <Button
-              variant="outlined"
-              startIcon={
-                <Badge
-                  color="primary"
-                  overlap="circular"
-                  variant="dot"
-                  invisible={!hasActiveFilters}
-                >
-                  <FilterListRoundedIcon />
-                </Badge>
-              }
-              onClick={onOpenFiltersDialog}
-            >
-              {t("meters.actions.filters")}
-            </Button>
-
-            {hasActiveFilters && (
-              <IconButton
-                size="small"
-                color="error"
-                aria-label={t("meters.filters.reset")}
-                onClick={onResetFilters}
-                sx={{
-                  position: "absolute",
-                  top: -8,
-                  right: -8,
-                  width: 20,
-                  height: 20,
-                  backgroundColor: "background.paper",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  boxShadow: 1,
-                  "&:hover": {
-                    backgroundColor: "background.paper",
-                  },
-                }}
-              >
-                <CloseRoundedIcon sx={{ fontSize: 12 }} />
-              </IconButton>
-            )}
-          </Box>
+          <FiltersButton
+            label={t("meters.actions.filters")}
+            resetLabel={t("meters.filters.reset")}
+            hasActiveFilters={hasActiveFilters}
+            onOpenFilters={onOpenFiltersDialog}
+            onResetFilters={onResetFilters}
+          />
 
           {!isUser(currentRole) && (
             <>
