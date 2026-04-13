@@ -1,8 +1,8 @@
 import type { TFunction } from "i18next";
 
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import Button from "@mui/material/Button";
 
+import { ResponsiveButton } from "@shared/ui/responsive-button";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -32,13 +32,12 @@ export const UsersToolbar = ({
     isSearchLoading={isSearchLoading}
     isArchived={isArchived}
     actions={
-      <Button
+      <ResponsiveButton
         variant="contained"
-        startIcon={<AddRoundedIcon />}
+        icon={<AddRoundedIcon />}
+        label={t("users.actions.create")}
         onClick={onOpenCreateDialog}
-      >
-        {t("users.actions.create")}
-      </Button>
+      />
     }
     onSearchChange={onSearchChange}
     onArchivedChange={onArchivedChange}
