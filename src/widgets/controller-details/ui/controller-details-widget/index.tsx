@@ -18,6 +18,7 @@ import {
   TransferControllerDialog,
 } from "@features/controllers";
 
+import { COLORS } from "@shared/constants";
 import { isAdmin, isUser } from "@shared/helpers";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
@@ -125,6 +126,14 @@ export const ControllerDetailsWidget = () => {
               icon={<SwapHorizRoundedIcon />}
               label={t("controllers.actions.transfer")}
               onClick={handleOpenTransferDialog}
+              sx={{
+                color: COLORS.accent.violet,
+                borderColor: COLORS.accent.violetSoft,
+                "&:hover": {
+                  borderColor: COLORS.accent.violet,
+                  backgroundColor: COLORS.accent.violetSoft,
+                },
+              }}
             />
           )}
 

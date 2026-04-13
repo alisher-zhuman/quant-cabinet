@@ -2,7 +2,6 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -23,22 +22,24 @@ export const FiltersButton = ({
 }: Props) => (
   <Box sx={{ position: "relative", display: "inline-flex" }}>
     <Tooltip title={label}>
-      <Button
-        variant="outlined"
-        startIcon={
-          <Badge
-            color="primary"
-            overlap="circular"
-            variant="dot"
-            invisible={!hasActiveFilters}
-          >
-            <FilterListRoundedIcon />
-          </Badge>
-        }
+      <IconButton
         onClick={onOpenFilters}
+        sx={{
+          border: "1px solid",
+          borderColor: "divider",
+          borderRadius: 2,
+          p: 1,
+        }}
       >
-        {label}
-      </Button>
+        <Badge
+          color="primary"
+          overlap="circular"
+          variant="dot"
+          invisible={!hasActiveFilters}
+        >
+          <FilterListRoundedIcon />
+        </Badge>
+      </IconButton>
     </Tooltip>
 
     {hasActiveFilters && (
