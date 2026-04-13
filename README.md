@@ -18,7 +18,7 @@ The project uses a `.env` file to store environment-specific configurations.
 Expected public variables for the frontend include:
 
 ```env
-VITE_API_URL="https://quant.l.mycloud.kg/api"
+VITE_API_URL="https://api.example.com"
 ```
 
 Create a `.env` file in the root directory before running or building the app.
