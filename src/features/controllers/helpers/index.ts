@@ -1,3 +1,4 @@
+import { COLORS } from "@shared/constants";
 import { createListSearchString, parseListSearchState } from "@shared/helpers";
 
 import type { ControllersSearchState } from "../types";
@@ -49,12 +50,12 @@ export const getStatusColor = (status?: string | null) => {
 export const getTypeStyles = (type?: string | null) => {
   if (type === "single") {
     return {
-      color: "#0288d1",
-      backgroundColor: "rgba(2, 136, 209, 0.08)",
+      color: COLORS.accent.cyan,
+      backgroundColor: COLORS.accent.cyanSoft,
     };
   }
   return {
-    color: "#7b1fa2",
-    backgroundColor: "rgba(123, 31, 162, 0.08)",
+    color: COLORS.accent.violet,
+    backgroundColor: COLORS.accent.violetSoft,
   };
 };

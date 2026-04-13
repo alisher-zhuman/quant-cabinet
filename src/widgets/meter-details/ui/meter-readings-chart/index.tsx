@@ -13,6 +13,8 @@ import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import { COLORS } from "@shared/constants";
+
 import { MeterReadingsChartTooltip } from "../meter-readings-chart-tooltip";
 
 interface Point {
@@ -177,10 +179,15 @@ export const MeterReadingsChart = ({
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#0f766e"
+                stroke={COLORS.accent.teal}
                 strokeWidth={2.5}
-                dot={{ r: 2.5, strokeWidth: 0, fill: "#0f766e" }}
-                activeDot={{ r: 5, fill: "#0f766e", stroke: "#ccfbf1", strokeWidth: 3 }}
+                dot={{ r: 2.5, strokeWidth: 0, fill: COLORS.accent.teal }}
+                activeDot={{
+                  r: 5,
+                  fill: COLORS.accent.teal,
+                  stroke: COLORS.accent.tealLight,
+                  strokeWidth: 3,
+                }}
               />
             </LineChart>
           </ResponsiveContainer>

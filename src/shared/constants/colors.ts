@@ -4,6 +4,15 @@ export const COLORS = {
     light: "#EBF1FF",
     dark: "#1D4ED8",
   },
+  accent: {
+    teal: "#0F766E",
+    tealLight: "#CCFBF1",
+    cyan: "#0288D1",
+    cyanSoft: "rgba(2, 136, 209, 0.08)",
+    violet: "#7B1FA2",
+    violetSoft: "rgba(123, 31, 162, 0.08)",
+    purple: "#7C3AED",
+  },
   neutral: {
     900: "#0F172A",
     600: "#475569",

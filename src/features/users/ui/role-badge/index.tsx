@@ -19,8 +19,8 @@ export const RoleBadge = ({ role, label }: Props) => {
         }
       : isManager(role)
         ? {
-            color: "#7C3AED",
-            backgroundColor: alpha("#7C3AED", 0.1),
+            color: COLORS.accent.purple,
+            backgroundColor: alpha(COLORS.accent.purple, 0.1),
           }
         : {
             color: COLORS.system.success,
