@@ -96,9 +96,8 @@ export const ControllerDetailsWidget = () => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: { xs: "stretch", sm: "center" },
-          gap: 1.5,
-          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          gap: 1,
         }}
       >
         <ResponsiveButton
@@ -107,10 +106,10 @@ export const ControllerDetailsWidget = () => {
           variant="text"
           icon={<ArrowBackRoundedIcon />}
           label={t("controllers.details.back")}
-          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+          sx={{ px: 1 }}
         />
 
-        <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
           {!isUser(role) && (
             <ResponsiveButton
               variant="outlined"

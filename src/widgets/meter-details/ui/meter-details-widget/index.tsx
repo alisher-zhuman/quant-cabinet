@@ -92,9 +92,8 @@ export const MeterDetailsWidget = () => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: { xs: "stretch", sm: "center" },
-          gap: 1.5,
-          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          gap: 1,
         }}
       >
         <ResponsiveButton
@@ -103,11 +102,11 @@ export const MeterDetailsWidget = () => {
           variant="text"
           icon={<ArrowBackRoundedIcon />}
           label={t("meters.details.back")}
-          sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+          sx={{ px: 1 }}
         />
 
         {!isUser(role) && (
-          <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
+          <Stack direction="row" spacing={1}>
             <ResponsiveButton
               variant="outlined"
               icon={<EditRoundedIcon />}

@@ -68,9 +68,8 @@ export const CompanyDetailsWidget = ({
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: { xs: "stretch", sm: "center" },
-          gap: 1.5,
-          flexDirection: { xs: "column", sm: "row" },
+          alignItems: "center",
+          gap: 1,
         }}
       >
         {!isManagerView && (
@@ -80,12 +79,12 @@ export const CompanyDetailsWidget = ({
             variant="text"
             icon={<ArrowBackRoundedIcon />}
             label={t("companies.details.back")}
-            sx={{ width: "fit-content", px: 1, alignSelf: "flex-start" }}
+            sx={{ px: 1 }}
           />
         )}
 
         {!isManagerView && (
-          <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <ResponsiveButton
               variant="outlined"
               icon={<EditRoundedIcon />}
