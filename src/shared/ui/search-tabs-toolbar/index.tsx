@@ -61,7 +61,7 @@ export const SearchTabsToolbar = ({
       sx={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "flex-end",
+        justifyContent: { xs: "space-between", sm: "flex-end" },
         flexDirection: "row",
         flexWrap: "nowrap",
         gap: { xs: 1, sm: 1.5 },
