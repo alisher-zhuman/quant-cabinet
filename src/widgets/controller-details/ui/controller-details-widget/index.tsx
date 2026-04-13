@@ -18,6 +18,7 @@ import {
   TransferControllerDialog,
 } from "@features/controllers";
 
+import { isAdmin, isUser } from "@shared/helpers";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
 
@@ -109,7 +110,7 @@ export const ControllerDetailsWidget = () => {
         </Button>
 
         <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
-          {role !== "user" && (
+          {!isUser(role) && (
             <Button
               variant="outlined"
               startIcon={<EditRoundedIcon />}
@@ -119,7 +120,7 @@ export const ControllerDetailsWidget = () => {
             </Button>
           )}
 
-          {role === "admin" && (
+          {isAdmin(role) && (
             <Button
               variant="outlined"
               startIcon={<SwapHorizRoundedIcon />}
@@ -129,7 +130,7 @@ export const ControllerDetailsWidget = () => {
             </Button>
           )}
 
-          {role !== "user" && (
+          {!isUser(role) && (
             <Button
               color="error"
               variant="outlined"

@@ -2,7 +2,8 @@ import type { TFunction } from "i18next";
 
 import type { MeterRow } from "@entities/meters";
 
-import { formatDate } from "@shared/helpers";
+import { formatDate, isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import type { Column } from "@shared/types";
 
 import {
@@ -20,7 +21,7 @@ export const createMeterColumns = (
   onEdit: (meter: MeterRow) => void,
   options?: {
     showCompanyColumn?: boolean;
-    currentRole?: string | null;
+    currentRole?: UserRole | null;
   },
 ): Column<MeterRow>[] => [
   {
@@ -77,7 +78,7 @@ export const createMeterColumns = (
     header: t("meters.table.columns.createdAt"),
     cell: (meter) => formatDate(meter.createdAt),
   },
-  ...(options?.currentRole !== "user"
+  ...(!isUser(options?.currentRole)
     ? [
         {
           id: "actions",

@@ -3,6 +3,8 @@ import type { Control } from "react-hook-form";
 
 import type { ControllerFormValues } from "@entities/controllers";
 
+import { isManager } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import { FormSelectField } from "@shared/ui/form-select-field";
 import { FormTextField } from "@shared/ui/form-text-field";
 
@@ -19,7 +21,7 @@ interface Props {
   isCompaniesLoading: boolean;
   companyOptions: Option[];
   typeOptions: Option[];
-  currentRole?: string | null;
+  currentRole?: UserRole | null;
 }
 
 export const ControllerMainFields = ({
@@ -45,7 +47,7 @@ export const ControllerMainFields = ({
         fullWidth
       />
 
-      {!initialCompanyId && currentRole !== "manager" && (
+      {!initialCompanyId && !isManager(currentRole) && (
         <FormSelectField
           name="companyId"
           control={control}

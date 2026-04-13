@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isAdmin, isManager } from "@shared/helpers";
 import { createListResponseSchema, UserRoleSchema } from "@shared/schemas";
+import type { UserRole } from "@shared/types";
 
 const UserCompanySchema = z
   .looseObject({
@@ -40,7 +41,7 @@ export const DeleteUserPayloadSchema = z.object({
 
 export const createUserFormSchema = (
   t: (key: string) => string,
-  currentRole?: string | null,
+  currentRole?: UserRole | null,
 ) =>
   z
     .object({
@@ -62,9 +63,9 @@ export const createUserFormSchema = (
     })
     .superRefine((values, context) => {
       if (
-        values.role !== AUTH_ROLES.ADMIN &&
+        !isAdmin(values.role) &&
         !values.company &&
-        currentRole !== AUTH_ROLES.MANAGER
+        !isManager(currentRole)
       ) {
         context.addIssue({
           code: "custom",
@@ -76,7 +77,7 @@ export const createUserFormSchema = (
 
 export const updateUserFormSchema = (
   t: (key: string) => string,
-  currentRole?: string | null,
+  currentRole?: UserRole | null,
 ) =>
   z
     .object({
@@ -98,9 +99,9 @@ export const updateUserFormSchema = (
     })
     .superRefine((values, context) => {
       if (
-        values.role !== AUTH_ROLES.ADMIN &&
+        !isAdmin(values.role) &&
         !values.company &&
-        currentRole !== AUTH_ROLES.MANAGER
+        !isManager(currentRole)
       ) {
         context.addIssue({
           code: "custom",

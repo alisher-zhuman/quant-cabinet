@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import { alpha } from "@mui/material/styles";
 
-import { AUTH_ROLES, COLORS } from "@shared/constants";
+import { COLORS } from "@shared/constants";
+import { isAdmin, isManager } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
 
 interface Props {
@@ -11,12 +12,12 @@ interface Props {
 
 export const RoleBadge = ({ role, label }: Props) => {
   const toneStyles =
-    role === AUTH_ROLES.ADMIN
+    isAdmin(role)
       ? {
           color: COLORS.primary.dark,
           backgroundColor: alpha(COLORS.primary.main, 0.1),
         }
-      : role === AUTH_ROLES.MANAGER
+      : isManager(role)
         ? {
             color: "#7C3AED",
             backgroundColor: alpha("#7C3AED", 0.1),

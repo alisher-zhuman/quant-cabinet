@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import type { UserFormValues, UserRow } from "@entities/users";
 import { createUserFormSchema, updateUserFormSchema } from "@entities/users";
 
+import { AUTH_ROLES } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 
 import { useCreateUser } from "./useCreateUser";
@@ -26,7 +27,7 @@ const getDefaultValues = (
   email: user?.email ?? "",
   firstName: user?.firstName ?? "",
   lastName: user?.lastName ?? "",
-  role: user?.role ?? "user",
+  role: user?.role ?? AUTH_ROLES.USER,
   phoneNumber: user?.phoneNumber ?? "",
   descriptions: user?.descriptions ?? "",
   company: user?.company?.id ?? companyId ?? "",

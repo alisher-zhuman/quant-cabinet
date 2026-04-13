@@ -16,6 +16,7 @@ import { MeterDialog } from "@features/meters";
 
 import type { MeterRow } from "@entities/meters";
 
+import { isUser } from "@shared/helpers";
 import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
 
@@ -105,7 +106,7 @@ export const MeterDetailsWidget = () => {
           {t("meters.details.back")}
         </Button>
 
-        {role !== "user" && (
+        {!isUser(role) && (
           <Stack direction="row" spacing={1} sx={{ alignSelf: { xs: "flex-start", sm: "auto" } }}>
             <Button
               variant="outlined"

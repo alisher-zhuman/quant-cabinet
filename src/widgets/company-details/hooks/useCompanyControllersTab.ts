@@ -10,7 +10,8 @@ import {
   useControllersQuery,
 } from "@entities/controllers";
 
-import { AUTH_ROLES, getControllerDetailsRoute } from "@shared/constants";
+import { getControllerDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
@@ -108,7 +109,7 @@ export const useCompanyControllersTab = ({
     isError,
     isFetching,
   } = useControllersQuery({
-    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
+    companyId: isAdmin(role) ? companyId : undefined,
     page: filtersState.page,
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,

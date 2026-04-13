@@ -7,7 +7,8 @@ import { createControllerColumns } from "@features/controllers";
 
 import { type ControllerRow, useControllersQuery } from "@entities/controllers";
 
-import { AUTH_ROLES, getControllerDetailsRoute } from "@shared/constants";
+import { getControllerDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 
 import { useControllerDialogs } from "./useControllerDialogs";
@@ -51,7 +52,7 @@ export const useControllersWidget = () => {
         dialogs.handleEditController,
         dialogs.handleTransferController,
         dialogs.setControllerToDelete,
-        { currentRole: role, showCompanyColumn: role === AUTH_ROLES.ADMIN },
+        { currentRole: role, showCompanyColumn: isAdmin(role) },
       ),
     [
       dialogs.handleEditController,
@@ -113,7 +114,7 @@ export const useControllersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
       isDeletePending: dialogs.deleteControllerMutation.isPending,
-      hideCompanyField: role !== AUTH_ROLES.ADMIN,
+      hideCompanyField: !isAdmin(role),
       filters: {
         companyId: filters.companyId,
         serialNumber: filters.serialNumber,

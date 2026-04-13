@@ -8,7 +8,8 @@ import Tooltip from "@mui/material/Tooltip";
 
 import type { UserRow } from "@entities/users";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isAdmin, isManager } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 
 interface Props {
   editLabel: string;
@@ -16,7 +17,7 @@ interface Props {
   onEdit: (user: UserRow) => void;
   onDelete: (user: UserRow) => void;
   user: UserRow;
-  currentRole?: string | null | undefined;
+  currentRole?: UserRole | null | undefined;
 }
 
 export const UserActions = ({
@@ -37,8 +38,7 @@ export const UserActions = ({
     onDelete(user);
   };
 
-  const isForbidden =
-    currentRole === AUTH_ROLES.MANAGER && user.role === AUTH_ROLES.ADMIN;
+  const isForbidden = isManager(currentRole) && isAdmin(user.role);
 
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 0.5 }}>

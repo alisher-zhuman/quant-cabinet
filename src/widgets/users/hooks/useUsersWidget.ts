@@ -11,7 +11,8 @@ import {
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
-import { AUTH_ROLES, getUserDetailsRoute } from "@shared/constants";
+import { getUserDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -28,7 +29,6 @@ export const useUsersWidget = () => {
   const location = useLocation();
 
   const role = useAuthStore((state) => state.role);
-  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseUsersSearchState);
@@ -51,7 +51,6 @@ export const useUsersWidget = () => {
     { page, limit, search, isArchived },
     createUsersSearchString,
   );
-
 
   const { users, total, hasUsers, emptyText, isLoading, isError, isFetching } =
     useUsersQuery({
@@ -77,7 +76,7 @@ export const useUsersWidget = () => {
     () =>
       createUserColumns(t, dialogs.handleEditUser, dialogs.handleDeleteUser, {
         currentRole: role,
-        showCompanyColumn: role === AUTH_ROLES.ADMIN,
+        showCompanyColumn: isAdmin(role),
       }),
     [dialogs.handleDeleteUser, dialogs.handleEditUser, role, t],
   );

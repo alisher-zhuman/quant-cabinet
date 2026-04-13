@@ -7,7 +7,8 @@ import { createUserColumns } from "@features/users";
 
 import { type UserRow, useUsersQuery } from "@entities/users";
 
-import { AUTH_ROLES, getUserDetailsRoute } from "@shared/constants";
+import { getUserDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import {
   useArchivedFilter,
   useInitialSearchState,
@@ -141,7 +142,7 @@ export const useCompanyUsersTab = ({
     limit,
     search: debouncedSearch,
     isArchived,
-    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
+    companyId: isAdmin(role) ? companyId : undefined,
     enabled: isActive && Boolean(companyId),
   });
 

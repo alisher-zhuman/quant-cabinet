@@ -11,6 +11,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useCompaniesQuery } from "@entities/companies";
 import type { UserRow } from "@entities/users";
 
+import { AUTH_ROLES } from "@shared/constants";
+import { isManager } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
@@ -44,7 +46,7 @@ export const CreateUserDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: currentRole !== "manager",
+    enabled: !isManager(currentRole),
   });
 
   const companyOptions = useMemo(
@@ -54,13 +56,13 @@ export const CreateUserDialog = ({
   const roleOptions = useMemo(
     () => {
       const options = [
-        { value: "admin", label: t("profile.roles.admin") },
-        { value: "manager", label: t("profile.roles.manager") },
-        { value: "user", label: t("profile.roles.user") },
+        { value: AUTH_ROLES.ADMIN, label: t("profile.roles.admin") },
+        { value: AUTH_ROLES.MANAGER, label: t("profile.roles.manager") },
+        { value: AUTH_ROLES.USER, label: t("profile.roles.user") },
       ];
 
-      if (currentRole === "manager") {
-        return options.filter((opt) => opt.value !== "admin");
+      if (isManager(currentRole)) {
+        return options.filter((opt) => opt.value !== AUTH_ROLES.ADMIN);
       }
 
       return options;
@@ -77,7 +79,7 @@ export const CreateUserDialog = ({
   const selectedRole = useWatch({ control, name: "role" });
 
   const shouldShowCompanyField =
-    selectedRole !== "admin" && !companyId && currentRole !== "manager";
+    selectedRole !== AUTH_ROLES.ADMIN && !companyId && !isManager(currentRole);
 
   useEffect(() => {
     if (!shouldShowCompanyField) {

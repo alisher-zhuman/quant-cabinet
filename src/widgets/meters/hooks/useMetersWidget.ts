@@ -7,7 +7,8 @@ import { createMeterColumns } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
-import { AUTH_ROLES, getMeterDetailsRoute } from "@shared/constants";
+import { getMeterDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 
 import { useMeterDialogs } from "./useMeterDialogs";
@@ -65,7 +66,7 @@ export const useMetersWidget = () => {
     () =>
       createMeterColumns(t, dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, {
         currentRole: role,
-        showCompanyColumn: role === AUTH_ROLES.ADMIN,
+        showCompanyColumn: isAdmin(role),
       }),
     [dialogs.setMeterToDelete, dialogs.handleOpenEditDialog, role, t],
   );
@@ -125,7 +126,7 @@ export const useMetersWidget = () => {
       isCreateDialogOpen: dialogs.isCreateDialogOpen,
       isBulkUploadDialogOpen: dialogs.isBulkUploadDialogOpen,
       isFiltersDialogOpen: dialogs.isFiltersDialogOpen,
-      hideCompanyField: role !== AUTH_ROLES.ADMIN,
+      hideCompanyField: !isAdmin(role),
       filters: {
         companyId: filters.companyId,
         locationType: filters.locationType,

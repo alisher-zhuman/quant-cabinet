@@ -9,6 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useCompaniesQuery } from "@entities/companies";
 import type { ControllerRow } from "@entities/controllers";
 
+import { isAdmin } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
@@ -42,7 +43,7 @@ export const CreateControllerDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !isEditMode && !initialCompanyId && currentRole === "admin",
+    enabled: !isEditMode && !initialCompanyId && isAdmin(currentRole),
   });
 
   const companyOptions = useMemo(

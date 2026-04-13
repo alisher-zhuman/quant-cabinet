@@ -8,13 +8,16 @@ import Tooltip from "@mui/material/Tooltip";
 
 import type { MeterRow } from "@entities/meters";
 
+import { isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
+
 interface Props {
   deleteLabel: string;
   editLabel: string;
   meter: MeterRow;
   onDelete: (meter: MeterRow) => void;
   onEdit: (meter: MeterRow) => void;
-  role?: string | null | undefined;
+  role?: UserRole | null | undefined;
 }
 
 export const MeterActions = ({
@@ -37,7 +40,7 @@ export const MeterActions = ({
 
   return (
     <Stack direction="row" spacing={1}>
-      {role !== "user" && (
+      {!isUser(role) && (
         <>
           <Tooltip title={editLabel}>
             <IconButton aria-label={editLabel} color="primary" onClick={handleEditClick}>

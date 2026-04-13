@@ -3,6 +3,7 @@ import type { Control } from "react-hook-form";
 
 import type { MeterFormValues } from "@entities/meters";
 
+import { isAdmin } from "@shared/helpers";
 import type { AuthState } from "@shared/types";
 import { FormSelectField } from "@shared/ui/form-select-field";
 
@@ -37,7 +38,7 @@ export const MeterContextFields = ({
   controllerHelperText,
 }: Props) => (
   <>
-    {!initialCompanyId && currentRole === "admin" && (
+    {!initialCompanyId && isAdmin(currentRole) && (
       <FormSelectField
         name="companyId"
         control={control}
@@ -57,7 +58,9 @@ export const MeterContextFields = ({
         fullWidth
         disabled={
           isControllersLoading ||
-          (currentRole === "admin" && !initialCompanyId && !controllerOptions.length)
+          (isAdmin(currentRole) &&
+            !initialCompanyId &&
+            !controllerOptions.length)
         }
         options={controllerOptions}
         emptyOptionLabel={t("meters.createDialog.fields.controllerPlaceholder")}

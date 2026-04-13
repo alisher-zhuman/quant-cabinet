@@ -7,7 +7,8 @@ import { createMeterColumns, useDeleteMeter } from "@features/meters";
 
 import { type MeterRow, useMetersQuery } from "@entities/meters";
 
-import { AUTH_ROLES, getMeterDetailsRoute } from "@shared/constants";
+import { getMeterDetailsRoute } from "@shared/constants";
+import { isAdmin } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 import type { Column } from "@shared/types";
 
@@ -129,7 +130,7 @@ export const useCompanyMetersTab = ({
     limit: filtersState.limit,
     search: filtersState.debouncedSearch,
     isArchived: filtersState.isArchived,
-    companyId: role === AUTH_ROLES.ADMIN ? companyId : undefined,
+    companyId: isAdmin(role) ? companyId : undefined,
     controllerId: "",
     locationType: filtersState.locationType,
     meterStatus: filtersState.meterStatus,

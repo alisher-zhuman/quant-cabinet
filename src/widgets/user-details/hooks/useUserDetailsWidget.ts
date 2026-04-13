@@ -7,8 +7,8 @@ import { useDeleteUser } from "@features/users";
 
 import { useUserQuery } from "@entities/users";
 
-import { AUTH_ROLES, ROUTE_PATHS } from "@shared/constants";
-import { getBackTo } from "@shared/helpers";
+import { ROUTE_PATHS } from "@shared/constants";
+import { getBackTo, isAdmin } from "@shared/helpers";
 
 export const useUserDetailsWidget = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -36,9 +36,7 @@ export const useUserDetailsWidget = () => {
     : t("users.details.values.active");
 
   const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
-  const canShowCompanyDetails = Boolean(
-    user?.company && user.role !== AUTH_ROLES.ADMIN,
-  );
+  const canShowCompanyDetails = Boolean(user?.company && !isAdmin(user.role));
 
   const handleOpenEditDialog = () => {
     setIsEditDialogOpen(true);

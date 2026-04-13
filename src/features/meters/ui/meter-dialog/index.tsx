@@ -14,6 +14,7 @@ import { useCompaniesQuery } from "@entities/companies";
 import { useControllerQuery, useControllersQuery } from "@entities/controllers";
 import type { MeterFormValues, MeterRow } from "@entities/meters";
 
+import { isAdmin, isManager } from "@shared/helpers";
 import { useAuthStore } from "@shared/stores";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
@@ -48,7 +49,7 @@ export const MeterDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    enabled: !initialCompanyId && role === "admin",
+    enabled: !initialCompanyId && isAdmin(role),
   });
 
   const companyOptions = useMemo(() => {
@@ -108,11 +109,13 @@ export const MeterDialog = ({
     limit: 1000,
     search: "",
     isArchived: false,
-    companyId: initialCompanyId ?? (role === "admin" ? selectedCompanyId : undefined),
+    companyId:
+      initialCompanyId ??
+      (isAdmin(role) ? selectedCompanyId : undefined),
     serialNumber: "",
     phoneNumber: "",
     simIMSI: "",
-    enabled: role === "manager" || Boolean(initialCompanyId ?? selectedCompanyId),
+    enabled: isManager(role) || Boolean(initialCompanyId ?? selectedCompanyId),
   });
 
   const controllerOptions = useMemo(() => {

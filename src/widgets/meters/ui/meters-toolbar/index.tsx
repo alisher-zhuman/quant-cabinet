@@ -16,7 +16,8 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -33,7 +34,7 @@ interface Props {
   onOpenFiltersDialog: () => void;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
-  currentRole?: string | null;
+  currentRole?: UserRole | null;
 }
 
 export const MetersToolbar = ({
@@ -130,7 +131,7 @@ export const MetersToolbar = ({
             )}
           </Box>
 
-          {currentRole !== AUTH_ROLES.USER && (
+          {!isUser(currentRole) && (
             <>
               <Button
                 variant="contained"

@@ -1,7 +1,8 @@
 import { z } from "zod";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isManager } from "@shared/helpers";
 import { createListResponseSchema } from "@shared/schemas";
+import type { UserRole } from "@shared/types";
 
 const ControllerCompanySchema = z
   .looseObject({
@@ -109,7 +110,7 @@ export const ControllerTypeSchema = z.enum(["single", "multiple"]);
 
 export const createControllerFormSchema = (
   t: (key: string) => string,
-  currentRole?: string | null,
+  currentRole?: UserRole | null,
 ) =>
   z
     .object({
@@ -143,7 +144,7 @@ export const createControllerFormSchema = (
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (!values.companyId && currentRole !== AUTH_ROLES.MANAGER) {
+      if (!values.companyId && !isManager(currentRole)) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),
@@ -154,7 +155,7 @@ export const createControllerFormSchema = (
 
 export const updateControllerFormSchema = (
   t: (key: string) => string,
-  currentRole?: string | null,
+  currentRole?: UserRole | null,
 ) =>
   z
     .object({
@@ -185,7 +186,7 @@ export const updateControllerFormSchema = (
       isArchived: z.boolean(),
     })
     .superRefine((values, context) => {
-      if (!values.companyId && currentRole !== AUTH_ROLES.MANAGER) {
+      if (!values.companyId && !isManager(currentRole)) {
         context.addIssue({
           code: "custom",
           message: t("validation.requiredCompany"),

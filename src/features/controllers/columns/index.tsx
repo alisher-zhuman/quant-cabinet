@@ -9,7 +9,8 @@ import Typography from "@mui/material/Typography";
 
 import type { ControllerRow } from "@entities/controllers";
 
-import { formatDate } from "@shared/helpers";
+import { formatDate, isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import type { Column } from "@shared/types";
 
 import { getStatusColor, getTypeStyles } from "../helpers";
@@ -19,7 +20,7 @@ export const createControllerColumns = (
   onEdit: (controller: ControllerRow) => void,
   onTransfer: (controller: ControllerRow) => void,
   onDelete: (controller: ControllerRow) => void,
-  options: { showCompanyColumn?: boolean; currentRole?: string | null } = {},
+  options: { showCompanyColumn?: boolean; currentRole?: UserRole | null } = {},
 ): Column<ControllerRow>[] => [
   {
     id: "serialNumber",
@@ -93,7 +94,7 @@ export const createControllerColumns = (
     header: t("controllers.table.columns.createdAt"),
     cell: (controller) => formatDate(controller.createdAt),
   },
-  ...(options.currentRole !== "user"
+  ...(!isUser(options.currentRole)
     ? [
         {
           id: "actions",

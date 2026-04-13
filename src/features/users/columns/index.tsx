@@ -2,7 +2,8 @@ import type { TFunction } from "i18next";
 
 import type { UserRow } from "@entities/users";
 
-import { formatDate } from "@shared/helpers";
+import { formatDate, isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import type { Column } from "@shared/types";
 
 import { RoleBadge } from "../ui/role-badge";
@@ -14,7 +15,7 @@ export const createUserColumns = (
   onDelete: (user: UserRow) => void,
   options: {
     showCompanyColumn?: boolean;
-    currentRole?: string | null | undefined;
+    currentRole?: UserRole | null | undefined;
   } = {},
 ): Column<UserRow>[] => [
   {
@@ -49,7 +50,7 @@ export const createUserColumns = (
     header: t("users.table.columns.createdAt"),
     cell: (user) => formatDate(user.createdAt),
   },
-  ...(options.currentRole !== "user"
+  ...(!isUser(options.currentRole)
     ? [
         {
           id: "actions",

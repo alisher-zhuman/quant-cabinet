@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isManager } from "@shared/helpers";
 import { createListResponseSchema } from "@shared/schemas";
 import type { AuthState } from "@shared/types";
 
@@ -116,7 +116,7 @@ export const createMeterFormSchema = (
       .min(1, t("validation.requiredSerialNumber")),
     controllerId: z.string().trim().min(1, t("validation.requiredController")),
     companyId:
-      currentRole === AUTH_ROLES.MANAGER
+      isManager(currentRole)
         ? z.string().optional()
         : z.string().trim().min(1, t("validation.requiredCompany")),
     locationType: MeterLocationTypeSchema,
@@ -155,7 +155,7 @@ export const updateMeterFormSchema = (
       .min(1, t("validation.requiredSerialNumber")),
     controllerId: z.string().trim().min(1, t("validation.requiredController")),
     companyId:
-      currentRole === AUTH_ROLES.MANAGER
+      isManager(currentRole)
         ? z.string().optional()
         : z.string().trim().min(1, t("validation.requiredCompany")),
     locationType: MeterLocationTypeSchema,

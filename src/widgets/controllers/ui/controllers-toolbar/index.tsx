@@ -8,7 +8,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isAdmin, isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -22,7 +23,7 @@ interface Props {
   onOpenCreateDialog: () => void;
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
-  currentRole?: string | null;
+  currentRole?: UserRole | null;
 }
 
 export const ControllersToolbar = ({
@@ -38,7 +39,7 @@ export const ControllersToolbar = ({
   onArchivedChange,
   currentRole,
 }: Props) => {
-  const isAdmin = currentRole === AUTH_ROLES.ADMIN;
+  const isAdminRole = isAdmin(currentRole);
 
   const filtersButton = (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -94,13 +95,13 @@ export const ControllersToolbar = ({
       archivedLabel={t("controllers.tabs.archived")}
       isSearchLoading={isSearchLoading}
       isArchived={isArchived}
-      hideSearch={!isAdmin}
-      left={!isAdmin ? filtersButton : undefined}
+      hideSearch={!isAdminRole}
+      left={!isAdminRole ? filtersButton : undefined}
       actions={
         <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-          {isAdmin && filtersButton}
+          {isAdminRole && filtersButton}
 
-          {currentRole !== AUTH_ROLES.USER && (
+          {!isUser(currentRole) && (
             <Button
               variant="contained"
               startIcon={<AddRoundedIcon />}

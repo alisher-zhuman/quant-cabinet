@@ -8,7 +8,8 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 
-import { AUTH_ROLES } from "@shared/constants";
+import { isUser } from "@shared/helpers";
+import type { UserRole } from "@shared/types";
 import { SearchTabsToolbar } from "@shared/ui/search-tabs-toolbar";
 
 interface Props {
@@ -22,7 +23,7 @@ interface Props {
   onSearchChange: (value: string) => void;
   onArchivedChange: (value: boolean) => void;
   onOpenCreateDialog: () => void;
-  currentRole?: string | null;
+  currentRole?: UserRole | null;
 }
 
 export const ControllerMetersToolbar = ({
@@ -91,7 +92,7 @@ export const ControllerMetersToolbar = ({
           )}
         </Box>
 
-        {currentRole !== AUTH_ROLES.USER && (
+        {!isUser(currentRole) && (
           <Button
             variant="contained"
             startIcon={<AddRoundedIcon />}
