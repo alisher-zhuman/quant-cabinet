@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-import { useDownloadControllersTemplate } from "@features/controllers";
-import { useDeleteMeter } from "@features/meters";
+import {
+  useDeleteMeter,
+  useDownloadMetersTemplate,
+} from "@features/meters";
 
 import { type MeterRow } from "@entities/meters";
 
@@ -12,7 +14,7 @@ export const useMeterDialogs = (setIsArchived: (value: boolean) => void) => {
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [meterToDelete, setMeterToDelete] = useState<MeterRow | null>(null);
 
-  const downloadTemplateMutation = useDownloadControllersTemplate();
+  const downloadTemplateMutation = useDownloadMetersTemplate();
 
   const onCloseDeleteDialog = () => {
     setMeterToDelete(null);

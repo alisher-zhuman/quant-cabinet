@@ -1,24 +1,21 @@
 import { useTranslation } from "react-i18next";
 
-import { downloadControllersTemplate } from "@entities/controllers";
+import { downloadMetersTemplate } from "@entities/meters";
 
 import { getApiErrorMessage } from "@shared/helpers";
 import { useToastMutation } from "@shared/hooks";
 
-const TEMPLATE_FILE_NAME = "controllers-template.xlsx";
+const TEMPLATE_FILE_NAME = "meters-template.xlsx";
 
-export const useDownloadControllersTemplate = () => {
+export const useDownloadMetersTemplate = () => {
   const { t } = useTranslation();
 
   return useToastMutation({
-    mutationFn: downloadControllersTemplate,
-    pendingMessage: t("controllers.bulkUpload.template.toast.loading"),
-    successMessage: t("controllers.bulkUpload.template.toast.success"),
+    mutationFn: downloadMetersTemplate,
+    pendingMessage: t("meters.bulkUpload.template.toast.loading"),
+    successMessage: t("meters.bulkUpload.template.toast.success"),
     errorMessage: (error: unknown) =>
-      getApiErrorMessage(
-        error,
-        t("controllers.bulkUpload.template.toast.error"),
-      ),
+      getApiErrorMessage(error, t("meters.bulkUpload.template.toast.error")),
     onSuccess: (blob) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");

@@ -10,6 +10,7 @@ import {
   UpdateMeterPayloadSchema,
 } from "../model/schemas";
 import type {
+  BulkImportMetersPayload,
   CreateMeterPayload,
   DeleteMeterPayload,
   MeterDetails,
@@ -17,6 +18,29 @@ import type {
   MetersResponse,
   UpdateMeterPayload,
 } from "../model/types";
+
+export const downloadMetersTemplate = async (): Promise<Blob> => {
+  const response = await api.get(API_PATHS.BULK_UPLOAD_TEMPLATE, {
+    responseType: "blob",
+  });
+
+  return response.data as Blob;
+};
+
+export const importMeters = async ({
+  file,
+  companyId,
+}: BulkImportMetersPayload): Promise<void> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("companyId", companyId);
+
+  await api.post(API_PATHS.BULK_UPLOAD_IMPORT, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
 export const createMeter = async (payload: CreateMeterPayload): Promise<void> => {
   const validPayload = CreateMeterPayloadSchema.parse(payload);

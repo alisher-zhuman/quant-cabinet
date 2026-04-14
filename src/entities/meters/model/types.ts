@@ -4,6 +4,7 @@ import type {
   createMeterFormSchema,
   CreateMeterPayloadSchema,
   DeleteMeterPayloadSchema,
+  meterBulkUploadFormSchema,
   MeterDetailsSchema,
   MeterLocationTypeSchema,
   MeterPendingCommandSchema,
@@ -23,6 +24,14 @@ export type UpdateMeterPayload = ZodInfer<typeof UpdateMeterPayloadSchema>;
 export type MeterLocationType = ZodInfer<typeof MeterLocationTypeSchema>;
 export type MeterPendingCommand = ZodInfer<typeof MeterPendingCommandSchema>;
 export type DeleteMeterPayload = ZodInfer<typeof DeleteMeterPayloadSchema>;
+export type MeterBulkUploadFormValues = ZodInfer<
+  ReturnType<typeof meterBulkUploadFormSchema>
+>;
+
+export interface BulkImportMetersPayload {
+  file: File;
+  companyId: string;
+}
 
 export interface MetersListQueryParams {
   page?: number;

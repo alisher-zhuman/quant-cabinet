@@ -9,19 +9,19 @@ import TextField from "@mui/material/TextField";
 
 import { useCompaniesQuery } from "@entities/companies";
 import {
-  type ControllerBulkUploadFormValues,
-} from "@entities/controllers";
+  type MeterBulkUploadFormValues,
+} from "@entities/meters";
 
 import { FormSelectField } from "@shared/ui/form-select-field";
 
 interface Props {
   t: TFunction;
-  control: Control<ControllerBulkUploadFormValues>;
+  control: Control<MeterBulkUploadFormValues>;
   selectedFile: File | null;
   onFileChange: (file: File | null) => void;
 }
 
-export const ControllerBulkUploadFields = ({
+export const MeterBulkUploadFields = ({
   t,
   control,
   selectedFile,
@@ -56,17 +56,17 @@ export const ControllerBulkUploadFields = ({
       <FormSelectField
         name="companyId"
         control={control}
-        label={t("controllers.bulkUpload.import.fields.company")}
-        placeholder={t("controllers.bulkUpload.import.fields.companyPlaceholder")}
+        label={t("meters.bulkUpload.import.fields.company")}
+        placeholder={t("meters.bulkUpload.import.fields.companyPlaceholder")}
         options={companyOptions}
         disabled={isLoading}
       />
 
       <Stack spacing={1}>
         <TextField
-          label={t("controllers.bulkUpload.import.fields.file")}
+          label={t("meters.bulkUpload.import.fields.file")}
           value={selectedFile?.name ?? ""}
-          placeholder={t("controllers.bulkUpload.import.fields.filePlaceholder")}
+          placeholder={t("meters.bulkUpload.import.fields.filePlaceholder")}
           slotProps={{
             inputLabel: {
               shrink: true,
@@ -78,12 +78,12 @@ export const ControllerBulkUploadFields = ({
           error={Boolean(fieldState.error?.message)}
           helperText={
             fieldState.error?.message ??
-            t("controllers.bulkUpload.import.fields.fileHelper")
+            t("meters.bulkUpload.import.fields.fileHelper")
           }
         />
 
         <Button variant="outlined" component="label">
-          {t("controllers.bulkUpload.import.actions.chooseFile")}
+          {t("meters.bulkUpload.import.actions.chooseFile")}
           <input
             hidden
             type="file"

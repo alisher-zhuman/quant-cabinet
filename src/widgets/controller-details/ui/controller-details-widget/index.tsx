@@ -1,31 +1,20 @@
 import { Link } from "react-router";
 
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import DeleteOutlineRoundedIcon from "@mui/icons-material/DeleteOutlineRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import { alpha } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
-import {
-  CreateControllerDialog,
-  TransferControllerDialog,
-} from "@features/controllers";
-
-import { COLORS } from "@shared/constants";
-import { isAdmin, isUser } from "@shared/helpers";
-import { ConfirmDialog } from "@shared/ui/confirm-dialog";
 import { Loader } from "@shared/ui/loader";
-import { ResponsiveButton } from "@shared/ui/responsive-button";
 
 import { useControllerDetailsWidget } from "../../hooks/useControllerDetailsWidget";
 import { ControllerCompanySection } from "../controller-company-section";
+import { ControllerDetailsDialogs } from "../controller-details-dialogs";
+import { ControllerDetailsHeader } from "../controller-details-header";
+import { ControllerDetailsMainInfo } from "../controller-details-main-info";
 import { ControllerInfoSection } from "../controller-info-section";
 import { ControllerMetersSection } from "../controller-meters-section";
 
@@ -92,61 +81,14 @@ export const ControllerDetailsWidget = () => {
           "radial-gradient(circle at top left, rgba(14, 165, 233, 0.08), transparent 28%), radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 24%)",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 1,
-        }}
-      >
-        <ResponsiveButton
-          component={Link}
-          to={backTo}
-          variant="text"
-          icon={<ArrowBackRoundedIcon />}
-          label={t("controllers.details.back")}
-          sx={{ px: 1 }}
-        />
-
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          {!isUser(role) && (
-            <ResponsiveButton
-              variant="outlined"
-              icon={<EditRoundedIcon />}
-              label={t("controllers.actions.edit")}
-              onClick={handleOpenEditDialog}
-            />
-          )}
-
-          {isAdmin(role) && (
-            <ResponsiveButton
-              variant="outlined"
-              icon={<SwapHorizRoundedIcon />}
-              label={t("controllers.actions.transfer")}
-              onClick={handleOpenTransferDialog}
-              sx={{
-                color: COLORS.accent.violet,
-                borderColor: COLORS.accent.violetSoft,
-                "&:hover": {
-                  borderColor: COLORS.accent.violet,
-                  backgroundColor: COLORS.accent.violetSoft,
-                },
-              }}
-            />
-          )}
-
-          {!isUser(role) && (
-            <ResponsiveButton
-              color="error"
-              variant="outlined"
-              icon={<DeleteOutlineRoundedIcon />}
-              label={t("controllers.actions.delete")}
-              onClick={handleOpenDeleteDialog}
-            />
-          )}
-        </Box>
-      </Box>
+      <ControllerDetailsHeader
+        t={t}
+        backTo={backTo}
+        role={role}
+        onEdit={handleOpenEditDialog}
+        onTransfer={handleOpenTransferDialog}
+        onDelete={handleOpenDeleteDialog}
+      />
 
       <Paper
         elevation={0}
@@ -157,44 +99,17 @@ export const ControllerDetailsWidget = () => {
           borderColor: "divider",
           background: (theme) =>
             `linear-gradient(180deg, ${alpha(theme.palette.background.paper, 0.98)} 0%, ${alpha(theme.palette.info.light, 0.06)} 100%)`,
-          boxShadow: (theme) => `0 18px 40px ${alpha(theme.palette.common.black, 0.05)}`,
+          boxShadow: (theme) =>
+            `0 18px 40px ${alpha(theme.palette.common.black, 0.05)}`,
         }}
       >
         <Stack spacing={3}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
-            <Typography variant="h4" fontWeight={700}>
-              {controller.serialNumber}
-            </Typography>
-
-            <Typography color="text.secondary">
-              {controllerType} • {controllerStatus}
-            </Typography>
-          </Box>
-
-          <Stack
-            direction="row"
-            spacing={1}
-            useFlexGap
-            flexWrap="wrap"
-            sx={{ justifyContent: { sm: "flex-end" } }}
-          >
-            <Chip
-              size="small"
-              label={`${t("controllers.details.fields.controllerStatus")}: ${controllerStatus}`}
-              sx={{
-                borderRadius: 999,
-                backgroundColor: (theme) => alpha(theme.palette.info.main, 0.10),
-              }}
-            />
-            <Chip
-              size="small"
-              label={`${t("controllers.details.fields.controllerType")}: ${controllerType}`}
-              sx={{
-                borderRadius: 999,
-                backgroundColor: (theme) => alpha(theme.palette.warning.main, 0.14),
-              }}
-            />
-          </Stack>
+          <ControllerDetailsMainInfo
+            t={t}
+            controller={controller}
+            controllerStatus={controllerStatus}
+            controllerType={controllerType}
+          />
 
           <Stack spacing={1.5}>
             <ControllerInfoSection
@@ -225,33 +140,19 @@ export const ControllerDetailsWidget = () => {
 
       <ControllerMetersSection controllerId={controllerId} />
 
-      {isEditDialogOpen && (
-        <CreateControllerDialog
-          controller={controller}
-          open={isEditDialogOpen}
-          onClose={handleCloseEditDialog}
-          onSuccess={handleEditSuccess}
-        />
-      )}
-
-      {isTransferDialogOpen && (
-        <TransferControllerDialog
-          controller={controller}
-          open={isTransferDialogOpen}
-          onClose={handleCloseTransferDialog}
-          onSuccess={handleTransferSuccess}
-        />
-      )}
-
-      <ConfirmDialog
-        open={isDeleteDialogOpen}
-        title={t("controllers.deleteDialog.title")}
-        description={t("controllers.deleteDialog.description")}
-        cancelLabel={t("controllers.deleteDialog.cancel")}
-        confirmLabel={t("controllers.deleteDialog.confirm")}
-        isLoading={isDeletePending}
-        onClose={handleCloseDeleteDialog}
-        onConfirm={handleConfirmDelete}
+      <ControllerDetailsDialogs
+        t={t}
+        controller={controller}
+        isEditDialogOpen={isEditDialogOpen}
+        isTransferDialogOpen={isTransferDialogOpen}
+        isDeleteDialogOpen={isDeleteDialogOpen}
+        isDeletePending={isDeletePending}
+        onCloseEdit={handleCloseEditDialog}
+        onEditSuccess={handleEditSuccess}
+        onCloseTransfer={handleCloseTransferDialog}
+        onTransferSuccess={handleTransferSuccess}
+        onCloseDelete={handleCloseDeleteDialog}
+        onConfirmDelete={handleConfirmDelete}
       />
     </Box>
   );

@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 
-import { ControllerBulkUploadDialog } from "@features/controllers";
 import {
+  MeterBulkUploadDialog,
   MeterDialog,
   MeterFiltersDialog,
 } from "@features/meters";
@@ -91,7 +91,7 @@ export const MetersDialogs = ({
     )}
 
     {isBulkUploadDialogOpen && (
-      <ControllerBulkUploadDialog
+      <MeterBulkUploadDialog
         open={isBulkUploadDialogOpen}
         onClose={onCloseBulkUploadDialog}
         onSuccess={onBulkUploadSuccess}

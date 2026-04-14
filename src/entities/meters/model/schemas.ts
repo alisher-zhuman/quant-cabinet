@@ -215,3 +215,17 @@ export const UpdateMeterPayloadSchema = z.object({
 export const DeleteMeterPayloadSchema = z.object({
   id: z.string(),
 });
+
+export const meterBulkUploadFormSchema = (t: (key: string) => string) =>
+  z.object({
+    companyId: z
+      .string()
+      .trim()
+      .min(1, t("meters.bulkUpload.import.validation.required")),
+    file: z
+      .instanceof(File)
+      .nullable()
+      .refine((value) => value !== null, {
+        message: t("meters.bulkUpload.import.validation.required"),
+      }),
+  });

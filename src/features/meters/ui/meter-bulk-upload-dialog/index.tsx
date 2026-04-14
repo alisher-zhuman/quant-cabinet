@@ -9,8 +9,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { FormActions } from "@shared/ui/form-actions";
 import { FormFieldset } from "@shared/ui/form-fieldset";
 
-import { useControllerBulkUploadForm } from "../../hooks/useControllerBulkUploadForm";
-import { ControllerBulkUploadFields } from "../controller-bulk-upload-fields";
+import { useMeterBulkUploadForm } from "../../hooks/useMeterBulkUploadForm";
+import { MeterBulkUploadFields } from "../meter-bulk-upload-fields";
 
 interface Props {
   open: boolean;
@@ -18,7 +18,7 @@ interface Props {
   onSuccess: () => void;
 }
 
-export const ControllerBulkUploadDialog = ({
+export const MeterBulkUploadDialog = ({
   open,
   onClose,
   onSuccess,
@@ -31,7 +31,7 @@ export const ControllerBulkUploadDialog = ({
     isValid,
     onSubmit,
     handleFileChange,
-  } = useControllerBulkUploadForm({
+  } = useMeterBulkUploadForm({
     onSuccess,
   });
   const selectedFile = useWatch({
@@ -46,12 +46,12 @@ export const ControllerBulkUploadDialog = ({
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{t("controllers.bulkUpload.import.title")}</DialogTitle>
+      <DialogTitle>{t("meters.bulkUpload.import.title")}</DialogTitle>
 
       <DialogContent>
         <form onSubmit={onSubmit}>
           <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
-            <ControllerBulkUploadFields
+            <MeterBulkUploadFields
               t={t}
               control={control}
               selectedFile={selectedFile}
@@ -60,10 +60,10 @@ export const ControllerBulkUploadDialog = ({
 
             <FormActions
               onCancel={onClose}
-              cancelLabel={t("controllers.bulkUpload.import.actions.cancel")}
-              submitLabel={t("controllers.bulkUpload.import.actions.submit")}
+              cancelLabel={t("meters.bulkUpload.import.actions.cancel")}
+              submitLabel={t("meters.bulkUpload.import.actions.submit")}
               submitLabelLoading={t(
-                "controllers.bulkUpload.import.actions.submitLoading",
+                "meters.bulkUpload.import.actions.submitLoading",
               )}
               isSubmitting={isPending}
               isDirty={isDirty}
