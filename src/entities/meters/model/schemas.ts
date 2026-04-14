@@ -223,9 +223,5 @@ export const meterBulkUploadFormSchema = (t: (key: string) => string) =>
       .trim()
       .min(1, t("meters.bulkUpload.import.validation.required")),
     file: z
-      .instanceof(File)
-      .nullable()
-      .refine((value) => value !== null, {
-        message: t("meters.bulkUpload.import.validation.required"),
-      }),
+      .instanceof(File, { message: t("meters.bulkUpload.import.validation.required") }),
   });

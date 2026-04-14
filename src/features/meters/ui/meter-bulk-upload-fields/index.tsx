@@ -17,8 +17,8 @@ import { FormSelectField } from "@shared/ui/form-select-field";
 interface Props {
   t: TFunction;
   control: Control<MeterBulkUploadFormValues>;
-  selectedFile: File | null;
-  onFileChange: (file: File | null) => void;
+  selectedFile: File | undefined;
+  onFileChange: (file: File | undefined) => void;
 }
 
 export const MeterBulkUploadFields = ({
@@ -45,7 +45,7 @@ export const MeterBulkUploadFields = ({
   }));
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
+    const file = event.target.files?.[0];
 
     onFileChange(file);
     event.target.value = "";

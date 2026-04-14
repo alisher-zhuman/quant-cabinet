@@ -53,8 +53,7 @@ export const MeterBulkUploadDialog = ({
           <FormFieldset disabled={isPending} sx={{ pt: 1 }}>
             <MeterBulkUploadFields
               t={t}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
-              control={control as any}
+              control={control}
               selectedFile={selectedFile}
               onFileChange={handleFileChange}
             />

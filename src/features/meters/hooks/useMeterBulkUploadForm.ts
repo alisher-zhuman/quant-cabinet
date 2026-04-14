@@ -1,5 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
 import { useMemo } from "react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,18 +28,18 @@ export const useMeterBulkUploadForm = ({ onSuccess }: Params) => {
     setValue,
     formState: { isDirty, isValid },
   } = useForm<MeterBulkUploadFormValues>({
-    resolver: zodResolver(schema) as any,
+    resolver: zodResolver(schema),
     mode: "onChange",
     defaultValues: {
       companyId: "",
-      file: null,
+      file: undefined as unknown as File,
     },
   });
 
   const importMutation = useImportMeters(() => {
     reset({
       companyId: "",
-      file: null,
+      file: undefined as unknown as File,
     });
     onSuccess();
   });
@@ -57,8 +55,8 @@ export const useMeterBulkUploadForm = ({ onSuccess }: Params) => {
     });
   });
 
-  const handleFileChange = (file: File | null) => {
-    setValue("file", file, {
+  const handleFileChange = (file: File | undefined) => {
+    setValue("file", file as File, {
       shouldDirty: true,
       shouldTouch: true,
       shouldValidate: true,
