@@ -19,7 +19,7 @@ export const useDownloadMetersTemplate = () => {
       const link = document.createElement("a");
 
       link.href = url;
-      link.download = "meters-template.xlsx";
+      link.download = t("meters.bulkUpload.template.filename");
       document.body.append(link);
       link.click();
       link.remove();

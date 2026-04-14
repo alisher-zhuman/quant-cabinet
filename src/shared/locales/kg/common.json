@@ -265,40 +265,6 @@
       "filters": "Чыпкалар",
       "more": "Дагы"
     },
-    "bulkUpload": {
-      "template": {
-        "action": "Шаблонду жүктөө",
-        "toast": {
-          "loading": "Шаблон жүктөлүүдө...",
-          "success": "Шаблон жүктөлдү",
-          "error": "Шаблонду жүктөө мүмкүн болгон жок"
-        }
-      },
-      "import": {
-        "action": "Excel жүктөө",
-        "title": "Жабдууну жүктөө",
-        "fields": {
-          "company": "Компания",
-          "companyPlaceholder": "Компанияны тандаңыз",
-          "file": "Excel файл",
-          "filePlaceholder": "Файл тандалган эмес",
-          "fileHelper": ".xlsx жана .xls колдоого алынат"
-        },
-        "actions": {
-          "chooseFile": "Файл тандоо",
-          "cancel": "Жокко чыгаруу",
-          "submit": "Жүктөө",
-          "submitLoading": "Жүктөлүүдө..."
-        },
-        "validation": {
-          "required": "Талаа милдеттүү"
-        },
-        "toast": {
-          "loading": "Жабдуу жүктөлүүдө...",
-          "success": "Жабдуу жүктөлдү",
-          "error": "Жабдууну жүктөө мүмкүн болгон жок"
-        }
-      }
     },
     "search": {
       "placeholder": "Компаниянын аталышы боюнча издөө"
@@ -451,6 +417,42 @@
       "delete": "Эсептегичти өчүрүү",
       "filters": "Фильтр",
       "import": "Жүктөө"
+    },
+    "bulkUpload": {
+      "template": {
+        "action": "Шаблонду жүктөө",
+        "filename": "Эсептегичтердин_үлгүсү.xlsx",
+        "toast": {
+          "loading": "Шаблон жүктөлүүдө...",
+          "success": "Шаблон жүктөлдү",
+          "error": "Шаблонду жүктөө мүмкүн болгон жок"
+        }
+      },
+      "import": {
+        "action": "Excel жүктөө",
+        "title": "Жабдууну жүктөө",
+        "fields": {
+          "company": "Компания",
+          "companyPlaceholder": "Компанияны тандаңыз",
+          "file": "Excel файл",
+          "filePlaceholder": "Файл тандалган эмес",
+          "fileHelper": ".xlsx жана .xls колдоого алынат"
+        },
+        "actions": {
+          "chooseFile": "Файл тандоо",
+          "cancel": "Жокко чыгаруу",
+          "submit": "Жүктөө",
+          "submitLoading": "Жүктөлүүдө..."
+        },
+        "validation": {
+          "required": "Талаа милдеттүү"
+        },
+        "toast": {
+          "loading": "Жабдуу жүктөлүүдө...",
+          "success": "Жабдуу жүктөлдү",
+          "error": "Жабдууну жүктөө мүмкүн болгон жок"
+        }
+      }
     },
     "search": {
       "placeholder": "Эсептегичтин сериялык номери боюнча издөө"
