@@ -95,6 +95,7 @@ export const useCompanyControllersTab = ({
   const role = useAuthStore((state) => state.role);
 
   const filtersState = useCompanyControllerFiltersState({ isActive });
+  
   const dialogs = useCompanyControllerDialogs({
     setIsArchived: filtersState.setIsArchived,
     setPage: filtersState.setPage,

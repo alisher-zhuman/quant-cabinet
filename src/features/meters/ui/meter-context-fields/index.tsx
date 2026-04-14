@@ -1,7 +1,7 @@
 import type { TFunction } from "i18next";
 import type { Control } from "react-hook-form";
 
-import type { MeterFormValues } from "@entities/meters";
+import type { MeterEditFormValues } from "@entities/meters";
 
 import { isAdmin } from "@shared/helpers";
 import type { AuthState } from "@shared/types";
@@ -14,7 +14,7 @@ interface Option {
 
 interface Props {
   t: TFunction;
-  control: Control<MeterFormValues>;
+  control: Control<MeterEditFormValues>;
   initialCompanyId?: string | undefined;
   initialControllerId?: string | undefined;
   currentRole: AuthState["role"];

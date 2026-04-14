@@ -42,8 +42,6 @@ interface Props {
   maxValue: number;
 }
 
-const CHART_HEIGHT = 220;
-
 export const MeterReadingsChart = ({
   title,
   subtitle,
@@ -133,7 +131,7 @@ export const MeterReadingsChart = ({
         border: "1px solid",
         borderColor: "divider",
         background: (theme) =>
-          `linear-gradient(180deg, ${alpha(theme.palette.common.white, 0.78)} 0%, ${alpha(theme.palette.info.light, 0.10)} 100%)`,
+          `linear-gradient(180deg, ${alpha(theme.palette.common.white, 0.78)} 0%, ${alpha(theme.palette.info.light, 0.1)} 100%)`,
       }}
     >
       <Stack spacing={2}>
@@ -151,7 +149,7 @@ export const MeterReadingsChart = ({
             {yAxisLabel}
           </Typography>
 
-          <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+          <ResponsiveContainer width="100%" height={220}>
             <LineChart
               data={points}
               margin={{ top: 8, right: 8, left: -18, bottom: 8 }}
@@ -172,9 +170,7 @@ export const MeterReadingsChart = ({
                 tickLine={false}
               />
               <Tooltip
-                content={
-                  <MeterReadingsChartTooltip valueLabel={valueLabel} />
-                }
+                content={<MeterReadingsChartTooltip valueLabel={valueLabel} />}
               />
               <Line
                 type="monotone"

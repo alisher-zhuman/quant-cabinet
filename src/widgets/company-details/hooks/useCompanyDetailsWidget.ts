@@ -44,6 +44,7 @@ export const useCompanyDetailsWidget = ({
   });
 
   const queryParamsCompany = useCompanyQuery(isManagerView ? undefined : companyId);
+  
   const myCompany = useMyCompanyQuery();
 
   const { company } = isManagerView ? myCompany : queryParamsCompany;

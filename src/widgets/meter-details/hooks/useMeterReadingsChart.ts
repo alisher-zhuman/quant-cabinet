@@ -5,21 +5,13 @@ import { useTranslation } from "react-i18next";
 import type { MeterDetails } from "@entities/meters";
 import { useReadingsQuery } from "@entities/readings";
 
+import type { ChartPoint } from "../types";
+
 interface Params {
   meter: MeterDetails;
   from: string;
   to: string;
 }
-
-interface ChartPoint {
-  id: string;
-  value: number;
-  axisLabel: string;
-  tooltipLabel: string;
-  rawDate: string;
-}
-
-const CHART_LIMIT = 500;
 
 export const useMeterReadingsChart = ({ meter, from, to }: Params) => {
   const { t, i18n } = useTranslation();
@@ -33,7 +25,7 @@ export const useMeterReadingsChart = ({ meter, from, to }: Params) => {
     from,
     to,
     page: 0,
-    limit: CHART_LIMIT,
+    limit: 500,
     ...(typeof port === "number" ? { port } : {}),
   });
 
@@ -79,7 +71,8 @@ export const useMeterReadingsChart = ({ meter, from, to }: Params) => {
         .filter((point) => Number.isFinite(point.value))
         .sort(
           (left, right) =>
-            new Date(left.rawDate).getTime() - new Date(right.rawDate).getTime(),
+            new Date(left.rawDate).getTime() -
+            new Date(right.rawDate).getTime(),
         ),
     [fullDateTimeFormatter, readings, shortDateTimeFormatter],
   );

@@ -19,8 +19,8 @@ import { useUpdateMeter } from "./useUpdateMeter";
 interface Params {
   meter?: MeterRow | null | undefined;
   onSuccess?: () => void;
-  initialCompanyId?: string;
-  initialControllerId?: string;
+  initialCompanyId?: string | undefined;
+  initialControllerId?: string | undefined;
 }
 
 const getDefaultValues = (

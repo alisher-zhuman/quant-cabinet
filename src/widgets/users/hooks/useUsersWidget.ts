@@ -29,6 +29,7 @@ export const useUsersWidget = () => {
   const location = useLocation();
 
   const role = useAuthStore((state) => state.role);
+  
   const { t } = useTranslation();
 
   const initialSearchState = useInitialSearchState(parseUsersSearchState);
