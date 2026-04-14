@@ -30,7 +30,7 @@ export const useMeterBulkUploadForm = ({ onSuccess }: Params) => {
     setValue,
     formState: { isDirty, isValid },
   } = useForm<MeterBulkUploadFormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     mode: "onChange",
     defaultValues: {
       companyId: "",
