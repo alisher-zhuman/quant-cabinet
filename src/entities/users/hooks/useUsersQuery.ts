@@ -31,7 +31,6 @@ export const useUsersQuery = ({
 
   const normalizedSearch = search.trim();
 
-  // If search is provided but firstName/lastName are not, derive them
   const nameParams =
     !initialFirstName && !initialLastName && normalizedSearch
       ? getUsersNameSearchParams(normalizedSearch)
