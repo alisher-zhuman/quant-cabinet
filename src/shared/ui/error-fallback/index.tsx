@@ -7,12 +7,12 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-export interface ErrorFallbackProps {
+interface Props {
   error: Error | null;
   componentStack?: string;
 }
 
-export const ErrorFallback = ({ error, componentStack }: ErrorFallbackProps) => {
+export const ErrorFallback = ({ error, componentStack }: Props) => {
   const { t } = useTranslation();
 
   const resolvedComponentStack = componentStack?.trim();
