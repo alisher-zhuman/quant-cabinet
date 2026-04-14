@@ -6,7 +6,7 @@ import { ROUTE_PATHS } from "@shared/constants";
 import { useAuthStore } from "@shared/stores";
 import type { AuthState } from "@shared/types";
 
-import { getHomeRoute } from "../../helpers/getHomeRoute";
+import { getHomeRoute } from "../../helpers";
 
 interface Props {
   children: ReactNode;
