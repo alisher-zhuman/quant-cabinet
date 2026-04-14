@@ -5,11 +5,9 @@ import Typography from "@mui/material/Typography";
 
 import { MeterReadingsChartFooter } from "../meter-readings-chart-footer";
 import { MeterReadingsChartRoot } from "../meter-readings-chart-root";
-import {
-  MeterReadingsChartEmpty,
-  MeterReadingsChartError,
-  MeterReadingsChartLoading,
-} from "../meter-readings-chart-states";
+import { MeterReadingsChartEmpty } from "../meter-readings-chart-empty";
+import { MeterReadingsChartError } from "../meter-readings-chart-error";
+import { MeterReadingsChartLoading } from "../meter-readings-chart-loading";
 
 interface Point {
   id: string;

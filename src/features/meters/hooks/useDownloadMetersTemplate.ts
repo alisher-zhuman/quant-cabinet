@@ -5,8 +5,6 @@ import { downloadMetersTemplate } from "@entities/meters";
 import { getApiErrorMessage } from "@shared/helpers";
 import { useToastMutation } from "@shared/hooks";
 
-const TEMPLATE_FILE_NAME = "meters-template.xlsx";
-
 export const useDownloadMetersTemplate = () => {
   const { t } = useTranslation();
 
@@ -21,7 +19,7 @@ export const useDownloadMetersTemplate = () => {
       const link = document.createElement("a");
 
       link.href = url;
-      link.download = TEMPLATE_FILE_NAME;
+      link.download = "meters-template.xlsx";
       document.body.append(link);
       link.click();
       link.remove();
