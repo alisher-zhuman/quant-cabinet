@@ -264,147 +264,147 @@
       "transfer": "Передать другой компании",
       "filters": "Фильтры",
       "more": "Еще"
+    }
+  },
+  "search": {
+    "placeholder": "Поиск по названию компании"
+  },
+  "filters": {
+    "title": "Фильтры контроллеров",
+    "fields": {
+      "companyId": "Компания",
+      "serialNumber": "Серийный номер счетчика",
+      "phoneNumber": "Номер телефона для пополнения",
+      "simIMSI": "Номер симкарты (IMSI)"
     },
+    "reset": "Сбросить",
+    "cancel": "Отмена",
+    "apply": "Применить"
+  },
+  "tabs": {
+    "active": "Активные",
+    "archived": "Архивные"
+  },
+  "empty": {
+    "active": "Нет активных контроллеров",
+    "archived": "Нет архивных контроллеров",
+    "search": "По вашему запросу ничего не найдено"
+  },
+  "deleteDialog": {
+    "title": "Удалить контроллер?",
+    "description": "При удалении контроллера удалятся все счетчики и показания, принадлежащие этому контроллеру. Вы точно хотите продолжить?",
+    "cancel": "Отмена",
+    "confirm": "Удалить"
+  },
+  "createDialog": {
+    "title": "Добавить контроллер",
+    "fields": {
+      "serialNumber": "Серийный номер",
+      "company": "Компания",
+      "companyPlaceholder": "Выберите компанию",
+      "type": "Тип",
+      "simIMSI": "Номер симкарты (IMSI)",
+      "phoneNumber": "Номер телефона для пополнения",
+      "descriptions": "Описание"
     },
-    "search": {
-      "placeholder": "Поиск по названию компании"
+    "cancel": "Отмена",
+    "submit": "Сохранить",
+    "submitLoading": "Создание..."
+  },
+  "editDialog": {
+    "title": "Редактировать контроллер",
+    "fields": {
+      "correctTime": "Корректировать время",
+      "correctInterval": "Корректировать интервал",
+      "setInterval": "Интервал опроса, ч",
+      "isArchived": "В архиве"
     },
-    "filters": {
-      "title": "Фильтры контроллеров",
-      "fields": {
-        "companyId": "Компания",
-        "serialNumber": "Серийный номер счетчика",
-        "phoneNumber": "Номер телефона для пополнения",
-        "simIMSI": "Номер симкарты (IMSI)"
-      },
-      "reset": "Сбросить",
-      "cancel": "Отмена",
-      "apply": "Применить"
+    "cancel": "Отмена",
+    "submit": "Сохранить",
+    "submitLoading": "Сохранение..."
+  },
+  "transferDialog": {
+    "title": "Передача контроллера",
+    "fields": {
+      "company": "Новая компания",
+      "companyPlaceholder": "Выберите компанию"
     },
-    "tabs": {
-      "active": "Активные",
-      "archived": "Архивные"
+    "cancel": "Отмена",
+    "submit": "Передать",
+    "submitLoading": "Передача..."
+  },
+  "details": {
+    "title": "Информация о контроллере",
+    "back": "Назад",
+    "sections": {
+      "controller": "Контроллер",
+      "company": "Компания",
+      "meters": "Счетчики"
     },
-    "empty": {
-      "active": "Нет активных контроллеров",
-      "archived": "Нет архивных контроллеров",
-      "search": "По вашему запросу ничего не найдено"
+    "fields": {
+      "id": "ID",
+      "serialNumber": "Серийный номер",
+      "batteryStatus": "Заряд батареи",
+      "signalStatus": "Уровень сигнала",
+      "controllerStatus": "Статус",
+      "controllerType": "Тип",
+      "simIMSI": "IMSI",
+      "phoneNumber": "Номер телефона",
+      "descriptions": "Описание",
+      "correctTime": "Корректировка времени",
+      "correctInterval": "Корректировка интервала",
+      "setInterval": "Интервал опроса (ч)",
+      "createdAt": "Дата создания",
+      "updatedAt": "Дата обновления",
+      "isArchived": "В архиве",
+      "companyId": "ID компании",
+      "companyName": "Название компании",
+      "companyAddress": "Адрес компании",
+      "companyStatus": "Статус компании",
+      "companyCreatedAt": "Дата создания компании",
+      "companyUpdatedAt": "Дата обновления компании"
     },
-    "deleteDialog": {
-      "title": "Удалить контроллер?",
-      "description": "При удалении контроллера удалятся все счетчики и показания, принадлежащие этому контроллеру. Вы точно хотите продолжить?",
-      "cancel": "Отмена",
-      "confirm": "Удалить"
+    "values": {
+      "yes": "Да",
+      "no": "Нет",
+      "active": "Активный",
+      "archived": "В архиве"
+    }
+  },
+  "toast": {
+    "create": {
+      "loading": "Создание контроллера...",
+      "success": "Контроллер создан",
+      "error": "Не удалось создать контроллер"
     },
-    "createDialog": {
-      "title": "Добавить контроллер",
-      "fields": {
-        "serialNumber": "Серийный номер",
-        "company": "Компания",
-        "companyPlaceholder": "Выберите компанию",
-        "type": "Тип",
-        "simIMSI": "Номер симкарты (IMSI)",
-        "phoneNumber": "Номер телефона для пополнения",
-        "descriptions": "Описание"
-      },
-      "cancel": "Отмена",
-      "submit": "Сохранить",
-      "submitLoading": "Создание..."
+    "update": {
+      "loading": "Обновление контроллера...",
+      "success": "Контроллер обновлен",
+      "error": "Не удалось обновить контроллер"
     },
-    "editDialog": {
-      "title": "Редактировать контроллер",
-      "fields": {
-        "correctTime": "Корректировать время",
-        "correctInterval": "Корректировать интервал",
-        "setInterval": "Интервал опроса, ч",
-        "isArchived": "В архиве"
-      },
-      "cancel": "Отмена",
-      "submit": "Сохранить",
-      "submitLoading": "Сохранение..."
+    "delete": {
+      "loading": "Удаление контроллера...",
+      "success": "Контроллер удален",
+      "error": "Не удалось удалить контроллер"
     },
-    "transferDialog": {
-      "title": "Передача контроллера",
-      "fields": {
-        "company": "Новая компания",
-        "companyPlaceholder": "Выберите компанию"
-      },
-      "cancel": "Отмена",
-      "submit": "Передать",
-      "submitLoading": "Передача..."
-    },
-    "details": {
-      "title": "Информация о контроллере",
-      "back": "Назад",
-      "sections": {
-        "controller": "Контроллер",
-        "company": "Компания",
-        "meters": "Счетчики"
-      },
-      "fields": {
-        "id": "ID",
-        "serialNumber": "Серийный номер",
-        "batteryStatus": "Заряд батареи",
-        "signalStatus": "Уровень сигнала",
-        "controllerStatus": "Статус",
-        "controllerType": "Тип",
-        "simIMSI": "IMSI",
-        "phoneNumber": "Номер телефона",
-        "descriptions": "Описание",
-        "correctTime": "Корректировка времени",
-        "correctInterval": "Корректировка интервала",
-        "setInterval": "Интервал опроса (ч)",
-        "createdAt": "Дата создания",
-        "updatedAt": "Дата обновления",
-        "isArchived": "В архиве",
-        "companyId": "ID компании",
-        "companyName": "Название компании",
-        "companyAddress": "Адрес компании",
-        "companyStatus": "Статус компании",
-        "companyCreatedAt": "Дата создания компании",
-        "companyUpdatedAt": "Дата обновления компании"
-      },
-      "values": {
-        "yes": "Да",
-        "no": "Нет",
-        "active": "Активный",
-        "archived": "В архиве"
-      }
-    },
-    "toast": {
-      "create": {
-        "loading": "Создание контроллера...",
-        "success": "Контроллер создан",
-        "error": "Не удалось создать контроллер"
-      },
-      "update": {
-        "loading": "Обновление контроллера...",
-        "success": "Контроллер обновлен",
-        "error": "Не удалось обновить контроллер"
-      },
-      "delete": {
-        "loading": "Удаление контроллера...",
-        "success": "Контроллер удален",
-        "error": "Не удалось удалить контроллер"
-      },
-      "transfer": {
-        "loading": "Передача контроллера...",
-        "success": "Контроллер передан",
-        "error": "Не удалось передать контроллер"
-      }
-    },
-    "table": {
-      "rowsPerPage": "Строк на странице:",
-      "columns": {
-        "id": "Серийный номер",
-        "company": "Название компании",
-        "statusAndSignal": "Статус и сигнал",
-        "battery": "Заряд батареи",
-        "controllerType": "Тип устройства",
-        "setInterval": "Интервал опроса",
-        "metersCount": "Количество счетчиков",
-        "createdAt": "Дата создания",
-        "actions": "Действия"
+    "transfer": {
+      "loading": "Передача контроллера...",
+      "success": "Контроллер передан",
+      "error": "Не удалось передать контроллер"
+    }
+  },
+  "table": {
+    "rowsPerPage": "Строк на странице:",
+    "columns": {
+      "id": "Серийный номер",
+      "company": "Название компании",
+      "statusAndSignal": "Статус и сигнал",
+      "battery": "Заряд батареи",
+      "controllerType": "Тип устройства",
+      "setInterval": "Интервал опроса",
+      "metersCount": "Количество счетчиков",
+      "createdAt": "Дата создания",
+      "actions": "Действия"
     }
   },
   "meters": {
