@@ -120,11 +120,11 @@ export const MetersToolbar = ({
                   disabled={isTemplateDownloadPending}
                 >
                   <DownloadRoundedIcon sx={{ mr: 1 }} />
-                  {t("controllers.bulkUpload.template.action")}
+                  {t("meters.bulkUpload.template.action")}
                 </MenuItem>
                 <MenuItem onClick={handleOpenBulkUploadDialog}>
                   <UploadFileRoundedIcon sx={{ mr: 1 }} />
-                  {t("controllers.bulkUpload.import.action")}
+                  {t("meters.bulkUpload.import.action")}
                 </MenuItem>
               </Menu>
             </>
