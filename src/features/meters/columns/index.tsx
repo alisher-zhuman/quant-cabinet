@@ -2,7 +2,7 @@ import type { TFunction } from "i18next";
 
 import type { MeterRow } from "@entities/meters";
 
-import { formatDate, isUser } from "@shared/helpers";
+import { isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
 import type { Column } from "@shared/types";
 
@@ -60,12 +60,6 @@ export const createMeterColumns = (
         tone={getValveStatusTone(meter.valveState)}
       />
     ),
-  },
-  {
-    id: "createdAt",
-    header: t("meters.table.columns.createdAt"),
-    cell: (meter) => formatDate(meter.createdAt),
-    hiddenOnMobile: true,
   },
   ...(!isUser(options?.currentRole)
     ? [
