@@ -34,7 +34,6 @@ export const useMeterFiltersState = () => {
   const [locationType, setLocationType] = useState(
     initialSearchState.locationType,
   );
-  const [meterStatus, setMeterStatus] = useState(initialSearchState.meterStatus);
   const [accountNumber, setAccountNumber] = useState(
     initialSearchState.accountNumber,
   );
@@ -52,7 +51,6 @@ export const useMeterFiltersState = () => {
       isArchived,
       companyId,
       locationType,
-      meterStatus,
       accountNumber,
       clientName,
       address,
@@ -74,7 +72,6 @@ export const useMeterFiltersState = () => {
   const handleApplyFilters = (filters: {
     companyId: string;
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
@@ -82,7 +79,6 @@ export const useMeterFiltersState = () => {
   }) => {
     setCompanyId(filters.companyId);
     setLocationType(filters.locationType);
-    setMeterStatus(filters.meterStatus);
     setAccountNumber(filters.accountNumber);
     setClientName(filters.clientName);
     setAddress(filters.address);
@@ -93,7 +89,6 @@ export const useMeterFiltersState = () => {
   const handleResetFilters = () => {
     setCompanyId("");
     setLocationType("");
-    setMeterStatus("");
     setAccountNumber("");
     setClientName("");
     setAddress("");
@@ -104,7 +99,6 @@ export const useMeterFiltersState = () => {
   const hasActiveFilters = Boolean(
     companyId.trim() ||
       locationType.trim() ||
-      meterStatus.trim() ||
       accountNumber.trim() ||
       clientName.trim() ||
       address.trim() ||
@@ -119,7 +113,6 @@ export const useMeterFiltersState = () => {
     limit,
     companyId,
     locationType,
-    meterStatus,
     accountNumber,
     clientName,
     address,

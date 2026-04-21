@@ -17,7 +17,6 @@ interface Props {
     companyId: string;
     controllerId: string;
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
@@ -28,7 +27,6 @@ interface Props {
   onCloseFiltersDialog: () => void;
   onApplyFilters: (filters: {
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
@@ -76,7 +74,6 @@ export const ControllerMetersDialogs = ({
         onClose={onCloseFiltersDialog}
         onApply={({
           locationType,
-          meterStatus,
           accountNumber,
           clientName,
           address,
@@ -84,7 +81,6 @@ export const ControllerMetersDialogs = ({
         }) =>
           onApplyFilters({
             locationType,
-            meterStatus,
             accountNumber,
             clientName,
             address,

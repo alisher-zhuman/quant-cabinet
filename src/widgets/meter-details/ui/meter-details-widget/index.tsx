@@ -29,7 +29,6 @@ export const MeterDetailsWidget = () => {
     backTo,
     isLoading,
     isError,
-    meterStatus,
     valveStatus,
     pendingCommand,
     locationType,
@@ -108,7 +107,6 @@ export const MeterDetailsWidget = () => {
           <MeterDetailsMainInfo
             t={t}
             meter={meter}
-            meterStatus={meterStatus}
             locationType={locationType}
           />
 
@@ -117,7 +115,6 @@ export const MeterDetailsWidget = () => {
               t={t}
               meter={meter}
               meterId={meterId}
-              meterStatus={meterStatus}
               valveStatus={valveStatus}
               pendingCommand={pendingCommand}
               locationType={locationType}

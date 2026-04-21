@@ -14,7 +14,6 @@ interface Props {
   t: TFunction;
   meter: MeterDetails;
   meterId: string;
-  meterStatus: string;
   valveStatus: string;
   pendingCommand: string;
   locationType: string;
@@ -27,7 +26,6 @@ export const MeterInfoSection = ({
   t,
   meter,
   meterId,
-  meterStatus,
   valveStatus,
   pendingCommand,
   locationType,
@@ -69,10 +67,6 @@ export const MeterInfoSection = ({
       <DetailRow
         label={t("meters.details.fields.lastValue")}
         value={meter.lastValue || "-"}
-      />
-      <DetailRow
-        label={t("meters.details.fields.meterStatus")}
-        value={meterStatus}
       />
       <DetailRow
         label={t("meters.details.fields.valveState")}

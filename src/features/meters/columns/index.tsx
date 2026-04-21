@@ -6,12 +6,7 @@ import { formatDate, isUser } from "@shared/helpers";
 import type { UserRole } from "@shared/types";
 import type { Column } from "@shared/types";
 
-import {
-  getBatteryStatusLabel,
-  getBatteryStatusTone,
-  getValveStatusLabel,
-  getValveStatusTone,
-} from "../helpers";
+import { getValveStatusLabel, getValveStatusTone } from "../helpers";
 import { MeterActions } from "../ui/meter-actions";
 import { MeterStatusBadge } from "../ui/meter-status-badge";
 
@@ -55,16 +50,6 @@ export const createMeterColumns = (
     header: t("meters.table.columns.readings"),
     cell: (meter) => meter.readings,
     hiddenOnMobile: true,
-  },
-  {
-    id: "batteryStatus",
-    header: t("meters.table.columns.batteryStatus"),
-    cell: (meter) => (
-      <MeterStatusBadge
-        label={getBatteryStatusLabel(meter.meterStatus, t)}
-        tone={getBatteryStatusTone(meter.meterStatus)}
-      />
-    ),
   },
   {
     id: "valveStatus",

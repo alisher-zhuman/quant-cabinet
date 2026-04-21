@@ -11,7 +11,6 @@ export const parseMetersSearchState = (
   ...parseListSearchState(params),
   companyId: params.get("companyId")?.trim() ?? "",
   locationType: params.get("locationType")?.trim() ?? "",
-  meterStatus: params.get("meterStatus")?.trim() ?? "",
   accountNumber: params.get("accountNumber")?.trim() ?? "",
   clientName: params.get("clientName")?.trim() ?? "",
   address: params.get("address")?.trim() ?? "",
@@ -21,7 +20,6 @@ export const parseMetersSearchState = (
 export const createMetersSearchString = ({
   companyId,
   locationType,
-  meterStatus,
   accountNumber,
   clientName,
   address,
@@ -36,10 +34,6 @@ export const createMetersSearchString = ({
 
   if (locationType.trim()) {
     params.set("locationType", locationType.trim());
-  }
-
-  if (meterStatus.trim()) {
-    params.set("meterStatus", meterStatus.trim());
   }
 
   if (accountNumber.trim()) {
@@ -83,38 +77,6 @@ export const getValveStatusTone = (valveState: string): MeterStatusTone => {
   }
 
   if (valveState === "closed") {
-    return "error";
-  }
-
-  return "neutral";
-};
-
-export const getBatteryStatusLabel = (meterStatus: string, t: TFunction) => {
-  if (meterStatus === "normal") {
-    return t("meters.batteryStatus.normal");
-  }
-
-  if (meterStatus === "low") {
-    return t("meters.batteryStatus.low");
-  }
-
-  if (meterStatus === "critical") {
-    return t("meters.batteryStatus.critical");
-  }
-
-  return meterStatus;
-};
-
-export const getBatteryStatusTone = (meterStatus: string): MeterStatusTone => {
-  if (meterStatus === "normal") {
-    return "success";
-  }
-
-  if (meterStatus === "low") {
-    return "warning";
-  }
-
-  if (meterStatus === "critical") {
     return "error";
   }
 

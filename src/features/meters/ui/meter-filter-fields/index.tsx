@@ -68,20 +68,6 @@ export const MeterFilterFields = ({
       </TextField>
 
       <TextField
-        select
-        value={values.meterStatus}
-        label={t("meters.filters.fields.meterStatus")}
-        onChange={createChangeHandler("meterStatus")}
-      >
-        <MenuItem value="">
-          <em>{t("meters.filters.values.all")}</em>
-        </MenuItem>
-        <MenuItem value="normal">{t("meters.details.statuses.normal")}</MenuItem>
-        <MenuItem value="low">{t("meters.details.statuses.low")}</MenuItem>
-        <MenuItem value="critical">{t("meters.details.statuses.critical")}</MenuItem>
-      </TextField>
-
-      <TextField
         value={values.accountNumber}
         label={t("meters.filters.fields.accountNumber")}
         onChange={createChangeHandler("accountNumber")}

@@ -545,7 +545,6 @@
       "fields": {
         "companyId": "Компания",
         "locationType": "Тип локации",
-        "meterStatus": "Статус счетчика",
         "accountNumber": "Лицевой счет",
         "clientName": "ФИО",
         "address": "Адрес",
@@ -567,7 +566,6 @@
         "accountNumber": "Лицевой счет",
         "clientName": "Абонент",
         "lastValue": "Последнее показание",
-        "meterStatus": "Статус счетчика",
         "valveState": "Состояние клапана",
         "pendingCommand": "Ожидающая команда",
         "locationType": "Расположение",
@@ -584,11 +582,6 @@
         "archived": "В архиве",
         "yes": "Да",
         "no": "Нет"
-      },
-      "statuses": {
-        "normal": "В норме",
-        "low": "Низкий",
-        "critical": "Критический"
       },
       "locationType": {
         "indoor": "Внутри помещения",
@@ -642,11 +635,6 @@
         }
       }
     },
-    "batteryStatus": {
-      "normal": "Нормальный",
-      "low": "Низкий",
-      "critical": "Критический"
-    },
     "valveStatus": {
       "open": "Открыт",
       "closed": "Закрыт",
@@ -661,7 +649,6 @@
         "company": "Компания",
         "lastValue": "Последнее показание",
         "readings": "Количество записей",
-        "batteryStatus": "Статус батареи",
         "valveStatus": "Статус клапана",
         "createdAt": "Дата создания",
         "actions": "Действия"

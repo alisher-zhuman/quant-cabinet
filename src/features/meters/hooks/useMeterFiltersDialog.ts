@@ -15,7 +15,6 @@ interface Params {
 const EMPTY_FILTERS: MeterFilters = {
   companyId: "",
   locationType: "",
-  meterStatus: "",
   accountNumber: "",
   clientName: "",
   address: "",
@@ -83,7 +82,6 @@ export const useMeterFiltersDialog = ({
   const hasActiveFilters = Boolean(
     (!hideCompanyField && filters.companyId.trim()) ||
       filters.locationType.trim() ||
-      filters.meterStatus.trim() ||
       filters.accountNumber.trim() ||
       filters.clientName.trim() ||
       filters.address.trim() ||

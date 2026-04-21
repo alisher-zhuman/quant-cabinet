@@ -61,7 +61,6 @@ interface CompanyMetersTab {
     filters: {
       companyId: string;
       locationType: string;
-      meterStatus: string;
       accountNumber: string;
       clientName: string;
       address: string;
@@ -72,7 +71,6 @@ interface CompanyMetersTab {
     onCloseFiltersDialog: () => void;
     onApplyFilters: (filters: {
       locationType: string;
-      meterStatus: string;
       accountNumber: string;
       clientName: string;
       address: string;
@@ -133,7 +131,6 @@ export const useCompanyMetersTab = ({
     companyId: isAdmin(role) ? companyId : undefined,
     controllerId: "",
     locationType: filtersState.locationType,
-    meterStatus: filtersState.meterStatus,
     accountNumber: filtersState.accountNumber,
     clientName: filtersState.clientName,
     address: filtersState.address,
@@ -210,7 +207,6 @@ export const useCompanyMetersTab = ({
       filters: {
         companyId,
         locationType: filtersState.locationType,
-        meterStatus: filtersState.meterStatus,
         accountNumber: filtersState.accountNumber,
         clientName: filtersState.clientName,
         address: filtersState.address,

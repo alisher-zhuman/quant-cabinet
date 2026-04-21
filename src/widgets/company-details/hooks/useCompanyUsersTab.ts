@@ -112,7 +112,6 @@ export const useCompanyUsersTab = ({
       phoneNumber: "",
       simIMSI: "",
       locationType: "",
-      meterStatus: "",
       accountNumber: "",
       clientName: "",
       address: "",

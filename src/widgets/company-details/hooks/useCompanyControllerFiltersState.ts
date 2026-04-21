@@ -56,7 +56,6 @@ export const useCompanyControllerFiltersState = ({ isActive }: Params) => {
       phoneNumber,
       simIMSI,
       locationType: "",
-      meterStatus: "",
       accountNumber: "",
       clientName: "",
       address: "",

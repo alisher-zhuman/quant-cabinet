@@ -41,7 +41,6 @@ export interface MetersListQueryParams {
   companyId?: string;
   controllerId?: string;
   locationType?: string;
-  meterStatus?: string;
   accountNumber?: string;
   clientName?: string;
   address?: string;

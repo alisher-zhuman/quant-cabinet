@@ -8,7 +8,6 @@ import {
 
 interface MeterFiltersValues {
   locationType: string;
-  meterStatus: string;
   accountNumber: string;
   clientName: string;
   address: string;
@@ -18,7 +17,6 @@ interface MeterFiltersValues {
 export const useControllerMeterFiltersState = () => {
   const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
   const [locationType, setLocationType] = useState("");
-  const [meterStatus, setMeterStatus] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [clientName, setClientName] = useState("");
   const [address, setAddress] = useState("");
@@ -50,14 +48,12 @@ export const useControllerMeterFiltersState = () => {
 
   const handleApplyFilters = ({
     locationType: nextLocationType,
-    meterStatus: nextMeterStatus,
     accountNumber: nextAccountNumber,
     clientName: nextClientName,
     address: nextAddress,
     isValveLockedByManager: nextIsValveLockedByManager,
   }: MeterFiltersValues) => {
     setLocationType(nextLocationType);
-    setMeterStatus(nextMeterStatus);
     setAccountNumber(nextAccountNumber);
     setClientName(nextClientName);
     setAddress(nextAddress);
@@ -68,7 +64,6 @@ export const useControllerMeterFiltersState = () => {
 
   const handleResetFilters = () => {
     setLocationType("");
-    setMeterStatus("");
     setAccountNumber("");
     setClientName("");
     setAddress("");
@@ -78,7 +73,6 @@ export const useControllerMeterFiltersState = () => {
 
   const hasActiveFilters = Boolean(
     locationType.trim() ||
-      meterStatus.trim() ||
       accountNumber.trim() ||
       clientName.trim() ||
       address.trim() ||
@@ -93,7 +87,6 @@ export const useControllerMeterFiltersState = () => {
     page,
     limit,
     locationType,
-    meterStatus,
     accountNumber,
     clientName,
     address,

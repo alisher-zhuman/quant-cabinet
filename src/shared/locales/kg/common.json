@@ -545,7 +545,6 @@
       "fields": {
         "companyId": "Компания",
         "locationType": "Локациянын түрү",
-        "meterStatus": "Эсептегичтин статусу",
         "accountNumber": "Жеке эсеп",
         "clientName": "ФИО",
         "address": "Дарек",
@@ -567,7 +566,6 @@
         "accountNumber": "Жеке эсеп",
         "clientName": "Абонент",
         "lastValue": "Акыркы көрсөткүч",
-        "meterStatus": "Эсептегичтин статусу",
         "valveState": "Клапандын абалы",
         "pendingCommand": "Күтүүдөгү буйрук",
         "locationType": "Жайгашуусу",
@@ -584,11 +582,6 @@
         "archived": "Архивде",
         "yes": "Ооба",
         "no": "Жок"
-      },
-      "statuses": {
-        "normal": "Нормада",
-        "low": "Төмөн",
-        "critical": "Критикалык"
       },
       "locationType": {
         "indoor": "Имарат ичинде",
@@ -642,11 +635,6 @@
         }
       }
     },
-    "batteryStatus": {
-      "normal": "Нормалдуу",
-      "low": "Төмөн",
-      "critical": "Критикалык"
-    },
     "valveStatus": {
       "open": "Ачык",
       "closed": "Жабык",
@@ -661,7 +649,6 @@
         "company": "Компания",
         "lastValue": "Акыркы көрсөткүч",
         "readings": "Жазуулардын саны",
-        "batteryStatus": "Батареянын статусу",
         "valveStatus": "Клапандын статусу",
         "createdAt": "Түзүлгөн күнү",
         "actions": "Аракеттер"

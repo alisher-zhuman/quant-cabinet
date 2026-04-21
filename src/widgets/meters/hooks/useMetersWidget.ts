@@ -40,7 +40,6 @@ export const useMetersWidget = () => {
     companyId: filters.companyId,
     controllerId: "",
     locationType: filters.locationType,
-    meterStatus: filters.meterStatus,
     accountNumber: filters.accountNumber,
     clientName: filters.clientName,
     address: filters.address,
@@ -52,7 +51,6 @@ export const useMetersWidget = () => {
   const handleApplyFilters = (nextFilters: {
     companyId: string;
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
@@ -130,7 +128,6 @@ export const useMetersWidget = () => {
       filters: {
         companyId: filters.companyId,
         locationType: filters.locationType,
-        meterStatus: filters.meterStatus,
         accountNumber: filters.accountNumber,
         clientName: filters.clientName,
         address: filters.address,

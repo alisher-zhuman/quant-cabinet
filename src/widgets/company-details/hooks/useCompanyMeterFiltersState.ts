@@ -26,7 +26,6 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
   const [locationType, setLocationType] = useState(
     initialSearchState.locationType,
   );
-  const [meterStatus, setMeterStatus] = useState(initialSearchState.meterStatus);
   const [accountNumber, setAccountNumber] = useState(
     initialSearchState.accountNumber,
   );
@@ -61,7 +60,6 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
       phoneNumber: "",
       simIMSI: "",
       locationType,
-      meterStatus,
       accountNumber,
       clientName,
       address,
@@ -91,21 +89,18 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
 
   const handleApplyFilters = ({
     locationType: nextLocationType,
-    meterStatus: nextMeterStatus,
     accountNumber: nextAccountNumber,
     clientName: nextClientName,
     address: nextAddress,
     isValveLockedByManager: nextIsValveLockedByManager,
   }: {
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
     isValveLockedByManager: string;
   }) => {
     setLocationType(nextLocationType);
-    setMeterStatus(nextMeterStatus);
     setAccountNumber(nextAccountNumber);
     setClientName(nextClientName);
     setAddress(nextAddress);
@@ -116,7 +111,6 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
 
   const handleResetFilters = () => {
     setLocationType("");
-    setMeterStatus("");
     setAccountNumber("");
     setClientName("");
     setAddress("");
@@ -126,7 +120,6 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
 
   const hasActiveFilters = Boolean(
     locationType.trim() ||
-      meterStatus.trim() ||
       accountNumber.trim() ||
       clientName.trim() ||
       address.trim() ||
@@ -141,7 +134,6 @@ export const useCompanyMeterFiltersState = ({ isActive }: Params) => {
     page,
     limit,
     locationType,
-    meterStatus,
     accountNumber,
     clientName,
     address,

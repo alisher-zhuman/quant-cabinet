@@ -13,7 +13,6 @@ interface Params {
   companyId?: string | undefined;
   controllerId: string;
   locationType: string;
-  meterStatus: string;
   accountNumber: string;
   clientName: string;
   address: string;
@@ -29,7 +28,6 @@ export const useMetersQuery = ({
   companyId = "",
   controllerId = "",
   locationType = "",
-  meterStatus = "",
   accountNumber = "",
   clientName = "",
   address = "",
@@ -42,7 +40,6 @@ export const useMetersQuery = ({
   const normalizedCompanyId = companyId.trim();
   const normalizedControllerId = controllerId.trim();
   const normalizedLocationType = locationType.trim();
-  const normalizedMeterStatus = meterStatus.trim();
   const normalizedAccountNumber = accountNumber.trim();
   const normalizedClientName = clientName.trim();
   const normalizedAddress = address.trim();
@@ -58,7 +55,6 @@ export const useMetersQuery = ({
       normalizedCompanyId,
       normalizedControllerId,
       normalizedLocationType,
-      normalizedMeterStatus,
       normalizedAccountNumber,
       normalizedClientName,
       normalizedAddress,
@@ -73,7 +69,6 @@ export const useMetersQuery = ({
         companyId: normalizedCompanyId,
         controllerId: normalizedControllerId,
         locationType: normalizedLocationType,
-        meterStatus: normalizedMeterStatus,
         accountNumber: normalizedAccountNumber,
         clientName: normalizedClientName,
         address: normalizedAddress,
@@ -90,7 +85,6 @@ export const useMetersQuery = ({
       normalizedCompanyId ||
       normalizedControllerId ||
       normalizedLocationType ||
-      normalizedMeterStatus ||
       normalizedAccountNumber ||
       normalizedClientName ||
       normalizedAddress ||

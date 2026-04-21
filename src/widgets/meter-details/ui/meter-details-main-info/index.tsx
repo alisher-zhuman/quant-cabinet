@@ -11,14 +11,12 @@ import type { MeterDetails } from "@entities/meters";
 interface Props {
   t: TFunction;
   meter: MeterDetails;
-  meterStatus: string;
   locationType: string;
 }
 
 export const MeterDetailsMainInfo = ({
   t,
   meter,
-  meterStatus,
   locationType,
 }: Props) => (
   <Box
@@ -59,14 +57,6 @@ export const MeterDetailsMainInfo = ({
       flexWrap="wrap"
       sx={{ maxWidth: 480, justifyContent: { lg: "flex-end" } }}
     >
-      <Chip
-        size="small"
-        label={`${t("meters.details.fields.meterStatus")}: ${meterStatus}`}
-        sx={{
-          borderRadius: 999,
-          backgroundColor: (theme) => alpha(theme.palette.success.main, 0.12),
-        }}
-      />
       <Chip
         size="small"
         label={`${t("meters.details.fields.locationType")}: ${locationType}`}

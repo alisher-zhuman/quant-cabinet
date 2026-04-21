@@ -8,7 +8,6 @@ export interface CompanyDetailsSearchState extends ListSearchState {
   phoneNumber: string;
   simIMSI: string;
   locationType: string;
-  meterStatus: string;
   accountNumber: string;
   clientName: string;
   address: string;

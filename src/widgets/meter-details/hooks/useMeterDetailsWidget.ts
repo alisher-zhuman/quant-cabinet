@@ -34,12 +34,6 @@ export const useMeterDetailsWidget = () => {
     navigate(backTo);
   });
 
-  const meterStatus = meter?.meterStatus
-    ? t(`meters.details.statuses.${meter.meterStatus}`, {
-        defaultValue: meter.meterStatus,
-      })
-    : "-";
-
   const valveStatus = meter?.valveState
     ? t(`meters.valveStatus.${meter.valveState}`)
     : "-";
@@ -122,7 +116,6 @@ export const useMeterDetailsWidget = () => {
     isLoading,
     isError,
     role,
-    meterStatus,
     valveStatus,
     pendingCommand,
     locationType,

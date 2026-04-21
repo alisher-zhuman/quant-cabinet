@@ -21,7 +21,6 @@ interface Props {
   filters: {
     companyId: string;
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
@@ -39,7 +38,6 @@ interface Props {
   onApplyFilters: (filters: {
     companyId: string;
     locationType: string;
-    meterStatus: string;
     accountNumber: string;
     clientName: string;
     address: string;
