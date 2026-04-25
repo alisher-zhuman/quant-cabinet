@@ -71,7 +71,7 @@ export const CreateUserDialog = ({
     [currentRole, t],
   );
 
-  const { control, isPending, isDirty, isValid, onSubmit, setValue } = useUserForm({
+  const { control, isPending, isDirty, onSubmit, setValue } = useUserForm({
     user,
     companyId,
     onSuccess,
@@ -140,7 +140,6 @@ export const CreateUserDialog = ({
               )}
               isSubmitting={isPending}
               isDirty={isDirty}
-              submitProps={{ disabled: !isValid }}
             />
           </FormFieldset>
         </form>
