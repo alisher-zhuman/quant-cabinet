@@ -54,10 +54,7 @@ export const createUserFormSchema = (
       lastName: z.string().trim().min(1, t("validation.requiredLastName")),
       role: UserRoleSchema,
       phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-      descriptions: z
-        .string()
-        .trim()
-        .min(1, t("validation.requiredDescriptions")),
+      descriptions: z.string().trim().optional(),
       company: z.string().trim(),
       isArchived: z.boolean(),
     })
@@ -90,10 +87,7 @@ export const updateUserFormSchema = (
       lastName: z.string().trim().min(1, t("validation.requiredLastName")),
       role: UserRoleSchema,
       phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-      descriptions: z
-        .string()
-        .trim()
-        .min(1, t("validation.requiredDescriptions")),
+      descriptions: z.string().trim().optional(),
       company: z.string().trim(),
       isArchived: z.boolean(),
     })
@@ -117,7 +111,7 @@ export const CreateUserPayloadSchema = z.object({
   lastName: z.string().trim().min(1),
   role: UserRoleSchema,
   phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
+  descriptions: z.string().trim().optional(),
   company: z.string().trim().optional(),
 });
 
@@ -127,7 +121,7 @@ export const UpdateUserPayloadSchema = z.object({
   lastName: z.string().trim().min(1),
   role: UserRoleSchema,
   phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
+  descriptions: z.string().trim().optional(),
   company: z.string().trim().optional(),
   isArchived: z.boolean(),
 });
