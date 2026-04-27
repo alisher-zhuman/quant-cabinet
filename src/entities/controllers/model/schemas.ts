@@ -8,7 +8,7 @@ const ControllerCompanySchema = z
   .looseObject({
     id: z.string(),
     name: z.string(),
-    address: z.string(),
+    address: z.preprocess((value) => (value === null ? "" : value), z.string()),
     isArchived: z.boolean(),
     createdAt: z.string(),
     updatedAt: z.string(),
