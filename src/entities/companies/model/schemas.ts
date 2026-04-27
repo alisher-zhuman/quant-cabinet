@@ -15,7 +15,7 @@ const CompanyKeySchema = z
 export const CompanyRowSchema = z.looseObject({
   id: z.string(),
   name: z.string(),
-  address: z.string(),
+  address: z.preprocess((value) => (value === null ? "" : value), z.string()),
   createdAt: z.string(),
   isArchived: z.boolean(),
 });
@@ -25,7 +25,7 @@ export const CompaniesResponseSchema = createListResponseSchema(CompanyRowSchema
 export const CompanyDetailsSchema = z.looseObject({
   id: z.string(),
   name: z.string(),
-  address: z.string(),
+  address: z.preprocess((value) => (value === null ? "" : value), z.string()),
   createdAt: z.string(),
   updatedAt: z.string(),
   isArchived: z.boolean(),
