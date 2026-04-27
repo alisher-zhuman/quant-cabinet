@@ -8,7 +8,7 @@ const MeterCompanySchema = z
   .looseObject({
     id: z.string(),
     name: z.string(),
-    address: z.string().optional(),
+    address: z.preprocess((value) => (value === null ? "" : value), z.string()),
     createdAt: z.string().optional(),
     isArchived: z.boolean().optional(),
   })
