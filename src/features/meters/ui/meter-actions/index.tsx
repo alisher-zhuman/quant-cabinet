@@ -39,7 +39,7 @@ export const MeterActions = ({
   };
 
   return (
-    <Stack direction="row" spacing={1}>
+    <Stack direction="row" spacing={1} justifyContent="flex-end">
       {!isUser(role) && (
         <>
           <Tooltip title={editLabel}>
