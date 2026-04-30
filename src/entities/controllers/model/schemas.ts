@@ -110,12 +110,9 @@ export const createControllerFormSchema = (
         .min(1, t("validation.requiredSerialNumber")),
       companyId: z.string().trim(),
       type: ControllerTypeSchema,
-      simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
-      phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-      descriptions: z
-        .string()
-        .trim()
-        .min(1, t("validation.requiredDescriptions")),
+      simIMSI: z.string().trim().optional(),
+      phoneNumber: z.string().trim().optional(),
+      descriptions: z.string().trim().optional(),
       correctTime: z.boolean(),
       correctInterval: z.boolean(),
       setInterval: z
@@ -152,12 +149,9 @@ export const updateControllerFormSchema = (
       serialNumber: z.string().trim(),
       companyId: z.string().trim(),
       type: ControllerTypeSchema,
-      simIMSI: z.string().trim().min(1, t("validation.requiredSimIMSI")),
-      phoneNumber: z.string().trim().min(1, t("validation.requiredPhoneNumber")),
-      descriptions: z
-        .string()
-        .trim()
-        .min(1, t("validation.requiredDescriptions")),
+      simIMSI: z.string().trim().optional(),
+      phoneNumber: z.string().trim().optional(),
+      descriptions: z.string().trim().optional(),
       correctTime: z.boolean(),
       correctInterval: z.boolean(),
       setInterval: z
@@ -189,16 +183,16 @@ export const CreateControllerPayloadSchema = z.object({
   serialNumber: z.string().trim().min(1),
   companyId: z.string().trim().optional(),
   type: ControllerTypeSchema,
-  simIMSI: z.string().trim().min(1),
-  phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
+  simIMSI: z.string().trim().optional(),
+  phoneNumber: z.string().trim().optional(),
+  descriptions: z.string().trim().optional(),
 });
 
 export const UpdateControllerPayloadSchema = z.object({
   id: z.string(),
-  simIMSI: z.string().trim().min(1),
-  phoneNumber: z.string().trim().min(1),
-  descriptions: z.string().trim().min(1),
+  simIMSI: z.string().trim().optional(),
+  phoneNumber: z.string().trim().optional(),
+  descriptions: z.string().trim().optional(),
   correctTime: z.boolean(),
   correctInterval: z.boolean(),
   setInterval: z.number().int().min(1).max(255),

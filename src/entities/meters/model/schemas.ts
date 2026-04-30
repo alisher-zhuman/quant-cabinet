@@ -133,13 +133,10 @@ export const createMeterFormSchema = (
       .refine((value) => Number(value) <= 8, {
         message: t("validation.maxPort"),
       }),
-    accountNumber: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredAccountNumber")),
-    clientName: z.string().trim().min(1, t("validation.requiredClientName")),
-    address: z.string().trim().min(1, t("validation.requiredAddress")),
-    descriptions: z.string().trim(),
+    accountNumber: z.string().trim().optional(),
+    clientName: z.string().trim().optional(),
+    address: z.string().trim().optional(),
+    descriptions: z.string().trim().optional(),
   });
 
 export const MeterPendingCommandSchema = z.enum(["none", "open", "close"]);
@@ -172,13 +169,10 @@ export const updateMeterFormSchema = (
       .refine((value) => Number(value) <= 8, {
         message: t("validation.maxPort"),
       }),
-    accountNumber: z
-      .string()
-      .trim()
-      .min(1, t("validation.requiredAccountNumber")),
-    clientName: z.string().trim().min(1, t("validation.requiredClientName")),
-    address: z.string().trim().min(1, t("validation.requiredAddress")),
-    descriptions: z.string().trim(),
+    accountNumber: z.string().trim().optional(),
+    clientName: z.string().trim().optional(),
+    address: z.string().trim().optional(),
+    descriptions: z.string().trim().optional(),
     pendingCommand: MeterPendingCommandSchema,
     isValveLockedByManager: z.boolean(),
     isArchived: z.boolean(),
@@ -190,10 +184,10 @@ export const CreateMeterPayloadSchema = z.object({
   companyId: z.string().trim().optional(),
   locationType: MeterLocationTypeSchema,
   port: z.number().int().min(1).max(8),
-  accountNumber: z.string().trim().min(1),
-  clientName: z.string().trim().min(1),
-  address: z.string().trim().min(1),
-  descriptions: z.string().trim(),
+  accountNumber: z.string().trim().optional(),
+  clientName: z.string().trim().optional(),
+  address: z.string().trim().optional(),
+  descriptions: z.string().trim().optional(),
 });
 
 export const UpdateMeterPayloadSchema = z.object({
@@ -203,10 +197,10 @@ export const UpdateMeterPayloadSchema = z.object({
   companyId: z.string().trim().optional(),
   locationType: MeterLocationTypeSchema,
   port: z.number().int().min(1).max(8),
-  accountNumber: z.string().trim().min(1),
-  clientName: z.string().trim().min(1),
-  address: z.string().trim().min(1),
-  descriptions: z.string().trim(),
+  accountNumber: z.string().trim().optional(),
+  clientName: z.string().trim().optional(),
+  address: z.string().trim().optional(),
+  descriptions: z.string().trim().optional(),
   pendingCommand: MeterPendingCommandSchema,
   isValveLockedByManager: z.boolean(),
   isArchived: z.boolean(),
