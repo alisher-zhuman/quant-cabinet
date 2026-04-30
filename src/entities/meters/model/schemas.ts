@@ -97,6 +97,7 @@ export const MeterDetailsSchema = z.looseObject({
   createdAt: z.string(),
   updatedAt: z.string(),
   isArchived: z.boolean(),
+  deviceBalance: z.preprocess((value) => (value === null ? 0 : value), z.number()),
   company: MeterCompanySchema,
   controller: MeterControllerSchema,
 });

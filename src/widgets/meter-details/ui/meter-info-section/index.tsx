@@ -69,6 +69,10 @@ export const MeterInfoSection = ({
         value={meter.lastValue || "-"}
       />
       <DetailRow
+        label={t("meters.details.fields.deviceBalance")}
+        value={String(meter.deviceBalance)}
+      />
+      <DetailRow
         label={t("meters.details.fields.valveState")}
         value={valveStatus}
       />
